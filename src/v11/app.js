@@ -116,10 +116,11 @@ function startWithBirth() {
 const GAME_VERSION = 'v0.19';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
+const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
 function lifeLabel(s) { return s ? `${s.name}, ${s.born} ${s.place} · ${s.job}, ${ageOf(s)}세` : ''; }
 function syncLinks() {
-  const s = engine.state, q = new URLSearchParams({template:'feedback.yml', version:GAME_VERSION, ...(s ? {life:lifeLabel(s)} : {})});
-  $id('linkFeedback').href = `${REPO}/issues/new?${q}`;
+  $id('linkFeedback').href = FEEDBACK_FORM;
+  const s = engine.state;
   $id('linkUpdates').href = `${COMMUNITY}#updates`;
   $id('linkStories').href = `${COMMUNITY}#stories`;
   const fresh = prefs.seenVersion !== GAME_VERSION;

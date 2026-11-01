@@ -13,6 +13,7 @@
 const CONFIG = {
   repo: 'hseo1101-boop/80',
   game: 'https://hseo1101-boop.github.io/80/',
+  feedbackForm: 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header',
   storiesCategory: 'Player Stories',      // Discussions 카테고리 이름 (영문 권장)
   storiesCategorySlug: 'player-stories',  // 위 이름의 주소용 표기
   giscusRepoId: '',
@@ -77,10 +78,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2p
       <h2 id="feedbackTitle">의견 보내기</h2>
       <p>어디서 재밌었는지, 어디서 지루했는지, 이상한 장면은 없었는지 알려 주세요. 짧아도 큰 도움이 됩니다.</p>
       <div class="actions">
-        <a class="action" id="feedbackLink" target="_blank" rel="noopener"><b>플레이 소감 남기기</b><span>얼마나 했는지, 다시 하고 싶은지, 좋았던 점과 아쉬운 점</span></a>
+        <a class="action" id="feedbackLink" target="_blank" rel="noopener"><b>플레이 소감 남기기</b><span>로그인 없이 바로 쓰는 설문. 좋았던 점, 아쉬운 점, 다시 하고 싶은지</span></a>
         <a class="action" id="bugLink" target="_blank" rel="noopener"><b>버그·고증 오류 알리기</b><span>말이 안 되는 장면, 틀린 연도와 사실, 화면 문제</span></a>
       </div>
-      <p class="note">GitHub 계정으로 로그인해야 글을 남길 수 있습니다. 남긴 글은 이 게임의 공개 저장소에 올라가 누구나 볼 수 있습니다.</p>
+      <p class="note">버그·고증 오류 알리기는 GitHub 계정이 필요하고, 남긴 글은 공개 저장소에 올라갑니다. 계정이 없다면 설문에 적어 주셔도 됩니다.</p>
     </div>
   </section>
 
@@ -129,7 +130,7 @@ fetch('updates.md', {cache:'no-cache'}).then(r => r.ok ? r.text() : Promise.reje
   .catch(() => { $('updates').innerHTML = `<p class="muted">업데이트 노트를 불러오지 못했습니다. <a href="https://github.com/${CONFIG.repo}/blob/HEAD/updates.md" target="_blank" rel="noopener">GitHub에서 보기</a></p>`; });
 
 const repo = `https://github.com/${CONFIG.repo}`;
-$('feedbackLink').href = `${repo}/issues/new?template=feedback.yml`;
+$('feedbackLink').href = CONFIG.feedbackForm;
 $('bugLink').href = `${repo}/issues/new?template=bug.yml`;
 $('newStoryLink').href = `${repo}/discussions/new?category=${encodeURIComponent(CONFIG.storiesCategorySlug)}`;
 $('allStoriesLink').href = `${repo}/discussions/categories/${encodeURIComponent(CONFIG.storiesCategorySlug)}`;
