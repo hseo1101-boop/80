@@ -1,0 +1,230 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>어느 프랑스인의 삶 0.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eceeeb;--card:#f8f9f7;--line:#d6dbd6;--line2:#e6e9e5;--ink:#1c272a;--muted:#6d7672;--faint:#9aa29e;--wine:#8c1c3c;--teal:#17695a;--good:#17695a;--bad:#b23a32;--dark:#16242a;--chip:#e9edea;
+  --sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;--serif:'Bitter',Georgia,'Noto Serif KR',serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 12px;line-height:1.3}
+button:hover:not(:disabled){background:#fff;border-color:#c2c9c3}button:disabled{opacity:.4;cursor:default}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid #c9a040;outline-offset:2px}
+[hidden]{display:none!important}.muted{color:var(--muted)}
+h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left)) 12px}
+.tb-inner{max-width:1360px;margin:0 auto;display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap}
+.tb-brand{font-family:var(--serif);font-weight:700;font-size:1.05rem;white-space:nowrap;color:var(--ink)}.tb-brand b{color:var(--wine)}
+.tb-age{display:flex;align-items:baseline;gap:4px}.tb-age b{font-family:var(--serif);font-size:3rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.tb-age span{font-size:1.4rem;font-weight:700}
+.tb-meta{flex:1 1 220px;min-width:0}.tb-meta #ageLine{color:var(--muted);font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-track{height:5px;background:#dde1dd;border-radius:3px;margin-top:8px;overflow:hidden}.tb-track div{height:100%;width:0;background:var(--wine);border-radius:3px}
+.tb-controls{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.tb-controls button{min-height:44px;background:#f4f6f3}
+.play{background:var(--dark)!important;color:#fff;border-color:var(--dark)!important;min-width:56px;font-weight:700}.play:hover{background:#25383f!important}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#f4f6f3}.seg button{border:0;border-radius:0;border-right:1px solid var(--line);min-width:46px;padding:8px 10px;font-variant-numeric:tabular-nums;background:transparent}.seg button:last-child{border-right:0}
+.seg button.on,.ctl.on{background:var(--dark)!important;color:#fff}
+.menu-wrap{position:relative;display:flex}.menu-wrap>button{min-height:44px}.menu{position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px #1c272a26;padding:6px;min-width:210px;z-index:8;display:grid}
+.menu button{border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:6px}.menu button:hover{background:var(--chip)}.menu hr{border:0;border-top:1px solid var(--line2);margin:4px 0}
+.menu .on::after{content:' ✓';color:var(--teal);font-weight:700}
+
+/* ---- layout ---- */
+.shell{max-width:1360px;margin:18px auto 40px;padding:0 16px;display:grid;grid-template-columns:330px minmax(0,1fr) 270px;gap:18px;align-items:start}
+.col{display:grid;gap:14px;min-width:0}
+
+/* ---- passport ---- */
+.idcard{position:relative;background:#f7f8f5;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  background-image:repeating-radial-gradient(circle at 115% 40%,transparent 0 9px,#2f7a6a0d 9px 10px),repeating-radial-gradient(circle at -15% 80%,transparent 0 11px,#8c1c3c0a 11px 12px)}
+.id-head{display:flex;justify-content:space-between;background:var(--wine);color:#fbeef1;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;padding:9px 18px}
+.id-body{display:grid;grid-template-columns:96px 1fr;gap:6px 16px;padding:18px 18px 12px}
+.id-photo{width:96px;height:117px;image-rendering:pixelated;border:1px solid #c9cfc9;border-radius:3px;background:#a9d6ec;grid-row:span 1}
+.id-name{align-self:center}.id-name b{display:block;font-family:var(--serif);font-size:1.75rem;line-height:1.15;letter-spacing:-.01em}.id-name i{display:block;font-family:var(--serif);font-style:italic;color:var(--muted);font-size:1rem;margin-top:4px}
+.id-fields{grid-column:1/-1;display:grid;grid-template-columns:84px 1fr;gap:7px 12px;margin:10px 0 0;font-size:.95rem}
+.id-fields dt{color:var(--muted)}.id-fields dd{margin:0}.dots{letter-spacing:2px;color:var(--ink)}.dots span{color:#aab1ad}
+.id-mrz{border-top:1px dashed #c3c9c3;padding:12px 18px 14px;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:#4a5552;display:grid;gap:3px;overflow:hidden}.id-mrz span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.id-seal{position:absolute;right:14px;top:48px;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#c4473f,#8c1c2c 70%);color:#f5d7c6;display:grid;place-items:center;font-size:1.15rem;box-shadow:0 2px 0 #5e1220,inset 0 0 0 3px #a8323a;transform:rotate(-12deg);opacity:.92}
+
+/* ---- people ---- */
+.people{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:2px}
+.people li{display:grid;grid-template-columns:30px 1fr 54px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line2)}
+.people img{width:30px;height:48px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%}
+.people small{display:block;color:var(--muted);font-size:.8rem}.people i{height:4px;background:#e1e5e1;border-radius:2px;overflow:hidden}.people i u{display:block;height:100%;background:var(--wine)}
+.people li.dead{opacity:.5}.people li.dead img{filter:grayscale(1)}
+
+/* ---- scene ---- */
+.scene-card{padding:0!important;overflow:hidden}
+.scene-wrap{line-height:0;background:#a3d3ec;overflow:hidden}
+#scene,#introScene{display:block;image-rendering:pixelated;image-rendering:crisp-edges;max-width:none}
+.caption{display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--line);border-radius:0;background:var(--card);padding:16px 20px;font-size:1.08rem;line-height:1.6}
+.caption .chev{font-size:.75rem;color:var(--muted)}.caption[aria-expanded=true] .chev{display:inline-block;transform:rotate(180deg)}
+.scene-detail{padding:0 20px 14px;color:var(--muted);font-size:.9rem}.scene-detail p{margin:0 0 4px}
+.death-banner{background:var(--dark);color:#f0ece2;padding:14px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.death-banner p{margin:0}.death-banner button{background:#fff;color:var(--ink)}
+
+/* ---- stats strip ---- */
+.statbar{display:flex;align-items:center;gap:12px 16px;padding:12px 18px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(52px,1fr));gap:14px;flex:1 1 340px}
+.stat span{display:block;color:var(--muted);font-size:.85rem}.stat b{display:block;font-size:1.15rem;font-variant-numeric:tabular-nums;line-height:1.4}
+.stat i{display:block;height:5px;background:#e1e5e1;border-radius:3px;overflow:hidden;margin-top:4px}.stat u{display:block;height:100%;border-radius:3px;transition:width .4s}
+.pill-btn{border-radius:999px;padding:10px 18px;background:#eef1ee;font-weight:700;white-space:nowrap}.pill-btn .chev{font-size:.7rem;color:var(--muted);font-weight:400}
+
+/* ---- focus ---- */
+.focus-card .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.focus-card .head span{color:var(--muted);font-size:.85rem}
+.focus-sub{margin:10px 0 12px}.focus-sub b{font-weight:800}.focus-sub span{color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border-radius:999px;padding:9px 16px;background:#fff}.chip.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+#focusText{margin:12px 0 0;color:#4b5553;font-size:.92rem}
+
+/* ---- log ---- */
+.log-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.log-head h2{font-size:1.35rem}.link{border:0;background:none;padding:4px 0;color:var(--muted);font-size:.88rem}.link:hover{background:none!important;color:var(--ink)}
+.popline{color:var(--teal);margin:8px 0 6px;font-size:.98rem}
+.history{list-style:none;margin:0;padding:0;max-height:640px;overflow:auto;overflow-anchor:none}
+.history .row{display:grid;grid-template-columns:62px 1fr 22px;gap:12px;padding:16px 2px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:1.02rem}
+.history .row:hover{background:#f1f3f0}.history .row:first-child{animation:fade .35s}
+.history .age{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}.history .age b{font-weight:400;margin-left:4px}
+.history small{display:block;color:var(--faint);font-size:.75rem;line-height:1.4;margin-bottom:2px}.history p{margin:0;white-space:pre-line;line-height:1.7}
+.history .star{color:#c4cac6;text-align:center}.history .starred .star{color:#d39b1d}
+.history .bad p{color:var(--bad)}.history .good p{color:var(--good)}.history .major p{font-weight:700}.history .history p{color:#5b3a52}.history .history small{color:#9a6a86}
+.history .fact p{color:var(--ink)}.history .fact small{color:var(--teal)}.history .empty{padding:24px 0;color:var(--muted)}
+@keyframes fade{from{opacity:.2;transform:translateY(-4px)}to{opacity:1}}
+
+/* ---- right column ---- */
+.erabar{position:relative;height:14px;border-radius:3px;overflow:hidden;margin:12px 0 4px;background:#ddd}.erabar span{position:absolute;top:0;bottom:0}
+.erabar em{position:absolute;top:-1px;bottom:-1px;border:2px solid var(--ink);border-radius:3px;background:#ffffff40}.erabar b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.eralabels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+#era{font-size:.9rem;color:#4b5553;margin:10px 0 0}
+.mlist{list-style:none;margin:10px 0 0;padding:0;font-size:.9rem;max-height:260px;overflow:auto}.mlist li{padding:5px 0;border-bottom:1px solid var(--line2)}.mlist small{color:var(--muted);font-family:var(--mono);margin-right:6px}
+.tag{display:inline-block;background:var(--chip);border-radius:999px;padding:3px 10px;font-size:.8rem;margin:6px 4px 0 0}
+.sum{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;margin:10px 0 0;font-size:.9rem}.sum dt{color:var(--muted)}.sum dd{margin:0}
+
+/* ---- intro ---- */
+.intro{max-width:880px;margin:32px auto;padding:0 16px}
+.intro .card{padding:0;overflow:hidden}.intro-body{padding:26px 28px 28px}
+.intro h1{font-family:var(--serif);font-size:2.2rem;margin:0 0 4px;line-height:1.2}.intro h1 b{color:var(--wine)}
+.intro .sub{color:var(--muted);margin:0 0 16px}.intro p{line-height:1.8}
+.intro .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.primary{background:var(--dark)!important;color:#fff;border-color:var(--dark)!important;font-weight:700;padding:12px 20px}
+.story-start{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.story-start p{margin:4px 0 10px;color:var(--muted);font-size:.9rem}
+
+/* ---- decision modal ---- */
+.overlay{position:fixed;inset:0;background:#0f181bcc;display:flex;justify-content:center;align-items:center;padding:16px;z-index:20}
+.modal{position:relative;max-width:620px;width:100%;max-height:92vh;overflow:auto;background:var(--card);border-radius:14px;padding:26px 28px;box-shadow:0 24px 70px #0008}
+.modal-top{display:flex;gap:14px;align-items:center}.modal-top img{width:40px;height:64px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%;flex:none}
+.pill{display:inline-block;background:var(--wine);color:#fff;border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700}
+.decision-meta{color:var(--muted);font-size:.85rem;margin:6px 0 0}
+.steps{display:flex;gap:8px;font-size:.78rem;color:var(--faint);margin:18px 0 6px}.steps .on{color:var(--ink);font-weight:800}
+.modal h2{font-family:var(--serif);font-size:1.55rem;line-height:1.3;margin:4px 0 10px}
+.modal .section{font-size:.75rem;font-weight:800;letter-spacing:.06em;color:var(--muted);margin:18px 0 8px}
+#decisionText{white-space:pre-line;line-height:1.85;margin:0}
+.choice{display:flex;gap:12px;width:100%;text-align:left;margin:8px 0;padding:14px 16px;background:#fff;border-radius:10px;align-items:flex-start}.choice:hover{border-color:var(--teal)!important}
+.choice .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--chip);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.choice-label{display:block;font-weight:700}.choice-preview{display:block;color:var(--muted);font-size:.82rem;margin-top:4px}
+.outcome{background:#eef4f1;border:1px solid #cfdcd5;border-radius:10px;padding:16px 18px;margin:12px 0}.outcome h3{margin:0 0 8px;font-size:1.15rem;color:var(--teal)}.outcome p{margin:0;line-height:1.8}
+.changes{display:flex;gap:6px;flex-wrap:wrap;list-style:none;margin:12px 0 0;padding:0}.changes li{border-radius:6px;padding:4px 10px;font-size:.82rem;font-weight:700;background:#fff;border:1px solid var(--line)}.changes .up{color:var(--good)}.changes .down{color:var(--bad)}
+.note{font-size:.84rem;color:var(--muted)}.modal .primary{width:100%;margin-top:8px}
+.hint{font-size:.8rem;color:var(--faint);text-align:center;margin:14px 0 0}
+
+#notice{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(92vw,560px);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;z-index:30;font-size:.9rem;box-shadow:0 8px 24px #0005}
+.foot{max-width:1360px;margin:0 auto;padding:0 16px 28px;color:var(--faint);font-size:.75rem;text-align:center}
+.wide{display:inline}.narrow{display:none}
+
+/* ---- responsive ---- */
+@media (max-width:1180px){.shell{grid-template-columns:320px minmax(0,1fr)}.col-right{grid-column:1/-1;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:12px;margin-top:12px}.col{gap:12px}
+  .col-main{order:1}.col-left{order:2}.col-right{order:3;grid-template-columns:1fr}
+  .tb-brand,.tb-only-wide{display:none!important}
+  .focus-card{display:none}.focus-card.open{display:block}
+}
+@media (min-width:861px){#focusButton{display:none}}
+@media (max-width:600px){
+  body{font-size:14.5px}
+  .topbar{padding:10px 14px}.tb-inner{gap:6px 14px}.tb-age b{font-size:2.6rem}.tb-meta{flex-basis:200px}
+  .tb-controls{width:100%;gap:6px;flex-wrap:nowrap}.seg{flex:1}.seg button{flex:1;min-width:0;padding:8px 0;font-size:.85rem;white-space:nowrap;letter-spacing:-.02em}.tb-meta #ageLine{white-space:normal;line-height:1.4;font-size:.92rem}.seg button[data-speed="6"]{display:none}
+  .wide{display:none}.narrow{display:inline}.play{min-width:52px}
+  .card{padding:14px 16px}.caption{padding:14px 16px;font-size:1rem}
+  .stats{gap:10px;grid-template-columns:repeat(5,1fr)}.stat b{font-size:1.05rem}
+  .history .row{grid-template-columns:48px 1fr 18px;gap:8px;font-size:1rem}
+  .modal{padding:20px 18px;border-radius:14px 14px 0 0;max-height:94vh}.overlay{align-items:flex-end;padding:0}
+  .id-body{grid-template-columns:80px 1fr}.id-photo{width:80px;height:97px}.id-name b{font-size:1.45rem}
+  .intro h1{font-size:1.7rem}.intro-body{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){.history .row:first-child{animation:none}.stat u{transition:none}}
+</style></head><body>
+<header id="topbar" class="topbar" hidden><div class="tb-inner">
+  <div class="tb-brand">어느 <b>프랑스인</b>의 삶</div>
+  <div class="tb-age"><b id="ageNumber">0</b><span>세</span></div>
+  <div class="tb-meta"><div id="ageLine"></div><div class="tb-track" id="yearProgress" role="progressbar" aria-label="다음 생일까지" aria-valuemin="0" aria-valuemax="100"><div id="yearProgressFill"></div></div></div>
+  <div class="tb-controls">
+    <button id="pauseButton" class="play" data-action="togglePause">▸</button>
+    <div class="seg" role="group" aria-label="배속"><button data-speed="1">1×</button><button data-speed="2">2×</button><button data-speed="4">4×</button><button data-speed="6">6×</button><button data-speed="8">8×</button><button data-speed="12">12×</button><button data-speed="16">16×</button></div>
+    <button id="skipButton" class="ctl" data-action="skipToDecision" title="다음 중대 결정까지 건너뛰기"><span class="wide">다음 결정까지 »</span><span class="narrow">다음 »</span></button>
+    <button id="autoButton" class="ctl tb-only-wide" data-action="toggleAuto" aria-pressed="false">자동 결정</button>
+    <button id="musicButton" class="ctl tb-only-wide" data-action="toggleMusic" aria-pressed="false">♪ 음악</button>
+    <div class="menu-wrap"><button id="menuButton" class="ctl" data-action="toggleMenu" aria-haspopup="true" aria-expanded="false" aria-label="메뉴">⋯</button>
+      <div id="menu" class="menu" hidden>
+        <button data-action="saveGame">기록 저장</button><button data-action="loadGame">기록 불러오기</button>
+        <button data-action="exportGame">저장 파일 내보내기</button><button data-action="importGame">저장 파일 가져오기</button><hr>
+        <button id="autoMenu" data-action="toggleAuto">자동 결정</button><button id="musicMenu" data-action="toggleMusic">♪ 음악</button><hr>
+        <button data-action="newLife">새 인생 시작</button>
+      </div></div>
+  </div>
+</div></header>
+
+<section id="intro" class="intro"><div class="card">
+  <div class="scene-wrap"><canvas id="introScene" aria-label="18세기 프랑스 시골 마을의 가족"></canvas></div>
+  <div class="intro-body">
+    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1760–1850 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
+    <p>출생지와 가문은 무작위로 정해집니다. 시간이 자동으로 흐르며 일상이 기록되고, 중요한 순간에는 <b>중대 결정</b> 창이 열립니다. 역사의 흐름은 바뀌지 않지만, 당신의 삶은 선택에 따라 달라집니다.</p>
+    <div class="btns"><button class="primary" data-action="newLife">새 인생 시작하기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 파일 가져오기</button></div>
+    <div class="story-start"><b>유년기 · 학교에 보내 달라고 부탁할까?</b><p>1778년 · 8세 · 파리 · 장인 가정 — 이 결정에서 시작해 이후의 삶을 이어 갑니다.</p><button data-action="schoolStory">1778년 파리 이야기로 시작</button></div>
+  </div>
+</div></section>
+
+<main id="app" class="shell" hidden>
+  <aside class="col col-left">
+    <article id="idcard" class="idcard" aria-label="신원 기록"></article>
+    <section class="card"><h2>가족과 주변 사람</h2><ul id="relations" class="people"></ul><p id="relationExtra" class="muted" style="margin:8px 0 0;font-size:.82rem"></p></section>
+  </aside>
+  <section class="col col-main">
+    <div class="card scene-card">
+      <div class="scene-wrap"><canvas id="scene" role="img" aria-label="현재 삶의 장면"></canvas></div>
+      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="newLife">새 인생 시작</button></div>
+      <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
+      <div id="sceneDetail" class="scene-detail" hidden></div>
+    </div>
+    <div class="card statbar"><div id="stats" class="stats"></div><button id="focusButton" class="pill-btn" data-action="openFocus" aria-controls="focusCard">집안 돕기 <span class="chev">▾</span></button></div>
+    <section id="focusCard" class="card focus-card">
+      <div class="head"><h2>올해의 초점</h2><span>언제든 바꿀 수 있어요</span></div>
+      <p class="focus-sub"><b id="stageLabel"></b> · <span id="stagePlace"></span></p>
+      <div id="focusChips" class="chips" role="group" aria-label="올해의 초점"></div>
+      <p id="focusText"></p>
+    </section>
+    <section class="card log-card">
+      <div class="log-head"><h2>인생 기록</h2><button id="starFilter" class="link" aria-pressed="false">최근 순 · 줄을 누르면 ☆</button></div>
+      <p id="popLine" class="popline"></p>
+      <ol id="history" class="history" aria-label="인생 기록, 최근 순"></ol>
+    </section>
+  </section>
+  <aside class="col col-right">
+    <section class="card"><h2>시대</h2><div id="eraBar" class="erabar" aria-hidden="true"></div><div id="eraLabels" class="eralabels"></div><p id="era"></p></section>
+    <section class="card"><h2>인생의 이정표</h2><ol id="milestones" class="mlist"></ol></section>
+    <section class="card"><h2>기억과 관심</h2><div id="experienceSummary"></div><ol id="memoryList" class="mlist"></ol><p class="muted" style="font-size:.78rem;margin:8px 0 0">관심은 경험의 누적입니다. 성격이나 정치적 입장을 뜻하지 않습니다.</p></section>
+    <section class="card"><h2>생활 현황</h2><dl id="lifeSummary" class="sum"></dl></section>
+  </aside>
+</main>
+
+<div id="notice" role="status" aria-live="polite" hidden></div><input id="importFile" type="file" accept=".json,application/json" hidden>
+<div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="decisionTitle" aria-describedby="decisionMeta" hidden><div class="modal">
+  <div class="modal-top"><img id="decisionSprite" alt=""><div><span class="pill" id="decisionPill">중대 결정</span><p id="decisionMeta" class="decision-meta"></p></div></div>
+  <div class="steps" aria-label="결정 단계"><span>상황</span><span aria-hidden="true">→</span><span id="choiceStep" class="on">선택</span><span aria-hidden="true">→</span><span id="resultStep">결과</span></div>
+  <h2 id="decisionTitle" tabindex="-1"></h2>
+  <div id="decisionSituation"><p id="decisionText"></p><div class="section">선택지 · 가능한 결과</div></div>
+  <div id="decisionChoices"></div>
+  <section id="decisionResult" hidden aria-labelledby="resultTitle"><p id="resultChoice" class="note"></p>
+    <div class="outcome"><h3 id="resultTitle" tabindex="-1"></h3><p id="resultText"></p><ul id="resultChanges" class="changes" aria-label="능력치 변화"></ul></div>
+    <p id="resultLearning" class="note"></p><p class="note">이 선택과 결과는 인생 기록에 남았습니다.</p>
+    <button id="continueDecision" class="primary" data-action="continueDecision">결과를 확인하고 삶 이어 가기 →</button></section>
+  <p id="decisionHint" class="hint"></p>
+</div></div>
+<div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1789~1815년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
+<script>
