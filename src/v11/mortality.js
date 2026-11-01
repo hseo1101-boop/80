@@ -90,3 +90,29 @@ function earlierLoss(s) {
   s.relations.push(r);
   addLog(s, '가족의 기억', `당신이 태어나기 전, ${siblingWord(s, r)} ${r.name}은(는) 첫돌을 넘기지 못하고 세상을 떠났습니다.`, 'normal');
 }
+
+// Softer bad luck: bad everyday events and the original decisions cost less health.
+// Runs before the era decisions are added, so only the original data is rescaled.
+for (const e of [...dailyEvents, ...childhoodEvents]) {
+  const h = e.effects?.stats?.건강;
+  if (e.kind === 'bad' && h < 0) e.effects.stats.건강 = Math.trunc(h * 0.4) || -1;
+}
+for (const d of decisions) for (const c of d.choices) {
+  const h = c.effects?.stats?.건강;
+  if (h < -1) c.effects.stats.건강 = Math.trunc(h / 2);
+}
+// The yearly focus replaced these two filler decisions; the rest of the repeatable ones are rationed.
+const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
+function decisionAllowed(s, d) {
+  if (RETIRED_DECISIONS.has(d.id)) return false;
+  // One-off decisions gated on a shared flag (e.g. 'marriage') also close on their own id.
+  if (d.when.unsetFlag && d.when.unsetFlag !== d.id && s.flags[d.id]) return false;
+  if (d.when.unsetFlag) return true;
+  const n = s.familyEvents['dc-' + d.id] || 0, y = s.familyEvents['dy-' + d.id];
+  return n < 2 && (y === undefined || s.year - y >= 7);
+}
+function noteDecision(s, d) {
+  if (d.when.unsetFlag) return;
+  s.familyEvents['dc-' + d.id] = (s.familyEvents['dc-' + d.id] || 0) + 1;
+  s.familyEvents['dy-' + d.id] = s.year;
+}

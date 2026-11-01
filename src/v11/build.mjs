@@ -79,6 +79,17 @@ js = patch(js, `    newLife(scenario = null) {`, `    newLife(scenario = null, o
 js = patch(js, `createState(seed())); autosave(); return true;`, `createState(seed(), options)); autosave(); return true;`);
 // Health drift: no average decline before 40, so early death comes from bad luck rather than attrition.
 js = patch(js, 'changeStats(s, {건강:rand(s,-2,1)});', 'changeStats(s, {건강: ageOf(s) < 40 ? rand(s,-1,1) : rand(s,-2,1)});');
+// 2c. Era decisions, softer health penalties, rationed repeatable decisions, extra conditions.
+js = patch(js, '// src/engine.js', read('decisions2.js') + '\n// src/engine.js');
+js = patch(js, 'const candidates = decisions.filter(d => matches(s, d.when)', 'const candidates = decisions.filter(d => decisionAllowed(s, d) && matches(s, d.when)');
+js = patch(js, '    remember(s,d);', '    remember(s,d); noteDecision(s,d);');
+js = patch(js, '(s.year-s.born)*12+s.month-s.birthMonth<=c.maxAgeMonths);', `(s.year-s.born)*12+s.month-s.birthMonth<=c.maxAgeMonths)
+    && (!c.sexes || c.sexes.includes(s.sex))
+    && (!c.years || c.years.includes(s.year))
+    && (!c.excludeYears || s.year < c.excludeYears[0] || s.year > c.excludeYears[1])
+    && (!c.noLivingRoles || !c.noLivingRoles.some(role => s.relations.some(r => r.role === role && r.alive)))
+    && (!c.hadRoles || c.hadRoles.every(role => s.relations.some(r => r.role === role)));`);
+js = patch(js, 'birthYear: s.year - rand(s, 19, 33)', 'birthYear: s.year - Math.max(18, ageOf(s) + rand(s, -7, 4))');
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },
