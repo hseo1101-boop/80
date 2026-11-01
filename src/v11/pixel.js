@@ -70,9 +70,9 @@ function eraOf(year, month = 6) {
 function jobKind(job = '') {
   if (/군/.test(job)) return 'soldier';
   if (/농부|소작|농업|농민/.test(job)) return 'peasant';
-  if (/법률|교사|교육|의사|관리|공증|사제/.test(job)) return 'professional';
+  if (/법률|교사|교육|의사|관리|공증|사제|변호사|서기|행정관|의원|도지사|교정원|팸플릿|기자|발행인|교수|아카데미|학사원/.test(job)) return 'professional';
   if (/지주/.test(job)) return 'noble';
-  if (/상인|점원|자영업/.test(job)) return 'merchant';
+  if (/상인|점원|자영업|도매|은행|화가/.test(job)) return 'merchant';
   if (/도제|장인|직물|인쇄|제화|노동|하인|하녀|견습|보조|방적|직인|청소/.test(job)) return 'artisan';
   return null;
 }

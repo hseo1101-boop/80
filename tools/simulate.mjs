@@ -10,7 +10,7 @@ let seed = 12345;
 const rnd = () => (seed = (seed * 1103515245 + 12345) >>> 0) / 4294967296;
 
 const stats = {classes:{}, places:{}, deaths:[], causes:{}, decisions:[], repeats:0, events:0, generic:0, knowledge40:[], literate:0,
-  historic:0, crisisLogs:0, siblingsLost:0, locked:0, offered:0, outlived:[]};
+  historic:0, crisisLogs:0, careers:{}, tops:{}, figures:0, siblingsLost:0, locked:0, offered:0, outlived:[]};
 const engine = new G.GameEngine();
 for (let i = 0; i < N; i++) {
   engine.replace(G.createState(1000 + i * 7919, {born: bornFixed}));
@@ -44,6 +44,13 @@ for (let i = 0; i < N; i++) {
   stats.crisisLogs += s.log.filter(x => x.title.endsWith('흉년')).length;
   stats.siblingsLost += s.relations.filter(r => ['형제자매','자녀'].includes(r.role) && !r.alive && r.deathYear - r.birthYear <= 1).length;
   stats.outlived.push(G.outlivedPercent(s));
+  const top = s.familyEvents.career_top;
+  if (top) {
+    const id = Object.keys(G.CAREERS).find(k => G.CAREERS[k].ranks.some(r => r.label === top));
+    stats.careers[G.CAREERS[id].label] = (stats.careers[G.CAREERS[id].label] || 0) + 1;
+    stats.tops[top] = (stats.tops[top] || 0) + 1;
+  }
+  stats.figures += s.relations.filter(r => r.role === '인물').length;
 }
 const pct = (n, d = N) => (100 * n / d).toFixed(1) + '%';
 const median = a => { const b = [...a].sort((x, y) => x - y); return b[Math.floor(b.length / 2)]; };
@@ -60,4 +67,6 @@ console.log(`Choices locked by requirements: ${pct(stats.locked, stats.offered)}
 console.log(`Adult everyday events from the generic set: ${pct(stats.generic, stats.events)}`);
 console.log(`Knowledge at 40: median ${median(stats.knowledge40)} · ` + kb.map(([a, b]) => `${a}–${b}: ${pct(stats.knowledge40.filter(x => x >= a && x <= b).length, stats.knowledge40.length)}`).join(' · '));
 console.log(`Literate at death: ${pct(stats.literate)} · historic scenes per life: ${(stats.historic / N).toFixed(2)} · hunger years lived per life: ${(stats.crisisLogs / N).toFixed(2)}`);
+console.log('Careers (lives that entered one)\n' + table(stats.careers) + '\n\nHighest rank reached\n' + table(stats.tops));
+console.log(`Historical figures met per life: ${(stats.figures / N).toFixed(2)}`);
 console.log(`Siblings/children lost before age 2, per life: ${(stats.siblingsLost / N).toFixed(2)} · median "outlived %" at death: ${median(stats.outlived)}%\n`);

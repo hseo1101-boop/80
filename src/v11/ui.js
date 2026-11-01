@@ -91,7 +91,7 @@ const TEMPERAMENT = {curiosity:'호기심이 많음',educationInterest:'배우�
   responsibility:'책임감이 강함',familyTrade:'가업에 익숙함',religious:'신앙심이 깊음',inequality:'불공평에 예민함',selfStudy:'혼자 익히는 편'};
 const RELIGION = {catholic:'가톨릭',protestant:'개신교',jewish:'유대교',other:'기타',unspecified:'기록 없음'};
 const LITERACY = {illiterate:'글을 읽지 못함',learning:'글을 배우는 중',basic:'읽고 쓸 수 있음'};
-const STAT_COLORS = {건강:'#2e8b57',행복:'#c08a1e',지식:'#1f7a7a',재산:'#8a6a2a',관계:'#8c1c3c'};
+const STAT_COLORS = {건강:'#2e8b57',행복:'#c08a1e',지식:'#1f7a7a',재산:'#8a6a2a',관계:'#8c1c3c',명성:'#5b4a8c'};
 function sceneFamily(s) {
   const alive = s.relations.filter(r => r.alive);
   const order = ['할머니','아버지','어머니','배우자','형제자매','자녀'];
@@ -147,6 +147,7 @@ function createUI(doc, engine, handlers) {
     $('summaryCause').textContent = r.cause;
     $('summaryLines').innerHTML = r.lines.map(x => `<li>${e(x)}</li>`).join('');
     $('summaryHistoric').innerHTML = r.historic.length ? r.historic.map(h => `<li><b>${h.year}</b> ${e(h.title)}${h.choice ? ` <span>— ${e(h.choice)}</span>` : ''}</li>`).join('') : '<li class="muted">역사의 현장에 직접 서지는 않았습니다.</li>';
+    $('summaryFigures').innerHTML = r.figures.length ? r.figures.map(f => `<li><b>${e(f.name)}</b> <span>${e(f.job)}</span></li>`).join('') : '<li class="muted">이름난 인물과 마주친 적은 없었습니다.</li>';
     $('summaryStarred').innerHTML = r.starred.slice(0, 8).map(x => `<li>${e(x)}</li>`).join('') || '<li class="muted">별표한 기록이 없습니다. 기록 줄을 누르면 ☆ 표시됩니다.</li>';
     drawShareCard(s, r);
   }
@@ -252,7 +253,7 @@ function createUI(doc, engine, handlers) {
         <dt>종교</dt><dd>${e(RELIGION[s.religion] || '기록 없음')}</dd>
         <dt>출신 가정</dt><dd class="dots" aria-label="5단계 중 ${dots}">${'●'.repeat(dots)}<span>${'○'.repeat(5-dots)}</span></dd>
         <dt>학력</dt><dd>${e(s.education === '미정' ? '정규 교육 없음' : s.education)} · ${e(LITERACY[literacyOf(s)])}</dd>
-        <dt>직업</dt><dd>${e(s.job)}</dd>
+        <dt>직업</dt><dd>${e(s.job)}${s.career ? ` <span class="muted">(${e(CAREERS[s.career.id].label)} · 명성 ${Math.round(s.reputation)})</span>` : ''}</dd>
         <dt>타고난 재능</dt><dd>${s.aptitude} · ${e(aptitudeBand(s.aptitude).label)} <span class="muted">(상위 ${aptitudeTopPercent(s.aptitude) < 1 ? aptitudeTopPercent(s.aptitude).toFixed(1) : Math.round(aptitudeTopPercent(s.aptitude))}% · 학습 ×${aptitudeBand(s.aptitude).mult.toFixed(2)})</span></dd>
         <dt>기질</dt><dd>${e(top ? TEMPERAMENT[top[0]] : '아직 알 수 없음')}</dd>
       </dl></div>
@@ -303,7 +304,7 @@ function createUI(doc, engine, handlers) {
     $('scene').setAttribute('aria-label', `${s.place}의 풍경. ${characterLook(s).label}. 함께 있는 가족 ${cast.length ? cast.length - 1 : 0}명.`);
     $('sceneDetail').innerHTML = `<p>${e(eraText(s))}</p><p>${e(placeNote(s))}${placeNote(s) ? '.' : ''}</p>`;
     // Stats
-    const stats = {...s.stats, 관계:relationScore(s)};
+    const stats = {...s.stats, 관계:relationScore(s), ...(s.career || s.familyEvents.career_top ? {명성:s.reputation} : {})};
     $('stats').innerHTML = Object.entries(stats).map(([k,v]) => `<div class="stat"><span>${e(k)}</span><b>${Math.round(v)}</b><i role="meter" aria-label="${e(k)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(v)}"><u style="width:${v}%;background:${STAT_COLORS[k]}"></u></i></div>`).join('');
     const focus = currentFocus(s);
     $('focusButton').firstChild.textContent = focus ? focus.label + ' ' : '보살핌 받기 ';
@@ -322,7 +323,7 @@ function createUI(doc, engine, handlers) {
     $('idcard').innerHTML = idCard(s);
     $('relations').innerHTML = s.relations.map(r => {
       const look = characterLook(s, r);
-      return `<li class="${r.alive ? '' : 'dead'}"><img alt="" src="${spriteURL(doc, look)}"><div><b>${e(r.role)}</b> ${e(r.name)}<small>${r.alive ? ageOf(s, r) + '세' : (r.deathYear ? r.deathYear + '년 사망' : '사망')} · ${e(r.job)}</small></div><i title="친밀도 ${r.closeness}"><u style="width:${r.closeness}%"></u></i></li>`;
+      return `<li class="${r.alive ? '' : 'dead'}"><img alt="" src="${spriteURL(doc, look)}"><div><b>${r.role === '인물' ? '역사 인물' : e(r.role)}</b> ${e(r.name)}<small>${r.alive ? ageOf(s, r) + '세' : (r.deathYear ? r.deathYear + '년 사망' : '사망')} · ${e(r.job)}</small></div><i title="친밀도 ${r.closeness}"><u style="width:${r.closeness}%"></u></i></li>`;
     }).join('') || '<li class="muted">아직 기록된 사람이 없습니다.</li>';
     $('relationExtra').textContent = `생존 ${s.relations.filter(r => r.alive).length}명 · 전체 ${s.relations.length}명`;
     // Right column

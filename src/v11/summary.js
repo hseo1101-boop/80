@@ -18,7 +18,8 @@ function lifeReport(s) {
   const kids = s.relations.filter(r => r.role === '자녀'), aliveKids = kids.filter(r => r.alive);
   const spouse = s.relations.find(r => r.role === '배우자');
   const placeShort = s.place.replace(' 농촌', '');
-  const job = ['없음','은퇴'].includes(s.job) ? (s.job === '은퇴' ? (s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1]).filter(Boolean).at(-1) || '') : '') : s.job;
+  const top = s.familyEvents?.career_top;
+  const job = top ? top : ['없음','은퇴'].includes(s.job) ? (s.job === '은퇴' ? (s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1]).filter(Boolean).at(-1) || '') : '') : s.job;
   const who = job ? `${placeShort}의 ${job.replace(/ 보조$/, '')}` : `${placeShort} 사람`;
   const NUM = ['','한','둘','셋','넷','다섯','여섯','일곱','여덟','아홉','열'];
   const parent = woman ? '어머니' : '아버지';
@@ -46,6 +47,7 @@ function lifeReport(s) {
     choice:(x.desc.split('\n').find(l => l.startsWith('선택: ')) || '').slice(4)})).reverse();
   const starred = s.log.filter(x => x.star).map(x => `${x.year} · ${x.title.split(' · ').at(-1)}`).reverse();
   const cause = (s.log.find(x => x.title === '생애의 끝')?.desc || '').split('생애를 마쳤습니다. ')[1] || '';
-  return {name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
+  const figures = s.relations.filter(r => r.role === '인물').map(r => ({name:r.name, job:r.job, alive:r.alive}));
+  return {figures, top, name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
     places:[...new Set(s.lifeMilestones.filter(m => /이주|출생/.test(m)).map(m => m.split(' · ')[1]))]};
 }

@@ -63,7 +63,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 
 /* ---- stats strip ---- */
 .statbar{display:flex;align-items:center;gap:12px 16px;padding:12px 18px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(5,minmax(52px,1fr));gap:14px;flex:1 1 340px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(52px,1fr));gap:14px;flex:1 1 340px}
 .stat span{display:block;color:var(--muted);font-size:.85rem}.stat b{display:block;font-size:1.15rem;font-variant-numeric:tabular-nums;line-height:1.4}
 .stat i{display:block;height:5px;background:#e1e5e1;border-radius:3px;overflow:hidden;margin-top:4px}.stat u{display:block;height:100%;border-radius:3px;transition:width .4s}
 .pill-btn{border-radius:999px;padding:10px 18px;background:#eef1ee;font-weight:700;white-space:nowrap}.pill-btn .chev{font-size:.7rem;color:var(--muted);font-weight:400}
@@ -163,7 +163,7 @@ label.section{display:block}
   .tb-controls{width:100%;gap:6px;flex-wrap:nowrap}.seg{flex:1}.seg button{flex:1;min-width:0;padding:8px 0;font-size:.85rem;white-space:nowrap;letter-spacing:-.02em}.tb-meta #ageLine{white-space:normal;line-height:1.4;font-size:.92rem}.seg button[data-speed="6"]{display:none}
   .wide{display:none}.narrow{display:inline}.play{min-width:52px}
   .card{padding:14px 16px}.caption{padding:14px 16px;font-size:1rem}
-  .stats{gap:10px;grid-template-columns:repeat(5,1fr)}.stat b{font-size:1.05rem}
+  .stats{gap:10px;grid-template-columns:repeat(auto-fit,minmax(44px,1fr))}.stat b{font-size:1.05rem}
   .history .row{grid-template-columns:48px 1fr 18px;gap:8px;font-size:1rem}
   .modal{padding:20px 18px;border-radius:14px 14px 0 0;max-height:94vh}.overlay{align-items:flex-end;padding:0}
   .id-body{grid-template-columns:80px 1fr}.id-photo{width:80px;height:97px}.id-name b{font-size:1.45rem}
@@ -219,7 +219,7 @@ label.section{display:block}
       <section id="summaryCard" class="summary" hidden aria-labelledby="summaryName">
         <div class="sum-head"><img id="summaryPortrait" alt=""><div><p class="sum-kicker">생애 요약</p><h2 id="summaryName"></h2><p id="summaryDates" class="sum-dates"></p><p id="summaryEpitaph" class="sum-epitaph"></p><p id="summaryCause" class="sum-cause"></p></div></div>
         <ul id="summaryLines" class="sum-lines"></ul>
-        <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
+        <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
         <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
       </section>
