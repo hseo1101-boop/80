@@ -375,7 +375,7 @@ function createUI(doc, engine, handlers) {
       if (result) {
         const choice = d.choices[result.choiceIndex], outcome = outcomeFor(choice, result.outcomeId);
         $('resultChoice').textContent = `나의 선택 · ${choice.label}`;
-        $('resultTitle').textContent = outcome.title; $('resultText').textContent = outcome.result;
+        $('resultTitle').textContent = outcome.title; $('resultText').textContent = bondFill(s, d, outcome.result);
         $('resultChanges').replaceChildren();
         for (const k of STAT_KEYS) {
           const delta = s.stats[k] - result.statsBefore[k]; if (!delta) continue;
@@ -392,7 +392,7 @@ function createUI(doc, engine, handlers) {
           const b = doc.createElement('button'); b.className = 'choice';
           const gaps = requirementGaps(s, choice), need = requirementLabel(choice);
           b.disabled = gaps.length > 0;
-          b.innerHTML = `<span class="n">${gaps.length ? '🔒' : i+1}</span><span><span class="choice-label">${e(choice.label)}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}${need ? `<span class="choice-req ${gaps.length ? 'no' : 'ok'}">${gaps.length ? '필요: ' + e(gaps.join(' · ')) : '✓ 조건 충족 · ' + e(need)}</span>` : ''}</span>`;
+          b.innerHTML = `<span class="n">${gaps.length ? '🔒' : i+1}</span><span><span class="choice-label">${e(bondFill(s, d, choice.label))}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}${need ? `<span class="choice-req ${gaps.length ? 'no' : 'ok'}">${gaps.length ? '필요: ' + e(gaps.join(' · ')) : '✓ 조건 충족 · ' + e(need)}</span>` : ''}</span>`;
           b.addEventListener('click', () => { if (!b.disabled && engine.state?.decision === d.id && !engine.state.decisionResult) handlers.choose(i); });
           $('decisionChoices').appendChild(b);
         });

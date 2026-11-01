@@ -133,7 +133,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  applyFamilyEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
@@ -146,6 +146,12 @@ js = patch(js, 'function endLife(s, reason) {\n  if (s.dead) return;', 'function
 js = patch(js, '    && (!c.knows ||', '    && (!c.real || s.familyEvents.real === c.real)\n    && (!c.onHistory || !s.familyEvents.realOff)\n    && (!c.knows ||');
 js = patch(js, '  applyCareerEffects(s, effects);\n', '  applyCareerEffects(s, effects);\n  applyRealEffects(s, effects);\n');
 js = patch(js, '    figureFates(s);\n', '    figureFates(s);\n    realKeep(s);\n');
+// 2j. Bonds that return decades later, and the same revolution seen from different places.
+js = patch(js, '    && (!c.real || s.familyEvents.real === c.real)', '    && (!c.bond || !!bondPick(s, c.bond))\n    && (!c.terrorRisk || terrorRisk(s))\n    && (c.maxBonds === undefined || bondsOf(s).length < c.maxBonds)\n    && (!c.politicsIn || c.politicsIn.includes(s.paths.politics))\n    && (!c.real || s.familyEvents.real === c.real)');
+js = patch(js, '  applyRealEffects(s, effects);\n', '  applyRealEffects(s, effects);\n  applyBondEffects(s, effects);\n');
+js = patch(js, 'careerYear(s); crisisYear(s);', 'careerYear(s); bondYear(s); crisisYear(s);');
+js = patch(js, 'function decisionText(s,d) {', 'function decisionText(s,d) {\n  if (d.when?.bond) return bondFill(s, d, d.text);');
+js = patch(js, '\\n선택: ${choice.label}\\n결과: ${outcome.title}\\n${outcome.result}`', '\\n선택: ${bondFill(s, d, choice.label)}\\n결과: ${outcome.title}\\n${bondFill(s, d, outcome.result)}`');
 
 js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
     const c = object(v.career, '진로');
