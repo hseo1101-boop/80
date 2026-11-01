@@ -344,7 +344,9 @@ function createUI(doc, engine, handlers) {
     $('memoryList').innerHTML = (s.memories || []).slice(0, 8).map(m => `<li><small>${m.year}.${m.month}</small> ${e(m.title)}</li>`).join('');
     $('lifeSummary').innerHTML = `<dt>직업</dt><dd>${e(s.job)}</dd><dt>거주지</dt><dd>${e(s.place)}</dd><dt>교육</dt><dd>${e(s.education)}</dd><dt>문해력</dt><dd>${e(LITERACY[literacyOf(s)])}</dd><dt>자녀</dt><dd>${s.relations.filter(r => r.role === '자녀').length}명</dd><dt>물가</dt><dd>${e(priceLine(s))}<br><small class="muted">빵값은 하루 품삯의 ${pricesOf(s).share}% · ${s.place === '파리' ? '파리' : s.place.includes('농촌') ? '시골' : '지방 도시'} 기준 대략값</small></dd><dt>사건</dt><dd>좋은 일 ${s.eventTally.good} · 보통 ${s.eventTally.normal} · 나쁜 일 ${s.eventTally.bad}</dd>`;
     // Controls
-    $('pauseButton').innerHTML = s.runtime.paused || s.dead ? '▸<span class="wide"> 계속</span>' : '❚❚<span class="wide"> 멈춤</span>';
+    $('pauseButton').innerHTML = s.runtime.paused || s.dead
+      ? '<svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg><span class="wide"> 계속</span>'
+      : '<svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="1.5" width="2.6" height="9" fill="currentColor"/><rect x="6.9" y="1.5" width="2.6" height="9" fill="currentColor"/></svg><span class="wide"> 멈춤</span>';
     $('pauseButton').setAttribute('aria-label', s.runtime.paused ? '계속 진행' : '일시정지');
     $('pauseButton').disabled = s.dead || !!s.decision;
     $('skipButton').disabled = s.dead || !!s.decision;

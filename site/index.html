@@ -86,7 +86,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .history small{font-size:.78rem;color:var(--muted)}.history .ttl{display:block;font-weight:800;font-size:1.02rem;line-height:1.5;margin:1px 0 2px;color:var(--ink)}
 .history .fx{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.history .fx i{font-style:normal;font-size:.75rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:1px 7px;background:#fff}.history .fx .up{color:var(--good)}.history .fx .down{color:var(--bad)}
 .history .star{color:#c4cac6;text-align:center}.history .starred .star{color:#d39b1d}
-.history .bad p{color:var(--bad)}.history .good p{color:var(--good)}.history .major p{font-weight:700}.history .history p{color:#5b3a52}.history .history small{color:#9a6a86}
+.history .bad p{color:var(--bad)}.history .good p{color:var(--good)}.history .major p{font-weight:500}.history .history p{color:#5b3a52}.history .history small{color:#9a6a86}
 .history .fact p{color:var(--ink)}.history .fact small{color:var(--teal)}.history .empty{padding:24px 0;color:var(--muted)}
 @keyframes fade{from{opacity:.2;transform:translateY(-4px)}to{opacity:1}}
 
@@ -213,6 +213,14 @@ label.section{display:block}
   .modal{padding:20px 18px;border-radius:14px 14px 0 0;max-height:94vh}.overlay{align-items:flex-end;padding:0}
   .id-body{grid-template-columns:80px 1fr}.id-photo{width:80px;height:97px}.id-name b{font-size:1.45rem}
   .intro h1{font-size:1.7rem}.intro-body{padding:20px}
+}
+.pp{width:15px;height:15px;vertical-align:-2px}
+#starFilter{min-height:40px;padding:8px 0}.foot a{display:inline-block;padding:8px 2px}
+@media (max-width:420px){
+  .seg button[data-speed="2"]:not(.on),.seg button[data-speed="12"]:not(.on){display:none}
+  .card{padding:14px 12px}.history .row{grid-template-columns:38px 1fr 16px;gap:8px;padding:14px 0}.history .age{font-size:.85rem}
+  .chron-target button,.gb-send{width:100%}
+  .history .age b{display:block;margin:0}.sum-dates{font-size:.8rem}
 }
 @media (prefers-reduced-motion:reduce){.history .row:first-child{animation:none}.stat u{transition:none}}
 </style>
@@ -369,7 +377,7 @@ label.section{display:block}
   <p id="saveStatus" class="note" role="status" aria-live="polite"></p>
   <div class="ask-btns"><button id="saveClose">닫기</button><button id="saveFile" data-off="1">파일로 받기</button><button id="savePick">파일 고르기</button><button id="saveCopy" class="primary">복사</button><button id="saveLoad" class="primary">이 코드로 불러오기</button></div>
 </div></div>
-<div class="foot">어느 프랑스인의 삶 <span id="gameVersion"></span> · <a href="https://hseo1101-boop.github.io/80/community.html" target="_blank" rel="noopener">광장(업데이트·의견·이야기)</a> · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
+<div class="foot">어느 프랑스인의 삶 <span id="gameVersion"></span> · <a href="https://hseo1101-boop.github.io/80/community.html" target="_blank" rel="noopener">광장(업데이트·의견·묘비명)</a> · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
 <script>
 (() => {
 'use strict';
@@ -8231,7 +8239,9 @@ function createUI(doc, engine, handlers) {
     $('memoryList').innerHTML = (s.memories || []).slice(0, 8).map(m => `<li><small>${m.year}.${m.month}</small> ${e(m.title)}</li>`).join('');
     $('lifeSummary').innerHTML = `<dt>직업</dt><dd>${e(s.job)}</dd><dt>거주지</dt><dd>${e(s.place)}</dd><dt>교육</dt><dd>${e(s.education)}</dd><dt>문해력</dt><dd>${e(LITERACY[literacyOf(s)])}</dd><dt>자녀</dt><dd>${s.relations.filter(r => r.role === '자녀').length}명</dd><dt>물가</dt><dd>${e(priceLine(s))}<br><small class="muted">빵값은 하루 품삯의 ${pricesOf(s).share}% · ${s.place === '파리' ? '파리' : s.place.includes('농촌') ? '시골' : '지방 도시'} 기준 대략값</small></dd><dt>사건</dt><dd>좋은 일 ${s.eventTally.good} · 보통 ${s.eventTally.normal} · 나쁜 일 ${s.eventTally.bad}</dd>`;
     // Controls
-    $('pauseButton').innerHTML = s.runtime.paused || s.dead ? '▸<span class="wide"> 계속</span>' : '❚❚<span class="wide"> 멈춤</span>';
+    $('pauseButton').innerHTML = s.runtime.paused || s.dead
+      ? '<svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg><span class="wide"> 계속</span>'
+      : '<svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="1.5" width="2.6" height="9" fill="currentColor"/><rect x="6.9" y="1.5" width="2.6" height="9" fill="currentColor"/></svg><span class="wide"> 멈춤</span>';
     $('pauseButton').setAttribute('aria-label', s.runtime.paused ? '계속 진행' : '일시정지');
     $('pauseButton').disabled = s.dead || !!s.decision;
     $('skipButton').disabled = s.dead || !!s.decision;
