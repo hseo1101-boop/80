@@ -181,6 +181,7 @@ function createUI(doc, engine, handlers) {
         <dt>출신 가정</dt><dd class="dots" aria-label="5단계 중 ${dots}">${'●'.repeat(dots)}<span>${'○'.repeat(5-dots)}</span></dd>
         <dt>학력</dt><dd>${e(s.education === '미정' ? '정규 교육 없음' : s.education)} · ${e(LITERACY[literacyOf(s)])}</dd>
         <dt>직업</dt><dd>${e(s.job)}</dd>
+        <dt>타고난 재능</dt><dd>${s.aptitude} · ${e(aptitudeBand(s.aptitude).label)} <span class="muted">(상위 ${aptitudeTopPercent(s.aptitude) < 1 ? aptitudeTopPercent(s.aptitude).toFixed(1) : Math.round(aptitudeTopPercent(s.aptitude))}% · 학습 ×${aptitudeBand(s.aptitude).mult.toFixed(2)})</span></dd>
         <dt>기질</dt><dd>${e(top ? TEMPERAMENT[top[0]] : '아직 알 수 없음')}</dd>
       </dl></div>
       <div class="id-mrz"><span>${e(signalement(s))}</span><span>P&lt;FRA${e(mrz)}</span><span>FAIT À ${e(frenchPlace(s.place))} · L'AN ${s.year}${s.dead ? ' · DÉCÉDÉ' : ''}</span></div>

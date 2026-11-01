@@ -2029,7 +2029,7 @@ function milestone(s, text) {
   if (s.lifeMilestones.length > 80) s.lifeMilestones.shift();
 }
 function changeStats(s, delta = {}) {
-  for (const key of STAT_KEYS) if (key in delta) s.stats[key] = clamp(s.stats[key] + delta[key]);
+  for (const key of STAT_KEYS) if (key in delta) s.stats[key] = clamp(s.stats[key] + (key === '지식' ? knowledgeDelta(s, delta[key]) : delta[key]));
 }
 function createState(seed = Date.now(), options = {}) {
   const s = {schemaVersion: SCHEMA_VERSION, rngState: (seed >>> 0) || 1};
@@ -2045,6 +2045,7 @@ function createState(seed = Date.now(), options = {}) {
   });
   const religiousRoll=rand(s,1,100);
   Object.assign(s,{religion:religiousRoll<=95?'catholic':religiousRoll<=98?'protestant':'unspecified',literacy:'illiterate',experience:emptyExperience(),memories:[],seenEvents:[],dailyCategories:{universal:0,personal:0,historical:0}});
+  assignAptitude(s);
   s.year = s.born; s.month = s.birthMonth;
   s.name = pick(s, s.sex === '남성' ? male : female) + ' ' + surname;
   for (const [role, names, min, max, job, sex] of [
@@ -2071,7 +2072,7 @@ function createSchoolScenario(seed = Date.now()) {
     if (r.role === '어머니') r.job = '가사·생계 활동';
   }
   Object.assign(s, {born:1770,birthMonth:4,year:1770,month:4,place:'파리',class:'도시 평민',
-    parentJob:'인쇄공',religion:'catholic',stats:{건강:82,행복:65,지식:4,재산:37},log:[],lifeMilestones:[]});
+    parentJob:'인쇄공',religion:'catholic',stats:{건강:82,행복:65,지식:s.stats.지식,재산:37},log:[],lifeMilestones:[]});
   addLog(s,'출생',`${s.name}이(가) 파리의 인쇄공 가정에서 태어났습니다.`,'major');
   milestone(s,'파리에서 출생');
   s.year=1778; s.month=6; s.decision='school'; s.lastDecision=s.year;
@@ -4416,6 +4417,54 @@ function noteDecision(s, d) {
      {label:'마을 성당에서 기도한다', result:'익숙한 자리에서 조용히 기도했습니다.', effects:{stats:{행복:2}, experience:{religious:1}}}]);
 })();
 
+// src/aptitude.js
+// Innate aptitude and starting knowledge follow an IQ-like bell curve (mean 50, SD 15, clamped 1–100):
+// 1–19 ≈2.3% · 20–34 ≈13.6% · 35–49 ≈34.1% · 50–64 ≈34.1% · 65–79 ≈13.6% · 80–94 ≈2.1% · 95–100 ≈0.1%.
+const APTITUDE_BANDS = [
+  {max:19, label:'매우 낮음', mult:.70}, {max:34, label:'낮음', mult:.85}, {max:49, label:'평균보다 낮음', mult:.95},
+  {max:64, label:'평균~평균 이상', mult:1.00}, {max:79, label:'높음', mult:1.10}, {max:94, label:'매우 높음', mult:1.20},
+  {max:100, label:'극히 드묾', mult:1.30}
+];
+const bellScore = z => Math.max(1, Math.min(100, Math.round(50 + 15*z)));
+function gaussian(next) {
+  const u = Math.max(1e-12, next()), v = next();
+  return [Math.sqrt(-2*Math.log(u)) * Math.cos(2*Math.PI*v), Math.sqrt(-2*Math.log(u)) * Math.sin(2*Math.PI*v)];
+}
+// Starting knowledge is correlated with aptitude (r ≈ 0.7) but keeps the same bell-shaped spread.
+function assignAptitude(s) {
+  const [za, zb] = gaussian(() => random(s));
+  s.aptitude = bellScore(za);
+  s.stats.지식 = bellScore(0.7*za + Math.sqrt(1 - 0.49)*zb);
+}
+// Saves from before v0.11.3 get a stable aptitude derived from the person, without touching game RNG.
+function legacyAptitude(v) {
+  let x = strHash(String(v.name) + v.born) || 1;
+  const next = () => { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; };
+  return bellScore(gaussian(next)[0]);
+}
+function aptitudeBand(score) { return APTITUDE_BANDS.find(b => score <= b.max); }
+// Share of people at or above this score under the normal curve.
+function aptitudeTopPercent(score) {
+  const z = (score - 50) / 15, t = 1 / (1 + .3275911*Math.abs(z)/Math.SQRT2);
+  const erf = 1 - (((((1.061405429*t - 1.453152027)*t) + 1.421413741)*t - .284496736)*t + .254829592)*t*Math.exp(-z*z/2);
+  const cdf = .5 * (1 + Math.sign(z) * erf);
+  return Math.max(.1, (1 - cdf) * 100);
+}
+// Knowledge gains are scaled by aptitude and slow down above 50, so the adult spread stays bell-shaped
+// instead of everyone piling up at 100. Losses are not scaled.
+function knowledgeDelta(s, delta) {
+  if (delta <= 0) return delta;
+  const mult = aptitudeBand(s.aptitude || 50).mult, k = s.stats.지식;
+  const room = k < 50 ? 1 : Math.max(.08, ((100 - k) / 50) ** 2);
+  return Math.round(delta * mult * room * 10) / 10;
+}
+// Knowledge is a standing among one's peers, not a running total: each year it drifts 5% back toward
+// the person's aptitude, so what was learned matters most when it is kept up.
+function knowledgeYear(s) {
+  const k = s.stats.지식, target = s.aptitude || 50;
+  s.stats.지식 = clamp(Math.round((k + (target - k) * .05) * 10) / 10);
+}
+
 // src/engine.js
 
 
@@ -4476,7 +4525,7 @@ function annual(s) {
   if (ageOf(s) > 10 && !['없음','은퇴'].includes(s.job)) changeStats(s, {재산:rand(s,-1,2)});
   checkHealth(s);
   if (s.dead) return;
-  yearlyPaths(s); applyFocus(s); familyYear(s); fateYear(s);
+  yearlyPaths(s); applyFocus(s); knowledgeYear(s); familyYear(s); fateYear(s);
   if (s.dead) return;
   const gap = s.year - s.lastDecision;
   if (ageOf(s) >= 2 && gap >= 1 && (gap >= 2 || random(s) < .66)) s.pendingDecisionYear = s.year;
@@ -5447,6 +5496,7 @@ function createUI(doc, engine, handlers) {
         <dt>출신 가정</dt><dd class="dots" aria-label="5단계 중 ${dots}">${'●'.repeat(dots)}<span>${'○'.repeat(5-dots)}</span></dd>
         <dt>학력</dt><dd>${e(s.education === '미정' ? '정규 교육 없음' : s.education)} · ${e(LITERACY[literacyOf(s)])}</dd>
         <dt>직업</dt><dd>${e(s.job)}</dd>
+        <dt>타고난 재능</dt><dd>${s.aptitude} · ${e(aptitudeBand(s.aptitude).label)} <span class="muted">(상위 ${aptitudeTopPercent(s.aptitude) < 1 ? aptitudeTopPercent(s.aptitude).toFixed(1) : Math.round(aptitudeTopPercent(s.aptitude))}% · 학습 ×${aptitudeBand(s.aptitude).mult.toFixed(2)})</span></dd>
         <dt>기질</dt><dd>${e(top ? TEMPERAMENT[top[0]] : '아직 알 수 없음')}</dd>
       </dl></div>
       <div class="id-mrz"><span>${e(signalement(s))}</span><span>P&lt;FRA${e(mrz)}</span><span>FAIT À ${e(frenchPlace(s.place))} · L'AN ${s.year}${s.dead ? ' · DÉCÉDÉ' : ''}</span></div>
@@ -5688,6 +5738,7 @@ function normalizeState(input) {
   if(!['illiterate','learning','basic'].includes(s.literacy))throw new Error('문해력이 올바르지 않습니다.');
   s.focus = v.focus == null ? null : string(v.focus,'올해의 초점',undefined,40);
   if (s.focus && !FOCUS_IDS.has(s.focus)) s.focus = null;
+  s.aptitude = number(v.aptitude,'선천적 능력',1,100,legacyAptitude(v));
   s.experience=emptyExperience();
   const xp=object(v.experience??{},'경험');
   for(const key of Object.keys(s.experience))s.experience[key]=number(xp[key],'경험',0,100,0);

@@ -73,7 +73,7 @@ js = patch(js, 'born: rand(s, ...BIRTH_RANGE),', 'born: (year => Number.isIntege
 js = patch(js, "  milestone(s, `${s.place}에서 출생`);\n  return s;", "  milestone(s, `${s.place}에서 출생`);\n  earlierLoss(s);\n  return s;");
 js = patch(js, 'r.birthYear += birthShift; r.birthMonth = 4;', 'r.birthYear += birthShift; r.birthMonth = 4; if (r.deathYear !== undefined) r.deathYear += birthShift;');
 js = patch(js, "milestone(s, '자녀 출생'); changeStats(s, {행복:7,재산:-4});", "milestone(s, '자녀 출생'); changeStats(s, {행복:7,재산:-4}); childbirthRisk(s); if (s.dead) return;");
-js = patch(js, 'yearlyPaths(s); applyFocus(s); familyYear(s);', 'yearlyPaths(s); applyFocus(s); familyYear(s); fateYear(s);');
+js = patch(js, 'yearlyPaths(s); applyFocus(s); familyYear(s);', 'yearlyPaths(s); applyFocus(s); knowledgeYear(s); familyYear(s); fateYear(s);');
 js = patch(js, '    birthdayFacts(s);', '    birthdayFacts(s);\n    familyMonth(s);\n    if (s.dead) return true;');
 js = patch(js, `    newLife(scenario = null) {`, `    newLife(scenario = null, options = {}) {`);
 js = patch(js, `createState(seed())); autosave(); return true;`, `createState(seed(), options)); autosave(); return true;`);
@@ -90,6 +90,13 @@ js = patch(js, '(s.year-s.born)*12+s.month-s.birthMonth<=c.maxAgeMonths);', `(s.
     && (!c.noLivingRoles || !c.noLivingRoles.some(role => s.relations.some(r => r.role === role && r.alive)))
     && (!c.hadRoles || c.hadRoles.every(role => s.relations.some(r => r.role === role)));`);
 js = patch(js, 'birthYear: s.year - rand(s, 19, 33)', 'birthYear: s.year - Math.max(18, ageOf(s) + rand(s, -7, 4))');
+// 2d. Innate aptitude: bell-curve starting knowledge and a learning multiplier.
+js = patch(js, '// src/engine.js', read('aptitude.js') + '\n// src/engine.js');
+js = patch(js, '  for (const key of STAT_KEYS) if (key in delta) s.stats[key] = clamp(s.stats[key] + delta[key]);',
+  "  for (const key of STAT_KEYS) if (key in delta) s.stats[key] = clamp(s.stats[key] + (key === '지식' ? knowledgeDelta(s, delta[key]) : delta[key]));");
+js = patch(js, "dailyCategories:{universal:0,personal:0,historical:0}});", "dailyCategories:{universal:0,personal:0,historical:0}});\n  assignAptitude(s);");
+js = patch(js, 'stats:{건강:82,행복:65,지식:4,재산:37}', 'stats:{건강:82,행복:65,지식:s.stats.지식,재산:37}');
+js = patch(js, '  s.experience=emptyExperience();', "  s.aptitude = number(v.aptitude,'선천적 능력',1,100,legacyAptitude(v));\n  s.experience=emptyExperience();");
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },
