@@ -113,31 +113,38 @@ function gbReport(id) {
   const rep = gbStore.get('reported', []); if (rep.includes(id)) return false;
   rep.push(id); gbStore.set('reported', rep.slice(-500)); gbSend({type:'report', id, name:'', meta:'', life:'', quote:''}); return true;
 }
-// Renders posts into a list. All text goes through textContent: posts are untrusted.
+// Renders posts as a parish-register page: years in the margin, the epitaph first, the life below.
+// All text goes through textContent: posts are untrusted.
+const GB_CANDLE = '<svg viewBox="0 0 8 12" width="8" height="12" aria-hidden="true"><rect x="3" y="0" width="2" height="2" fill="#e8a33a"/><rect x="3" y="2" width="2" height="1" fill="#c0392b"/><rect x="2" y="4" width="4" height="8" fill="currentColor"/></svg>';
 function gbRenderList(box, posts, {limit = 20, onReport} = {}) {
   box.replaceChildren();
   const liked = gbStore.get('liked', []), reported = gbStore.get('reported', []);
   for (const p of posts.slice(0, limit)) {
     if (reported.includes(p.id)) continue;
     const li = document.createElement('li'); li.className = 'gb-entry';
+    const years = (p.meta.match(/^(\d{4}\s*[–-]\s*\d{4})\s*·\s*/) || []);
+    const margin = document.createElement('div'); margin.className = 'gb-years'; margin.textContent = years[1] ? years[1].replace(/\s*[–-]\s*/, '\n') : '†';
+    const body = document.createElement('div'); body.className = 'gb-body';
+    const quote = document.createElement('p'); quote.className = 'gb-quote'; quote.textContent = p.quote;
     const top = document.createElement('div'); top.className = 'gb-top';
     const who = document.createElement('b'); who.textContent = p.name || '이름 없는 삶';
-    const meta = document.createElement('span'); meta.className = 'gb-meta'; meta.textContent = p.meta;
-    const when = document.createElement('time'); when.textContent = gbAgo(p.time);
-    top.append(who, meta, when);
+    const meta = document.createElement('span'); meta.className = 'gb-meta'; meta.textContent = years[0] ? p.meta.slice(years[0].length) : p.meta;
+    top.append(who, meta);
     const life = document.createElement('p'); life.className = 'gb-life'; life.textContent = p.life;
-    const quote = document.createElement('p'); quote.className = 'gb-quote'; quote.textContent = p.quote ? `“${p.quote}”` : '';
     const actions = document.createElement('div'); actions.className = 'gb-actions';
     const like = document.createElement('button'); like.className = 'gb-like';
-    const paint = (n, on) => { like.textContent = n ? `기억해요 ${n}` : '기억해요'; like.classList.toggle('on', on); like.setAttribute('aria-pressed', String(on)); };
+    const paint = (n, on) => { like.innerHTML = GB_CANDLE; like.append(on ? ` 촛불을 켰어요 · ${n}` : n ? ` 촛불 켜기 · ${n}` : ' 촛불 켜기');
+      like.classList.toggle('on', on); like.setAttribute('aria-pressed', String(on)); };
     let count = p.likes; paint(count, liked.includes(p.id));
     like.onclick = () => { if (gbLike(p.id)) { count++; paint(count, true); } };
+    const when = document.createElement('time'); when.textContent = gbAgo(p.time);
     const report = document.createElement('button'); report.className = 'gb-report'; report.textContent = '신고';
     report.onclick = () => (onReport || (f => f()))(() => { gbReport(p.id); li.remove(); });
-    actions.append(like, report);
-    li.append(top, life);
-    if (p.quote) li.append(quote);
-    li.append(actions);
+    const right = document.createElement('span'); right.className = 'gb-right'; right.append(when, report);
+    actions.append(like, right);
+    if (p.quote) body.append(quote);
+    body.append(top, life, actions);
+    li.append(margin, body);
     box.append(li);
   }
 }
