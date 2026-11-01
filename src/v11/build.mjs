@@ -25,7 +25,7 @@ function patch(text, find, replace) {
 // 1. The 2 MB AI-image atlas and its SVG-based sprite UI are replaced by procedural pixel art.
 js = cut(js, '// src/data/pixel-atlas.js', '// src/characters.js', '');
 js = cut(js, '// src/characters.js', '// src/persistence.js', read('pixel.js') + '\n' + read('ui.js') + '\n');
-js = cut(js, '// src/app.js', '\n})();', read('app.js'));
+js = cut(js, '// src/app.js', '\n})();', read('guestbook.js') + '\n' + read('app.js'));
 // 2. Yearly focus and era facts.
 js = patch(js, '// src/engine.js', read('focus.js') + '\n// src/engine.js');
 js = patch(js, 'yearlyPaths(s); familyYear(s);', 'yearlyPaths(s); applyFocus(s); familyYear(s);');
@@ -168,11 +168,14 @@ const html = read('head.html') + js + '</script></body></html>\n';
 writeFileSync(join(root, 'french_life_v11.html'), html);
 // GitHub Pages serves the repository root, so the game is also the site's index page.
 writeFileSync(join(root, 'index.html'), html);
+// community.html loads the same guestbook code as a plain script.
+writeFileSync(join(root, 'guestbook.js'), read('guestbook.js'));
 // The web build is the same game without the document skeleton, for hosts that wrap the page themselves.
 const page = html.replace(/^<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport"[^>]*>/, '').replace('</style></head><body>', '</style>').replace('</script></body></html>', '</script>')
   // Embedded viewers block downloads; the copyable save code covers it there.
   .replace('<button id="saveFile">', '<button id="saveFile" data-off="1">')
-  .replace('<button id="shareSave">', '<button id="shareSave" hidden>');
+  .replace('<button id="shareSave">', '<button id="shareSave" hidden>')
+  .replace('const GUESTBOOK_EMBEDDED = false;', 'const GUESTBOOK_EMBEDDED = true;');
 mkdirSync(join(root, 'site'), {recursive:true});
 // Engine-only bundle (no DOM) for tools/simulate.mjs.
 const body = js.replace(/^\(\(\) => \{\n'use strict';\n/, '');

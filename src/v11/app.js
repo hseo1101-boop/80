@@ -126,18 +126,17 @@ function syncLinks() {
   const fresh = prefs.seenVersion !== GAME_VERSION;
   $id('newsDot').hidden = !fresh; $id('menuDot').hidden = !fresh;
   $id('gameVersion').textContent = GAME_VERSION;
-  if (s?.dead) $id('shareStory').href = storyURL(s);
+  if (s?.dead) {
+    const url = storyURL(s);
+    $id('shareStory').hidden = !url; $id('shareNote').hidden = !url;
+    if (url) $id('shareStory').href = url;
+  }
 }
 function storyURL(s) {
-  const r = lifeReport(s), lines = [
-    `## ${r.name} (${r.french}) · ${r.born}–${r.died}`, `**${r.epitaph}**`, r.cause, '',
-    ...r.lines.map(x => `- ${x}`), '',
-    ...(r.historic.length ? ['### 역사의 현장', ...r.historic.map(h => `- ${h.year} ${h.title}${h.choice ? ` — ${h.choice}` : ''}`), ''] : []),
-    ...(r.figures.length ? ['### 만난 인물', ...r.figures.map(f => `- ${f.name} (${f.job})`), ''] : []),
-    ...(r.starred.length ? ['### 별표한 기억', ...r.starred.slice(0, 8).map(x => `- ${x}`), ''] : []),
-    '### 하고 싶은 이야기', '(이 삶에서 기억에 남는 장면을 적어 주세요. 공유용 이미지는 이 칸에 끌어다 놓으면 붙습니다.)', '', `_${GAME_VERSION}_`];
-  const q = new URLSearchParams({category:'player-stories', title:`${r.name} · ${r.born}–${r.died} · ${r.epitaph}`, body:lines.join('\n')});
-  return `${REPO}/discussions/new?${q}`;
+  const r = lifeReport(s);
+  const life = `${r.born}–${r.died} · ${r.epitaph} · ${r.age}세`;
+  const story = [r.cause, ...r.lines.slice(0, 3), ...(r.historic.length ? [`역사의 현장: ${r.historic.slice(0, 3).map(h => `${h.year} ${h.title}`).join(', ')}`] : [])].filter(Boolean).join('\n');
+  return guestbookShareURL(r.name, life, story);
 }
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
 const PRESETS = {
@@ -237,4 +236,5 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('pagehide', () => { controller.autosave(); clock.stop(); });
 window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden && !ui.choosing) clock.start(); });
 if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller};
+guestbookMount({box:$id('gbList'), status:$id('gbStatus'), more:$id('gbMore'), write:$id('gbWrite')});
 render();

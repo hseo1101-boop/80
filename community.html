@@ -8,17 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
 <script>
 // ───────────── 설정 ─────────────
-// giscus.app에서 이 저장소와 'Player Stories' 카테고리를 고르면 repoId·categoryId가 나옵니다. 여기에 붙여 넣으세요.
-// 비워 두면 게시판 위젯 대신 GitHub Discussions로 가는 버튼이 나옵니다.
 const CONFIG = {
   repo: 'hseo1101-boop/80',
   game: 'https://hseo1101-boop.github.io/80/',
   feedbackForm: 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header',
-  storiesCategory: 'Player Stories',      // Discussions 카테고리 이름 (영문 권장)
-  storiesCategorySlug: 'player-stories',  // 위 이름의 주소용 표기
-  giscusRepoId: '',
-  giscusCategoryId: ''
 };
+// 플레이어 이야기(방명록) 설정은 guestbook.js 맨 위에 있습니다.
 </script>
 <style>
 /* Layout: one reading column with three tabs (updates · feedback · stories), same palette as the game. */
@@ -51,11 +46,16 @@ h2{font-size:1.25rem;margin:0 0 6px}h3{font-size:1.05rem;margin:0}
 .action:hover{border-color:var(--wine)}.action b{color:var(--wine);font-size:1.05rem}.action span{color:var(--muted);font-size:.9rem}
 ol.steps{padding-left:20px}ol.steps li{margin:4px 0}
 code{font-family:var(--mono);font-size:.85em;background:#e6e9e5;padding:1px 5px;border-radius:4px}
-.giscus-wrap{margin-top:12px}
+.gb-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.gb-write{font-weight:700;color:var(--wine);text-decoration:none}
+.gb-status{margin:0 0 10px;font-size:.88rem;color:var(--teal)}.gb-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.gb-entry{background:#fff;border:1px solid var(--line);border-left:3px solid var(--wine);border-radius:8px;padding:12px 14px}.gb-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.gb-top b{font-family:var(--serif)}.gb-top time{font-family:var(--mono);font-size:.75rem;color:var(--muted)}.gb-life{margin:2px 0 0;font-size:.88rem;color:var(--muted)}.gb-story{margin:6px 0 0;white-space:pre-line}
+.gb-more{margin-top:10px;width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
 [hidden]{display:none!important}
 a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2px}
 @media (max-width:560px){h1{font-size:1.6rem}.card{padding:16px}}
 </style>
+<script src="guestbook.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -87,14 +87,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2p
 
   <section id="tab-stories" hidden aria-labelledby="storiesTitle">
     <div class="card">
-      <h2 id="storiesTitle">플레이어 이야기</h2>
-      <p>여러분이 살아 본 삶을 들려주세요. 게임이 끝나면 생애 요약의 <b>이 삶을 게시판에 공유하기</b>를 누르면 요약이 미리 채워진 글쓰기 화면이 열립니다. 공유용 이미지는 글쓰기 칸에 끌어다 놓으면 붙습니다.</p>
-      <div class="actions">
-        <a class="action" id="newStoryLink" target="_blank" rel="noopener"><b>새 이야기 쓰기</b><span>내 인물의 이름과 시대, 기억에 남는 장면</span></a>
-        <a class="action" id="allStoriesLink" target="_blank" rel="noopener"><b>모든 이야기 보기</b><span>다른 플레이어들의 삶 읽기</span></a>
-      </div>
-      <div id="giscusSetup" class="note" hidden><p>아래에 이야기 게시판을 바로 띄우려면 <a href="https://giscus.app/ko" target="_blank" rel="noopener">giscus</a> 설정값을 이 페이지 위쪽 <code>CONFIG</code>에 넣어 주세요.</p></div>
-      <div class="giscus-wrap"><div class="giscus"></div></div>
+      <div class="gb-head"><h2 id="storiesTitle">플레이어 이야기</h2><a id="gbWrite" class="gb-write" target="_blank" rel="noopener" hidden>내 이야기 남기기 →</a></div>
+      <p>다른 플레이어들이 살아 본 삶이 방명록처럼 쌓입니다. 게임이 끝나면 생애 요약의 <b>방명록에 이 삶 남기기</b>로 바로 남길 수 있습니다.</p>
+      <p id="gbStatus" class="gb-status" role="status"></p>
+      <ol id="gbList" class="gb-list"></ol>
+      <button id="gbMore" class="gb-more" hidden>더 보기</button>
     </div>
   </section>
 </div>
@@ -132,29 +129,15 @@ fetch('updates.md', {cache:'no-cache'}).then(r => r.ok ? r.text() : Promise.reje
 const repo = `https://github.com/${CONFIG.repo}`;
 $('feedbackLink').href = CONFIG.feedbackForm;
 $('bugLink').href = `${repo}/issues/new?template=bug.yml`;
-$('newStoryLink').href = `${repo}/discussions/new?category=${encodeURIComponent(CONFIG.storiesCategorySlug)}`;
-$('allStoriesLink').href = `${repo}/discussions/categories/${encodeURIComponent(CONFIG.storiesCategorySlug)}`;
 $('playLink').href = CONFIG.game;
 
-let giscusLoaded = false;
-function loadGiscus() {
-  if (giscusLoaded) return;
-  if (!CONFIG.giscusRepoId || !CONFIG.giscusCategoryId) { $('giscusSetup').hidden = false; return; }
-  giscusLoaded = true;
-  const s = document.createElement('script');
-  Object.entries({src:'https://giscus.app/client.js', 'data-repo':CONFIG.repo, 'data-repo-id':CONFIG.giscusRepoId,
-    'data-category':CONFIG.storiesCategory, 'data-category-id':CONFIG.giscusCategoryId, 'data-mapping':'specific',
-    'data-term':'플레이어 이야기 게시판', 'data-strict':'0', 'data-reactions-enabled':'1', 'data-emit-metadata':'0',
-    'data-input-position':'top', 'data-theme':'light', 'data-lang':'ko', crossorigin:'anonymous'}).forEach(([k, v]) => s.setAttribute(k, v));
-  s.async = true;
-  document.querySelector('.giscus-wrap').appendChild(s);
-}
+let guestbookShown = false;
 const TABS = ['updates', 'feedback', 'stories'];
 function show() {
   const tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'updates';
   for (const t of TABS) $('tab-' + t).hidden = t !== tab;
   document.querySelectorAll('nav a').forEach(a => a.setAttribute('aria-current', a.dataset.tab === tab ? 'page' : 'false'));
-  if (tab === 'stories') loadGiscus();
+  if (tab === 'stories' && !guestbookShown) { guestbookShown = true; guestbookMount({box:$('gbList'), status:$('gbStatus'), more:$('gbMore'), write:$('gbWrite')}, 10); }
 }
 addEventListener('hashchange', show); show();
 </script>
