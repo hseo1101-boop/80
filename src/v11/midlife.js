@@ -105,4 +105,13 @@
   E('m-fair-day', 'normal', {...M}, '성인 축일 장', '수호성인 축일 장이 섰습니다. 약장수와 줄타기꾼, 이 뽑는 사람이 한꺼번에 광장을 차지했습니다.', {stats:{행복:1}, experience:{social:1}});
   E('m-letter-writer', 'normal', {...M, literacy:['none']}, '대서인', '관청에 낼 청원서를 쓰려고 장터의 대서인에게 몇 수를 냈습니다. 그가 읽어 주는 문장이 내가 한 말 같지 않았습니다.', {stats:{재산:-1}, experience:{educationInterest:1}});
   E('m-reading-aloud', 'good', {...M, literacy:['basic'], fromYear:1789}, '읽어 주는 사람', '저녁마다 이웃들이 모여 당신이 신문을 소리 내어 읽는 것을 듣습니다. 글을 안다는 것이 이렇게 사람을 모읍니다.', {stats:{행복:2}, experience:{social:1}});
+
+  // ───── 계절과 달력 ─────
+  E('m-saint-martin', 'normal', {...M, placeIncludes:'농촌', months:[11]}, '생마르탱 날', '11월 11일 생마르탱 날, 소작 계약과 일꾼 고용이 한꺼번에 갱신됩니다. 지주의 집 앞에 소작료 자루를 진 사람들이 줄을 섰습니다.', {stats:{재산:-1}, experience:{inequality:1}});
+  E('m-toussaint', 'normal', {...M, months:[11], religions:['catholic']}, '만성절의 묘지', '만성절에 먼저 간 가족들의 무덤을 찾아 국화를 놓았습니다. 묘지는 해마다 아는 이름이 늘어 갑니다.', {experience:{religious:1}});
+  E('m-easter-duty', 'normal', {...M, months:[3], religions:['catholic'], toYear:1792}, '부활절 의무', '부활절 영성체를 하지 않으면 신부가 명단을 적어 둡니다. 일 년에 한 번, 마을 사람 거의 모두가 고해소 앞에 섭니다.', {experience:{religious:1}});
+  E('m-hiring-fair', 'normal', {minAge:16, maxAge:45, placeIncludes:'농촌', months:[7], maxWealth:40}, '일꾼 장', '한여름 일꾼 장에서 머리에 밀 이삭을 꽂고 서 있었습니다. 일꾼이라는 표시입니다. 부농 하나가 손바닥을 살피더니 품삯을 불렀습니다.', {stats:{재산:1}, experience:{commerce:1}});
+  E('m-decadi', 'normal', {...M, fromYear:1794, toYear:1801, religions:['catholic']}, '데카디와 일요일', '관청은 열흘째 날(데카디)에 쉬라고 하지만, 마을 사람들은 여전히 일요일에 일손을 놓습니다. 몰래 오는 신부의 미사는 헛간에서 열립니다.', {experience:{religious:1, inequality:1}});
+  E('m-pear', 'good', {...M, fromYear:1831, toYear:1835, classes:['도시 평민','부르주아'], literacy:['basic']}, '배 모양 왕', '신문 「르 샤리바리」에 왕의 얼굴을 배 모양으로 그린 그림이 실렸습니다. 담벼락마다 아이들이 배를 그려 놓아 경찰이 지우느라 바쁩니다.', {stats:{행복:1}, experience:{curiosity:1}});
+  E('m-carnival-adult', 'good', {...M, months:[3]}, '사육제의 밤', '사순절 전 마지막 밤, 가면을 쓰고 광장에서 춤을 추었습니다. 짚으로 만든 사육제 인형을 태우며 겨울을 보냈습니다.', {stats:{행복:2}, experience:{social:1}});
 })();

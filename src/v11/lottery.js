@@ -55,7 +55,8 @@ function crisisYear(s) {
     `${cause} 빵값이 크게 올랐습니다. 끼니를 줄이고 아끼던 물건을 팔아야 했습니다.`,
     `${cause} 빵값이 올랐지만, 모아 둔 것으로 큰 어려움 없이 넘겼습니다.`,
     `${cause} 거리에 굶주린 사람이 늘었습니다. 집안 곳간은 넉넉했습니다.`][tier]
-    + (helped ? ' 가까운 이웃과 친척이 먹을 것을 나눠 준 덕분에 조금 덜 힘들었습니다.' : '');
+    + (helped ? ' 가까운 이웃과 친척이 먹을 것을 나눠 준 덕분에 조금 덜 힘들었습니다.' : '')
+    + ` (빵 2kg 한 덩이 약 ${pricesOf(s).bread}수, 날품 하루 약 ${pricesOf(s).wage}수${pricesOf(s).assignat ? ' — 아시냐 지폐로 치르면 그 몇십 배' : ''})`;
   changeStats(s, {건강:-loss, 행복: tier === 3 ? 0 : -sev, 재산: tier <= 1 ? -sev : 0});
   if (tier === 3) { s.experience.inequality = clamp((s.experience.inequality || 0) + 1); }
   addLog(s, tier <= 1 ? '🌧️ 나쁜 일 · 흉년' : '☕ 일상 · 흉년', text, tier <= 1 ? 'bad' : 'normal');

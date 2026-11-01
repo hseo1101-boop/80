@@ -5525,7 +5525,35 @@ function personalFirst(s, groups, group) {
   E('m-fair-day', 'normal', {...M}, '성인 축일 장', '수호성인 축일 장이 섰습니다. 약장수와 줄타기꾼, 이 뽑는 사람이 한꺼번에 광장을 차지했습니다.', {stats:{행복:1}, experience:{social:1}});
   E('m-letter-writer', 'normal', {...M, literacy:['none']}, '대서인', '관청에 낼 청원서를 쓰려고 장터의 대서인에게 몇 수를 냈습니다. 그가 읽어 주는 문장이 내가 한 말 같지 않았습니다.', {stats:{재산:-1}, experience:{educationInterest:1}});
   E('m-reading-aloud', 'good', {...M, literacy:['basic'], fromYear:1789}, '읽어 주는 사람', '저녁마다 이웃들이 모여 당신이 신문을 소리 내어 읽는 것을 듣습니다. 글을 안다는 것이 이렇게 사람을 모읍니다.', {stats:{행복:2}, experience:{social:1}});
+
+  // ───── 계절과 달력 ─────
+  E('m-saint-martin', 'normal', {...M, placeIncludes:'농촌', months:[11]}, '생마르탱 날', '11월 11일 생마르탱 날, 소작 계약과 일꾼 고용이 한꺼번에 갱신됩니다. 지주의 집 앞에 소작료 자루를 진 사람들이 줄을 섰습니다.', {stats:{재산:-1}, experience:{inequality:1}});
+  E('m-toussaint', 'normal', {...M, months:[11], religions:['catholic']}, '만성절의 묘지', '만성절에 먼저 간 가족들의 무덤을 찾아 국화를 놓았습니다. 묘지는 해마다 아는 이름이 늘어 갑니다.', {experience:{religious:1}});
+  E('m-easter-duty', 'normal', {...M, months:[3], religions:['catholic'], toYear:1792}, '부활절 의무', '부활절 영성체를 하지 않으면 신부가 명단을 적어 둡니다. 일 년에 한 번, 마을 사람 거의 모두가 고해소 앞에 섭니다.', {experience:{religious:1}});
+  E('m-hiring-fair', 'normal', {minAge:16, maxAge:45, placeIncludes:'농촌', months:[7], maxWealth:40}, '일꾼 장', '한여름 일꾼 장에서 머리에 밀 이삭을 꽂고 서 있었습니다. 일꾼이라는 표시입니다. 부농 하나가 손바닥을 살피더니 품삯을 불렀습니다.', {stats:{재산:1}, experience:{commerce:1}});
+  E('m-decadi', 'normal', {...M, fromYear:1794, toYear:1801, religions:['catholic']}, '데카디와 일요일', '관청은 열흘째 날(데카디)에 쉬라고 하지만, 마을 사람들은 여전히 일요일에 일손을 놓습니다. 몰래 오는 신부의 미사는 헛간에서 열립니다.', {experience:{religious:1, inequality:1}});
+  E('m-pear', 'good', {...M, fromYear:1831, toYear:1835, classes:['도시 평민','부르주아'], literacy:['basic']}, '배 모양 왕', '신문 「르 샤리바리」에 왕의 얼굴을 배 모양으로 그린 그림이 실렸습니다. 담벼락마다 아이들이 배를 그려 놓아 경찰이 지우느라 바쁩니다.', {stats:{행복:1}, experience:{curiosity:1}});
+  E('m-carnival-adult', 'good', {...M, months:[3]}, '사육제의 밤', '사순절 전 마지막 밤, 가면을 쓰고 광장에서 춤을 추었습니다. 짚으로 만든 사육제 인형을 태우며 겨울을 보냈습니다.', {stats:{행복:2}, experience:{social:1}});
 })();
+
+// src/prices.js — what bread cost and what a day's work paid.
+// Rough figures for the Paris 4-livre (about 2 kg) loaf of ordinary bread and an unskilled day wage, in
+// sous (20 sous = 1 livre, later 1 franc). Provinces and the countryside paid less and ate cheaper bread.
+// Sources in spirit: Labrousse, Rudé and Kaplan on Paris bread; Simiand and Chevalier on wages.
+const BREAD_SOUS = {1750:9, 1768:11, 1770:12, 1771:11, 1774:10, 1775:13, 1776:9, 1788:12, 1789:14, 1790:12, 1795:16, 1796:14, 1797:11,
+  1801:16, 1803:12, 1811:13, 1812:18, 1813:13, 1816:16, 1817:19, 1818:15, 1819:12, 1828:15, 1829:16, 1830:15, 1832:12, 1839:14, 1841:13, 1846:16, 1847:19, 1848:12};
+const WAGE_SOUS = {1750:18, 1780:20, 1790:24, 1800:36, 1815:40, 1830:44, 1845:46};
+const stepValue = (table, year) => Object.keys(table).map(Number).filter(y => y <= year).reduce((v, y) => table[y], table[Object.keys(table)[0]]);
+function pricesOf(s) {
+  const paris = s.place === '파리', rural = s.place.includes('농촌');
+  const bread = Math.round(stepValue(BREAD_SOUS, s.year) * (paris ? 1 : rural ? .8 : .9));
+  const wage = Math.round(stepValue(WAGE_SOUS, s.year) * (paris ? 1 : rural ? .6 : .75));
+  return {bread, wage, share:Math.round(bread / wage * 100), franc:s.year >= 1795, assignat:s.year >= 1794 && s.year <= 1796};
+}
+function priceLine(s) {
+  const p = pricesOf(s), unit = p.franc ? '수(1프랑=20수)' : '수';
+  return `빵 2kg 한 덩이 약 ${p.bread}수 · 날품 하루 약 ${p.wage}${unit}`;
+}
 
 // src/lottery.js
 // 1) The birth lottery: families are drawn with weights close to France's real social make-up around 1789
@@ -5584,7 +5612,8 @@ function crisisYear(s) {
     `${cause} 빵값이 크게 올랐습니다. 끼니를 줄이고 아끼던 물건을 팔아야 했습니다.`,
     `${cause} 빵값이 올랐지만, 모아 둔 것으로 큰 어려움 없이 넘겼습니다.`,
     `${cause} 거리에 굶주린 사람이 늘었습니다. 집안 곳간은 넉넉했습니다.`][tier]
-    + (helped ? ' 가까운 이웃과 친척이 먹을 것을 나눠 준 덕분에 조금 덜 힘들었습니다.' : '');
+    + (helped ? ' 가까운 이웃과 친척이 먹을 것을 나눠 준 덕분에 조금 덜 힘들었습니다.' : '')
+    + ` (빵 2kg 한 덩이 약 ${pricesOf(s).bread}수, 날품 하루 약 ${pricesOf(s).wage}수${pricesOf(s).assignat ? ' — 아시냐 지폐로 치르면 그 몇십 배' : ''})`;
   changeStats(s, {건강:-loss, 행복: tier === 3 ? 0 : -sev, 재산: tier <= 1 ? -sev : 0});
   if (tier === 3) { s.experience.inequality = clamp((s.experience.inequality || 0) + 1); }
   addLog(s, tier <= 1 ? '🌧️ 나쁜 일 · 흉년' : '☕ 일상 · 흉년', text, tier <= 1 ? 'bad' : 'normal');
@@ -8200,7 +8229,7 @@ function createUI(doc, engine, handlers) {
     const interests = Object.entries(s.experience || {}).filter(([,v]) => v > 0).sort((a,b) => b[1]-a[1]);
     $('experienceSummary').innerHTML = interests.length ? interests.slice(0,6).map(([k,v]) => `<span class="tag">${e(EXPERIENCE_LABELS[k])} <b>${v}</b></span>`).join('') : '<span class="muted">작은 경험들이 쌓여 관심이 자라납니다.</span>';
     $('memoryList').innerHTML = (s.memories || []).slice(0, 8).map(m => `<li><small>${m.year}.${m.month}</small> ${e(m.title)}</li>`).join('');
-    $('lifeSummary').innerHTML = `<dt>직업</dt><dd>${e(s.job)}</dd><dt>거주지</dt><dd>${e(s.place)}</dd><dt>교육</dt><dd>${e(s.education)}</dd><dt>문해력</dt><dd>${e(LITERACY[literacyOf(s)])}</dd><dt>자녀</dt><dd>${s.relations.filter(r => r.role === '자녀').length}명</dd><dt>사건</dt><dd>좋은 일 ${s.eventTally.good} · 보통 ${s.eventTally.normal} · 나쁜 일 ${s.eventTally.bad}</dd>`;
+    $('lifeSummary').innerHTML = `<dt>직업</dt><dd>${e(s.job)}</dd><dt>거주지</dt><dd>${e(s.place)}</dd><dt>교육</dt><dd>${e(s.education)}</dd><dt>문해력</dt><dd>${e(LITERACY[literacyOf(s)])}</dd><dt>자녀</dt><dd>${s.relations.filter(r => r.role === '자녀').length}명</dd><dt>물가</dt><dd>${e(priceLine(s))}<br><small class="muted">빵값은 하루 품삯의 ${pricesOf(s).share}% · ${s.place === '파리' ? '파리' : s.place.includes('농촌') ? '시골' : '지방 도시'} 기준 대략값</small></dd><dt>사건</dt><dd>좋은 일 ${s.eventTally.good} · 보통 ${s.eventTally.normal} · 나쁜 일 ${s.eventTally.bad}</dd>`;
     // Controls
     $('pauseButton').innerHTML = s.runtime.paused || s.dead ? '▸<span class="wide"> 계속</span>' : '❚❚<span class="wide"> 멈춤</span>';
     $('pauseButton').setAttribute('aria-label', s.runtime.paused ? '계속 진행' : '일시정지');
