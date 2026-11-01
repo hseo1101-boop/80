@@ -362,6 +362,7 @@ function flagOf(year, month) {
   return 'tricolor';
 }
 function placeKind(s) {
+  if (atFront(s)) return 'camp';
   if (s.place.includes('파리')) return 'paris';
   if (s.class === '귀족') return 'chateau';
   if (s.place.includes('농촌')) return 'country';
@@ -563,7 +564,15 @@ function createScene(canvas, doc) {
   }
   function buildings(sp, gy, t) {
     const k = sp.kind, slate = sp.place.includes('브르타뉴') || sp.place.includes('투르');
-    if (k === 'paris') {
+    if (k === 'camp') {
+      const tent = (x, w) => { for (let r = 0; r < 12; r++) { const rw = Math.max(2, Math.round(w * (r + 1) / 12)); R(x + w/2 - rw/2, gy - 11 + r, rw, 1, r % 3 ? '#e8e0cc' : '#d6ccb4'); } R(x + w/2 - 1, gy - 5, 3, 6, '#5a4a3a'); R(x + w/2, gy - 13, 1, 3, '#6b5a48'); };
+      tent(4, 24); tent(30, 20); tent(W - 30, 24);
+      for (let i = 0; i < 3; i++) { R(W - 52 + i*3, gy - 9 + i, 1, 10, '#5a4a3a'); }
+      R(W - 54, gy - 9, 11, 1, '#5a4a3a');
+      const cx = W - 70; R(cx, gy - 3, 12, 3, '#3d3a36'); R(cx - 2, gy - 1, 3, 3, '#4a4038'); R(cx + 10, gy - 1, 3, 3, '#4a4038'); R(cx + 11, gy - 5, 8, 2, '#3d3a36');
+      if (!sp.dead) { const f = Math.floor(t / 300) % 2; R(58, gy - 2, 6, 2, '#6b4a2c'); R(59, gy - 5 - f, 2, 3, '#e8963a'); R(61, gy - 4, 2, 2, '#f2c84b'); R(60, gy - 9 - f, 1, 3, '#b9b5ad'); }
+      flag(W - 12, gy - 30, sp, t, 31);
+    } else if (k === 'paris') {
       townhouse(-6, gy+1, 40, 4, sp, {wall:'#e4dbc8', roof:'#5b6875', mansard:true, shutters:'#7a8a8a'});
       const top = townhouse(W-46, gy+1, 48, 4, sp, {wall:'#dcd2bc', roof:'#5b6875', mansard:true});
       flag(W-30, top - 12, sp, t, 13); lantern(34, W-46, gy-26, sp);
@@ -586,7 +595,7 @@ function createScene(canvas, doc) {
       flag(W-50, gy-30, sp, t, 31);
       laundry(36, Math.min(W-54, 36 + 40), gy-15, sp);
     }
-    if (k !== 'paris') fence(gy - 7, sp);
+    if (k !== 'paris' && k !== 'camp') fence(gy - 7, sp);
   }
   function drawCast(sp, gy, t) {
     const feet = gy + 7, cast = sp.cast, n = cast.length;

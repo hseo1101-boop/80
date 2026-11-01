@@ -101,6 +101,7 @@ function sceneFamily(s) {
     .sort((a,b) => order.indexOf(a.role) - order.indexOf(b.role));
 }
 function castOf(s) {
+  if (atFront(s)) return [{look:characterLook(s, comrades(s)[0])}, {look:characterLook(s), me:true}, {look:characterLook(s, comrades(s)[1])}];
   const fam = sceneFamily(s), before = fam.filter(r => ['할머니','아버지','어머니'].includes(r.role)), after = fam.filter(r => !before.includes(r));
   return [...before.map(r => ({look:characterLook(s, r)})), {look:characterLook(s), me:true}, ...after.map(r => ({look:characterLook(s, r)}))];
 }
@@ -300,7 +301,8 @@ function createUI(doc, engine, handlers) {
     const nextSpec = sceneSpec(s, cast);
     const key = JSON.stringify([nextSpec.kind, nextSpec.place, nextSpec.season, nextSpec.month >= 7 && nextSpec.month <= 8, nextSpec.flag, nextSpec.dead, cast.map(c => c.look.key)]);
     if (key !== specKey) { spec = nextSpec; specKey = key; spec.drawn = false; }
-    $('sceneCaption').firstChild.textContent = s.dead ? `${placeTitle(s)} · 마지막 안식처 ` : `${placeTitle(s)} · ${homeLabel(s)} · ${companions(s)} `;
+    $('sceneCaption').firstChild.textContent = s.dead ? `${placeTitle(s)} · 마지막 안식처 `
+      : atFront(s) ? `${frontLabel(s)} · 야영지 · 고향 ${s.place.replace(' 농촌', '')}의 가족과 떨어져 복무 중 ` : `${placeTitle(s)} · ${homeLabel(s)} · ${companions(s)} `;
     $('scene').setAttribute('aria-label', `${s.place}의 풍경. ${characterLook(s).label}. 함께 있는 가족 ${cast.length ? cast.length - 1 : 0}명.`);
     $('sceneDetail').innerHTML = `<p>${e(eraText(s))}</p><p>${e(placeNote(s))}${placeNote(s) ? '.' : ''}</p>`;
     // Stats

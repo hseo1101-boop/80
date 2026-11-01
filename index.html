@@ -3933,7 +3933,7 @@ const childhoodEvents = [
 
 
 function eligibleDaily(s,kind) {
-  return (ageOf(s)<=11 ? childhoodEvents : dailyEvents).filter(e=>e.kind===kind && matches(s,e.when) && (e.repeatable!==false || !s.seenEvents?.includes(e.id)));
+  return (ageOf(s)<=11 ? childhoodEvents : dailyEvents).filter(e=>e.kind===kind && matches(s,e.when) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) && (e.repeatable!==false || !s.seenEvents?.includes(e.id)));
 }
 function selectDaily(s,kind) {
   const pool=eligibleDaily(s,kind);
@@ -4729,7 +4729,11 @@ DECISION_DOMAINS.push({id:'history', label:'역사의 현장', target:0});
 // A historic decision opens in its month regardless of the usual decision cadence.
 function historicDecision(s) {
   if (s.dead || s.decision) return;
-  const d = decisions.find(d => d.historic && decisionAllowed(s, d) && matches(s, d.when));
+  // Someone serving at the front is not in the home-town crowd; battles open only for some units.
+  const away = typeof atFront === 'function' && atFront(s);
+  const d = decisions.find(d => d.historic && decisionAllowed(s, d) && matches(s, d.when)
+    && !(away && (d.when.places || d.when.placeIncludes || d.when.notPlaces) && !d.when.jobMatch)
+    && (d.chance === undefined || random(s) < d.chance));
   if (d) s.decision = d.id;
 }
 
@@ -5861,6 +5865,56 @@ FIGURE_BY_NAME = Object.fromEntries(Object.entries(FIGURES).map(([id, f]) => [f.
      no('도로와 운하를 맡는다', '익숙한 일을 이어 갑니다.')]);
 })();
 
+// src/army.js
+// Serving soldiers and officers are away from home in wartime: their scene becomes a camp, home-town
+// events and crowds no longer reach them, battles open only for some units, and peace sends conscripts home.
+const SERVING = /^(군인|육군)/;
+function atFront(s) { return !s.dead && SERVING.test(s.job || '') && WAR_YEARS(s.year); }
+function frontLabel(s) {
+  const y = s.year;
+  if (y <= 1763) return '7년 전쟁의 독일 전선';
+  if (y <= 1795) return '국경의 공화국 군대';
+  if (y <= 1797) return '이탈리아·라인 전선';
+  if (y <= 1801) return '라인·알프스 전선';
+  if (y <= 1805 && !(y === 1805 && s.month >= 9)) return '불로뉴 해안 야영지';
+  if (y <= 1807) return '대육군 · 독일과 폴란드';
+  if (y <= 1811) return '스페인 또는 독일 전선';
+  if (y === 1812) return '러시아 원정군';
+  if (y <= 1814) return '독일과 프랑스 동부 전선';
+  return '벨기에 국경의 북부군';
+}
+// Conscripts and volunteers go home when the wars end; career officers stay in the army.
+function armyYear(s) {
+  if (s.dead || s.job !== '군인' || WAR_YEARS(s.year)) return;
+  s.job = '없음';
+  addLog(s, '☕ 일상 · 제대', `전쟁이 끝나 군복을 벗고 고향 ${s.place}(으)로 돌아왔습니다. 집은 그대로인데 모든 것이 조금 낯섭니다.`, 'normal');
+  milestone(s, '제대하고 귀향');
+}
+// Units, not whole armies, fought each battle: only some soldiers are there.
+const BATTLE_CHANCE = {valmy:.6, austerlitz:.6, russia:.6, waterloo:.5, toulon:.3, 'hoche-ireland':.25, trafalgar:.4};
+for (const [id, chance] of Object.entries(BATTLE_CHANCE)) {
+  const d = decisions.find(x => x.id === id);
+  if (d) { d.chance = chance; if (d.when.jobMatch === '군') d.when.jobMatch = '^(군인|육군)'; }
+}
+// Life in the ranks, for the months away from home.
+(() => {
+  const E = (id, kind, title, text, stats = {}, experience = {}, repeatable = true) => dailyEvents.push({id, kind, category:'personal',
+    when:{minAge:16, jobMatch:'^(군인|육군)', fromYear:1756}, title, text, effects:{stats, experience}, tags:['daily','army'], repeatable});
+  E('army-march', 'normal', '행군', '하루 종일 진흙길을 행군했습니다. 배낭 무게에 어깨가 끊어질 것 같습니다. 저녁에는 길가 밭에 그대로 쓰러져 잤습니다.', {건강:-1});
+  E('army-bread', 'bad', '배급 지연', '보급 마차가 오지 않아 사흘 동안 딱딱한 비스킷 반쪽으로 버텼습니다. 동료들은 근처 농가를 기웃거립니다.', {건강:-1, 행복:-1});
+  E('army-letter', 'good', '고향에서 온 편지', '고향에서 편지가 왔습니다. 글을 아는 동료가 읽어 주었습니다. 가족은 모두 무사하다고 합니다.', {행복:3}, {}, true);
+  E('army-campfire', 'good', '야영지의 밤', '모닥불 가에서 동료들과 고향 노래를 불렀습니다. 노르망디, 프로방스, 브르타뉴 사투리가 뒤섞였습니다.', {행복:2}, {social:1});
+  E('army-lice', 'bad', '이와 열병', '야영지에 이가 들끓고 열병이 돌았습니다. 며칠 동안 야전 병원에 누워 있었습니다.', {건강:-2});
+  E('army-drill', 'normal', '훈련', '하사의 구령에 맞춰 장전과 사격을 수십 번 반복했습니다. 손이 저절로 움직일 때까지.', {}, {responsibility:1});
+  E('army-pay', 'good', '밀린 봉급', '몇 달 밀린 봉급이 한꺼번에 나왔습니다. 일부를 고향에 부쳤습니다.', {재산:2});
+  E('army-foreign', 'normal', '낯선 나라', '처음 보는 강과 마을을 지났습니다. 사람들 말을 한마디도 알아들을 수 없습니다.', {}, {curiosity:2});
+})();
+// Comrades shown beside the player in the camp scene. Derived from the player's name, so no game RNG.
+function comrades(s) {
+  const h = strHash(s.name + s.year);
+  return [0, 1].map(i => ({name:`${male[(h >>> (i*5)) % male.length]} 전우`, role:'전우', sex:'남성', job:'군인', birthYear:s.born + i*2 - 1, birthMonth:1}));
+}
+
 // src/engine.js
 
 
@@ -5921,7 +5975,7 @@ function annual(s) {
   if (ageOf(s) > 10 && !['없음','은퇴'].includes(s.job)) changeStats(s, {재산:rand(s,-1,2)});
   checkHealth(s);
   if (s.dead) return;
-  yearlyPaths(s); applyFocus(s); knowledgeYear(s); familyYear(s); careerYear(s); crisisYear(s); fateYear(s);
+  yearlyPaths(s); applyFocus(s); knowledgeYear(s); familyYear(s); careerYear(s); armyYear(s); crisisYear(s); fateYear(s);
   if (s.dead) return;
   const gap = s.year - s.lastDecision;
   if (ageOf(s) >= 2 && gap >= 1 && (gap >= 2 || random(s) < .66)) s.pendingDecisionYear = s.year;
@@ -6436,6 +6490,7 @@ function flagOf(year, month) {
   return 'tricolor';
 }
 function placeKind(s) {
+  if (atFront(s)) return 'camp';
   if (s.place.includes('파리')) return 'paris';
   if (s.class === '귀족') return 'chateau';
   if (s.place.includes('농촌')) return 'country';
@@ -6637,7 +6692,15 @@ function createScene(canvas, doc) {
   }
   function buildings(sp, gy, t) {
     const k = sp.kind, slate = sp.place.includes('브르타뉴') || sp.place.includes('투르');
-    if (k === 'paris') {
+    if (k === 'camp') {
+      const tent = (x, w) => { for (let r = 0; r < 12; r++) { const rw = Math.max(2, Math.round(w * (r + 1) / 12)); R(x + w/2 - rw/2, gy - 11 + r, rw, 1, r % 3 ? '#e8e0cc' : '#d6ccb4'); } R(x + w/2 - 1, gy - 5, 3, 6, '#5a4a3a'); R(x + w/2, gy - 13, 1, 3, '#6b5a48'); };
+      tent(4, 24); tent(30, 20); tent(W - 30, 24);
+      for (let i = 0; i < 3; i++) { R(W - 52 + i*3, gy - 9 + i, 1, 10, '#5a4a3a'); }
+      R(W - 54, gy - 9, 11, 1, '#5a4a3a');
+      const cx = W - 70; R(cx, gy - 3, 12, 3, '#3d3a36'); R(cx - 2, gy - 1, 3, 3, '#4a4038'); R(cx + 10, gy - 1, 3, 3, '#4a4038'); R(cx + 11, gy - 5, 8, 2, '#3d3a36');
+      if (!sp.dead) { const f = Math.floor(t / 300) % 2; R(58, gy - 2, 6, 2, '#6b4a2c'); R(59, gy - 5 - f, 2, 3, '#e8963a'); R(61, gy - 4, 2, 2, '#f2c84b'); R(60, gy - 9 - f, 1, 3, '#b9b5ad'); }
+      flag(W - 12, gy - 30, sp, t, 31);
+    } else if (k === 'paris') {
       townhouse(-6, gy+1, 40, 4, sp, {wall:'#e4dbc8', roof:'#5b6875', mansard:true, shutters:'#7a8a8a'});
       const top = townhouse(W-46, gy+1, 48, 4, sp, {wall:'#dcd2bc', roof:'#5b6875', mansard:true});
       flag(W-30, top - 12, sp, t, 13); lantern(34, W-46, gy-26, sp);
@@ -6660,7 +6723,7 @@ function createScene(canvas, doc) {
       flag(W-50, gy-30, sp, t, 31);
       laundry(36, Math.min(W-54, 36 + 40), gy-15, sp);
     }
-    if (k !== 'paris') fence(gy - 7, sp);
+    if (k !== 'paris' && k !== 'camp') fence(gy - 7, sp);
   }
   function drawCast(sp, gy, t) {
     const feet = gy + 7, cast = sp.cast, n = cast.length;
@@ -6816,6 +6879,7 @@ function sceneFamily(s) {
     .sort((a,b) => order.indexOf(a.role) - order.indexOf(b.role));
 }
 function castOf(s) {
+  if (atFront(s)) return [{look:characterLook(s, comrades(s)[0])}, {look:characterLook(s), me:true}, {look:characterLook(s, comrades(s)[1])}];
   const fam = sceneFamily(s), before = fam.filter(r => ['할머니','아버지','어머니'].includes(r.role)), after = fam.filter(r => !before.includes(r));
   return [...before.map(r => ({look:characterLook(s, r)})), {look:characterLook(s), me:true}, ...after.map(r => ({look:characterLook(s, r)}))];
 }
@@ -7015,7 +7079,8 @@ function createUI(doc, engine, handlers) {
     const nextSpec = sceneSpec(s, cast);
     const key = JSON.stringify([nextSpec.kind, nextSpec.place, nextSpec.season, nextSpec.month >= 7 && nextSpec.month <= 8, nextSpec.flag, nextSpec.dead, cast.map(c => c.look.key)]);
     if (key !== specKey) { spec = nextSpec; specKey = key; spec.drawn = false; }
-    $('sceneCaption').firstChild.textContent = s.dead ? `${placeTitle(s)} · 마지막 안식처 ` : `${placeTitle(s)} · ${homeLabel(s)} · ${companions(s)} `;
+    $('sceneCaption').firstChild.textContent = s.dead ? `${placeTitle(s)} · 마지막 안식처 `
+      : atFront(s) ? `${frontLabel(s)} · 야영지 · 고향 ${s.place.replace(' 농촌', '')}의 가족과 떨어져 복무 중 ` : `${placeTitle(s)} · ${homeLabel(s)} · ${companions(s)} `;
     $('scene').setAttribute('aria-label', `${s.place}의 풍경. ${characterLook(s).label}. 함께 있는 가족 ${cast.length ? cast.length - 1 : 0}명.`);
     $('sceneDetail').innerHTML = `<p>${e(eraText(s))}</p><p>${e(placeNote(s))}${placeNote(s) ? '.' : ''}</p>`;
     // Stats

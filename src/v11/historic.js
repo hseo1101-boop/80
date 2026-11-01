@@ -215,6 +215,10 @@ DECISION_DOMAINS.push({id:'history', label:'역사의 현장', target:0});
 // A historic decision opens in its month regardless of the usual decision cadence.
 function historicDecision(s) {
   if (s.dead || s.decision) return;
-  const d = decisions.find(d => d.historic && decisionAllowed(s, d) && matches(s, d.when));
+  // Someone serving at the front is not in the home-town crowd; battles open only for some units.
+  const away = typeof atFront === 'function' && atFront(s);
+  const d = decisions.find(d => d.historic && decisionAllowed(s, d) && matches(s, d.when)
+    && !(away && (d.when.places || d.when.placeIncludes || d.when.notPlaces) && !d.when.jobMatch)
+    && (d.chance === undefined || random(s) < d.chance));
   if (d) s.decision = d.id;
 }

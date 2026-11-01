@@ -123,7 +123,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
@@ -135,6 +135,9 @@ js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
     s.career = {id:c.id, rank:number(c.rank, '진로 단계', 0, CAREERS[c.id].ranks.length - 1), since:number(c.since, '진로 시작 연도', 1600, 2200)};
   } else s.career = null;
   s.aptitude = number(`);
+// 2i. Soldiers at the front: no home-town everyday events, discharge in peacetime.
+js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) &&');
+js = patch(js, 'familyYear(s); careerYear(s);', 'familyYear(s); careerYear(s); armyYear(s);');
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },
