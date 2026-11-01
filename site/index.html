@@ -134,6 +134,16 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .overlay.top{z-index:40}#askOverlay{z-index:50}.ask p{margin:0 0 18px;line-height:1.75;font-size:1rem}.ask-btns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.ask-btns .primary{width:auto;margin:0}
 #saveCode{display:block;width:100%;font-family:var(--mono);font-size:.72rem;line-height:1.5;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;color:var(--ink);resize:vertical;word-break:break-all}
 label.section{display:block}
+.summary{padding:22px 22px 20px;border-top:1px solid var(--line);display:grid;gap:16px;background:var(--card)}
+.sum-head{display:flex;gap:16px;align-items:center}.sum-head img{width:84px;height:102px;image-rendering:pixelated;border:1px solid var(--line);border-radius:3px;flex:none}
+.sum-kicker{margin:0;font-size:.75rem;font-weight:800;letter-spacing:.08em;color:var(--wine)}.summary h2{font-size:1.6rem;margin:2px 0}
+.sum-dates{margin:0;font-family:var(--mono);font-size:.82rem;color:var(--muted)}.sum-epitaph{margin:6px 0 0;font-weight:700}.sum-cause{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.sum-lines{margin:0;padding:0 0 0 18px;display:grid;gap:6px;color:var(--teal)}.sum-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.sum-cols h3{font-size:.9rem;margin:0 0 6px}.sum-list{list-style:none;margin:0;padding:0;font-size:.9rem;display:grid;gap:4px}.sum-list b{font-family:var(--mono);font-weight:500;color:var(--wine);margin-right:4px}.sum-list span{color:var(--muted)}
+.sum-share summary{cursor:pointer;font-weight:700}.sum-share img{display:block;width:100%;max-width:360px;margin:10px 0;border:1px solid var(--line);border-radius:6px}
+.sum-actions{display:flex;gap:8px}.choice-req{display:block;font-size:.78rem;margin-top:5px;font-weight:700}.choice-req.ok{color:var(--teal)}.choice-req.no{color:var(--bad)}
+.choice:disabled{background:#f1f3f0;opacity:.75}.birth-top{display:flex;gap:14px;align-items:center;margin-bottom:10px}.birth-top img{width:48px;height:77px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%}
+.birth h2{font-family:var(--serif);margin:6px 0 0}.birth .sum-lines{margin:6px 0 18px}#birthLead{margin:0 0 4px;line-height:1.75}
 #notice{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(92vw,560px);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;z-index:30;font-size:.9rem;box-shadow:0 8px 24px #0005}
 .foot{max-width:1360px;margin:0 auto;padding:0 16px 28px;color:var(--faint);font-size:.75rem;text-align:center}
 .wide{display:inline}.narrow{display:none}
@@ -206,7 +216,13 @@ label.section{display:block}
   <section class="col col-main">
     <div class="card scene-card">
       <div class="scene-wrap"><canvas id="scene" role="img" aria-label="현재 삶의 장면"></canvas></div>
-      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="chooseLife">새 인생 시작</button></div>
+      <section id="summaryCard" class="summary" hidden aria-labelledby="summaryName">
+        <div class="sum-head"><img id="summaryPortrait" alt=""><div><p class="sum-kicker">생애 요약</p><h2 id="summaryName"></h2><p id="summaryDates" class="sum-dates"></p><p id="summaryEpitaph" class="sum-epitaph"></p><p id="summaryCause" class="sum-cause"></p></div></div>
+        <ul id="summaryLines" class="sum-lines"></ul>
+        <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
+        <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave" hidden>이미지 파일로 받기</button></details>
+        <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
+      </section>
       <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
       <div id="sceneDetail" class="scene-detail" hidden></div>
     </div>
@@ -243,6 +259,11 @@ label.section{display:block}
     <p id="resultLearning" class="note"></p><p class="note">이 선택과 결과는 인생 기록에 남았습니다.</p>
     <button id="continueDecision" class="primary" data-action="continueDecision">결과를 확인하고 삶 이어 가기 →</button></section>
   <p id="decisionHint" class="hint"></p>
+</div></div>
+ <div id="birthOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="birthTitle" hidden><div class="modal birth">
+  <div class="birth-top"><img id="birthSprite" alt=""><div><span class="pill">탄생</span><h2 id="birthTitle"></h2></div></div>
+  <p id="birthLead"></p><ul id="birthOddsList" class="sum-lines"></ul>
+  <button id="birthStart" class="primary">삶을 시작하기 →</button>
 </div></div>
 <div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
 <div id="saveOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="saveTitle" hidden><div class="modal">
@@ -2046,7 +2067,7 @@ function changeStats(s, delta = {}) {
 }
 function createState(seed = Date.now(), options = {}) {
   const s = {schemaVersion: SCHEMA_VERSION, rngState: (seed >>> 0) || 1};
-  const family = pick(s, families), surname = pick(s, surnames);
+  const family = pickFamily(s), surname = pick(s, surnames);
   Object.assign(s, {
     born: (year => Number.isInteger(options.born) ? Math.min(BIRTH_CHOICE.max, Math.max(BIRTH_CHOICE.min, options.born)) : year)(rand(s, ...BIRTH_RANGE)), birthMonth: rand(s, 1, 12), sex: pick(s, ['남성', '여성']),
     place: family.place, class: family.class, parentJob: family.job, job: '없음',
@@ -2073,6 +2094,7 @@ function createState(seed = Date.now(), options = {}) {
   addLog(s, '가족', '가족과 함께 새로운 삶을 시작합니다.', 'good');
   milestone(s, `${s.place}에서 출생`);
   earlierLoss(s);
+  birthLottery(s);
   return s;
 }
 
@@ -4069,7 +4091,7 @@ function familyMonth(s) {
     if (!r.alive || !['형제자매','자녀'].includes(r.role)) continue;
     const m = monthsOld(s, r);
     if (m <= 0) continue;
-    const q = m < 12 ? infantMonthlyRisk(s, r.birthYear) : m < 60 ? .003 : m < 120 ? .0009 : 0;
+    const q = (m < 12 ? infantMonthlyRisk(s, r.birthYear) : m < 60 ? .003 : m < 120 ? .0009 : 0) * crisisFactor(s);
     if (!q || random(s) >= q) continue;
     r.alive = false; r.deathYear = s.year;
     const who = r.role === '자녀' ? `${personSex(r) === '여성' ? '딸' : '아들'} ${r.name}` : `${siblingWord(s, r)} ${r.name}`;
@@ -4086,7 +4108,9 @@ function familyMonth(s) {
 function fateYear(s) {
   if (s.dead) return;
   const age = ageOf(s), h = s.stats.건강, job = s.job || '';
-  const frail = (h < 25 ? 3 : h < 45 ? 1.8 : 1) * (s.stats.재산 < 15 ? 1.3 : 1);
+  // Poverty raises every risk and wealth lowers it a little; hunger years make poverty worse.
+  const w = s.stats.재산, wealthRisk = w < 15 ? 1.4 : w < 30 ? 1.15 : w >= 70 ? .85 : 1;
+  const frail = (h < 25 ? 3 : h < 45 ? 1.8 : 1) * wealthRisk * crisisFactor(s);
   const risks = [];
   if (age < 5) risks.push([.006, '어린 시절 열병을 이겨 내지 못했습니다.']);
   else if (age < 15) risks.push([.002, '천연두에 걸려 끝내 회복하지 못했습니다.']);
@@ -5061,6 +5085,153 @@ function preferFresh(s, events) {
   return specific.length && random(s) < .7 ? specific : events;
 }
 
+// src/lottery.js
+// 1) The birth lottery: families are drawn with weights close to France's real social make-up around 1789
+//    (about 80% peasants, 11% urban working people, 8% bourgeois, under 1% nobility), and the odds are shown.
+// 2) Hunger years hit the poor hardest. 3) Some choices need money, knowledge, literacy or friends.
+const FAMILY_WEIGHTS = {
+  '파리|도시 평민': 4, '리옹|도시 평민': 4, '루앙|도시 평민': 3,
+  '오베르뉴 농촌|농민': 26, '부르고뉴 농촌|농민': 27, '브르타뉴 농촌|농민': 27,
+  '보르도|부르주아': 5, '파리|부르주아': 3, '투르|귀족': 1
+};
+function pickFamily(s) {
+  const weighted = families.map(f => ({f, w: FAMILY_WEIGHTS[f.place + '|' + f.class] || 1}));
+  let roll = random(s) * weighted.reduce((n, x) => n + x.w, 0);
+  return (weighted.find(x => (roll -= x.w) < 0) || weighted.at(-1)).f;
+}
+// Shares are rounded estimates for France around 1789 (population ≈ 28 million).
+const CLASS_SHARE = {'농민':80, '도시 평민':11, '부르주아':8, '귀족':1};
+const PLACE_SHARE = {'파리':2.2, '리옹':0.5, '보르도':0.4, '루앙':0.3, '투르':0.08};
+function birthOdds(s) {
+  const lines = [];
+  const share = CLASS_SHARE[s.class];
+  if (s.class === '귀족') lines.push('이 시대 프랑스 아기 100명 중 1명도 채 되지 않는 귀족 가정에서 태어났습니다.');
+  else if (share) lines.push(`이 시대 프랑스 아기 100명 중 약 ${share}명이 ${s.class === '도시 평민' ? '도시의 장인·노동자' : s.class} 가정에서 태어났습니다.`);
+  const town = Object.keys(PLACE_SHARE).find(k => s.place.includes(k));
+  if (town) {
+    const p = PLACE_SHARE[town];
+    lines.push(p >= 1 ? `${town}에서 태어나는 아기는 100명 중 ${Math.round(p)}명 남짓입니다.`
+      : p >= 0.25 ? `${town}에서 태어나는 아기는 1,000명 중 ${Math.round(p*10)}명꼴입니다.` : `${town}에서 태어나는 아기는 1,000명 중 1명이 채 되지 않습니다.`);
+  } else lines.push('열에 여덟은 당신처럼 시골에서 태어납니다.');
+  if (s.religion === 'protestant') lines.push('개신교 가정은 100명 중 2~3명뿐입니다.');
+  lines.push(s.born < 1800 ? '그리고 넷 중 한 명은 첫돌을 넘기지 못합니다.' : '그리고 다섯 중 한 명은 첫돌을 넘기지 못합니다.');
+  return lines;
+}
+function birthLottery(s) {
+  s.familyEvents.w0 = s.stats.재산;
+  addLog(s, '탄생의 확률', birthOdds(s).slice(0, 2).join(' '), 'fact');
+}
+
+// ---- Hunger years ----------------------------------------------------------
+const CRISIS_YEARS = {
+  1770: [2, '흉작이 두 해째 이어져'], 1775: [1, '곡물 거래 자유화 뒤 값이 뛰어'], 1784: [2, '1783년 겨울의 혹한과 홍수로'],
+  1789: [3, '지난여름 우박과 혹독한 겨울 끝에'], 1795: [3, '공화력 3년의 혹한과 아시냐 폭락으로'], 1812: [2, '흉작과 전쟁 징발이 겹쳐'],
+  1817: [3, '‘여름 없는 해’의 흉작 끝에'], 1829: [1, '긴 겨울과 비싼 곡물값으로'], 1847: [2, '감자 역병과 밀 흉작으로']
+};
+function wealthTier(s) { const w = s.stats.재산; return w < 20 ? 0 : w < 35 ? 1 : w < 55 ? 2 : 3; }
+function crisisFactor(s) { return CRISIS_YEARS[s.year] && wealthTier(s) <= 1 ? 1.5 : 1; }
+function crisisYear(s) {
+  const c = CRISIS_YEARS[s.year];
+  if (!c || s.dead || ageOf(s) < 1) return;
+  const [sev, cause] = c, tier = wealthTier(s);
+  let loss = [sev*2 + 1, Math.round(sev*1.5), Math.floor(sev/2), 0][tier];
+  const helped = loss > 0 && relationScore(s) >= 60;
+  if (helped) loss -= 1;
+  const text = [
+    `${cause} 빵값이 하루 품삯을 넘었습니다. 겨우내 밀기울을 섞은 빵과 묽은 수프로 버텼습니다.`,
+    `${cause} 빵값이 크게 올랐습니다. 끼니를 줄이고 아끼던 물건을 팔아야 했습니다.`,
+    `${cause} 빵값이 올랐지만, 모아 둔 것으로 큰 어려움 없이 넘겼습니다.`,
+    `${cause} 거리에 굶주린 사람이 늘었습니다. 집안 곳간은 넉넉했습니다.`][tier]
+    + (helped ? ' 가까운 이웃과 친척이 먹을 것을 나눠 준 덕분에 조금 덜 힘들었습니다.' : '');
+  changeStats(s, {건강:-loss, 행복: tier === 3 ? 0 : -sev, 재산: tier <= 1 ? -sev : 0});
+  if (tier === 3) { s.experience.inequality = clamp((s.experience.inequality || 0) + 1); }
+  addLog(s, tier <= 1 ? '🌧️ 나쁜 일 · 흉년' : '☕ 일상 · 흉년', text, tier <= 1 ? 'bad' : 'normal');
+  checkHealth(s);
+}
+
+// ---- Choices that need something -------------------------------------------
+const CHOICE_REQUIREMENTS = [
+  ['move', '파리로', {minWealth:15}], ['marriage', '소개받은', {minRelation:30}], ['trade', '작은 사업', {minWealth:35}],
+  ['future', '새로운 기술', {minKnowledge:35}], ['conscription', '대리인', {minWealth:60}],
+  ['section-club', '회의에 나가', {minKnowledge:45}], ['section-club', '신문만', {literacy:true}],
+  ['seminary', '신학교에', {minKnowledge:50}], ['college', '학교에서', {minWealth:40}], ['master-craft', '걸작', {minWealth:30}],
+  ['open-shop', '작업장을 연다', {minWealth:30}], ['savings-bank', '통장', {minWealth:20}], ['cholera-flight', '시골 친척', {minWealth:25}],
+  ['dowry', '부모가 땅', {minWealth:40}], ['levee', '숲에 숨는다', {minRelation:50}], ['refractory-priest', '곳간에', {minRelation:40}],
+  ['emigration', '국경을 넘어', {minWealth:30}], ['blockade', '밀수품', {minRelation:45}], ['tours-railway', '파리행', {minWealth:20}],
+  ['memoir', '가족 기록장', {literacy:true}], ['biens-nationaux', '땅을 사들인다', {minWealth:55}]
+];
+for (const [id, label, req] of CHOICE_REQUIREMENTS) {
+  const choice = decisions.find(d => d.id === id)?.choices.find(c => c.label.includes(label));
+  if (choice) choice.requires = req;
+}
+function requirementGaps(s, choice) {
+  const r = choice.requires, gaps = [];
+  if (!r) return gaps;
+  if (r.minWealth !== undefined && s.stats.재산 < r.minWealth) gaps.push(`재산 ${r.minWealth} 이상 (지금 ${Math.round(s.stats.재산)})`);
+  if (r.minKnowledge !== undefined && s.stats.지식 < r.minKnowledge) gaps.push(`지식 ${r.minKnowledge} 이상 (지금 ${Math.round(s.stats.지식)})`);
+  if (r.minRelation !== undefined && relationScore(s) < r.minRelation) gaps.push(`관계 ${r.minRelation} 이상 (지금 ${relationScore(s)})`);
+  if (r.literacy && literacyOf(s) !== 'basic') gaps.push('글을 읽고 쓸 수 있어야 함');
+  return gaps;
+}
+function requirementLabel(choice) {
+  const r = choice.requires; if (!r) return '';
+  return [r.minWealth !== undefined && `재산 ${r.minWealth}+`, r.minKnowledge !== undefined && `지식 ${r.minKnowledge}+`,
+    r.minRelation !== undefined && `관계 ${r.minRelation}+`, r.literacy && '글 읽기'].filter(Boolean).join(' · ');
+}
+function choiceAvailable(s, choice) { return requirementGaps(s, choice).length === 0; }
+
+// src/summary.js
+// End-of-life report: epitaph, comparisons with contemporaries, and the moments worth remembering.
+// Survival tables are rounded approximations of French life tables (per 1,000 births), not game output.
+const LIFE_TABLE = {
+  early:[[0,1000],[1,730],[5,600],[10,560],[20,520],[30,470],[40,410],[50,340],[60,250],[70,140],[80,45],[90,4],[100,0]],
+  late:[[0,1000],[1,800],[5,690],[10,650],[20,610],[30,560],[40,500],[50,430],[60,340],[70,210],[80,75],[90,8],[100,0]]
+};
+function survivors(born, age) {
+  const t = LIFE_TABLE[born < 1800 ? 'early' : 'late'];
+  for (let i = 1; i < t.length; i++) if (age <= t[i][0]) {
+    const [a0,l0] = t[i-1], [a1,l1] = t[i]; return l0 + (l1 - l0) * (age - a0) / (a1 - a0);
+  }
+  return 0;
+}
+function outlivedPercent(s) { return Math.round(100 - survivors(s.born, ageOf(s)) / 10); }
+function lifeReport(s) {
+  const age = ageOf(s), woman = s.sex === '여성';
+  const kids = s.relations.filter(r => r.role === '자녀'), aliveKids = kids.filter(r => r.alive);
+  const spouse = s.relations.find(r => r.role === '배우자');
+  const placeShort = s.place.replace(' 농촌', '');
+  const job = ['없음','은퇴'].includes(s.job) ? (s.job === '은퇴' ? (s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1]).filter(Boolean).at(-1) || '') : '') : s.job;
+  const who = job ? `${placeShort}의 ${job.replace(/ 보조$/, '')}` : `${placeShort} 사람`;
+  const NUM = ['','한','둘','셋','넷','다섯','여섯','일곱','여덟','아홉','열'];
+  const parent = woman ? '어머니' : '아버지';
+  const family = kids.length ? (kids.length === 1 ? `한 아이의 ${parent}` : `아이 ${NUM[kids.length] || kids.length}의 ${parent}`) : spouse ? `${spouse.name.split(' ')[0]}의 ${woman ? '아내' : '남편'}` : '';
+  const epitaph = [who, family].filter(Boolean).join(' · ');
+  const lines = [];
+  const out = outlivedPercent(s);
+  if (age < 1) lines.push('첫돌을 맞지 못했습니다. 이 시대에는 드문 일이 아니었습니다.');
+  else lines.push(`${age}세까지 살았습니다. 같은 해에 태어난 사람의 약 ${out}%보다 오래 산 셈입니다.`);
+  const lit = literacyOf(s), rate = s.sex === '남성' ? (s.born < 1790 ? 47 : 54) : (s.born < 1790 ? 27 : 34);
+  if (age >= 12) lines.push(lit === 'basic' ? `글을 읽고 쓸 줄 알았습니다. 같은 세대 ${woman ? '여성' : '남성'} 가운데 약 ${rate}%만 할 수 있던 일입니다.`
+    : `글을 끝내 익히지 못했습니다. 같은 세대 ${woman ? '여성' : '남성'}의 약 ${100 - rate}%가 그랬습니다.`);
+  const w0 = s.familyEvents?.w0;
+  if (typeof w0 === 'number' && age >= 16) {
+    const d = s.stats.재산 - w0;
+    lines.push(d >= 15 ? '태어난 집안보다 형편이 크게 나아졌습니다.' : d <= -15 ? '태어난 집안보다 형편이 어려워졌습니다.' : '태어난 집안과 비슷한 형편으로 살았습니다.');
+  }
+  if (kids.length) {
+    const lost = kids.length - aliveKids.length;
+    lines.push(`자녀 ${kids.length}명을 낳아 ${aliveKids.length}명이 곁에 남았습니다.${lost ? ` ${lost}명은 먼저 떠나보냈습니다.` : ''}`);
+  }
+  const lostSiblings = s.relations.filter(r => r.role === '형제자매' && !r.alive && r.deathYear !== undefined && r.deathYear - r.birthYear <= 9).length;
+  if (lostSiblings) lines.push(`형제자매 ${lostSiblings}명이 어린 나이에 세상을 떠났습니다.`);
+  const historic = s.log.filter(x => x.title.includes('역사의 현장')).map(x => ({year:x.year, title:x.title.split(' · ').at(-1),
+    choice:(x.desc.split('\n').find(l => l.startsWith('선택: ')) || '').slice(4)})).reverse();
+  const starred = s.log.filter(x => x.star).map(x => `${x.year} · ${x.title.split(' · ').at(-1)}`).reverse();
+  const cause = (s.log.find(x => x.title === '생애의 끝')?.desc || '').split('생애를 마쳤습니다. ')[1] || '';
+  return {name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
+    places:[...new Set(s.lifeMilestones.filter(m => /이주|출생/.test(m)).map(m => m.split(' · ')[1]))]};
+}
+
 // src/engine.js
 
 
@@ -5121,7 +5292,7 @@ function annual(s) {
   if (ageOf(s) > 10 && !['없음','은퇴'].includes(s.job)) changeStats(s, {재산:rand(s,-1,2)});
   checkHealth(s);
   if (s.dead) return;
-  yearlyPaths(s); applyFocus(s); knowledgeYear(s); familyYear(s); fateYear(s);
+  yearlyPaths(s); applyFocus(s); knowledgeYear(s); familyYear(s); crisisYear(s); fateYear(s);
   if (s.dead) return;
   const gap = s.year - s.lastDecision;
   if (ageOf(s) >= 2 && gap >= 1 && (gap >= 2 || random(s) < .66)) s.pendingDecisionYear = s.year;
@@ -5172,7 +5343,7 @@ class GameEngine {
   }
   choose(index) {
     const s = this.state, d = decisions.find(x => x.id === s?.decision);
-    if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;
+    if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;
     const choice = d.choices[index], outcome = resolveOutcome(s,choice), statsBefore = {...s.stats};
     applyEffects(s, choice.effects);
     applyEffects(s, outcome.effects);
@@ -6051,7 +6222,70 @@ function logLabel(x) { const p = logParts(x); return p.title ? `${p.kicker} · $
 function createUI(doc, engine, handlers) {
   const $ = id => doc.getElementById(id), e = escapeHTML;
   const scene = createScene($('scene'), doc);
-  let choosing = false;
+  let choosing = false, summaryKey = '';
+  function renderSummary(s) {
+    const r = lifeReport(s), look = characterLook(s), sp = sceneSpec(s, []);
+    $('summaryPortrait').src = portraitURL(doc, look, sp);
+    $('summaryName').textContent = r.name;
+    $('summaryDates').textContent = `${r.french} · ${r.born}–${r.died} · ${r.age}세`;
+    $('summaryEpitaph').textContent = r.epitaph;
+    $('summaryCause').textContent = r.cause;
+    $('summaryLines').innerHTML = r.lines.map(x => `<li>${e(x)}</li>`).join('');
+    $('summaryHistoric').innerHTML = r.historic.length ? r.historic.map(h => `<li><b>${h.year}</b> ${e(h.title)}${h.choice ? ` <span>— ${e(h.choice)}</span>` : ''}</li>`).join('') : '<li class="muted">역사의 현장에 직접 서지는 않았습니다.</li>';
+    $('summaryStarred').innerHTML = r.starred.slice(0, 8).map(x => `<li>${e(x)}</li>`).join('') || '<li class="muted">별표한 기록이 없습니다. 기록 줄을 누르면 ☆ 표시됩니다.</li>';
+    drawShareCard(s, r);
+  }
+  // A 4:5 card for sharing, drawn on canvas from the same report.
+  function drawShareCard(s, r) {
+    const c = doc.createElement('canvas'); c.width = 1080; c.height = 1350;
+    const x = c.getContext('2d'), sans = getComputedStyle(doc.body).fontFamily, serif = "'Bitter', Georgia, serif";
+    x.fillStyle = '#f8f9f7'; x.fillRect(0, 0, 1080, 1350);
+    x.fillStyle = '#8c1c3c'; x.fillRect(0, 0, 1080, 120);
+    x.fillStyle = '#fbeef1'; x.font = `600 40px ${sans}`; x.fillText('어느 프랑스인의 삶', 64, 76);
+    x.font = `500 30px 'IBM Plex Mono', monospace`; x.textAlign = 'right'; x.fillText(`${r.born}–${r.died}`, 1016, 76); x.textAlign = 'left';
+    x.imageSmoothingEnabled = false;
+    const portrait = new Image();
+    portrait.onload = () => {
+      x.drawImage(portrait, 64, 180, 280, 340);
+      x.strokeStyle = '#c9cfc9'; x.lineWidth = 3; x.strokeRect(64, 180, 280, 340);
+      x.fillStyle = '#1c272a'; x.font = `800 72px ${sans}`; x.fillText(r.name, 384, 290);
+      x.font = `italic 600 40px ${serif}`; x.fillStyle = '#6d7672'; x.fillText(r.french, 384, 350);
+      x.font = `500 36px ${sans}`; x.fillStyle = '#1c272a'; wrap(r.epitaph, 384, 420, 632, 50, 2);
+      x.font = `400 32px ${sans}`; x.fillStyle = '#6d7672'; wrap(r.cause, 384, 520, 632, 44, 2);
+      x.fillStyle = '#17695a'; x.font = `400 34px ${sans}`;
+      let y = 640;
+      for (const line of r.lines.slice(0, 4)) y = wrap(line, 64, y, 952, 50, 2) + 22;
+      if (r.historic.length) {
+        x.fillStyle = '#8c1c3c'; x.font = `700 32px ${sans}`; x.fillText('역사의 현장', 64, y + 20); y += 70;
+        x.fillStyle = '#1c272a'; x.font = `400 32px ${sans}`;
+        for (const h of r.historic.slice(0, 3)) { x.fillText(`${h.year}  ${h.title}`, 64, y); y += 48; }
+      }
+      x.fillStyle = '#9aa29e'; x.font = `400 26px ${sans}`; x.fillText('hseo1101-boop.github.io/80', 64, 1300);
+      $('shareImage').src = c.toDataURL('image/png');
+    };
+    portrait.src = portraitURL(doc, characterLook(s), sceneSpec(s, []));
+    function wrap(text, left, top, width, lh, max) {
+      const words = String(text).split(' '); let line = '', n = 0;
+      for (const word of words) {
+        const next = line ? line + ' ' + word : word;
+        if (x.measureText(next).width > width && line) {
+          if (n === max - 1) { x.fillText(line + '…', left, top); return top + lh; }
+          x.fillText(line, left, top); top += lh; n++; line = word;
+        } else line = next;
+      }
+      if (line) { x.fillText(line, left, top); top += lh; }
+      return top;
+    }
+  }
+  function showBirth() {
+    const s = engine.state; if (!s) return;
+    $('birthSprite').src = spriteURL(doc, characterLook(s));
+    $('birthTitle').textContent = `${s.born}년 ${s.birthMonth}월, ${s.place}`;
+    $('birthLead').textContent = `${s.name}. ${s.place}의 ${s.class === '도시 평민' ? '장인·노동자' : s.class} 가정(${s.parentJob})에서 ${s.sex === '남성' ? '아들' : '딸'}로 태어났습니다.`;
+    $('birthOddsList').innerHTML = birthOdds(s).map(x => `<li>${e(x)}</li>`).join('')
+      + `<li>타고난 재능 ${s.aptitude} · ${e(aptitudeBand(s.aptitude).label)} (상위 약 ${Math.max(1, Math.round(aptitudeTopPercent(s.aptitude)))}%)</li>`;
+    $('birthOverlay').hidden = false; $('birthStart').focus();
+  }
   let spec = null, specKey = '', starOnly = false, lastLog = null, lastLen = -1, renderedState = null;
   let shownDecision = null, shownResult = null, previousFocus = null, noticeTimer = null, introScene = null, introSpec = null;
 
@@ -6198,8 +6432,8 @@ function createUI(doc, engine, handlers) {
       const on = Number(b.dataset.speed) === s.runtime.speed;
       b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); b.disabled = s.dead;
     });
-    $('deathBanner').hidden = !s.dead;
-    if (s.dead) $('deathBanner').querySelector('p').textContent = `${s.name} (${s.born}–${s.year}) · ${ageOf(s)}세. ${s.lifeMilestones.length}개의 이정표와 ${s.log.length}개의 기록을 남겼습니다.`;
+    $('summaryCard').hidden = !s.dead;
+    if (s.dead && summaryKey !== s.name + s.year + s.log.length) { summaryKey = s.name + s.year + s.log.length; renderSummary(s); }
     // Decision
     $('overlay').hidden = !s.decision || s.dead;
     $('app').inert = !!s.decision && !s.dead; $('topbar').inert = !!s.decision && !s.dead;
@@ -6234,8 +6468,10 @@ function createUI(doc, engine, handlers) {
         $('decisionHint').textContent = '선택한 뒤 결과를 확인할 때까지 시간이 멈춥니다.';
         d.choices.forEach((choice, i) => {
           const b = doc.createElement('button'); b.className = 'choice';
-          b.innerHTML = `<span class="n">${i+1}</span><span><span class="choice-label">${e(choice.label)}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}</span>`;
-          b.addEventListener('click', () => { if (engine.state?.decision === d.id && !engine.state.decisionResult) handlers.choose(i); });
+          const gaps = requirementGaps(s, choice), need = requirementLabel(choice);
+          b.disabled = gaps.length > 0;
+          b.innerHTML = `<span class="n">${gaps.length ? '🔒' : i+1}</span><span><span class="choice-label">${e(choice.label)}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}${need ? `<span class="choice-req ${gaps.length ? 'no' : 'ok'}">${gaps.length ? '필요: ' + e(gaps.join(' · ')) : '✓ 조건 충족 · ' + e(need)}</span>` : ''}</span>`;
+          b.addEventListener('click', () => { if (!b.disabled && engine.state?.decision === d.id && !engine.state.decisionResult) handlers.choose(i); });
           $('decisionChoices').appendChild(b);
         });
         $('decisionTitle').focus({preventScroll:true});
@@ -6272,7 +6508,7 @@ function createUI(doc, engine, handlers) {
   globalThis.addEventListener('resize', onResize);
   $('birthYear').addEventListener('input', () => { handlers.setBorn(Number($('birthYear').value)); renderBirthPick(); });
   doc.querySelectorAll('[data-born]').forEach(b => b.addEventListener('click', () => { handlers.setBorn(b.dataset.born === 'random' ? null : Number(b.dataset.born)); renderBirthPick(); }));
-  return {render, renderProgress, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
+  return {render, renderProgress, showBirth, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
     $('notice').textContent = message; $('notice').hidden = false;
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('notice').hidden = true; }, 6000);
   }, dispose() { clearTimeout(noticeTimer); doc.removeEventListener('keydown', trapFocus); globalThis.removeEventListener('resize', onResize); }};
@@ -6604,7 +6840,10 @@ function autoDecide() {
     const st = engine.state;
     if (!prefs.auto || !st?.decision) return;
     if (st.decisionResult) controller.continueDecision();
-    else controller.choose(Math.floor(Math.random() * decisions.find(d => d.id === st.decision).choices.length));
+    else {
+      const open = decisions.find(d => d.id === st.decision).choices.map((c, i) => [c, i]).filter(([c]) => choiceAvailable(st, c));
+      controller.choose(open[Math.floor(Math.random() * open.length)][1]);
+    }
   }, engine.state.decisionResult ? 2200 : 1400);
 }
 function render() { ui.render(); syncToggles(); autoDecide(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
@@ -6648,6 +6887,11 @@ function importText(raw) {
     if (controller.importSave(raw)) { $id('saveOverlay').hidden = true; ui.setChoosing(false); }
   });
 }
+// The birth card pauses time until the player starts the life.
+function startWithBirth() {
+  if (!engine.state || prefs.auto) return;
+  engine.state.runtime.paused = true; ui.render(); ui.showBirth();
+}
 const clock = new GameClock(engine, {onFrame:ui.renderProgress, onChange:() => {
   controller.changed(); if (engine.state?.dead) clock.stop();
 }});
@@ -6657,7 +6901,7 @@ function closeMenu() { document.getElementById('menu').hidden = true; document.g
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) ui.setChoosing(false); });
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { ui.setChoosing(false); startWithBirth(); } });
   },
   schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) ui.setChoosing(false); }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
@@ -6680,7 +6924,7 @@ document.addEventListener('click', event => {
 });
 document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => controller.setSpeed(Number(button.dataset.speed))));
 document.addEventListener('keydown', event => {
-  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden || !$id('askOverlay').hidden || !$id('saveOverlay').hidden) return;
+  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden || !$id('askOverlay').hidden || !$id('saveOverlay').hidden || !$id('birthOverlay').hidden) return;
   if (event.key === ' ' && !event.target.closest('button,[tabindex]')) { event.preventDefault(); controller.togglePause(); }
 });
 document.getElementById('importFile').addEventListener('change', async event => {
@@ -6690,6 +6934,11 @@ document.getElementById('importFile').addEventListener('change', async event => 
     else if (file) importText(await file.text());
   } catch { ui.notify('파일을 읽지 못했습니다. 파일 권한을 확인해 주세요.'); }
   finally { event.target.value = ''; }
+});
+$id('birthStart').addEventListener('click', () => { $id('birthOverlay').hidden = true; if (engine.state?.runtime.paused) controller.togglePause(); });
+$id('shareSave')?.addEventListener('click', () => {
+  const link = document.createElement('a'); link.href = $id('shareImage').src;
+  link.download = `french-life-${engine.state?.name || 'life'}.png`; link.click();
 });
 $id('saveClose').addEventListener('click', () => { $id('saveOverlay').hidden = true; });
 $id('savePick').addEventListener('click', () => $id('importFile').click());
@@ -6710,6 +6959,7 @@ $id('saveFile').addEventListener('click', () => {
 document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   $id('askOverlay').hidden = true; $id('saveOverlay').hidden = true;
+  if (!$id('birthOverlay').hidden) $id('birthStart').click();
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { controller.autosave(); clock.stop(); }

@@ -60,7 +60,10 @@ function autoDecide() {
     const st = engine.state;
     if (!prefs.auto || !st?.decision) return;
     if (st.decisionResult) controller.continueDecision();
-    else controller.choose(Math.floor(Math.random() * decisions.find(d => d.id === st.decision).choices.length));
+    else {
+      const open = decisions.find(d => d.id === st.decision).choices.map((c, i) => [c, i]).filter(([c]) => choiceAvailable(st, c));
+      controller.choose(open[Math.floor(Math.random() * open.length)][1]);
+    }
   }, engine.state.decisionResult ? 2200 : 1400);
 }
 function render() { ui.render(); syncToggles(); autoDecide(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
@@ -104,6 +107,11 @@ function importText(raw) {
     if (controller.importSave(raw)) { $id('saveOverlay').hidden = true; ui.setChoosing(false); }
   });
 }
+// The birth card pauses time until the player starts the life.
+function startWithBirth() {
+  if (!engine.state || prefs.auto) return;
+  engine.state.runtime.paused = true; ui.render(); ui.showBirth();
+}
 const clock = new GameClock(engine, {onFrame:ui.renderProgress, onChange:() => {
   controller.changed(); if (engine.state?.dead) clock.stop();
 }});
@@ -113,7 +121,7 @@ function closeMenu() { document.getElementById('menu').hidden = true; document.g
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) ui.setChoosing(false); });
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { ui.setChoosing(false); startWithBirth(); } });
   },
   schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) ui.setChoosing(false); }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
@@ -136,7 +144,7 @@ document.addEventListener('click', event => {
 });
 document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => controller.setSpeed(Number(button.dataset.speed))));
 document.addEventListener('keydown', event => {
-  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden || !$id('askOverlay').hidden || !$id('saveOverlay').hidden) return;
+  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden || !$id('askOverlay').hidden || !$id('saveOverlay').hidden || !$id('birthOverlay').hidden) return;
   if (event.key === ' ' && !event.target.closest('button,[tabindex]')) { event.preventDefault(); controller.togglePause(); }
 });
 document.getElementById('importFile').addEventListener('change', async event => {
@@ -146,6 +154,11 @@ document.getElementById('importFile').addEventListener('change', async event => 
     else if (file) importText(await file.text());
   } catch { ui.notify('파일을 읽지 못했습니다. 파일 권한을 확인해 주세요.'); }
   finally { event.target.value = ''; }
+});
+$id('birthStart').addEventListener('click', () => { $id('birthOverlay').hidden = true; if (engine.state?.runtime.paused) controller.togglePause(); });
+$id('shareSave')?.addEventListener('click', () => {
+  const link = document.createElement('a'); link.href = $id('shareImage').src;
+  link.download = `french-life-${engine.state?.name || 'life'}.png`; link.click();
 });
 $id('saveClose').addEventListener('click', () => { $id('saveOverlay').hidden = true; });
 $id('savePick').addEventListener('click', () => $id('importFile').click());
@@ -166,6 +179,7 @@ $id('saveFile').addEventListener('click', () => {
 document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   $id('askOverlay').hidden = true; $id('saveOverlay').hidden = true;
+  if (!$id('birthOverlay').hidden) $id('birthStart').click();
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { controller.autosave(); clock.stop(); }

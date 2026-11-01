@@ -137,7 +137,70 @@ function logLabel(x) { const p = logParts(x); return p.title ? `${p.kicker} · $
 function createUI(doc, engine, handlers) {
   const $ = id => doc.getElementById(id), e = escapeHTML;
   const scene = createScene($('scene'), doc);
-  let choosing = false;
+  let choosing = false, summaryKey = '';
+  function renderSummary(s) {
+    const r = lifeReport(s), look = characterLook(s), sp = sceneSpec(s, []);
+    $('summaryPortrait').src = portraitURL(doc, look, sp);
+    $('summaryName').textContent = r.name;
+    $('summaryDates').textContent = `${r.french} · ${r.born}–${r.died} · ${r.age}세`;
+    $('summaryEpitaph').textContent = r.epitaph;
+    $('summaryCause').textContent = r.cause;
+    $('summaryLines').innerHTML = r.lines.map(x => `<li>${e(x)}</li>`).join('');
+    $('summaryHistoric').innerHTML = r.historic.length ? r.historic.map(h => `<li><b>${h.year}</b> ${e(h.title)}${h.choice ? ` <span>— ${e(h.choice)}</span>` : ''}</li>`).join('') : '<li class="muted">역사의 현장에 직접 서지는 않았습니다.</li>';
+    $('summaryStarred').innerHTML = r.starred.slice(0, 8).map(x => `<li>${e(x)}</li>`).join('') || '<li class="muted">별표한 기록이 없습니다. 기록 줄을 누르면 ☆ 표시됩니다.</li>';
+    drawShareCard(s, r);
+  }
+  // A 4:5 card for sharing, drawn on canvas from the same report.
+  function drawShareCard(s, r) {
+    const c = doc.createElement('canvas'); c.width = 1080; c.height = 1350;
+    const x = c.getContext('2d'), sans = getComputedStyle(doc.body).fontFamily, serif = "'Bitter', Georgia, serif";
+    x.fillStyle = '#f8f9f7'; x.fillRect(0, 0, 1080, 1350);
+    x.fillStyle = '#8c1c3c'; x.fillRect(0, 0, 1080, 120);
+    x.fillStyle = '#fbeef1'; x.font = `600 40px ${sans}`; x.fillText('어느 프랑스인의 삶', 64, 76);
+    x.font = `500 30px 'IBM Plex Mono', monospace`; x.textAlign = 'right'; x.fillText(`${r.born}–${r.died}`, 1016, 76); x.textAlign = 'left';
+    x.imageSmoothingEnabled = false;
+    const portrait = new Image();
+    portrait.onload = () => {
+      x.drawImage(portrait, 64, 180, 280, 340);
+      x.strokeStyle = '#c9cfc9'; x.lineWidth = 3; x.strokeRect(64, 180, 280, 340);
+      x.fillStyle = '#1c272a'; x.font = `800 72px ${sans}`; x.fillText(r.name, 384, 290);
+      x.font = `italic 600 40px ${serif}`; x.fillStyle = '#6d7672'; x.fillText(r.french, 384, 350);
+      x.font = `500 36px ${sans}`; x.fillStyle = '#1c272a'; wrap(r.epitaph, 384, 420, 632, 50, 2);
+      x.font = `400 32px ${sans}`; x.fillStyle = '#6d7672'; wrap(r.cause, 384, 520, 632, 44, 2);
+      x.fillStyle = '#17695a'; x.font = `400 34px ${sans}`;
+      let y = 640;
+      for (const line of r.lines.slice(0, 4)) y = wrap(line, 64, y, 952, 50, 2) + 22;
+      if (r.historic.length) {
+        x.fillStyle = '#8c1c3c'; x.font = `700 32px ${sans}`; x.fillText('역사의 현장', 64, y + 20); y += 70;
+        x.fillStyle = '#1c272a'; x.font = `400 32px ${sans}`;
+        for (const h of r.historic.slice(0, 3)) { x.fillText(`${h.year}  ${h.title}`, 64, y); y += 48; }
+      }
+      x.fillStyle = '#9aa29e'; x.font = `400 26px ${sans}`; x.fillText('hseo1101-boop.github.io/80', 64, 1300);
+      $('shareImage').src = c.toDataURL('image/png');
+    };
+    portrait.src = portraitURL(doc, characterLook(s), sceneSpec(s, []));
+    function wrap(text, left, top, width, lh, max) {
+      const words = String(text).split(' '); let line = '', n = 0;
+      for (const word of words) {
+        const next = line ? line + ' ' + word : word;
+        if (x.measureText(next).width > width && line) {
+          if (n === max - 1) { x.fillText(line + '…', left, top); return top + lh; }
+          x.fillText(line, left, top); top += lh; n++; line = word;
+        } else line = next;
+      }
+      if (line) { x.fillText(line, left, top); top += lh; }
+      return top;
+    }
+  }
+  function showBirth() {
+    const s = engine.state; if (!s) return;
+    $('birthSprite').src = spriteURL(doc, characterLook(s));
+    $('birthTitle').textContent = `${s.born}년 ${s.birthMonth}월, ${s.place}`;
+    $('birthLead').textContent = `${s.name}. ${s.place}의 ${s.class === '도시 평민' ? '장인·노동자' : s.class} 가정(${s.parentJob})에서 ${s.sex === '남성' ? '아들' : '딸'}로 태어났습니다.`;
+    $('birthOddsList').innerHTML = birthOdds(s).map(x => `<li>${e(x)}</li>`).join('')
+      + `<li>타고난 재능 ${s.aptitude} · ${e(aptitudeBand(s.aptitude).label)} (상위 약 ${Math.max(1, Math.round(aptitudeTopPercent(s.aptitude)))}%)</li>`;
+    $('birthOverlay').hidden = false; $('birthStart').focus();
+  }
   let spec = null, specKey = '', starOnly = false, lastLog = null, lastLen = -1, renderedState = null;
   let shownDecision = null, shownResult = null, previousFocus = null, noticeTimer = null, introScene = null, introSpec = null;
 
@@ -284,8 +347,8 @@ function createUI(doc, engine, handlers) {
       const on = Number(b.dataset.speed) === s.runtime.speed;
       b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); b.disabled = s.dead;
     });
-    $('deathBanner').hidden = !s.dead;
-    if (s.dead) $('deathBanner').querySelector('p').textContent = `${s.name} (${s.born}–${s.year}) · ${ageOf(s)}세. ${s.lifeMilestones.length}개의 이정표와 ${s.log.length}개의 기록을 남겼습니다.`;
+    $('summaryCard').hidden = !s.dead;
+    if (s.dead && summaryKey !== s.name + s.year + s.log.length) { summaryKey = s.name + s.year + s.log.length; renderSummary(s); }
     // Decision
     $('overlay').hidden = !s.decision || s.dead;
     $('app').inert = !!s.decision && !s.dead; $('topbar').inert = !!s.decision && !s.dead;
@@ -320,8 +383,10 @@ function createUI(doc, engine, handlers) {
         $('decisionHint').textContent = '선택한 뒤 결과를 확인할 때까지 시간이 멈춥니다.';
         d.choices.forEach((choice, i) => {
           const b = doc.createElement('button'); b.className = 'choice';
-          b.innerHTML = `<span class="n">${i+1}</span><span><span class="choice-label">${e(choice.label)}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}</span>`;
-          b.addEventListener('click', () => { if (engine.state?.decision === d.id && !engine.state.decisionResult) handlers.choose(i); });
+          const gaps = requirementGaps(s, choice), need = requirementLabel(choice);
+          b.disabled = gaps.length > 0;
+          b.innerHTML = `<span class="n">${gaps.length ? '🔒' : i+1}</span><span><span class="choice-label">${e(choice.label)}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}${need ? `<span class="choice-req ${gaps.length ? 'no' : 'ok'}">${gaps.length ? '필요: ' + e(gaps.join(' · ')) : '✓ 조건 충족 · ' + e(need)}</span>` : ''}</span>`;
+          b.addEventListener('click', () => { if (!b.disabled && engine.state?.decision === d.id && !engine.state.decisionResult) handlers.choose(i); });
           $('decisionChoices').appendChild(b);
         });
         $('decisionTitle').focus({preventScroll:true});
@@ -358,7 +423,7 @@ function createUI(doc, engine, handlers) {
   globalThis.addEventListener('resize', onResize);
   $('birthYear').addEventListener('input', () => { handlers.setBorn(Number($('birthYear').value)); renderBirthPick(); });
   doc.querySelectorAll('[data-born]').forEach(b => b.addEventListener('click', () => { handlers.setBorn(b.dataset.born === 'random' ? null : Number(b.dataset.born)); renderBirthPick(); }));
-  return {render, renderProgress, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
+  return {render, renderProgress, showBirth, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
     $('notice').textContent = message; $('notice').hidden = false;
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('notice').hidden = true; }, 6000);
   }, dispose() { clearTimeout(noticeTimer); doc.removeEventListener('keydown', trapFocus); globalThis.removeEventListener('resize', onResize); }};

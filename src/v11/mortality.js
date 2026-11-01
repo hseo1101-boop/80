@@ -39,7 +39,7 @@ function familyMonth(s) {
     if (!r.alive || !['형제자매','자녀'].includes(r.role)) continue;
     const m = monthsOld(s, r);
     if (m <= 0) continue;
-    const q = m < 12 ? infantMonthlyRisk(s, r.birthYear) : m < 60 ? .003 : m < 120 ? .0009 : 0;
+    const q = (m < 12 ? infantMonthlyRisk(s, r.birthYear) : m < 60 ? .003 : m < 120 ? .0009 : 0) * crisisFactor(s);
     if (!q || random(s) >= q) continue;
     r.alive = false; r.deathYear = s.year;
     const who = r.role === '자녀' ? `${personSex(r) === '여성' ? '딸' : '아들'} ${r.name}` : `${siblingWord(s, r)} ${r.name}`;
@@ -56,7 +56,9 @@ function familyMonth(s) {
 function fateYear(s) {
   if (s.dead) return;
   const age = ageOf(s), h = s.stats.건강, job = s.job || '';
-  const frail = (h < 25 ? 3 : h < 45 ? 1.8 : 1) * (s.stats.재산 < 15 ? 1.3 : 1);
+  // Poverty raises every risk and wealth lowers it a little; hunger years make poverty worse.
+  const w = s.stats.재산, wealthRisk = w < 15 ? 1.4 : w < 30 ? 1.15 : w >= 70 ? .85 : 1;
+  const frail = (h < 25 ? 3 : h < 45 ? 1.8 : 1) * wealthRisk * crisisFactor(s);
   const risks = [];
   if (age < 5) risks.push([.006, '어린 시절 열병을 이겨 내지 못했습니다.']);
   else if (age < 15) risks.push([.002, '천연두에 걸려 끝내 회복하지 못했습니다.']);

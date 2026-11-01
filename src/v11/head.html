@@ -134,6 +134,16 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .overlay.top{z-index:40}#askOverlay{z-index:50}.ask p{margin:0 0 18px;line-height:1.75;font-size:1rem}.ask-btns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.ask-btns .primary{width:auto;margin:0}
 #saveCode{display:block;width:100%;font-family:var(--mono);font-size:.72rem;line-height:1.5;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;color:var(--ink);resize:vertical;word-break:break-all}
 label.section{display:block}
+.summary{padding:22px 22px 20px;border-top:1px solid var(--line);display:grid;gap:16px;background:var(--card)}
+.sum-head{display:flex;gap:16px;align-items:center}.sum-head img{width:84px;height:102px;image-rendering:pixelated;border:1px solid var(--line);border-radius:3px;flex:none}
+.sum-kicker{margin:0;font-size:.75rem;font-weight:800;letter-spacing:.08em;color:var(--wine)}.summary h2{font-size:1.6rem;margin:2px 0}
+.sum-dates{margin:0;font-family:var(--mono);font-size:.82rem;color:var(--muted)}.sum-epitaph{margin:6px 0 0;font-weight:700}.sum-cause{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.sum-lines{margin:0;padding:0 0 0 18px;display:grid;gap:6px;color:var(--teal)}.sum-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.sum-cols h3{font-size:.9rem;margin:0 0 6px}.sum-list{list-style:none;margin:0;padding:0;font-size:.9rem;display:grid;gap:4px}.sum-list b{font-family:var(--mono);font-weight:500;color:var(--wine);margin-right:4px}.sum-list span{color:var(--muted)}
+.sum-share summary{cursor:pointer;font-weight:700}.sum-share img{display:block;width:100%;max-width:360px;margin:10px 0;border:1px solid var(--line);border-radius:6px}
+.sum-actions{display:flex;gap:8px}.choice-req{display:block;font-size:.78rem;margin-top:5px;font-weight:700}.choice-req.ok{color:var(--teal)}.choice-req.no{color:var(--bad)}
+.choice:disabled{background:#f1f3f0;opacity:.75}.birth-top{display:flex;gap:14px;align-items:center;margin-bottom:10px}.birth-top img{width:48px;height:77px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%}
+.birth h2{font-family:var(--serif);margin:6px 0 0}.birth .sum-lines{margin:6px 0 18px}#birthLead{margin:0 0 4px;line-height:1.75}
 #notice{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(92vw,560px);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;z-index:30;font-size:.9rem;box-shadow:0 8px 24px #0005}
 .foot{max-width:1360px;margin:0 auto;padding:0 16px 28px;color:var(--faint);font-size:.75rem;text-align:center}
 .wide{display:inline}.narrow{display:none}
@@ -206,7 +216,13 @@ label.section{display:block}
   <section class="col col-main">
     <div class="card scene-card">
       <div class="scene-wrap"><canvas id="scene" role="img" aria-label="현재 삶의 장면"></canvas></div>
-      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="chooseLife">새 인생 시작</button></div>
+      <section id="summaryCard" class="summary" hidden aria-labelledby="summaryName">
+        <div class="sum-head"><img id="summaryPortrait" alt=""><div><p class="sum-kicker">생애 요약</p><h2 id="summaryName"></h2><p id="summaryDates" class="sum-dates"></p><p id="summaryEpitaph" class="sum-epitaph"></p><p id="summaryCause" class="sum-cause"></p></div></div>
+        <ul id="summaryLines" class="sum-lines"></ul>
+        <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
+        <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
+        <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
+      </section>
       <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
       <div id="sceneDetail" class="scene-detail" hidden></div>
     </div>
@@ -243,6 +259,11 @@ label.section{display:block}
     <p id="resultLearning" class="note"></p><p class="note">이 선택과 결과는 인생 기록에 남았습니다.</p>
     <button id="continueDecision" class="primary" data-action="continueDecision">결과를 확인하고 삶 이어 가기 →</button></section>
   <p id="decisionHint" class="hint"></p>
+</div></div>
+ <div id="birthOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="birthTitle" hidden><div class="modal birth">
+  <div class="birth-top"><img id="birthSprite" alt=""><div><span class="pill">탄생</span><h2 id="birthTitle"></h2></div></div>
+  <p id="birthLead"></p><ul id="birthOddsList" class="sum-lines"></ul>
+  <button id="birthStart" class="primary">삶을 시작하기 →</button>
 </div></div>
 <div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
 <div id="saveOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="saveTitle" hidden><div class="modal">
