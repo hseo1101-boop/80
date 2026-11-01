@@ -13,7 +13,10 @@ function eraText(s) {
   if (t >= ym(1815,3) && t < ym(1815,7)) return '나폴레옹의 백일천하입니다.';
   if (t < ym(1830,8)) return '왕정복고 시대입니다. 부르봉 왕가가 돌아왔지만 혁명 이전으로 완전히 되돌아가지는 않았습니다.';
   if (t < ym(1848,2)) return '7월 왕정 시대입니다. 철도와 공장이 늘고 부르주아의 시대가 열립니다.';
-  return '제2공화국 이후의 프랑스입니다. 성인 남성 모두가 투표하는 시대가 시작되었습니다.';
+  if (t < ym(1852,12)) return '제2공화국 시대입니다. 성인 남성 모두가 투표하는 시대가 시작되었습니다.';
+  if (t < ym(1870,9)) return '제2제정 시대입니다. 나폴레옹 3세 아래 철도와 은행, 파리 대개조가 나라를 바꿉니다.';
+  if (t < ym(1914,8)) return '제3공화국 시대입니다. 무상·의무 교육과 국경일 7월 14일, 공화국이 마을까지 뿌리내립니다.';
+  return '제1차 세계대전이 시작되었습니다.';
 }
 const ERAS = [
   {from:1740, to:ym(1789,5), label:'구체제', color:'#b9a77a', regime:'ROYAUME DE FRANCE'},
@@ -25,10 +28,12 @@ const ERAS = [
   {to:ym(1815,7), label:'백일천하', color:'#3c5a8a', regime:'EMPIRE FRANÇAIS'},
   {to:ym(1830,8), label:'왕정복고', color:'#d6ccb2', regime:'ROYAUME DE FRANCE'},
   {to:ym(1848,2), label:'7월 왕정', color:'#7a9a7a', regime:'ROYAUME DES FRANÇAIS'},
-  {to:ym(1900,1), label:'제2공화국 이후', color:'#b3443f', regime:'RÉPUBLIQUE FRANÇAISE'}
+  {to:ym(1852,12), label:'제2공화국', color:'#c0564e', regime:'RÉPUBLIQUE FRANÇAISE'},
+  {to:ym(1870,9), label:'제2제정', color:'#3c5a8a', regime:'EMPIRE FRANÇAIS'},
+  {to:ym(1940,7), label:'제3공화국', color:'#b3443f', regime:'RÉPUBLIQUE FRANÇAISE'}
 ];
 function eraAt(year, month) { const t = ym(year, month); return ERAS.find(e => t < e.to) || ERAS.at(-1); }
-const POPULATION = [[1740,24.6],[1770,26.6],[1790,28.1],[1801,29.4],[1821,30.5],[1831,32.6],[1846,35.4],[1851,35.8],[1880,37.7]];
+const POPULATION = [[1740,24.6],[1770,26.6],[1790,28.1],[1801,29.4],[1821,30.5],[1831,32.6],[1846,35.4],[1851,35.8],[1861,37.4],[1872,36.1],[1881,37.7],[1891,38.3],[1901,38.5],[1911,39.6]];
 function populationOf(year) {
   const p = POPULATION;
   if (year <= p[0][0]) return p[0][1];
@@ -217,7 +222,7 @@ function createUI(doc, engine, handlers) {
       if (spec) { spec.moving = !s.dead && !s.decision && !s.runtime.paused; spec.speed = s.runtime.speed; if (spec.moving || !spec.drawn) { scene.draw(spec, now); spec.drawn = true; } }
     }
   }
-  const BIRTH_MARKS = [[1789,'대혁명'],[1804,'나폴레옹 즉위'],[1815,'워털루'],[1830,'7월 혁명'],[1848,'2월 혁명']];
+  const BIRTH_MARKS = [[1789,'대혁명'],[1804,'나폴레옹 즉위'],[1815,'워털루'],[1830,'7월 혁명'],[1848,'2월 혁명'],[1852,'제2제정'],[1870,'보불 전쟁'],[1871,'파리 코뮌'],[1889,'에펠탑'],[1914,'제1차 세계대전']];
   function renderBirthPick() {
     const born = handlers.getBorn();
     $('birthYearOut').textContent = born ? born + '년' : '무작위';
@@ -331,12 +336,12 @@ function createUI(doc, engine, handlers) {
     }).join('') || '<li class="muted">아직 기록된 사람이 없습니다.</li>';
     $('relationExtra').textContent = `생존 ${s.relations.filter(r => r.alive).length}명 · 전체 ${s.relations.length}명`;
     // Right column
-    const lifeEnd = s.year + s.month/12, span = [1740, 1860];
+    const lifeEnd = s.year + s.month/12, span = [1740, 1915];
     const pct = y => ((Math.min(span[1], Math.max(span[0], y)) - span[0]) / (span[1] - span[0]) * 100).toFixed(2);
     let from = span[0];
     $('eraBar').innerHTML = ERAS.map(x => { const to = Math.min(span[1], x.to/12); const seg = `<span style="left:${pct(from)}%;width:${(pct(to)-pct(from)).toFixed(2)}%;background:${x.color}" title="${e(x.label)}"></span>`; from = to; return seg; }).join('')
       + `<em style="left:${pct(s.born + s.birthMonth/12)}%;width:${(pct(lifeEnd)-pct(s.born + s.birthMonth/12)).toFixed(2)}%"></em><b style="left:${pct(lifeEnd)}%"></b>`;
-    $('eraLabels').innerHTML = '<span>1740</span><span>1789</span><span>1815</span><span>1860</span>';
+    $('eraLabels').innerHTML = '<span>1740</span><span>1789</span><span>1815</span><span>1848</span><span>1870</span><span>1914</span>';
     $('era').textContent = eraText(s);
     $('milestones').innerHTML = s.lifeMilestones.slice().reverse().map(x => `<li>${e(x)}</li>`).join('');
     const interests = Object.entries(s.experience || {}).filter(([,v]) => v > 0).sort((a,b) => b[1]-a[1]);

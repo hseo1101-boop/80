@@ -123,7 +123,7 @@ function characterLook(s, person = s) {
       const royal = era === 'ancien' || era === 'restoration';
       o.coat = royal && era === 'ancien' ? '#e7e2d4' : '#2d4c8e'; o.trim = royal && era === 'ancien' ? '#2d4c8e' : '#b8323a';
       o.vest = PX.white; o.legs = PX.white; o.stockings = '#2b2a30'; o.belts = true; o.cravat = true;
-      o.hat = era === 'ancien' ? 'tricorne' : 'bicorne'; o.plume = '#c8343a'; o.cockade = era === 'ancien' || era === 'restoration' ? 'white' : 'tricolor';
+      o.hat = era === 'ancien' ? 'tricorne' : 'bicorne'; o.plume = '#c8343a'; o.cockade = era === 'ancien' || (era === 'restoration' && s.year < 1830) ? 'white' : 'tricolor';
     } else if (kind === 'peasant') {
       o.vest = pickBy(v(3), ['#7a5a3a','#5e6b45','#8a4b32','#4e5a6b']); o.legs = '#6b5038';
       o.legStyle = era === 'ancien' || era === 'revolution' ? 'breeches' : 'trousers';

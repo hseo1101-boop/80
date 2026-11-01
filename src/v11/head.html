@@ -250,13 +250,13 @@ label.section{display:block}
 <section id="intro" class="intro"><div class="card">
   <div class="scene-wrap"><canvas id="introScene" aria-label="18세기 프랑스 시골 마을의 가족"></canvas></div>
   <div class="intro-body">
-    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1750–1850 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
+    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1750–1914 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
     <p>출생지와 가문은 무작위로 정해집니다. 시간이 자동으로 흐르며 일상이 기록되고, 중요한 순간에는 <b>중대 결정</b> 창이 열립니다. 역사의 흐름은 바뀌지 않지만, 당신의 삶은 선택에 따라 달라집니다.</p>
     <div class="birth-pick">
       <div class="bp-head"><label for="birthYear">태어날 해</label><output id="birthYearOut" for="birthYear">무작위</output></div>
-      <input type="range" id="birthYear" min="1750" max="1825" step="1" value="1775" aria-describedby="birthHint">
-      <div class="bp-marks" aria-hidden="true"><span>1750</span><span>1789</span><span>1815</span><span>1825</span></div>
-      <div class="chips" role="group" aria-label="빠른 선택"><button class="chip on" data-born="random">무작위</button><button class="chip" data-born="1760">1760 · 구체제</button><button class="chip" data-born="1772">1772 · 혁명 세대</button><button class="chip" data-born="1790">1790 · 나폴레옹 세대</button><button class="chip" data-born="1810">1810 · 7월 왕정 세대</button></div>
+      <input type="range" id="birthYear" min="1750" max="1860" step="1" value="1775" aria-describedby="birthHint">
+      <div class="bp-marks" aria-hidden="true"><span>1750</span><span>1789</span><span>1815</span><span>1848</span><span>1860</span></div>
+      <div class="chips" role="group" aria-label="빠른 선택"><button class="chip on" data-born="random">무작위</button><button class="chip" data-born="1760">1760 · 구체제</button><button class="chip" data-born="1772">1772 · 혁명 세대</button><button class="chip" data-born="1790">1790 · 나폴레옹 세대</button><button class="chip" data-born="1810">1810 · 7월 왕정 세대</button><button class="chip" data-born="1835">1835 · 제2제정 세대</button><button class="chip" data-born="1855">1855 · 제3공화국 세대</button></div>
       <p id="birthHint" class="bp-hint"></p>
     </div>
     <div class="btns"><button id="resumeButton" class="primary" data-action="loadGame" hidden>지난 인생 이어 하기</button><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 코드 가져오기</button></div>
@@ -377,5 +377,5 @@ label.section{display:block}
   <p id="saveStatus" class="note" role="status" aria-live="polite"></p>
   <div class="ask-btns"><button id="saveClose">닫기</button><button id="saveFile">파일로 받기</button><button id="savePick">파일 고르기</button><button id="saveCopy" class="primary">복사</button><button id="saveLoad" class="primary">이 코드로 불러오기</button></div>
 </div></div>
-<div class="foot">어느 프랑스인의 삶 <span id="gameVersion"></span> · <a href="https://hseo1101-boop.github.io/80/community.html" target="_blank" rel="noopener">광장(업데이트·의견·묘비명)</a> · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
+<div class="foot">어느 프랑스인의 삶 <span id="gameVersion"></span> · <a href="https://hseo1101-boop.github.io/80/community.html" target="_blank" rel="noopener">광장(업데이트·의견·묘비명)</a> · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1914년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
 <script>

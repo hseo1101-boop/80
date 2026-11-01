@@ -337,7 +337,7 @@ function applyRealEffects(s, e) {
 }
 // On the record, the recorded trade holds: chance careers and job changes from ordinary decisions wait.
 const realOnRecord = s => !!s.familyEvents?.real && !s.familyEvents.realOff;
-const CAREER_DOORS = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job))).map(d => d.id));
+const CAREER_DOORS = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id));
 function realBlocks(s, d) { return realOnRecord(s) && CAREER_DOORS.has(d.id); }
 function realKeep(s) {
   const job = s.familyEvents?.realJob;

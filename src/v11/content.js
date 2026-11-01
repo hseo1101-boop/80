@@ -65,4 +65,4 @@ historicalEvents.push(
 );
 
 // src/data/birth.js
-const BIRTH_CHOICE = {min:1750, max:1825};
+const BIRTH_CHOICE = {min:1750, max:1860};

@@ -8,21 +8,69 @@
 // A bond lives in familyEvents as "bd_<key>" = "kind|fate|year|name|memo" (saves keep it), and the
 // person joins your relations as 지인.
 DECISION_DOMAINS.push({id:'bond', label:'인연', target:0});
-const BOND_TITLES = {mayor:'면장', committee:'구역 감시위원', deputy:'국민공회 의원', officer:'공화국 장군', priest:'신부', patron:'망명 귀족', official:'도지사'};
-const BOND_RISE = {mayor:[1790, 1], committee:[1793, 4], deputy:[1792, 9], officer:[1796, 3], priest:[1802, 4], patron:[1790, 6], official:[1831, 2]};
-
-function bondTitle(s, fate) { return fate === 'committee' && s.place.includes('농촌') ? '마을 감시위원' : BOND_TITLES[fate] || '관리'; }
+// Each future: its title, when it arrives, whether it is local (a village mayor is only seen at home;
+// from elsewhere the news comes by letter), how the news reads, the quiet payoff for each kind of bond,
+// and sometimes a next future (the Convention deputy who becomes Napoleon's prefect, the émigré who
+// returns in 1815, the proscrit of 1851 who comes back a deputy in 1870).
+const FATES = {
+  mayor:{title:'면장', rise:1790, local:true, news:b => `${b.name}이(가) 새로 생긴 마을 면장으로 뽑혔습니다.`,
+    favor:['면장의 귀띔', '{n} 면장이 국유재산(옛 교회 땅) 경매 날짜를 먼저 알려 주었습니다. 밭 한 뙈기를 싸게 샀습니다.', {재산:5}],
+    grudge:['면장의 앙갚음', '{n} 면장이 공유지를 나누면서 당신 몫을 가장 척박한 곳으로 정했습니다. {y}년 전 일을 잊지 않은 것입니다.', {재산:-4, 행복:-2}]},
+  committee:{title:'감시위원', rise:1793, local:true, news:b => `${b.name}이(가) 감시위원회에 들어갔습니다. 이제 누가 ‘혐의자’인지 가리는 자리입니다.`},
+  deputy:{title:'국민공회 의원', rise:1792, news:b => `${b.name}이(가) 국민공회 의원으로 뽑혔다는 소식이 들려왔습니다.`, next:['prefect', .6],
+    special:(s, b) => { if (random(s) < .25) { b.rel.alive = false; b.rel.deathYear = Math.max(s.year, 1793); addLog(s, '단두대 소식', `국민공회 의원 ${b.name}이(가) 단두대에 올랐다는 소식이 들려왔습니다. 당신이 ${b.memo} 그 사람입니다.`, 'bad'); } }},
+  prefect:{title:'도지사', rise:1800, news:b => `옛 국민공회 의원 ${b.name}이(가) 제1통령의 도지사로 임명되었습니다. 혁명가들이 이제 나폴레옹의 관리가 됩니다.`,
+    favor:['도지사의 호의', '{n} 도지사가 당신 집안에 담배 판매 허가를 내주었습니다. 국가가 독점한 담배를 팔 수 있는 자리입니다.', {재산:6, 행복:2}],
+    grudge:['도지사의 감시', '{n} 도지사가 당신을 ‘불온한 자’ 명단에 올려 경찰이 드나들기 시작했습니다.', {행복:-4}], next:['regicide', .5]},
+  regicide:{title:'추방된 국왕 시해자', rise:1816, news:b => `왕정복고 정부가 국왕 처형에 찬성했던 옛 의원들을 추방했습니다. ${b.name}도 브뤼셀로 떠났습니다.`},
+  officer:{title:'공화국 장군', rise:1796, news:b => `${b.name}이(가) 공화국 군대에서 장군이 되었다는 소식을 들었습니다.`,
+    special:(s, b) => { if (b.kind !== 'favor') return;
+      const son = s.relations.find(r => r.role === '자녀' && r.alive && personSex(r) === '남성' && ageOf(s, r) >= 16 && ageOf(s, r) <= 30);
+      changeStats(s, son ? {행복:4} : {행복:4, 재산:5});
+      addLog(s, '장군의 편지', son ? `${b.name} 장군이 편지를 보내 ${son.name}을(를) 자기 사령부의 서기로 데려가겠다고 했습니다. 최전선 대신입니다.` : `${b.name} 장군이 옛 은혜를 잊지 않았다며 넉넉한 돈을 보내왔습니다.`, 'good'); }},
+  priest:{title:'신부', rise:1802, local:true, news:b => `정교 협약 뒤 ${b.name} 신부가 본당 신부로 돌아왔습니다.`,
+    favor:['신부의 축복', '{n} 신부가 미사 뒤 당신을 따로 불러 축복해 주었습니다. 당신이 {m} 일을 기억하고 있었습니다.', {행복:3}]},
+  patron:{title:'망명 귀족', rise:1790, news:b => `${b.name}이(가) 국경 너머로 망명했다는 소식이 들립니다. 그 이름과 얽힌 사람은 이제 의심을 받습니다.`, next:['returned', .7]},
+  returned:{title:'돌아온 귀족', rise:1815, news:b => `왕정복고와 함께 ${b.name} 후작이 망명에서 돌아왔습니다. 1793년에는 위험한 이름이었지만, 이제는 힘 있는 이름입니다.`,
+    stain:['후작의 기억', '{n} 후작이 옛 후원 관계를 잊지 않았습니다. 궁정에 납품하는 주문을 주선해 주었습니다.', {재산:7, 행복:3}]},
+  notable:{title:'시장', rise:1808, local:true, news:b => `${b.name}이(가) 황제가 임명한 시장이 되었습니다. 징집 명단을 만드는 사람입니다.`},
+  official:{title:'도지사', rise:1831, local:true, news:b => `7월 왕정이 들어서고 ${b.name}이(가) 도지사가 되었습니다.`,
+    favor:['도지사의 추천장', '{n} 도지사가 당신 집안 사람을 관청 자리에 추천해 주었습니다.', {재산:5, 행복:3}],
+    grudge:['도지사의 눈', '{n} 도지사가 당신의 영업 허가를 다시 심사하라고 지시했습니다.', {재산:-4}]},
+  commissaire:{title:'공화국 위원', rise:1848, news:b => `2월 혁명 뒤 ${b.name}이(가) 임시 정부의 ‘공화국 위원’으로 임명되었습니다. 7월 왕정 때 쫓기던 공화파가 이제 도를 다스립니다.`,
+    favor:['공화국 위원의 추천', '{n} 위원이 당신을 새 시 의회 명단에 올리고, 집안 젊은이에게 관청 일자리를 주었습니다.', {재산:4, 행복:4}],
+    grudge:['공화국 위원의 숙청', '{n} 위원이 7월 왕정에 협력한 사람들을 정리하면서 당신 이름도 올렸습니다.', {재산:-4, 행복:-3}], next:['proscrit', .55]},
+  proscrit:{title:'추방된 공화파', rise:1852, news:b => `12월 쿠데타 뒤 혼합 위원회가 공화파를 잡아들이고 있습니다. ${b.name}도 쫓기는 몸이 되었습니다.`},
+  imperial:{title:'제정의 도지사', rise:1853, local:true, news:b => `제2제정이 서고 ${b.name}이(가) 황제의 도지사가 되었습니다. 옛 보나파르트파 음모가가 이제 도를 다스립니다.`,
+    favor:['도지사의 철도 소식', '{n} 도지사가 새 철도 노선이 지날 땅을 귀띔해 주었습니다. 그 땅값이 세 배가 되었습니다.', {재산:8}],
+    grudge:['제정 경찰의 감시', '{n} 도지사의 경찰이 당신의 편지를 뜯어보고, 집에 드나드는 사람을 적어 갑니다.', {행복:-4}]},
+  republican:{title:'공화파 의원', rise:1871, news:b => `제3공화국 첫 선거에서 ${b.name}이(가) 의원으로 뽑혔습니다. 제정 시절의 망명과 감옥을 견딘 사람입니다.`, next:['senator', .4],
+    favor:['의원의 추천장', '{n} 의원이 추천장을 써 주어, 집안 사람이 담배 가게 허가와 우체국 자리를 얻었습니다. 공화국은 친구를 잊지 않습니다.', {재산:6, 행복:4}],
+    grudge:['의원의 앙갚음', '{n} 의원이 도청에 말을 넣었습니다. 당신 집안 사람이 관청 자리에서 밀려났습니다.', {재산:-5, 행복:-3}]},
+  senator:{title:'상원 의원', rise:1885, news:b => `${b.name}이(가) 상원 의원이 되었습니다. 레지옹 도뇌르 훈장 명단을 들여다보는 자리입니다.`,
+    favor:['상원 의원의 편지', '{n} 의원의 추천으로 당신(혹은 집안 어른)의 이름이 레지옹 도뇌르 명단에 올랐습니다.', {행복:5}]},
+  communard:{title:'코뮌 위원', rise:1871, local:true, news:b => `파리 코뮌이 선포되고 ${b.name}이(가) 구역의 코뮌 위원이 되었습니다.`, next:['amnesty', .6],
+    favor:['코뮌 위원의 보호', '{n} 위원이 당신 가게를 징발 명단에서 빼 주었습니다.', {행복:2}],
+    grudge:['코뮌의 징발', '{n} 위원이 당신 창고를 ‘인민의 이름으로’ 징발했습니다.', {재산:-6, 행복:-3}],
+    special:(s, b) => { if (random(s) < .3) { b.rel.alive = false; b.rel.deathYear = 1871; addLog(s, '피의 일주일', `5월 마지막 주, ${b.name}이(가) 베르사유군에게 붙잡혀 벽 앞에서 총살되었다는 소식을 들었습니다.`, 'bad'); } }},
+  amnesty:{title:'파리 시의원', rise:1880, local:true, news:b => `1880년 대사면으로 누벨칼레도니에서 돌아온 ${b.name}이(가) 파리 시의원에 뽑혔습니다.`,
+    favor:['시의원의 도움', '{n} 시의원이 당신 아이를 새 공립 학교의 교사 자리에 추천했습니다.', {재산:4, 행복:4}],
+    grudge:['시의원의 눈총', '{n} 시의원이 동네 사람들 앞에서 당신이 1871년에 한 일을 꺼냈습니다.', {행복:-4}]}
+};
+function bondTitle(s, fate) { return FATES[fate]?.title || '관리'; }
+const placeShort = p => (p || '').replace(' 농촌', ' 시골');
 function bondsOf(s) {
   return Object.entries(s.familyEvents || {}).filter(([k, v]) => k.startsWith('bd_') && typeof v === 'string').map(([k, v]) => {
-    const [kind, fate, year, name, memo, done] = v.split('|');
-    return {key:k.slice(3), kind, fate, year:+year, name, memo, done:done || '', rel:s.relations.find(r => r.name === name && r.role === '지인')};
+    const [kind, fate, year, name, memo, done, place] = v.split('|');
+    return {key:k.slice(3), kind, fate, year:+year, name, memo, done:done || '', place:place || '', rel:s.relations.find(r => r.name === name && r.role === '지인')};
   });
 }
-function bondSet(s, b) { s.familyEvents['bd_' + b.key] = [b.kind, b.fate, b.year, b.name, b.memo, b.done].join('|').slice(0, 300); }
-// The oldest living bond that fits {kind:[…], fate:[…], minYears}.
+function bondSet(s, b) { s.familyEvents['bd_' + b.key] = [b.kind, b.fate, b.year, b.name, b.memo, b.done, b.place].join('|').slice(0, 300); }
+const bondHere = (s, b) => !FATES[b.fate]?.local || !b.place || b.place === s.place;
+// The oldest living bond that fits {kind:[…], fate:[…], minYears, here}.
 function bondPick(s, spec = {}) {
   return bondsOf(s).filter(b => b.rel?.alive && (!spec.kind || spec.kind.includes(b.kind)) && (!spec.fate || spec.fate.includes(b.fate))
-    && s.year - b.year >= (spec.minYears || 0)).sort((a, b) => a.year - b.year)[0] || null;
+    && s.year - b.year >= (spec.minYears || 0) && (!spec.here || bondHere(s, b))).sort((a, b) => a.year - b.year)[0] || null;
 }
 function bondFill(s, d, text) {
   if (!d?.when?.bond || typeof text !== 'string' || !text.includes('{')) return text;
@@ -33,48 +81,45 @@ function bondFill(s, d, text) {
 function makeBond(s, spec) {
   const key = spec.key + (bondsOf(s).some(b => b.key === spec.key) ? s.year : '');
   let fate = spec.fate === 'auto' ? (s.place.includes('농촌') ? 'mayor' : random(s) < .4 ? 'deputy' : 'committee') : spec.fate;
+  if (fate === 'auto2') fate = s.place === '파리' ? 'communard' : 'republican';
   // One village has one mayor; a second rural bond sits on the village committee instead.
   if (fate === 'mayor' && bondsOf(s).some(b => b.fate === 'mayor')) fate = 'committee';
-  const sex = spec.sex || (fate === 'priest' || fate === 'officer' || fate === 'deputy' || fate === 'mayor' ? '남성' : pick(s, ['남성', '여성']));
+  const sex = spec.sex || (['priest', 'officer', 'deputy', 'mayor', 'notable', 'republican', 'commissaire', 'imperial', 'proscrit'].includes(fate) ? '남성' : pick(s, ['남성', '여성']));
   const name = freshName(s, sex === '남성' ? male : female, spec.surname || pick(s, surnames));
   s.relations.push({name, role:'지인', sex, birthYear:s.year - Math.max(16, ageOf(s) + rand(s, -8, 6)), birthMonth:s.month,
     alive:true, closeness:spec.kind === 'favor' ? rand(s, 60, 80) : spec.kind === 'grudge' ? rand(s, 5, 20) : 50, job:spec.job || '없음'});
-  bondSet(s, {key, kind:spec.kind, fate, year:s.year, name, memo:spec.memo || '', done:''});
+  bondSet(s, {key, kind:spec.kind, fate, year:s.year, name, memo:spec.memo || '', done:'', place:s.place});
 }
-function applyBondEffects(s, e) { if (e.bond) makeBond(s, e.bond); }
+// A decision can move an existing bond to a new kind or future (a proscrit hidden in 1851 becomes a friend in 1871).
+function shiftBond(s, spec) {
+  const b = bondPick(s, spec.from); if (!b) return;
+  if (spec.kind) b.kind = spec.kind;
+  if (spec.fate) { b.fate = spec.fate; b.done = b.done.replace(/r/g, ''); }
+  if (spec.memo) b.memo = spec.memo;
+  bondSet(s, b);
+}
+function applyBondEffects(s, e) {
+  if (e.bond) makeBond(s, e.bond);
+  if (e.bondShift) shiftBond(s, e.bondShift);
+  if (e.moveTo && s.place !== e.moveTo) { s.place = e.moveTo; milestone(s, `${e.moveTo}(으)로 이주`); }
+}
 
-// Yearly: futures arrive, and the quieter payoffs land.
+// Yearly: futures arrive. At home you see it and feel it; from elsewhere a letter brings only the news.
 function bondYear(s) {
   for (const b of bondsOf(s)) {
-    if (!b.rel?.alive || b.done.includes('r')) continue;
-    const [y, m] = BOND_RISE[b.fate] || [9999, 1];
-    if (s.year < y || ageOf(s, b.rel) < 25) continue;
-    b.rel.job = bondTitle(s, b.fate);
-    b.done += 'r'; bondSet(s, b);
+    const F = FATES[b.fate];
+    if (!F || !b.rel?.alive || b.done.includes('r') || s.year < F.rise || ageOf(s, b.rel) < 25) continue;
+    b.rel.job = F.title; b.done += 'r';
     const back = `${s.year - b.year}년 전 당신이 ${b.memo} 그 사람입니다.`;
-    const rise = {mayor:`${b.name}이(가) 새로 생긴 마을 면장으로 뽑혔습니다.`, committee:`${b.name}이(가) ${s.place.includes('농촌') ? '마을' : '구역'} 감시위원회에 들어갔습니다. 이제 누가 ‘혐의자’인지 가리는 자리입니다.`,
-      deputy:`${b.name}이(가) 국민공회 의원으로 뽑혔다는 소식이 들려왔습니다.`, officer:`${b.name}이(가) 공화국 군대에서 장군이 되었다는 소식을 들었습니다.`,
-      priest:`정교 협약 뒤 ${b.name} 신부가 본당 신부로 돌아왔습니다.`, patron:`${b.name}이(가) 국경 너머로 망명했다는 소식이 들립니다. 그 이름과 얽힌 사람은 이제 의심을 받습니다.`,
-      official:`7월 왕정이 들어서고 ${b.name}이(가) 도지사가 되었습니다.`}[b.fate];
-    addLog(s, '돌아온 이름', `${rise} ${back}`, b.kind === 'favor' ? 'good' : b.kind === 'grudge' || b.kind === 'stain' ? 'bad' : 'normal');
-    // Quiet payoffs that need no decision.
-    if (b.fate === 'mayor') {
-      if (b.kind === 'favor') { changeStats(s, {재산:5}); addLog(s, '면장의 귀띔', `${b.name} 면장이 국유재산(옛 교회 땅) 경매 날짜를 먼저 알려 주었습니다. 밭 한 뙈기를 싸게 샀습니다.`, 'good'); }
-      if (b.kind === 'grudge') { changeStats(s, {재산:-4, 행복:-2}); addLog(s, '면장의 앙갚음', `${b.name} 면장이 공유지를 나누면서 당신 몫을 가장 척박한 곳으로 정했습니다. ${s.year - b.year}년 전 일을 잊지 않은 것입니다.`, 'bad'); }
+    if (!bondHere(s, b)) addLog(s, '고향에서 온 편지', `고향 ${placeShort(b.place)}에서 편지가 왔습니다. ${F.news(b)} ${back}`, 'normal');
+    else {
+      addLog(s, '돌아온 이름', `${F.news(b)} ${back}`, b.kind === 'favor' ? 'good' : b.kind === 'grudge' ? 'bad' : 'normal');
+      const pay = F[b.kind];
+      if (pay) { changeStats(s, pay[2]); addLog(s, pay[0], pay[1].replaceAll('{n}', b.name).replaceAll('{y}', String(s.year - b.year)).replaceAll('{m}', b.memo), Object.values(pay[2]).some(v => v < 0) ? 'bad' : 'good'); }
+      F.special?.(s, b);
     }
-    if (b.fate === 'officer' && b.kind === 'favor') {
-      const son = s.relations.find(r => r.role === '자녀' && r.alive && personSex(r) === '남성' && ageOf(s, r) >= 16 && ageOf(s, r) <= 30);
-      changeStats(s, {행복:4});
-      addLog(s, '장군의 편지', son ? `${b.name} 장군이 편지를 보내 ${son.name}을(를) 자기 사령부의 서기로 데려가겠다고 했습니다. 최전선 대신입니다.` : `${b.name} 장군이 옛 은혜를 잊지 않았다며 넉넉한 돈을 보내왔습니다.`, 'good');
-      if (!son) changeStats(s, {재산:5});
-    }
-    if (b.fate === 'priest' && b.kind === 'favor') { changeStats(s, {행복:3}); addLog(s, '신부의 축복', `${b.name} 신부가 미사 뒤 당신을 따로 불러 축복해 주었습니다. 숨어 지내던 시절 당신이 ${b.memo} 일을 기억하고 있었습니다.`, 'good'); }
-    if (b.fate === 'official') {
-      if (b.kind === 'favor') { changeStats(s, {재산:5, 행복:3}); addLog(s, '도지사의 추천장', `${b.name} 도지사가 당신 집안 사람을 관청 자리에 추천해 주었습니다.`, 'good'); }
-      if (b.kind === 'grudge') { changeStats(s, {재산:-4}); addLog(s, '도지사의 눈', `${b.name} 도지사가 당신의 영업 허가를 다시 심사하라고 지시했습니다.`, 'bad'); }
-    }
-    // Deputies of the Convention often did not survive it.
-    if (b.fate === 'deputy' && random(s) < .25) { b.rel.alive = false; b.rel.deathYear = Math.max(s.year, 1793); addLog(s, '단두대 소식', `국민공회 의원 ${b.name}이(가) 단두대에 올랐다는 소식이 들려왔습니다. 당신이 ${b.memo} 그 사람입니다.`, 'bad'); }
+    if (F.next && b.rel.alive && random(s) < F.next[1]) { b.fate = F.next[0]; b.done = b.done.replace(/r/g, ''); }
+    bondSet(s, b);
   }
   // An old friend in old age.
   const old = bondPick(s, {kind:['favor'], minYears:30});
@@ -148,7 +193,7 @@ function terrorRisk(s) {
   const T = (id, date, until, when, title, text, choices, chance) => decisions.push({id, domain:'history', priority:30, historic:true, title, text, chance,
     when:{...when, fromDate:date, toDate:until, unsetFlag:'terror-bond'}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:['terror-bond', id]}}))});
   const GUILLOTINE = '혁명 재판소에서 사형 판결을 받고 단두대에 올랐습니다.';
-  T('terror-grudge', [1793,9], [1794,7], {minAge:16, bond:{kind:['grudge'], fate:['committee', 'deputy', 'mayor']}}, '고발장에 적힌 이름',
+  T('terror-grudge', [1793,9], [1794,7], {minAge:16, bond:{kind:['grudge'], fate:['committee', 'deputy', 'mayor'], here:true}}, '고발장에 적힌 이름',
     '혐의자 법이 공포되었습니다. 구역 감시위원회에서 출두하라는 쪽지가 왔습니다. 고발한 사람은 {옛사람}. 이제 {직함}입니다. {몇년}년 전 당신이 {그일} 일을, 그는 잊지 않았습니다.',
     [{label:'출두해 해명한다', preview:'풀려남 / 투옥 / 단두대', outcomes:[
        O('freed', '풀려났습니다', 55, '이웃들이 증언해 주었습니다. 위원회는 당신을 돌려보냈지만 {옛사람}은(는) 끝까지 당신을 노려보았습니다.', {stats:{행복:-4}}),
@@ -160,7 +205,7 @@ function terrorRisk(s) {
      {label:'다른 옛 인연에게 도움을 청한다', requires:{bondFavor:true}, preview:'구명 / 소용없음', outcomes:[
        O('saved', '도움을 받았습니다', 80, '당신이 예전에 도와준 사람이 위원회에 나와 당신 편을 들었습니다. 고발은 거둬졌습니다.', {stats:{행복:3}, milestone:'옛 인연 덕에 공포 정치를 넘김'}),
        O('vain', '소용없었습니다', 20, '그도 자기 몸을 사리느라 나서지 못했습니다. 넉 달을 감옥에서 보냈습니다.', {stats:{건강:-8, 재산:-6, 행복:-8}})]}], .14);
-  T('terror-favor', [1793,9], [1794,7], {minAge:16, terrorRisk:true, bond:{kind:['favor'], fate:['committee', 'deputy', 'mayor']}}, '명단에서 지워진 이름',
+  T('terror-favor', [1793,9], [1794,7], {minAge:16, terrorRisk:true, bond:{kind:['favor'], fate:['committee', 'deputy', 'mayor'], here:true}}, '명단에서 지워진 이름',
     '혐의자 명단이 돌고 있습니다. 당신 이름도 올라 있다는 소문입니다. 그날 밤 {옛사람}이(가) 조용히 찾아왔습니다. 이제 {직함}입니다. “{몇년}년 전 당신이 {그일} 일을 나는 잊지 않았소.”',
     [{label:'그의 도움을 받는다', result:'이튿날 명단에서 당신 이름이 사라졌습니다. 공포 정치가 끝날 때까지 아무도 당신을 부르지 않았습니다.', effects:{stats:{행복:6}, milestone:'옛 인연 덕에 공포 정치를 넘김'}},
      {label:'그를 위험에 빠뜨릴 수 없어 사양한다', preview:'무사함 / 투옥', outcomes:[

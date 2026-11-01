@@ -3,8 +3,8 @@
 // sous (20 sous = 1 livre, later 1 franc). Provinces and the countryside paid less and ate cheaper bread.
 // Sources in spirit: Labrousse, Rudé and Kaplan on Paris bread; Simiand and Chevalier on wages.
 const BREAD_SOUS = {1750:9, 1768:11, 1770:12, 1771:11, 1774:10, 1775:13, 1776:9, 1788:12, 1789:14, 1790:12, 1795:16, 1796:14, 1797:11,
-  1801:16, 1803:12, 1811:13, 1812:18, 1813:13, 1816:16, 1817:19, 1818:15, 1819:12, 1828:15, 1829:16, 1830:15, 1832:12, 1839:14, 1841:13, 1846:16, 1847:19, 1848:12};
-const WAGE_SOUS = {1750:18, 1780:20, 1790:24, 1800:36, 1815:40, 1830:44, 1845:46};
+  1801:16, 1803:12, 1811:13, 1812:18, 1813:13, 1816:16, 1817:19, 1818:15, 1819:12, 1828:15, 1829:16, 1830:15, 1832:12, 1839:14, 1841:13, 1846:16, 1847:19, 1848:12, 1853:15, 1855:17, 1857:14, 1859:12, 1868:14, 1870:16, 1871:22, 1872:14, 1880:13, 1890:12, 1900:11, 1910:12};
+const WAGE_SOUS = {1750:18, 1780:20, 1790:24, 1800:36, 1815:40, 1830:44, 1845:46, 1855:52, 1865:60, 1875:70, 1885:80, 1895:88, 1905:95, 1912:100};
 const stepValue = (table, year) => Object.keys(table).map(Number).filter(y => y <= year).reduce((v, y) => table[y], table[Object.keys(table)[0]]);
 function pricesOf(s) {
   const paris = s.place === '파리', rural = s.place.includes('농촌');
