@@ -114,16 +114,25 @@ function signalement(s) {
   return `CHEVEUX ${hair.toUpperCase()} · YEUX ${eyes.toUpperCase()} · TAILLE ${height.toUpperCase()}`;
 }
 function logAge(s, x) { return Math.max(0, x.year - s.born - (x.month < s.birthMonth ? 1 : 0)); }
-function logLabel(x) {
-  if (x.type === 'history') return '역사';
-  if (x.type === 'fact') return '시대의 숫자';
-  if (x.title.startsWith('중대 결정')) return (x.title.includes('역사의 현장') ? '역사의 현장 · ' : '결정 · ') + x.title.split(' · ').at(-1);
-  return x.title.includes(' · ') ? x.title.split(' · ').at(-1) : x.title;
+const EVENT_INDEX = new Map([...dailyEvents, ...childhoodEvents].map(ev => [ev.id, ev]));
+const KICKER = {history:'📜 역사', fact:'📊 시대의 숫자'};
+// Splits a log entry into a small kicker line, an optional bold title, the text and stat-change chips.
+function logParts(x) {
+  const daily = x.eventId && EVENT_INDEX.get(x.eventId);
+  if (x.title.startsWith('중대 결정')) {
+    const historic = x.title.includes('역사의 현장');
+    return {kicker: historic ? '🏛 역사의 현장' : '⚖ 중대 결정', title: x.title.split(' · ').at(-1),
+      text: x.desc.split('\n').slice(1).filter(line => line !== '결과: 선택의 결과').join('\n'), chips: []};
+  }
+  if (daily && x.title.includes(' · ')) {
+    const [kicker, ...rest] = x.title.split(' · ');
+    const chips = Object.entries(daily.effects?.stats || {}).filter(([,v]) => v).map(([k,v]) => [k, v]);
+    return {kicker, title: rest.join(' · '), text: x.desc, chips};
+  }
+  if (KICKER[x.type]) return {kicker: KICKER[x.type], title: '', text: x.desc, chips: []};
+  return {kicker: x.title, title: '', text: x.desc, chips: []};
 }
-function logText(x) {
-  if (x.title.startsWith('중대 결정')) return x.desc.split('\n').slice(1).filter(line => line !== '결과: 선택의 결과').join('\n');
-  return x.desc;
-}
+function logLabel(x) { const p = logParts(x); return p.title ? `${p.kicker} · ${p.title}` : p.kicker; }
 
 function createUI(doc, engine, handlers) {
   const $ = id => doc.getElementById(id), e = escapeHTML;
@@ -202,7 +211,7 @@ function createUI(doc, engine, handlers) {
       const dead = x.title === '생애의 끝' || /세상을 떠났/.test(x.desc);
       rows.push(`<li class="row ${e(x.type)}${x.star ? ' starred' : ''}" data-i="${i}" tabindex="0" aria-label="${x.star ? '별표한 기록. ' : ''}${logAge(s,x)}세 ${e(logLabel(x))}">
         <span class="age">${logAge(s, x)}세${dead ? ' <b>†</b>' : ''}</span>
-        <div class="txt"><small>${x.year}년 ${x.month}월 · ${e(logLabel(x))}</small><p>${e(logText(x))}</p></div>
+        <div class="txt">${(p => `<small>${x.year}년 ${x.month}월 · ${e(p.kicker)}</small>${p.title ? `<b class="ttl">${e(p.title)}</b>` : ''}<p>${e(p.text)}</p>${p.chips.length ? `<span class="fx">${p.chips.map(([k,v]) => `<i class="${v > 0 ? 'up' : 'down'}">${e(k)} ${v > 0 ? '+' : '−'}${Math.abs(v)}</i>`).join('')}</span>` : ''}`)(logParts(x))}</div>
         <span class="star" aria-hidden="true">${x.star ? '★' : '☆'}</span></li>`);
       if (rows.length >= 400) return;
     });

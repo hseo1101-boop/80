@@ -89,7 +89,8 @@ js = patch(js, '(s.year-s.born)*12+s.month-s.birthMonth<=c.maxAgeMonths);', `(s.
     && (!c.excludeYears || s.year < c.excludeYears[0] || s.year > c.excludeYears[1])
     && (!c.noLivingRoles || !c.noLivingRoles.some(role => s.relations.some(r => r.role === role && r.alive)))
     && (!c.hadRoles || c.hadRoles.every(role => s.relations.some(r => r.role === role)))
-    && (!c.jobMatch || new RegExp(c.jobMatch).test(s.job));`);
+    && (!c.jobMatch || new RegExp(c.jobMatch).test(s.job))
+    && (!c.notPlaces || !c.notPlaces.includes(s.place));`);
 js = patch(js, 'birthYear: s.year - rand(s, 19, 33)', 'birthYear: s.year - Math.max(18, ageOf(s) + rand(s, -7, 4))');
 // 2d. Innate aptitude: bell-curve starting knowledge and a learning multiplier.
 js = patch(js, '// src/engine.js', read('aptitude.js') + '\n// src/engine.js');
@@ -99,11 +100,16 @@ js = patch(js, "dailyCategories:{universal:0,personal:0,historical:0}});", "dail
 js = patch(js, 'stats:{건강:82,행복:65,지식:4,재산:37}', 'stats:{건강:82,행복:65,지식:s.stats.지식,재산:37}');
 js = patch(js, '  s.experience=emptyExperience();', "  s.aptitude = number(v.aptitude,'선천적 능력',1,100,legacyAptitude(v));\n  s.experience=emptyExperience();");
 // 2e. Historic participation decisions ("역사의 현장"), opened in the month of the event.
-js = patch(js, '// src/engine.js', read('historic.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('historic.js') + '\n' + read('historic2.js') + '\n// src/engine.js');
 js = patch(js, '    familyMonth(s);\n    if (s.dead) return true;', '    familyMonth(s);\n    if (s.dead) return true;\n    historicDecision(s);\n    if (s.decision) return true;');
 js = patch(js, "  if (effects.milestone) milestone(s, effects.milestone === '$job'", "  if (effects.doom) s.familyEvents.doom = String(effects.doom).slice(0, 300);\n  if (effects.milestone) milestone(s, effects.milestone === '$job'");
 js = patch(js, '    s.decision=null; s.decisionResult=null;\n    return true;', "    s.decision=null; s.decisionResult=null;\n    if (s.familyEvents.doom) { const reason = s.familyEvents.doom; delete s.familyEvents.doom; endLife(s, reason); }\n    return true;");
 js = patch(js, '      if (!engine.acknowledgeDecision()) return false;\n      clock.reset(); changed(); return true;', '      if (!engine.acknowledgeDecision()) return false;\n      clock.reset(); changed(); if (engine.state.dead) clock.stop(); return true;');
+// 2f. Concrete everyday events by place, class, period and stage; prefer fresh ones.
+js = patch(js, '// src/engine.js', read('daily2.js') + '\n// src/engine.js');
+js = patch(js, 'return pick(s,group.events.filter(e=>e.overrideChance===undefined).length ? group.events.filter(e=>e.overrideChance===undefined) : group.events);',
+  'return pick(s,preferFresh(s,group.events.filter(e=>e.overrideChance===undefined).length ? group.events.filter(e=>e.overrideChance===undefined) : group.events));');
+js = patch(js, "weight:category==='historical'?20:40", "weight:category==='historical'?20:category==='personal'?55:25");
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },
