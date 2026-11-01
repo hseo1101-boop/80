@@ -1791,7 +1791,7 @@ function changeStats(s, delta = {}) {
 }
 function createState(seed = Date.now(), options = {}) {
   const s = {schemaVersion: SCHEMA_VERSION, rngState: (seed >>> 0) || 1};
-  const family = pickFamily(s), surname = pick(s, surnames);
+  const picked = pickFamily(s), family = (options.family && families.find(f => f.place === options.family.place && f.class === options.family.class)) || picked, surname = pick(s, surnames);
   Object.assign(s, {
     born: (year => Number.isInteger(options.born) ? Math.min(BIRTH_CHOICE.max, Math.max(BIRTH_CHOICE.min, options.born)) : year)(rand(s, ...BIRTH_RANGE)), birthMonth: rand(s, 1, 12), sex: pick(s, ['남성', '여성']),
     place: family.place, class: family.class, parentJob: family.job, job: '없음',
@@ -5178,9 +5178,35 @@ function lifeReport(s) {
     choice:(x.desc.split('\n').find(l => l.startsWith('선택: ')) || '').slice(4)})).reverse();
   const starred = s.log.filter(x => x.star).map(x => `${x.year} · ${x.title.split(' · ').at(-1)}`).reverse();
   const cause = (s.log.find(x => x.title === '생애의 끝')?.desc || '').split('생애를 마쳤습니다. ')[1] || '';
+  const missed = missedScenes(s);
   const figures = s.relations.filter(r => r.role === '인물').map(r => ({name:r.name, job:r.job, alive:r.alive}));
-  return {figures, top, name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
+  return {missed, figures, top, name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
     places:[...new Set(s.lifeMilestones.filter(m => /이주|출생/.test(m)).map(m => m.split(' · ')[1]))]};
+}
+
+// "Had you lived elsewhere": famous scenes that happened during this life but out of the player's reach.
+const FAMOUS_SCENES = ['bastille','versailles-march','king-execution','tuileries','trois-glorieuses','june-1832','february-1848','coronation',
+  'battle-of-paris','siege-lyon','canuts','great-fear','chouans','valmy','austerlitz','russia','waterloo','railway-1837','coup-paris-1851','june-days'];
+function missedScenes(s, max = 3) {
+  const out = [], wheres = new Set(), end = s.year*12 + s.month;
+  for (const id of FAMOUS_SCENES) {
+    const d = decisions.find(x => x.id === id), w = d?.when;
+    if (!w?.fromDate || s.seenEvents?.includes(id)) continue;
+    const [y, m] = w.fromDate, at = y*12 + m;
+    if (at < s.born*12 + s.birthMonth || at > end) continue;
+    const age = y - s.born - (m < s.birthMonth ? 1 : 0);
+    if ((w.minAge !== undefined && age < w.minAge) || (w.maxAge !== undefined && age > w.maxAge)) continue;
+    if (w.sexes && !w.sexes.includes(s.sex)) continue;
+    if (w.jobMatch && s.sex === '여성') continue;  // soldiers' battles were not open to women
+    const where = w.places ? (w.places.includes(s.place) ? null : `${w.places.includes('파리') ? '파리' : w.places[0]}에 살았다면`)
+      : w.placeIncludes === '농촌' ? (s.place.includes('농촌') ? null : '시골에 살았다면')
+      : w.jobMatch ? '군대에 있었다면' : null;
+    if (!where || wheres.has(where)) continue;
+    wheres.add(where);
+    out.push({id, year:y, month:m, age, where, title:d.title, text:`${where} ${y}년 ${m}월, ${age}세에 「${d.title}」의 현장에 있었을지도 모릅니다.`});
+    if (out.length >= max) break;
+  }
+  return out;
 }
 
 // src/careers.js

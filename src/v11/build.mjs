@@ -127,7 +127,7 @@ js = patch(js, 'return pick(s,group.events.filter(e=>e.overrideChance===undefine
 js = patch(js, "weight:category==='historical'?20:40", "weight:category==='historical'?20:category==='personal'?55:25");
 // 2g. Birth lottery, hunger years, choice requirements, life report.
 js = patch(js, '// src/engine.js', read('lottery.js') + '\n' + read('summary.js') + '\n// src/engine.js');
-js = patch(js, 'const family = pick(s, families), surname = pick(s, surnames);', 'const family = pickFamily(s), surname = pick(s, surnames);');
+js = patch(js, 'const family = pick(s, families), surname = pick(s, surnames);', 'const picked = pickFamily(s), family = (options.family && families.find(f => f.place === options.family.place && f.class === options.family.class)) || picked, surname = pick(s, surnames);');
 js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLottery(s);\n  return s;');
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');

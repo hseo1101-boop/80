@@ -66,7 +66,7 @@ function autoDecide() {
     }
   }, engine.state.decisionResult ? 2200 : 1400);
 }
-function render() { ui.render(); syncToggles(); autoDecide(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
+function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
@@ -112,6 +112,21 @@ function startWithBirth() {
   if (!engine.state || prefs.auto) return;
   engine.state.runtime.paused = true; ui.render(); ui.showBirth();
 }
+// Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
+const PRESETS = {
+  paris1768:{label:'1768년 파리 이야기', born:1768, family:{place:'파리', class:'도시 평민'}},
+  bordeaux1765:{label:'1765년 보르도 이야기', born:1765, family:{place:'보르도', class:'부르주아'}},
+  lyon1805:{label:'1805년 리옹 이야기', born:1805, family:{place:'리옹', class:'도시 평민'}}
+};
+// First-time players see the curated starts first.
+function syncIntro() {
+  const first = !prefs.played && !hasSave();
+  document.getElementById('intro').classList.toggle('first', first);
+  document.getElementById('startsHint').hidden = !first;
+  const starts = document.getElementById('starts'), pick = document.querySelector('.birth-pick');
+  if (first && starts.nextElementSibling !== pick) pick.before(starts);
+  if (!first && starts.previousElementSibling?.classList?.contains('btns') === false) document.querySelector('.intro-body').appendChild(starts);
+}
 const clock = new GameClock(engine, {onFrame:ui.renderProgress, onChange:() => {
   controller.changed(); if (engine.state?.dead) clock.stop();
 }});
@@ -121,9 +136,15 @@ function closeMenu() { document.getElementById('menu').hidden = true; document.g
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { ui.setChoosing(false); startWithBirth(); } });
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); } });
   },
-  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) ui.setChoosing(false); }),
+  startPreset:button => {
+    const preset = PRESETS[button?.dataset.preset]; if (!preset) return;
+    guarded(`${preset.label}(으)로 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?`, '이야기 시작', () => {
+      if (controller.newLife(null, {born:preset.born, family:preset.family})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); }
+    });
+  },
+  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) { prefs.played = true; savePrefs(); ui.setChoosing(false); } }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
@@ -139,7 +160,7 @@ const actions = {
 };
 document.addEventListener('click', event => {
   const button = event.target.closest('[data-action]');
-  if (button) { if (button.closest('#menu')) closeMenu(); actions[button.dataset.action]?.(); return; }
+  if (button) { if (button.closest('#menu')) closeMenu(); actions[button.dataset.action]?.(button); return; }
   if (!event.target.closest('#menu')) closeMenu();
 });
 document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => controller.setSpeed(Number(button.dataset.speed))));

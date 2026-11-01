@@ -110,6 +110,12 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 #birthYear{width:100%;accent-color:var(--wine);margin:8px 0 2px}#birthYear.random{opacity:.45}
 .bp-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:10px}
 .bp-hint{margin:10px 0 0;font-size:.88rem;color:#4b5553}
+.starts{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.starts h2{font-size:1rem;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.starts-hint{font-size:.8rem;font-weight:700;color:#fff;background:var(--wine);border-radius:999px;padding:2px 10px}.starts-sub{margin:6px 0 12px;color:var(--muted);font-size:.88rem}
+.start-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.start-card{display:grid;gap:4px;text-align:left;padding:14px 16px;border-radius:10px;background:#fff}.start-card b{font-family:var(--serif);font-size:1.1rem;color:var(--wine)}.start-card span{font-weight:700}.start-card small{color:var(--muted);line-height:1.5}
+.start-card:hover{border-color:var(--wine)!important}.intro.first .starts{border-top:0;margin-top:0;padding-top:0;margin-bottom:18px}
+.sum-missed{background:#f3f0ea;border-radius:10px;padding:14px 16px}.sum-missed h3{margin:0 0 6px;font-size:.95rem}.sum-missed ul{margin:0 0 10px;padding-left:18px;display:grid;gap:4px;font-size:.92rem}
 .story-start{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.story-start p{margin:4px 0 10px;color:var(--muted);font-size:.9rem}
 
 /* ---- decision modal ---- */
@@ -204,7 +210,17 @@ label.section{display:block}
       <p id="birthHint" class="bp-hint"></p>
     </div>
     <div class="btns"><button id="resumeButton" class="primary" data-action="loadGame" hidden>지난 인생 이어 하기</button><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 코드 가져오기</button></div>
-    <div class="story-start"><b>유년기 · 학교에 보내 달라고 부탁할까?</b><p>1778년 · 8세 · 파리 · 장인 가정 — 이 결정에서 시작해 이후의 삶을 이어 갑니다.</p><button data-action="schoolStory">1778년 파리 이야기로 시작</button></div>
+    <section id="starts" class="starts" aria-labelledby="startsTitle">
+      <h2 id="startsTitle">추천 시작 <span id="startsHint" class="starts-hint" hidden>처음이라면 여기서 시작해 보세요</span></h2>
+      <p class="starts-sub">무작위 출생은 대부분 시골 농민의 삶입니다. 역사의 한복판을 먼저 겪어 보고 싶다면 아래에서 고르세요.</p>
+      <div class="start-grid">
+        <button class="start-card" data-action="startPreset" data-preset="paris1768"><b>1768 · 파리</b><span>인쇄공의 아이</span><small>스물한 살에 바스티유를 맞는 혁명 세대</small></button>
+        <button class="start-card" data-action="schoolStory"><b>1778 · 파리</b><span>학교에 보내 달라고 부탁할까?</span><small>여덟 살, 첫 중대 결정에서 바로 시작</small></button>
+        <button class="start-card" data-action="startPreset" data-preset="bordeaux1765"><b>1765 · 보르도</b><span>상인 집안의 아이</span><small>대서양 무역항, 혁명과 봉쇄령의 부와 몰락</small></button>
+        <button class="start-card" data-action="startPreset" data-preset="lyon1805"><b>1805 · 리옹</b><span>견직공의 아이</span><small>자카르 직기와 견직공 봉기, 7월 왕정의 도시</small></button>
+      </div>
+    </section>
+</div>
   </div>
 </div></section>
 
@@ -220,6 +236,7 @@ label.section{display:block}
         <div class="sum-head"><img id="summaryPortrait" alt=""><div><p class="sum-kicker">생애 요약</p><h2 id="summaryName"></h2><p id="summaryDates" class="sum-dates"></p><p id="summaryEpitaph" class="sum-epitaph"></p><p id="summaryCause" class="sum-cause"></p></div></div>
         <ul id="summaryLines" class="sum-lines"></ul>
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
+        <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave" hidden>이미지 파일로 받기</button></details>
         <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
       </section>
@@ -2067,7 +2084,7 @@ function changeStats(s, delta = {}) {
 }
 function createState(seed = Date.now(), options = {}) {
   const s = {schemaVersion: SCHEMA_VERSION, rngState: (seed >>> 0) || 1};
-  const family = pickFamily(s), surname = pick(s, surnames);
+  const picked = pickFamily(s), family = (options.family && families.find(f => f.place === options.family.place && f.class === options.family.class)) || picked, surname = pick(s, surnames);
   Object.assign(s, {
     born: (year => Number.isInteger(options.born) ? Math.min(BIRTH_CHOICE.max, Math.max(BIRTH_CHOICE.min, options.born)) : year)(rand(s, ...BIRTH_RANGE)), birthMonth: rand(s, 1, 12), sex: pick(s, ['남성', '여성']),
     place: family.place, class: family.class, parentJob: family.job, job: '없음',
@@ -5454,9 +5471,35 @@ function lifeReport(s) {
     choice:(x.desc.split('\n').find(l => l.startsWith('선택: ')) || '').slice(4)})).reverse();
   const starred = s.log.filter(x => x.star).map(x => `${x.year} · ${x.title.split(' · ').at(-1)}`).reverse();
   const cause = (s.log.find(x => x.title === '생애의 끝')?.desc || '').split('생애를 마쳤습니다. ')[1] || '';
+  const missed = missedScenes(s);
   const figures = s.relations.filter(r => r.role === '인물').map(r => ({name:r.name, job:r.job, alive:r.alive}));
-  return {figures, top, name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
+  return {missed, figures, top, name:s.name, french:frenchName(s.name), born:s.born, died:s.year, age, epitaph, lines, historic, starred, cause,
     places:[...new Set(s.lifeMilestones.filter(m => /이주|출생/.test(m)).map(m => m.split(' · ')[1]))]};
+}
+
+// "Had you lived elsewhere": famous scenes that happened during this life but out of the player's reach.
+const FAMOUS_SCENES = ['bastille','versailles-march','king-execution','tuileries','trois-glorieuses','june-1832','february-1848','coronation',
+  'battle-of-paris','siege-lyon','canuts','great-fear','chouans','valmy','austerlitz','russia','waterloo','railway-1837','coup-paris-1851','june-days'];
+function missedScenes(s, max = 3) {
+  const out = [], wheres = new Set(), end = s.year*12 + s.month;
+  for (const id of FAMOUS_SCENES) {
+    const d = decisions.find(x => x.id === id), w = d?.when;
+    if (!w?.fromDate || s.seenEvents?.includes(id)) continue;
+    const [y, m] = w.fromDate, at = y*12 + m;
+    if (at < s.born*12 + s.birthMonth || at > end) continue;
+    const age = y - s.born - (m < s.birthMonth ? 1 : 0);
+    if ((w.minAge !== undefined && age < w.minAge) || (w.maxAge !== undefined && age > w.maxAge)) continue;
+    if (w.sexes && !w.sexes.includes(s.sex)) continue;
+    if (w.jobMatch && s.sex === '여성') continue;  // soldiers' battles were not open to women
+    const where = w.places ? (w.places.includes(s.place) ? null : `${w.places.includes('파리') ? '파리' : w.places[0]}에 살았다면`)
+      : w.placeIncludes === '농촌' ? (s.place.includes('농촌') ? null : '시골에 살았다면')
+      : w.jobMatch ? '군대에 있었다면' : null;
+    if (!where || wheres.has(where)) continue;
+    wheres.add(where);
+    out.push({id, year:y, month:m, age, where, title:d.title, text:`${where} ${y}년 ${m}월, ${age}세에 「${d.title}」의 현장에 있었을지도 모릅니다.`});
+    if (out.length >= max) break;
+  }
+  return out;
 }
 
 // src/careers.js
@@ -7762,6 +7805,8 @@ function createUI(doc, engine, handlers) {
     $('summaryCause').textContent = r.cause;
     $('summaryLines').innerHTML = r.lines.map(x => `<li>${e(x)}</li>`).join('');
     $('summaryHistoric').innerHTML = r.historic.length ? r.historic.map(h => `<li><b>${h.year}</b> ${e(h.title)}${h.choice ? ` <span>— ${e(h.choice)}</span>` : ''}</li>`).join('') : '<li class="muted">역사의 현장에 직접 서지는 않았습니다.</li>';
+    $('summaryMissed').hidden = !r.missed.length;
+    $('summaryMissedList').innerHTML = r.missed.map(m => `<li>${e(m.text)}</li>`).join('');
     $('summaryFigures').innerHTML = r.figures.length ? r.figures.map(f => `<li><b>${e(f.name)}</b> <span>${e(f.job)}</span></li>`).join('') : '<li class="muted">이름난 인물과 마주친 적은 없었습니다.</li>';
     $('summaryStarred').innerHTML = r.starred.slice(0, 8).map(x => `<li>${e(x)}</li>`).join('') || '<li class="muted">별표한 기록이 없습니다. 기록 줄을 누르면 ☆ 표시됩니다.</li>';
     drawShareCard(s, r);
@@ -8383,7 +8428,7 @@ function autoDecide() {
     }
   }, engine.state.decisionResult ? 2200 : 1400);
 }
-function render() { ui.render(); syncToggles(); autoDecide(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
+function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
@@ -8429,6 +8474,21 @@ function startWithBirth() {
   if (!engine.state || prefs.auto) return;
   engine.state.runtime.paused = true; ui.render(); ui.showBirth();
 }
+// Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
+const PRESETS = {
+  paris1768:{label:'1768년 파리 이야기', born:1768, family:{place:'파리', class:'도시 평민'}},
+  bordeaux1765:{label:'1765년 보르도 이야기', born:1765, family:{place:'보르도', class:'부르주아'}},
+  lyon1805:{label:'1805년 리옹 이야기', born:1805, family:{place:'리옹', class:'도시 평민'}}
+};
+// First-time players see the curated starts first.
+function syncIntro() {
+  const first = !prefs.played && !hasSave();
+  document.getElementById('intro').classList.toggle('first', first);
+  document.getElementById('startsHint').hidden = !first;
+  const starts = document.getElementById('starts'), pick = document.querySelector('.birth-pick');
+  if (first && starts.nextElementSibling !== pick) pick.before(starts);
+  if (!first && starts.previousElementSibling?.classList?.contains('btns') === false) document.querySelector('.intro-body').appendChild(starts);
+}
 const clock = new GameClock(engine, {onFrame:ui.renderProgress, onChange:() => {
   controller.changed(); if (engine.state?.dead) clock.stop();
 }});
@@ -8438,9 +8498,15 @@ function closeMenu() { document.getElementById('menu').hidden = true; document.g
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { ui.setChoosing(false); startWithBirth(); } });
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); } });
   },
-  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) ui.setChoosing(false); }),
+  startPreset:button => {
+    const preset = PRESETS[button?.dataset.preset]; if (!preset) return;
+    guarded(`${preset.label}(으)로 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?`, '이야기 시작', () => {
+      if (controller.newLife(null, {born:preset.born, family:preset.family})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); }
+    });
+  },
+  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) { prefs.played = true; savePrefs(); ui.setChoosing(false); } }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
@@ -8456,7 +8522,7 @@ const actions = {
 };
 document.addEventListener('click', event => {
   const button = event.target.closest('[data-action]');
-  if (button) { if (button.closest('#menu')) closeMenu(); actions[button.dataset.action]?.(); return; }
+  if (button) { if (button.closest('#menu')) closeMenu(); actions[button.dataset.action]?.(button); return; }
   if (!event.target.closest('#menu')) closeMenu();
 });
 document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => controller.setSpeed(Number(button.dataset.speed))));

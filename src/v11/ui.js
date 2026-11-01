@@ -148,6 +148,8 @@ function createUI(doc, engine, handlers) {
     $('summaryCause').textContent = r.cause;
     $('summaryLines').innerHTML = r.lines.map(x => `<li>${e(x)}</li>`).join('');
     $('summaryHistoric').innerHTML = r.historic.length ? r.historic.map(h => `<li><b>${h.year}</b> ${e(h.title)}${h.choice ? ` <span>— ${e(h.choice)}</span>` : ''}</li>`).join('') : '<li class="muted">역사의 현장에 직접 서지는 않았습니다.</li>';
+    $('summaryMissed').hidden = !r.missed.length;
+    $('summaryMissedList').innerHTML = r.missed.map(m => `<li>${e(m.text)}</li>`).join('');
     $('summaryFigures').innerHTML = r.figures.length ? r.figures.map(f => `<li><b>${e(f.name)}</b> <span>${e(f.job)}</span></li>`).join('') : '<li class="muted">이름난 인물과 마주친 적은 없었습니다.</li>';
     $('summaryStarred').innerHTML = r.starred.slice(0, 8).map(x => `<li>${e(x)}</li>`).join('') || '<li class="muted">별표한 기록이 없습니다. 기록 줄을 누르면 ☆ 표시됩니다.</li>';
     drawShareCard(s, r);

@@ -110,6 +110,12 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 #birthYear{width:100%;accent-color:var(--wine);margin:8px 0 2px}#birthYear.random{opacity:.45}
 .bp-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:10px}
 .bp-hint{margin:10px 0 0;font-size:.88rem;color:#4b5553}
+.starts{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.starts h2{font-size:1rem;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.starts-hint{font-size:.8rem;font-weight:700;color:#fff;background:var(--wine);border-radius:999px;padding:2px 10px}.starts-sub{margin:6px 0 12px;color:var(--muted);font-size:.88rem}
+.start-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.start-card{display:grid;gap:4px;text-align:left;padding:14px 16px;border-radius:10px;background:#fff}.start-card b{font-family:var(--serif);font-size:1.1rem;color:var(--wine)}.start-card span{font-weight:700}.start-card small{color:var(--muted);line-height:1.5}
+.start-card:hover{border-color:var(--wine)!important}.intro.first .starts{border-top:0;margin-top:0;padding-top:0;margin-bottom:18px}
+.sum-missed{background:#f3f0ea;border-radius:10px;padding:14px 16px}.sum-missed h3{margin:0 0 6px;font-size:.95rem}.sum-missed ul{margin:0 0 10px;padding-left:18px;display:grid;gap:4px;font-size:.92rem}
 .story-start{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.story-start p{margin:4px 0 10px;color:var(--muted);font-size:.9rem}
 
 /* ---- decision modal ---- */
@@ -204,7 +210,17 @@ label.section{display:block}
       <p id="birthHint" class="bp-hint"></p>
     </div>
     <div class="btns"><button id="resumeButton" class="primary" data-action="loadGame" hidden>지난 인생 이어 하기</button><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 코드 가져오기</button></div>
-    <div class="story-start"><b>유년기 · 학교에 보내 달라고 부탁할까?</b><p>1778년 · 8세 · 파리 · 장인 가정 — 이 결정에서 시작해 이후의 삶을 이어 갑니다.</p><button data-action="schoolStory">1778년 파리 이야기로 시작</button></div>
+    <section id="starts" class="starts" aria-labelledby="startsTitle">
+      <h2 id="startsTitle">추천 시작 <span id="startsHint" class="starts-hint" hidden>처음이라면 여기서 시작해 보세요</span></h2>
+      <p class="starts-sub">무작위 출생은 대부분 시골 농민의 삶입니다. 역사의 한복판을 먼저 겪어 보고 싶다면 아래에서 고르세요.</p>
+      <div class="start-grid">
+        <button class="start-card" data-action="startPreset" data-preset="paris1768"><b>1768 · 파리</b><span>인쇄공의 아이</span><small>스물한 살에 바스티유를 맞는 혁명 세대</small></button>
+        <button class="start-card" data-action="schoolStory"><b>1778 · 파리</b><span>학교에 보내 달라고 부탁할까?</span><small>여덟 살, 첫 중대 결정에서 바로 시작</small></button>
+        <button class="start-card" data-action="startPreset" data-preset="bordeaux1765"><b>1765 · 보르도</b><span>상인 집안의 아이</span><small>대서양 무역항, 혁명과 봉쇄령의 부와 몰락</small></button>
+        <button class="start-card" data-action="startPreset" data-preset="lyon1805"><b>1805 · 리옹</b><span>견직공의 아이</span><small>자카르 직기와 견직공 봉기, 7월 왕정의 도시</small></button>
+      </div>
+    </section>
+</div>
   </div>
 </div></section>
 
@@ -220,6 +236,7 @@ label.section{display:block}
         <div class="sum-head"><img id="summaryPortrait" alt=""><div><p class="sum-kicker">생애 요약</p><h2 id="summaryName"></h2><p id="summaryDates" class="sum-dates"></p><p id="summaryEpitaph" class="sum-epitaph"></p><p id="summaryCause" class="sum-cause"></p></div></div>
         <ul id="summaryLines" class="sum-lines"></ul>
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
+        <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
         <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
       </section>
