@@ -64,6 +64,21 @@ js = patch(js, '  s.experience=emptyExperience();', `  s.focus = v.focus == null
   s.experience=emptyExperience();`);
 js = patch(js, "type:['normal','good','bad','major','history'].includes(x.type)", "type:['normal','good','bad','major','history','fact'].includes(x.type)");
 js = patch(js, "eventId:x.eventId == null ? null : string(x.eventId,'사건 ID')};", "eventId:x.eventId == null ? null : string(x.eventId,'사건 ID'), ...(x.star === true ? {star:true} : {})};");
+// 2b. Names, extended history, household births/deaths, player mortality, chosen birth year.
+js = cut(js, '// src/data/male.js', '// src/random.js', read('content.js') + '\n');
+js = patch(js, '// src/engine.js', read('mortality.js') + '\n// src/engine.js');
+js = patch(js, 'const BIRTH_RANGE = [1760, 1792];', 'const BIRTH_RANGE = [BIRTH_CHOICE.min, 1820];');
+js = patch(js, 'function createState(seed = Date.now()) {', 'function createState(seed = Date.now(), options = {}) {');
+js = patch(js, 'born: rand(s, ...BIRTH_RANGE),', 'born: (year => Number.isInteger(options.born) ? Math.min(BIRTH_CHOICE.max, Math.max(BIRTH_CHOICE.min, options.born)) : year)(rand(s, ...BIRTH_RANGE)),');
+js = patch(js, "  milestone(s, `${s.place}에서 출생`);\n  return s;", "  milestone(s, `${s.place}에서 출생`);\n  earlierLoss(s);\n  return s;");
+js = patch(js, 'r.birthYear += birthShift; r.birthMonth = 4;', 'r.birthYear += birthShift; r.birthMonth = 4; if (r.deathYear !== undefined) r.deathYear += birthShift;');
+js = patch(js, "milestone(s, '자녀 출생'); changeStats(s, {행복:7,재산:-4});", "milestone(s, '자녀 출생'); changeStats(s, {행복:7,재산:-4}); childbirthRisk(s); if (s.dead) return;");
+js = patch(js, 'yearlyPaths(s); applyFocus(s); familyYear(s);', 'yearlyPaths(s); applyFocus(s); familyYear(s); fateYear(s);');
+js = patch(js, '    birthdayFacts(s);', '    birthdayFacts(s);\n    familyMonth(s);\n    if (s.dead) return true;');
+js = patch(js, `    newLife(scenario = null) {`, `    newLife(scenario = null, options = {}) {`);
+js = patch(js, `createState(seed())); autosave(); return true;`, `createState(seed(), options)); autosave(); return true;`);
+// Health drift: no average decline before 40, so early death comes from bad luck rather than attrition.
+js = patch(js, 'changeStats(s, {건강:rand(s,-2,1)});', 'changeStats(s, {건강: ageOf(s) < 40 ? rand(s,-1,1) : rand(s,-2,1)});');
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },

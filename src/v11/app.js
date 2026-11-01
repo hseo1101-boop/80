@@ -46,14 +46,16 @@ let controller;
 const prefs = (() => { try { return JSON.parse(localStorage.getItem('franceLife.prefs')) || {}; } catch { return {}; } })();
 const savePrefs = () => { try { localStorage.setItem('franceLife.prefs', JSON.stringify(prefs)); } catch { /* optional */ } };
 const ui = createUI(document, engine, {
-  choose:index => controller.choose(index), setFocus:id => controller.setFocus(id), toggleStar:i => controller.toggleStar(i)
+  choose:index => controller.choose(index), setFocus:id => controller.setFocus(id), toggleStar:i => controller.toggleStar(i),
+  getBorn:() => Number.isInteger(prefs.born) ? prefs.born : null,
+  setBorn:year => { prefs.born = Number.isInteger(year) ? year : null; savePrefs(); }
 });
 const music = createMusic();
 let autoTimer = null;
 function autoDecide() {
   clearTimeout(autoTimer);
   const s = engine.state;
-  if (!prefs.auto || !s || s.dead || !s.decision) return;
+  if (!prefs.auto || !s || s.dead || !s.decision || ui.choosing) return;
   autoTimer = setTimeout(() => {
     const st = engine.state;
     if (!prefs.auto || !st?.decision) return;
@@ -73,7 +75,13 @@ controller = createController({engine, clock, render, notify:ui.notify,
   storage:() => window.localStorage, confirm:message => window.confirm(message)});
 function closeMenu() { document.getElementById('menu').hidden = true; document.getElementById('menuButton').setAttribute('aria-expanded', 'false'); }
 const actions = {
-  newLife:() => controller.newLife(), schoolStory:() => controller.newLife('school'),
+  newLife:() => {
+    const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
+    if (controller.newLife(null, {born})) ui.setChoosing(false);
+  },
+  schoolStory:() => { if (controller.newLife('school')) ui.setChoosing(false); },
+  chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
+  backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
   skipToDecision:() => controller.skipToDecision(),
   saveGame:() => controller.saveGame(), loadGame:() => controller.loadGame(),
@@ -112,9 +120,9 @@ document.getElementById('importFile').addEventListener('change', async event => 
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { controller.autosave(); clock.stop(); }
-  else if (engine.state && !engine.state.dead) clock.start();
+  else if (engine.state && !engine.state.dead && !ui.choosing) clock.start();
 });
 window.addEventListener('pagehide', () => { controller.autosave(); clock.stop(); });
-window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden) clock.start(); });
+window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden && !ui.choosing) clock.start(); });
 if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller};
 render();

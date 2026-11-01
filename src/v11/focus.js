@@ -15,7 +15,7 @@ const FOCUS_EFFECTS = {
   study:{stats:{지식:2,행복:-1},experience:{educationInterest:1,selfStudy:1},hint:'지식이 오르지만 놀 시간이 줄어듭니다.'},
   faith:{stats:{행복:1},experience:{religious:1},hint:'교구 공동체와 가까워집니다.'},
   craft:{stats:{지식:1,재산:1},experience:{craft:1},hint:'손기술과 수입이 조금씩 늘어납니다.'},
-  work:{stats:{재산:2,건강:-1},experience:{responsibility:1},hint:'벌이는 늘지만 몸이 지칩니다.'},
+  work:{stats:{재산:2,행복:-1},experience:{responsibility:1},hint:'벌이는 늘지만 여유가 줄어듭니다.'},
   social:{stats:{행복:1},friends:2,experience:{social:1},hint:'친구·이웃과 가까워집니다.'},
   rest:{stats:{건강:2,재산:-1},hint:'건강을 회복하지만 벌이가 줄어듭니다.'},
   save:{stats:{재산:1,행복:-1},experience:{commerce:1},hint:'조금씩 모으지만 생활이 빠듯합니다.'}

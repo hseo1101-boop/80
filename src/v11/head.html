@@ -103,6 +103,11 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .intro h1{font-family:var(--serif);font-size:2.2rem;margin:0 0 4px;line-height:1.2}.intro h1 b{color:var(--wine)}
 .intro .sub{color:var(--muted);margin:0 0 16px}.intro p{line-height:1.8}
 .intro .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.primary{background:var(--dark)!important;color:#fff;border-color:var(--dark)!important;font-weight:700;padding:12px 20px}
+.birth-pick{background:#eef1ee;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:16px}
+.bp-head{display:flex;justify-content:space-between;align-items:baseline}.bp-head label{font-weight:800}.bp-head output{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--wine)}
+#birthYear{width:100%;accent-color:var(--wine);margin:8px 0 2px}#birthYear.random{opacity:.45}
+.bp-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:10px}
+.bp-hint{margin:10px 0 0;font-size:.88rem;color:#4b5553}
 .story-start{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.story-start p{margin:4px 0 10px;color:var(--muted);font-size:.9rem}
 
 /* ---- decision modal ---- */
@@ -165,7 +170,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
         <button data-action="saveGame">기록 저장</button><button data-action="loadGame">기록 불러오기</button>
         <button data-action="exportGame">저장 파일 내보내기</button><button data-action="importGame">저장 파일 가져오기</button><hr>
         <button id="autoMenu" data-action="toggleAuto">자동 결정</button><button id="musicMenu" data-action="toggleMusic">♪ 음악</button><hr>
-        <button data-action="newLife">새 인생 시작</button>
+        <button data-action="chooseLife">새 인생 시작…</button>
       </div></div>
   </div>
 </div></header>
@@ -173,9 +178,16 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 <section id="intro" class="intro"><div class="card">
   <div class="scene-wrap"><canvas id="introScene" aria-label="18세기 프랑스 시골 마을의 가족"></canvas></div>
   <div class="intro-body">
-    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1760–1850 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
+    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1750–1850 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
     <p>출생지와 가문은 무작위로 정해집니다. 시간이 자동으로 흐르며 일상이 기록되고, 중요한 순간에는 <b>중대 결정</b> 창이 열립니다. 역사의 흐름은 바뀌지 않지만, 당신의 삶은 선택에 따라 달라집니다.</p>
-    <div class="btns"><button class="primary" data-action="newLife">새 인생 시작하기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 파일 가져오기</button></div>
+    <div class="birth-pick">
+      <div class="bp-head"><label for="birthYear">태어날 해</label><output id="birthYearOut" for="birthYear">무작위</output></div>
+      <input type="range" id="birthYear" min="1750" max="1825" step="1" value="1775" aria-describedby="birthHint">
+      <div class="bp-marks" aria-hidden="true"><span>1750</span><span>1789</span><span>1815</span><span>1825</span></div>
+      <div class="chips" role="group" aria-label="빠른 선택"><button class="chip on" data-born="random">무작위</button><button class="chip" data-born="1760">1760 · 구체제</button><button class="chip" data-born="1772">1772 · 혁명 세대</button><button class="chip" data-born="1790">1790 · 나폴레옹 세대</button><button class="chip" data-born="1810">1810 · 7월 왕정 세대</button></div>
+      <p id="birthHint" class="bp-hint"></p>
+    </div>
+    <div class="btns"><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 파일 가져오기</button></div>
     <div class="story-start"><b>유년기 · 학교에 보내 달라고 부탁할까?</b><p>1778년 · 8세 · 파리 · 장인 가정 — 이 결정에서 시작해 이후의 삶을 이어 갑니다.</p><button data-action="schoolStory">1778년 파리 이야기로 시작</button></div>
   </div>
 </div></section>
@@ -188,7 +200,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
   <section class="col col-main">
     <div class="card scene-card">
       <div class="scene-wrap"><canvas id="scene" role="img" aria-label="현재 삶의 장면"></canvas></div>
-      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="newLife">새 인생 시작</button></div>
+      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="chooseLife">새 인생 시작</button></div>
       <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
       <div id="sceneDetail" class="scene-detail" hidden></div>
     </div>
@@ -226,5 +238,5 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
     <button id="continueDecision" class="primary" data-action="continueDecision">결과를 확인하고 삶 이어 가기 →</button></section>
   <p id="decisionHint" class="hint"></p>
 </div></div>
-<div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1789~1815년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
+<div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
 <script>

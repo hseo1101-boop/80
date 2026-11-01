@@ -103,6 +103,11 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .intro h1{font-family:var(--serif);font-size:2.2rem;margin:0 0 4px;line-height:1.2}.intro h1 b{color:var(--wine)}
 .intro .sub{color:var(--muted);margin:0 0 16px}.intro p{line-height:1.8}
 .intro .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.primary{background:var(--dark)!important;color:#fff;border-color:var(--dark)!important;font-weight:700;padding:12px 20px}
+.birth-pick{background:#eef1ee;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:16px}
+.bp-head{display:flex;justify-content:space-between;align-items:baseline}.bp-head label{font-weight:800}.bp-head output{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--wine)}
+#birthYear{width:100%;accent-color:var(--wine);margin:8px 0 2px}#birthYear.random{opacity:.45}
+.bp-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:10px}
+.bp-hint{margin:10px 0 0;font-size:.88rem;color:#4b5553}
 .story-start{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.story-start p{margin:4px 0 10px;color:var(--muted);font-size:.9rem}
 
 /* ---- decision modal ---- */
@@ -165,7 +170,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
         <button data-action="saveGame">기록 저장</button><button data-action="loadGame">기록 불러오기</button>
         <button data-action="exportGame">저장 파일 내보내기</button><button data-action="importGame">저장 파일 가져오기</button><hr>
         <button id="autoMenu" data-action="toggleAuto">자동 결정</button><button id="musicMenu" data-action="toggleMusic">♪ 음악</button><hr>
-        <button data-action="newLife">새 인생 시작</button>
+        <button data-action="chooseLife">새 인생 시작…</button>
       </div></div>
   </div>
 </div></header>
@@ -173,9 +178,16 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 <section id="intro" class="intro"><div class="card">
   <div class="scene-wrap"><canvas id="introScene" aria-label="18세기 프랑스 시골 마을의 가족"></canvas></div>
   <div class="intro-body">
-    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1760–1850 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
+    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1750–1850 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
     <p>출생지와 가문은 무작위로 정해집니다. 시간이 자동으로 흐르며 일상이 기록되고, 중요한 순간에는 <b>중대 결정</b> 창이 열립니다. 역사의 흐름은 바뀌지 않지만, 당신의 삶은 선택에 따라 달라집니다.</p>
-    <div class="btns"><button class="primary" data-action="newLife">새 인생 시작하기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 파일 가져오기</button></div>
+    <div class="birth-pick">
+      <div class="bp-head"><label for="birthYear">태어날 해</label><output id="birthYearOut" for="birthYear">무작위</output></div>
+      <input type="range" id="birthYear" min="1750" max="1825" step="1" value="1775" aria-describedby="birthHint">
+      <div class="bp-marks" aria-hidden="true"><span>1750</span><span>1789</span><span>1815</span><span>1825</span></div>
+      <div class="chips" role="group" aria-label="빠른 선택"><button class="chip on" data-born="random">무작위</button><button class="chip" data-born="1760">1760 · 구체제</button><button class="chip" data-born="1772">1772 · 혁명 세대</button><button class="chip" data-born="1790">1790 · 나폴레옹 세대</button><button class="chip" data-born="1810">1810 · 7월 왕정 세대</button></div>
+      <p id="birthHint" class="bp-hint"></p>
+    </div>
+    <div class="btns"><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 파일 가져오기</button></div>
     <div class="story-start"><b>유년기 · 학교에 보내 달라고 부탁할까?</b><p>1778년 · 8세 · 파리 · 장인 가정 — 이 결정에서 시작해 이후의 삶을 이어 갑니다.</p><button data-action="schoolStory">1778년 파리 이야기로 시작</button></div>
   </div>
 </div></section>
@@ -188,7 +200,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
   <section class="col col-main">
     <div class="card scene-card">
       <div class="scene-wrap"><canvas id="scene" role="img" aria-label="현재 삶의 장면"></canvas></div>
-      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="newLife">새 인생 시작</button></div>
+      <div id="deathBanner" class="death-banner" hidden><p></p><button data-action="chooseLife">새 인생 시작</button></div>
       <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
       <div id="sceneDetail" class="scene-detail" hidden></div>
     </div>
@@ -226,7 +238,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
     <button id="continueDecision" class="primary" data-action="continueDecision">결과를 확인하고 삶 이어 가기 →</button></section>
   <p id="decisionHint" class="hint"></p>
 </div></div>
-<div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1789~1815년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
+<div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
 <script>
 (() => {
 'use strict';
@@ -1900,34 +1912,73 @@ const families = [
 ];
 
 // src/data/male.js
-const male = [
-  "장",
-  "피에르",
-  "루이",
-  "자크",
-  "앙투안",
-  "프랑수아"
-];
+// Korean display names. FR_NAMES (pixel.js) maps each to its French original for the passport.
+const male = ['장','피에르','루이','자크','앙투안','프랑수아','니콜라','미셸','에티엔','클로드','조제프','샤를','앙드레','질','기욤',
+  '르네','마티외','쥘리앵','필리프','위베르','장바티스트','폴','오귀스탱','이브','코랑탱','시몽','알렉시','뱅상','오노레','아드리앵','가브리엘','레옹'];
 
 // src/data/female.js
-const female = [
-  "마리",
-  "잔",
-  "안",
-  "마들렌",
-  "엘리자베트",
-  "루이즈"
-];
+const female = ['마리','잔','안','마들렌','엘리자베트','루이즈','카트린','마르그리트','프랑수아즈','마리안','쥐스틴','쥘리','빅투아르','테레즈',
+  '주느비에브','아델라이드','앙젤리크','소피','클레르','마르트','로즈','셀레스트','외제니','조제핀','앙투아네트','니콜','쉬잔','아니에스','펠리시테','바르브'];
 
 // src/data/surnames.js
-const surnames = [
-  "뒤퐁",
-  "마르탱",
-  "르페브르",
-  "베르나르",
-  "모로",
-  "로랑"
-];
+const surnames = ['뒤퐁','마르탱','르페브르','베르나르','모로','로랑','프티','뒤랑','르루아','루','베르트랑','모렐','푸르니에','지라르','메르시에',
+  '블랑','게랭','부아예','가르니에','슈발리에','르그랑','고티에','페랭','로베르','클레망','모랭','루셀','르메르','뒤부아','포르','르클레르',
+  '브뤼네','르브룅','르고프','르갈','뒤마','바이','콜랭','아르노','부셰','마송','샤르팡티에','파브르','롤랑','카라덱','바레','라퐁','르블랑'];
+
+// src/data/history-extended.js
+// Calendar months, Gregorian. Outcomes are fixed; `impacts` describe only the player's local experience.
+historicalEvents.push(
+  {id:'seven-years-war', year:1756, month:5, text:'프랑스가 영국에 선전포고하며 7년 전쟁이 시작됩니다.', impacts:[{when:{minAge:16,maxAge:45},stats:{재산:-1},text:'전쟁 소식과 함께 세금 부담이 늘어난다는 말이 돕니다.'}]},
+  {id:'damiens', year:1757, month:1, text:'다미앵이 베르사유에서 국왕 루이 15세를 칼로 찌르는 사건이 일어납니다.'},
+  {id:'quebec', year:1759, month:9, text:'북아메리카의 퀘벡이 영국군에게 함락됩니다.'},
+  {id:'calas', year:1762, month:3, text:'툴루즈에서 개신교도 장 칼라스가 처형됩니다. 볼테르가 그의 무죄를 주장하며 관용을 호소합니다.', impacts:[{when:{religions:['protestant']},stats:{행복:-3},text:'개신교 가정에는 남의 일 같지 않은 소식입니다.'}]},
+  {id:'paris-1763', year:1763, month:2, text:'파리 조약으로 7년 전쟁이 끝납니다. 프랑스는 캐나다를 비롯한 식민지 대부분을 잃습니다.'},
+  {id:'jesuits', year:1764, month:11, text:'왕령으로 프랑스에서 예수회가 해산됩니다. 예수회가 운영하던 학교들도 주인이 바뀝니다.'},
+  {id:'lorraine', year:1766, month:2, text:'로렌 공 스타니스와프가 세상을 떠나 로렌이 프랑스 왕국에 편입됩니다.'},
+  {id:'corsica', year:1768, month:5, text:'제노바가 코르시카섬을 프랑스에 넘깁니다.'},
+  {id:'royal-wedding', year:1770, month:5, text:'왕세자 루이와 오스트리아의 마리 앙투아네트가 혼인합니다.', impacts:[{when:{places:['파리']},stats:{행복:1},text:'축하 불꽃놀이 소식으로 거리가 들썩입니다.'}]},
+  {id:'maupeou', year:1771, month:1, text:'대법관 모푸가 고등법원을 해산하고 법원 개혁을 단행합니다.', impacts:[{when:{parentJobs:['법률가']},stats:{재산:-2},text:'법률가 집안에 근심이 드리웁니다.'}]},
+  {id:'louis-xv-death', year:1774, month:5, text:'루이 15세가 천연두로 세상을 떠나고 루이 16세가 즉위합니다.'},
+  {id:'flour-war', year:1775, month:4, text:'곡물 거래 자유화 뒤 빵값이 치솟아 곳곳에서 밀가루 폭동(밀가루 전쟁)이 일어납니다.', impacts:[{when:{classes:['도시 평민','농민']},stats:{재산:-3,행복:-2},text:'빵을 사기가 어려워져 끼니를 줄입니다.'}]},
+  {id:'turgot', year:1776, month:5, text:'개혁을 추진하던 재무총감 튀르고가 해임됩니다.'},
+  {id:'american-alliance', year:1778, month:2, text:'프랑스가 미국과 동맹을 맺고 독립전쟁에 뛰어듭니다.', impacts:[{when:{placeIncludes:'보르도'},stats:{재산:1},text:'대서양 항구에 군수품과 상선이 바삐 오갑니다.'}]},
+  {id:'balloon', year:1783, month:11, text:'몽골피에 형제의 열기구가 사람을 태우고 파리 하늘을 납니다.', impacts:[{when:{places:['파리']},stats:{행복:2,지식:1},text:'하늘을 나는 풍선을 보러 사람들이 몰려듭니다.'}]},
+  {id:'versailles-1783', year:1783, month:9, text:'베르사유 조약으로 미국 독립전쟁이 끝납니다. 승리했지만 왕국의 빚은 크게 불어났습니다.'},
+  {id:'figaro', year:1784, month:4, text:'보마르셰의 희극 「피가로의 결혼」이 초연되어 귀족을 풍자했다는 평판을 얻습니다.'},
+  {id:'necklace', year:1785, month:8, text:'목걸이 사건으로 로앙 추기경이 체포되고, 왕비에 대한 소문이 퍼집니다.'},
+  {id:'notables', year:1787, month:2, text:'재정 위기를 풀기 위해 명사회가 소집됩니다.'},
+  {id:'hailstorm', year:1788, month:7, text:'거대한 우박 폭풍이 북부와 중부의 들판을 휩씁니다.', impacts:[{when:{classes:['농민']},stats:{재산:-5,행복:-3},text:'한 해 농사가 하룻밤 사이에 망가졌습니다.'},{when:{classes:['도시 평민']},stats:{재산:-2},text:'곡물값이 오를 거라는 걱정이 돕니다.'}]},
+  {id:'estates-convoked', year:1788, month:8, text:'국왕이 이듬해 5월에 삼부회를 소집하겠다고 발표합니다.'},
+  {id:'winter-1788', year:1788, month:12, text:'유난히 혹독한 겨울이 찾아와 센강이 얼어붙고 빵값이 치솟습니다.', impacts:[{stats:{건강:-2},text:'땔감과 빵을 구하기 어려운 겨울입니다.'}]},
+
+  {id:'year-without-summer', year:1816, month:7, text:'‘여름 없는 해’. 차갑고 비가 잦은 여름이 이어져 수확이 크게 줄어듭니다.', impacts:[{when:{classes:['농민']},stats:{재산:-5,행복:-2},text:'밀이 제대로 여물지 않았습니다.'},{when:{classes:['도시 평민']},stats:{재산:-3},text:'빵값이 크게 올랐습니다.'}]},
+  {id:'occupation-ends', year:1818, month:11, text:'동맹군이 프랑스에서 철수하며 점령이 끝납니다.'},
+  {id:'berry', year:1820, month:2, text:'왕위 계승자 베리 공작이 오페라 극장 앞에서 암살됩니다.'},
+  {id:'napoleon-death', year:1821, month:7, text:'나폴레옹이 5월 세인트헬레나섬에서 세상을 떠났다는 소식이 프랑스에 전해집니다.'},
+  {id:'spanish-expedition', year:1823, month:4, text:'프랑스군이 스페인 국왕을 복위시키기 위해 피레네산맥을 넘습니다.'},
+  {id:'charles-x', year:1824, month:9, text:'루이 18세가 세상을 떠나고 샤를 10세가 즉위합니다.'},
+  {id:'reims', year:1825, month:5, text:'샤를 10세가 랭스 대성당에서 옛 방식 그대로 대관식을 올립니다.'},
+  {id:'july-revolution', year:1830, month:7, text:'7월 혁명. 파리에서 사흘 동안 바리케이드 전투가 벌어지고 샤를 10세가 물러납니다. 같은 달 프랑스군이 알제를 점령합니다.', impacts:[{when:{places:['파리']},stats:{행복:-2,지식:2},text:'거리마다 바리케이드가 세워졌습니다.'}]},
+  {id:'louis-philippe', year:1830, month:8, text:'루이필리프가 ‘프랑스인의 왕’으로 즉위하고 삼색기가 돌아옵니다.'},
+  {id:'canuts-1831', year:1831, month:11, text:'리옹의 견직공(카뉘)들이 임금 문제로 봉기합니다.', impacts:[{when:{placeIncludes:'리옹'},stats:{재산:-3,행복:-3},text:'작업장이 멈추고 거리에 총성이 울립니다.'}]},
+  {id:'cholera-1832', year:1832, month:4, text:'콜레라가 파리를 휩쓸어 몇 달 사이 1만 8천 명 넘게 목숨을 잃습니다.', impacts:[{when:{places:['파리']},stats:{건강:-6,행복:-4},text:'이웃의 장례 행렬이 날마다 지나갑니다.'},{stats:{건강:-1},text:'역병 소식에 모두가 손을 씻고 물을 끓입니다.'}]},
+  {id:'june-1832', year:1832, month:6, text:'파리에서 공화파의 6월 봉기가 일어났다가 이틀 만에 진압됩니다.'},
+  {id:'guizot-law', year:1833, month:6, text:'기조 법으로 모든 코뮌에 남자 초등학교를 세우도록 정해집니다.', impacts:[{when:{maxAge:12},stats:{지식:2},text:'마을에 학교가 생긴다는 소식이 들립니다.'}]},
+  {id:'canuts-1834', year:1834, month:4, text:'리옹에서 두 번째 견직공 봉기가 일어나고 파리 트랑스노냉 거리에서도 학살이 벌어집니다.', impacts:[{when:{placeIncludes:'리옹'},stats:{행복:-4},text:'다시 한번 리옹이 피로 물듭니다.'}]},
+  {id:'first-railway', year:1837, month:8, text:'파리와 생제르맹앙레를 잇는 첫 여객 철도가 개통됩니다.', impacts:[{when:{places:['파리']},stats:{지식:1,행복:1},text:'증기 기관차를 구경하러 사람들이 몰려듭니다.'}]},
+  {id:'ashes', year:1840, month:12, text:'나폴레옹의 유해가 파리로 돌아와 앵발리드에 안치됩니다.'},
+  {id:'railway-law', year:1842, month:6, text:'철도법이 제정되어 파리를 중심으로 한 철도망 건설이 시작됩니다.'},
+  {id:'bad-harvest-1846', year:1846, month:9, text:'감자 역병과 흉작이 겹쳐 빵값이 오르고 이듬해까지 경제 위기가 이어집니다.', impacts:[{when:{classes:['농민','도시 평민']},stats:{재산:-4,건강:-1},text:'식탁이 눈에 띄게 가벼워졌습니다.'}]},
+  {id:'february-1848', year:1848, month:2, text:'2월 혁명. 루이필리프가 물러나고 제2공화국이 선포됩니다.', impacts:[{when:{places:['파리']},stats:{지식:2},text:'파리 거리에 다시 바리케이드가 섭니다.'}]},
+  {id:'suffrage-1848', year:1848, month:4, text:'21세 이상 모든 남성이 투표하는 첫 총선거가 치러집니다.', impacts:[{when:{minAge:21},stats:{지식:1},text:'처음으로 투표권이 주어졌다는 이야기로 마을이 떠들썩합니다.'}]},
+  {id:'june-days', year:1848, month:6, text:'국립 작업장 폐쇄에 반발한 파리 노동자들의 6월 봉기가 유혈 진압됩니다.', impacts:[{when:{places:['파리'],classes:['도시 평민']},stats:{행복:-4,재산:-2},text:'일자리를 잃은 이웃이 많습니다.'}]},
+  {id:'president-1848', year:1848, month:12, text:'루이 나폴레옹 보나파르트가 대통령으로 선출됩니다.'},
+  {id:'cholera-1849', year:1849, month:5, text:'콜레라가 다시 유행합니다.', impacts:[{when:{places:['파리']},stats:{건강:-4},text:'1832년의 악몽이 되살아납니다.'}]},
+  {id:'coup-1851', year:1851, month:12, text:'루이 나폴레옹이 쿠데타를 일으켜 의회를 해산합니다.'}
+);
+
+// src/data/birth.js
+const BIRTH_CHOICE = {min:1750, max:1825};
 
 // src/random.js
 // The generator state is part of the save. Loading does not reroll the next event.
@@ -1964,7 +2015,7 @@ function remember(s,event) {
 const SCHEMA_VERSION = 2;
 const SPEEDS = [1, 2, 4, 6, 8, 12, 16];
 const STAT_KEYS = ['건강', '행복', '지식', '재산'];
-const BIRTH_RANGE = [1760, 1792];
+const BIRTH_RANGE = [BIRTH_CHOICE.min, 1820];
 function ageOf(s, person = s) {
   const year = person === s ? s.born : person.birthYear;
   return Math.max(0, s.year - year - (s.month < (person.birthMonth || 1) ? 1 : 0));
@@ -1980,11 +2031,11 @@ function milestone(s, text) {
 function changeStats(s, delta = {}) {
   for (const key of STAT_KEYS) if (key in delta) s.stats[key] = clamp(s.stats[key] + delta[key]);
 }
-function createState(seed = Date.now()) {
+function createState(seed = Date.now(), options = {}) {
   const s = {schemaVersion: SCHEMA_VERSION, rngState: (seed >>> 0) || 1};
   const family = pick(s, families), surname = pick(s, surnames);
   Object.assign(s, {
-    born: rand(s, ...BIRTH_RANGE), birthMonth: rand(s, 1, 12), sex: pick(s, ['남성', '여성']),
+    born: (year => Number.isInteger(options.born) ? Math.min(BIRTH_CHOICE.max, Math.max(BIRTH_CHOICE.min, options.born)) : year)(rand(s, ...BIRTH_RANGE)), birthMonth: rand(s, 1, 12), sex: pick(s, ['남성', '여성']),
     place: family.place, class: family.class, parentJob: family.job, job: '없음',
     education: '미정', reputation: 50, stats: {건강: rand(s, 65, 95), 행복: rand(s, 55, 85), 지식: rand(s, 0, 12), 재산: family.wealth},
     flags: {}, paths: {}, familyEvents: {}, lifeMilestones: [], dead: false,
@@ -2007,6 +2058,7 @@ function createState(seed = Date.now()) {
   if(rand(s,0,99)<35) s.relations.push({name:pick(s,female)+' '+pick(s,surnames),role:'할머니',sex:'여성',birthYear:s.relations[1].birthYear-rand(s,19,28),birthMonth:1,alive:true,closeness:60,job:'가사·생계 활동'});
   addLog(s, '가족', '가족과 함께 새로운 삶을 시작합니다.', 'good');
   milestone(s, `${s.place}에서 출생`);
+  earlierLoss(s);
   return s;
 }
 
@@ -2014,7 +2066,7 @@ function createState(seed = Date.now()) {
 function createSchoolScenario(seed = Date.now()) {
   const s = createState(seed), birthShift = 1770 - s.born;
   for (const r of s.relations) {
-    r.birthYear += birthShift; r.birthMonth = 4;
+    r.birthYear += birthShift; r.birthMonth = 4; if (r.deathYear !== undefined) r.deathYear += birthShift;
     if (r.role === '아버지') r.job = '인쇄공';
     if (r.role === '어머니') r.job = '가사·생계 활동';
   }
@@ -2143,7 +2195,7 @@ function familyYear(s) {
     const name = pick(s, [...male,...female]) + ' ' + s.name.split(' ').at(-1);
     s.relations.push({name, role:'자녀', birthYear:s.year, birthMonth:s.month, alive:true, closeness:75, job:'없음'});
     addLog(s, '가족의 변화', `${name}이(가) 태어났습니다. 새로운 가족을 돌보게 되었습니다.`, 'good');
-    milestone(s, '자녀 출생'); changeStats(s, {행복:7,재산:-4});
+    milestone(s, '자녀 출생'); changeStats(s, {행복:7,재산:-4}); childbirthRisk(s); if (s.dead) return;
   }
   if (age >= 52 && !['은퇴','없음'].includes(s.job) && random(s) < .12) {
     s.job = '은퇴'; addLog(s, '인생의 변화', '오랫동안 해 온 생업에서 물러나 일상을 조정합니다.'); milestone(s, '생업에서 물러남');
@@ -3890,7 +3942,7 @@ const FOCUS_EFFECTS = {
   study:{stats:{지식:2,행복:-1},experience:{educationInterest:1,selfStudy:1},hint:'지식이 오르지만 놀 시간이 줄어듭니다.'},
   faith:{stats:{행복:1},experience:{religious:1},hint:'교구 공동체와 가까워집니다.'},
   craft:{stats:{지식:1,재산:1},experience:{craft:1},hint:'손기술과 수입이 조금씩 늘어납니다.'},
-  work:{stats:{재산:2,건강:-1},experience:{responsibility:1},hint:'벌이는 늘지만 몸이 지칩니다.'},
+  work:{stats:{재산:2,행복:-1},experience:{responsibility:1},hint:'벌이는 늘지만 여유가 줄어듭니다.'},
   social:{stats:{행복:1},friends:2,experience:{social:1},hint:'친구·이웃과 가까워집니다.'},
   rest:{stats:{건강:2,재산:-1},hint:'건강을 회복하지만 벌이가 줄어듭니다.'},
   save:{stats:{재산:1,행복:-1},experience:{commerce:1},hint:'조금씩 모으지만 생활이 빠듯합니다.'}
@@ -3954,6 +4006,99 @@ function birthdayFacts(s) {
   addLog(s, '시대의 숫자', text, 'fact');
 }
 
+// src/mortality.js
+// Births and deaths in the household, and the player's own bad luck. A game model with rates
+// rounded from French historical demography; not a reconstruction of any real family.
+const monthIndex = (year, month) => year*12 + month;
+function monthsOld(s, r) { return monthIndex(s.year, s.month) - monthIndex(r.birthYear, r.birthMonth || 1); }
+function siblingWord(s, r) {
+  const sex = personSex(r), older = monthIndex(r.birthYear, r.birthMonth || 1) < monthIndex(s.born, s.birthMonth);
+  if (!older) return sex === '여성' ? '여동생' : '남동생';
+  if (s.sex === '남성') return sex === '여성' ? '누나' : '형';
+  return sex === '여성' ? '언니' : '오빠';
+}
+// A name nobody else in the living family already uses.
+function freshName(s, list, surname) {
+  const used = new Set([s.name, ...s.relations.filter(r => r.alive).map(r => r.name)].map(n => n.split(' ')[0]));
+  const options = list.filter(n => !used.has(n));
+  return pick(s, options.length ? options : list) + ' ' + surname;
+}
+function infantMonthlyRisk(s, birthYear) { return birthYear < 1800 ? .023 : .018; }
+
+function familyMonth(s) {
+  if (s.dead) return;
+  const surname = s.name.split(' ').at(-1);
+  const mother = s.relations.find(r => r.role === '어머니' && r.alive), father = s.relations.find(r => r.role === '아버지' && r.alive);
+  // Younger siblings keep arriving while the parents are together and the mother is of age.
+  if (mother && father && ageOf(s) < 20) {
+    const births = [monthIndex(s.born, s.birthMonth), ...s.relations.filter(r => r.role === '형제자매').map(r => monthIndex(r.birthYear, r.birthMonth || 1))];
+    const gap = monthIndex(s.year, s.month) - Math.max(...births), motherAge = ageOf(s, mother);
+    if (motherAge >= 18 && motherAge <= 42 && births.length < 8 && gap >= 15 && random(s) < .03) {
+      const sex = pick(s, ['남성','여성']);
+      const r = {name:freshName(s, sex === '남성' ? male : female, surname), role:'형제자매', sex, birthYear:s.year, birthMonth:s.month,
+        alive:true, closeness:rand(s, 55, 80), job:'없음'};
+      s.relations.push(r);
+      addLog(s, '가족의 변화', `${siblingWord(s, r)} ${r.name}이(가) 태어났습니다.`, 'good');
+      changeStats(s, {행복:3});
+    }
+  }
+  // Infant and child mortality for siblings and the player's own children.
+  for (const r of s.relations) {
+    if (!r.alive || !['형제자매','자녀'].includes(r.role)) continue;
+    const m = monthsOld(s, r);
+    if (m <= 0) continue;
+    const q = m < 12 ? infantMonthlyRisk(s, r.birthYear) : m < 60 ? .003 : m < 120 ? .0009 : 0;
+    if (!q || random(s) >= q) continue;
+    r.alive = false; r.deathYear = s.year;
+    const who = r.role === '자녀' ? `${personSex(r) === '여성' ? '딸' : '아들'} ${r.name}` : `${siblingWord(s, r)} ${r.name}`;
+    const text = m < 12 ? `갓 태어난 ${who}이(가) 첫돌을 넘기지 못하고 세상을 떠났습니다.`
+      : `${who}이(가) ${Math.floor(m/12)}살의 어린 나이에 병으로 세상을 떠났습니다.`;
+    addLog(s, '가족의 슬픔', text, 'bad');
+    milestone(s, `${who}과(와) 작별`);
+    changeStats(s, {행복: r.role === '자녀' ? -15 : -8});
+    if (r.role === '자녀') s.relations.forEach(p => { if (p.role === '배우자' && p.alive) p.closeness = clamp(p.closeness + 3); });
+  }
+}
+
+// The player's own risk, rolled once a year. Poor health and poverty raise every risk.
+function fateYear(s) {
+  if (s.dead) return;
+  const age = ageOf(s), h = s.stats.건강, job = s.job || '';
+  const frail = (h < 25 ? 3 : h < 45 ? 1.8 : 1) * (s.stats.재산 < 15 ? 1.3 : 1);
+  const risks = [];
+  if (age < 5) risks.push([.006, '어린 시절 열병을 이겨 내지 못했습니다.']);
+  else if (age < 15) risks.push([.002, '천연두에 걸려 끝내 회복하지 못했습니다.']);
+  else risks.push([.003 + Math.max(0, age - 40)*.0005, '갑작스러운 병으로 세상을 떠났습니다.']);
+  if (age >= 14 && /노동|농|직물|인쇄|제화|도제|장인|보조/.test(job)) risks.push([.0015, '작업 중 사고를 당해 목숨을 잃었습니다.']);
+  const war = (s.year >= 1792 && s.year <= 1815) || (s.year >= 1756 && s.year <= 1763);
+  if (war && /군/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
+  if (s.year === 1832 && s.place.includes('파리')) risks.push([.012, '1832년 콜레라에 걸려 세상을 떠났습니다.']);
+  if (s.year === 1849 && s.place.includes('파리')) risks.push([.006, '콜레라에 걸려 세상을 떠났습니다.']);
+  for (const [p, reason] of risks) if (random(s) < p * frail) { endLife(s, reason); return; }
+}
+
+// Childbirth was dangerous for the mother: roughly one birth in a hundred.
+function childbirthRisk(s) {
+  if (s.sex === '여성') { if (random(s) < .012) endLife(s, '출산 뒤 회복하지 못했습니다.'); return; }
+  const wife = s.relations.find(r => r.role === '배우자' && r.alive);
+  if (wife && random(s) < .012) {
+    wife.alive = false; wife.deathYear = s.year;
+    addLog(s, '가족의 슬픔', `배우자 ${wife.name}이(가) 출산 뒤 회복하지 못하고 세상을 떠났습니다.`, 'bad');
+    milestone(s, `배우자 ${wife.name}과 작별`); changeStats(s, {행복:-18});
+  }
+}
+
+// Some families had already lost a child before the player was born.
+function earlierLoss(s) {
+  if (random(s) >= .35) return;
+  const sex = pick(s, ['남성','여성']), birthYear = s.born - rand(s, 1, 4), months = rand(s, 1, 11);
+  const r = {name:freshName(s, sex === '남성' ? male : female, s.name.split(' ').at(-1)), role:'형제자매', sex, birthYear, birthMonth:rand(s, 1, 12),
+    alive:false, closeness:50, job:'없음'};
+  r.deathYear = Math.min(s.born, birthYear + (r.birthMonth + months > 12 ? 1 : 0));
+  s.relations.push(r);
+  addLog(s, '가족의 기억', `당신이 태어나기 전, ${siblingWord(s, r)} ${r.name}은(는) 첫돌을 넘기지 못하고 세상을 떠났습니다.`, 'normal');
+}
+
 // src/engine.js
 
 
@@ -4010,11 +4155,11 @@ function dailyEvent(s) {
 }
 function annual(s) {
   s.yearEvents[s.year] = 0;
-  changeStats(s, {건강:rand(s,-2,1)});
+  changeStats(s, {건강: ageOf(s) < 40 ? rand(s,-1,1) : rand(s,-2,1)});
   if (ageOf(s) > 10 && !['없음','은퇴'].includes(s.job)) changeStats(s, {재산:rand(s,-1,2)});
   checkHealth(s);
   if (s.dead) return;
-  yearlyPaths(s); applyFocus(s); familyYear(s);
+  yearlyPaths(s); applyFocus(s); familyYear(s); fateYear(s);
   if (s.dead) return;
   const gap = s.year - s.lastDecision;
   if (ageOf(s) >= 2 && gap >= 1 && (gap >= 2 || random(s) < .66)) s.pendingDecisionYear = s.year;
@@ -4033,6 +4178,8 @@ class GameEngine {
     historyMonth(s);
     if (s.dead) return true;
     birthdayFacts(s);
+    familyMonth(s);
+    if (s.dead) return true;
     if ([3,7,11].includes(s.month)) dailyEvent(s);
     if (s.dead) return true;
     if (s.year === s.born+2 && s.month === s.birthMonth && s.lastDecision < s.born) {
@@ -4169,9 +4316,23 @@ const PX = {
   hairs:['#3a271c','#5a3a24','#7a4e2c','#262021','#9a6a3a','#c79f58','#8b3d22']
 };
 // Korean display names → the French originals used on the passport.
-const FR_NAMES = {'장':'Jean','피에르':'Pierre','루이':'Louis','자크':'Jacques','앙투안':'Antoine','프랑수아':'François',
-  '마리':'Marie','잔':'Jeanne','안':'Anne','마들렌':'Madeleine','엘리자베트':'Élisabeth','루이즈':'Louise',
-  '뒤퐁':'Dupont','마르탱':'Martin','르페브르':'Lefebvre','베르나르':'Bernard','모로':'Moreau','로랑':'Laurent'};
+const FR_NAMES = {'장':'Jean','피에르':'Pierre','루이':'Louis','자크':'Jacques','앙투안':'Antoine','프랑수아':'François','니콜라':'Nicolas',
+  '미셸':'Michel','에티엔':'Étienne','클로드':'Claude','조제프':'Joseph','샤를':'Charles','앙드레':'André','질':'Gilles','기욤':'Guillaume',
+  '르네':'René','마티외':'Mathieu','쥘리앵':'Julien','필리프':'Philippe','위베르':'Hubert','장바티스트':'Jean-Baptiste','폴':'Paul',
+  '오귀스탱':'Augustin','이브':'Yves','코랑탱':'Corentin','시몽':'Simon','알렉시':'Alexis','뱅상':'Vincent','오노레':'Honoré',
+  '아드리앵':'Adrien','가브리엘':'Gabriel','레옹':'Léon',
+  '마리':'Marie','잔':'Jeanne','안':'Anne','마들렌':'Madeleine','엘리자베트':'Élisabeth','루이즈':'Louise','카트린':'Catherine',
+  '마르그리트':'Marguerite','프랑수아즈':'Françoise','마리안':'Marianne','쥐스틴':'Justine','쥘리':'Julie','빅투아르':'Victoire',
+  '테레즈':'Thérèse','주느비에브':'Geneviève','아델라이드':'Adélaïde','앙젤리크':'Angélique','소피':'Sophie','클레르':'Claire',
+  '마르트':'Marthe','로즈':'Rose','셀레스트':'Céleste','외제니':'Eugénie','조제핀':'Joséphine','앙투아네트':'Antoinette','니콜':'Nicole',
+  '쉬잔':'Suzanne','아니에스':'Agnès','펠리시테':'Félicité','바르브':'Barbe',
+  '뒤퐁':'Dupont','마르탱':'Martin','르페브르':'Lefebvre','베르나르':'Bernard','모로':'Moreau','로랑':'Laurent','프티':'Petit',
+  '뒤랑':'Durand','르루아':'Leroy','루':'Roux','베르트랑':'Bertrand','모렐':'Morel','푸르니에':'Fournier','지라르':'Girard',
+  '메르시에':'Mercier','블랑':'Blanc','게랭':'Guérin','부아예':'Boyer','가르니에':'Garnier','슈발리에':'Chevalier','르그랑':'Legrand',
+  '고티에':'Gautier','페랭':'Perrin','로베르':'Robert','클레망':'Clément','모랭':'Morin','루셀':'Roussel','르메르':'Lemaire',
+  '뒤부아':'Dubois','포르':'Faure','르클레르':'Leclerc','브뤼네':'Brunet','르브룅':'Lebrun','르고프':'Le Goff','르갈':'Le Gall',
+  '뒤마':'Dumas','바이':'Bailly','콜랭':'Colin','아르노':'Arnaud','부셰':'Boucher','마송':'Masson','샤르팡티에':'Charpentier',
+  '파브르':'Fabre','롤랑':'Roland','카라덱':'Caradec','바레':'Barré','라퐁':'Lafont','르블랑':'Leblanc'};
 function frenchName(name) { return name.split(' ').map(part => FR_NAMES[part] || part).join(' '); }
 function strHash(text) {
   let v = 2166136261;
@@ -4791,6 +4952,7 @@ const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;'
 const ym = (y, m) => y*12 + m;
 function eraText(s) {
   const t = ym(s.year, s.month);
+  if (t < ym(1763,2)) return '구체제(앙시앵 레짐)의 프랑스 왕국입니다. 7년 전쟁이 이어지고 있습니다.';
   if (t < ym(1789,5)) return '구체제(앙시앵 레짐)의 프랑스 왕국입니다. 지역과 신분에 따라 삶의 조건이 다릅니다.';
   if (t < ym(1792,9)) return '혁명이 진행되고 있습니다. 정치와 제도가 빠르게 변화합니다.';
   if (t < ym(1795,11)) return '공화국 초기입니다. 전쟁과 정치적 갈등이 사회에 영향을 미칩니다.';
@@ -4798,9 +4960,9 @@ function eraText(s) {
   if (t < ym(1804,5)) return '통령정부 시대입니다.';
   if (t < ym(1814,4)) return '나폴레옹 제1제정 시대입니다.';
   if (t >= ym(1815,3) && t < ym(1815,7)) return '나폴레옹의 백일천하입니다.';
-  if (t < ym(1830,8)) return '왕정복고 시대입니다. 수록된 역사 사건 연표는 1815년까지입니다.';
-  if (t < ym(1848,2)) return '7월 왕정 시대입니다. 이 시기의 역사 사건은 아직 수록되지 않았습니다.';
-  return '제2공화국 이후의 프랑스입니다. 이 시기의 역사 사건은 아직 수록되지 않았습니다.';
+  if (t < ym(1830,8)) return '왕정복고 시대입니다. 부르봉 왕가가 돌아왔지만 혁명 이전으로 완전히 되돌아가지는 않았습니다.';
+  if (t < ym(1848,2)) return '7월 왕정 시대입니다. 철도와 공장이 늘고 부르주아의 시대가 열립니다.';
+  return '제2공화국 이후의 프랑스입니다. 성인 남성 모두가 투표하는 시대가 시작되었습니다.';
 }
 const ERAS = [
   {from:1740, to:ym(1789,5), label:'구체제', color:'#b9a77a', regime:'ROYAUME DE FRANCE'},
@@ -4915,6 +5077,7 @@ function logText(x) {
 function createUI(doc, engine, handlers) {
   const $ = id => doc.getElementById(id), e = escapeHTML;
   const scene = createScene($('scene'), doc);
+  let choosing = false;
   let spec = null, specKey = '', starOnly = false, lastLog = null, lastLen = -1, renderedState = null;
   let shownDecision = null, shownResult = null, previousFocus = null, noticeTimer = null, introScene = null, introSpec = null;
 
@@ -4926,6 +5089,17 @@ function createUI(doc, engine, handlers) {
       $('yearProgress').setAttribute('aria-valuenow', String(Math.round(value)));
       if (spec) { spec.moving = !s.dead && !s.decision && !s.runtime.paused; spec.speed = s.runtime.speed; if (spec.moving || !spec.drawn) { scene.draw(spec, now); spec.drawn = true; } }
     }
+  }
+  const BIRTH_MARKS = [[1789,'대혁명'],[1804,'나폴레옹 즉위'],[1815,'워털루'],[1830,'7월 혁명'],[1848,'2월 혁명']];
+  function renderBirthPick() {
+    const born = handlers.getBorn();
+    $('birthYearOut').textContent = born ? born + '년' : '무작위';
+    $('birthYear').value = String(born || 1775);
+    $('birthYear').classList.toggle('random', !born);
+    doc.querySelectorAll('[data-born]').forEach(b => { const on = String(born || 'random') === b.dataset.born; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+    if (!born) { $('birthHint').textContent = `${BIRTH_CHOICE.min}년부터 1820년 사이에서 무작위로 태어납니다.`; return; }
+    const era = eraAt(born, 6).label, ahead = BIRTH_MARKS.filter(([y]) => y >= born).slice(0, 3).map(([y,l]) => `${l} ${y - born}세`);
+    $('birthHint').textContent = `${era} 시대에 태어납니다.` + (ahead.length ? ` 살아 있다면 ${ahead.join(' · ')}.` : '');
   }
   function renderIntro() {
     if (introScene) return;
@@ -4986,9 +5160,11 @@ function createUI(doc, engine, handlers) {
   }
   function render() {
     const s = engine.state;
-    $('intro').hidden = !!s; $('app').hidden = !s; $('topbar').hidden = !s;
-    if (!s) { $('overlay').hidden = true; renderIntro(); return; }
-    introScene = null;
+    const intro = !s || choosing;
+    $('intro').hidden = !intro; $('app').hidden = intro; $('topbar').hidden = intro;
+    $('backToLife').hidden = !s || !choosing;
+    if (intro) { $('overlay').hidden = true; renderIntro(); renderBirthPick(); return; }
+    if (introScene) { introScene = null; }
     const age = ageOf(s), era = eraAt(s.year, s.month);
     $('ageNumber').textContent = age;
     const secs = 48 / s.runtime.speed;
@@ -5118,7 +5294,9 @@ function createUI(doc, engine, handlers) {
   });
   const onResize = () => { scene.resize(); if (spec) spec.drawn = false; if (introScene) introScene.resize(); renderProgress(); };
   globalThis.addEventListener('resize', onResize);
-  return {render, renderProgress, notify(message) {
+  $('birthYear').addEventListener('input', () => { handlers.setBorn(Number($('birthYear').value)); renderBirthPick(); });
+  doc.querySelectorAll('[data-born]').forEach(b => b.addEventListener('click', () => { handlers.setBorn(b.dataset.born === 'random' ? null : Number(b.dataset.born)); renderBirthPick(); }));
+  return {render, renderProgress, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
     $('notice').textContent = message; $('notice').hidden = false;
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('notice').hidden = true; }, 6000);
   }, dispose() { clearTimeout(noticeTimer); doc.removeEventListener('keydown', trapFocus); globalThis.removeEventListener('resize', onResize); }};
@@ -5338,9 +5516,9 @@ function createController({engine,clock,render,notify,storage,confirm,seed = () 
   }
   return {
     changed, autosave,
-    newLife(scenario = null) {
+    newLife(scenario = null, options = {}) {
       if (engine.state && !confirm('새 인생을 시작하면 현재 진행 중인 기록이 바뀝니다. 저장 파일을 내보내 두셨나요? 계속할까요?')) return false;
-      replace(scenario==='school' ? createSchoolScenario(seed()) : createState(seed())); autosave(); return true;
+      replace(scenario==='school' ? createSchoolScenario(seed()) : createState(seed(), options)); autosave(); return true;
     },
     choose(index) {
       if (!engine.choose(index)) return false;
@@ -5435,14 +5613,16 @@ let controller;
 const prefs = (() => { try { return JSON.parse(localStorage.getItem('franceLife.prefs')) || {}; } catch { return {}; } })();
 const savePrefs = () => { try { localStorage.setItem('franceLife.prefs', JSON.stringify(prefs)); } catch { /* optional */ } };
 const ui = createUI(document, engine, {
-  choose:index => controller.choose(index), setFocus:id => controller.setFocus(id), toggleStar:i => controller.toggleStar(i)
+  choose:index => controller.choose(index), setFocus:id => controller.setFocus(id), toggleStar:i => controller.toggleStar(i),
+  getBorn:() => Number.isInteger(prefs.born) ? prefs.born : null,
+  setBorn:year => { prefs.born = Number.isInteger(year) ? year : null; savePrefs(); }
 });
 const music = createMusic();
 let autoTimer = null;
 function autoDecide() {
   clearTimeout(autoTimer);
   const s = engine.state;
-  if (!prefs.auto || !s || s.dead || !s.decision) return;
+  if (!prefs.auto || !s || s.dead || !s.decision || ui.choosing) return;
   autoTimer = setTimeout(() => {
     const st = engine.state;
     if (!prefs.auto || !st?.decision) return;
@@ -5462,7 +5642,13 @@ controller = createController({engine, clock, render, notify:ui.notify,
   storage:() => window.localStorage, confirm:message => window.confirm(message)});
 function closeMenu() { document.getElementById('menu').hidden = true; document.getElementById('menuButton').setAttribute('aria-expanded', 'false'); }
 const actions = {
-  newLife:() => controller.newLife(), schoolStory:() => controller.newLife('school'),
+  newLife:() => {
+    const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
+    if (controller.newLife(null, {born})) ui.setChoosing(false);
+  },
+  schoolStory:() => { if (controller.newLife('school')) ui.setChoosing(false); },
+  chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
+  backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
   skipToDecision:() => controller.skipToDecision(),
   saveGame:() => controller.saveGame(), loadGame:() => controller.loadGame(),
@@ -5501,10 +5687,10 @@ document.getElementById('importFile').addEventListener('change', async event => 
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { controller.autosave(); clock.stop(); }
-  else if (engine.state && !engine.state.dead) clock.start();
+  else if (engine.state && !engine.state.dead && !ui.choosing) clock.start();
 });
 window.addEventListener('pagehide', () => { controller.autosave(); clock.stop(); });
-window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden) clock.start(); });
+window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden && !ui.choosing) clock.start(); });
 if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller};
 render();
 

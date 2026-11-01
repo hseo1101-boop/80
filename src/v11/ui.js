@@ -3,6 +3,7 @@ const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;'
 const ym = (y, m) => y*12 + m;
 function eraText(s) {
   const t = ym(s.year, s.month);
+  if (t < ym(1763,2)) return '구체제(앙시앵 레짐)의 프랑스 왕국입니다. 7년 전쟁이 이어지고 있습니다.';
   if (t < ym(1789,5)) return '구체제(앙시앵 레짐)의 프랑스 왕국입니다. 지역과 신분에 따라 삶의 조건이 다릅니다.';
   if (t < ym(1792,9)) return '혁명이 진행되고 있습니다. 정치와 제도가 빠르게 변화합니다.';
   if (t < ym(1795,11)) return '공화국 초기입니다. 전쟁과 정치적 갈등이 사회에 영향을 미칩니다.';
@@ -10,9 +11,9 @@ function eraText(s) {
   if (t < ym(1804,5)) return '통령정부 시대입니다.';
   if (t < ym(1814,4)) return '나폴레옹 제1제정 시대입니다.';
   if (t >= ym(1815,3) && t < ym(1815,7)) return '나폴레옹의 백일천하입니다.';
-  if (t < ym(1830,8)) return '왕정복고 시대입니다. 수록된 역사 사건 연표는 1815년까지입니다.';
-  if (t < ym(1848,2)) return '7월 왕정 시대입니다. 이 시기의 역사 사건은 아직 수록되지 않았습니다.';
-  return '제2공화국 이후의 프랑스입니다. 이 시기의 역사 사건은 아직 수록되지 않았습니다.';
+  if (t < ym(1830,8)) return '왕정복고 시대입니다. 부르봉 왕가가 돌아왔지만 혁명 이전으로 완전히 되돌아가지는 않았습니다.';
+  if (t < ym(1848,2)) return '7월 왕정 시대입니다. 철도와 공장이 늘고 부르주아의 시대가 열립니다.';
+  return '제2공화국 이후의 프랑스입니다. 성인 남성 모두가 투표하는 시대가 시작되었습니다.';
 }
 const ERAS = [
   {from:1740, to:ym(1789,5), label:'구체제', color:'#b9a77a', regime:'ROYAUME DE FRANCE'},
@@ -127,6 +128,7 @@ function logText(x) {
 function createUI(doc, engine, handlers) {
   const $ = id => doc.getElementById(id), e = escapeHTML;
   const scene = createScene($('scene'), doc);
+  let choosing = false;
   let spec = null, specKey = '', starOnly = false, lastLog = null, lastLen = -1, renderedState = null;
   let shownDecision = null, shownResult = null, previousFocus = null, noticeTimer = null, introScene = null, introSpec = null;
 
@@ -138,6 +140,17 @@ function createUI(doc, engine, handlers) {
       $('yearProgress').setAttribute('aria-valuenow', String(Math.round(value)));
       if (spec) { spec.moving = !s.dead && !s.decision && !s.runtime.paused; spec.speed = s.runtime.speed; if (spec.moving || !spec.drawn) { scene.draw(spec, now); spec.drawn = true; } }
     }
+  }
+  const BIRTH_MARKS = [[1789,'대혁명'],[1804,'나폴레옹 즉위'],[1815,'워털루'],[1830,'7월 혁명'],[1848,'2월 혁명']];
+  function renderBirthPick() {
+    const born = handlers.getBorn();
+    $('birthYearOut').textContent = born ? born + '년' : '무작위';
+    $('birthYear').value = String(born || 1775);
+    $('birthYear').classList.toggle('random', !born);
+    doc.querySelectorAll('[data-born]').forEach(b => { const on = String(born || 'random') === b.dataset.born; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+    if (!born) { $('birthHint').textContent = `${BIRTH_CHOICE.min}년부터 1820년 사이에서 무작위로 태어납니다.`; return; }
+    const era = eraAt(born, 6).label, ahead = BIRTH_MARKS.filter(([y]) => y >= born).slice(0, 3).map(([y,l]) => `${l} ${y - born}세`);
+    $('birthHint').textContent = `${era} 시대에 태어납니다.` + (ahead.length ? ` 살아 있다면 ${ahead.join(' · ')}.` : '');
   }
   function renderIntro() {
     if (introScene) return;
@@ -198,9 +211,11 @@ function createUI(doc, engine, handlers) {
   }
   function render() {
     const s = engine.state;
-    $('intro').hidden = !!s; $('app').hidden = !s; $('topbar').hidden = !s;
-    if (!s) { $('overlay').hidden = true; renderIntro(); return; }
-    introScene = null;
+    const intro = !s || choosing;
+    $('intro').hidden = !intro; $('app').hidden = intro; $('topbar').hidden = intro;
+    $('backToLife').hidden = !s || !choosing;
+    if (intro) { $('overlay').hidden = true; renderIntro(); renderBirthPick(); return; }
+    if (introScene) { introScene = null; }
     const age = ageOf(s), era = eraAt(s.year, s.month);
     $('ageNumber').textContent = age;
     const secs = 48 / s.runtime.speed;
@@ -330,7 +345,9 @@ function createUI(doc, engine, handlers) {
   });
   const onResize = () => { scene.resize(); if (spec) spec.drawn = false; if (introScene) introScene.resize(); renderProgress(); };
   globalThis.addEventListener('resize', onResize);
-  return {render, renderProgress, notify(message) {
+  $('birthYear').addEventListener('input', () => { handlers.setBorn(Number($('birthYear').value)); renderBirthPick(); });
+  doc.querySelectorAll('[data-born]').forEach(b => b.addEventListener('click', () => { handlers.setBorn(b.dataset.born === 'random' ? null : Number(b.dataset.born)); renderBirthPick(); }));
+  return {render, renderProgress, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
     $('notice').textContent = message; $('notice').hidden = false;
     clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('notice').hidden = true; }, 6000);
   }, dispose() { clearTimeout(noticeTimer); doc.removeEventListener('keydown', trapFocus); globalThis.removeEventListener('resize', onResize); }};
