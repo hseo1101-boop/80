@@ -121,9 +121,10 @@ js = patch(js, "  if (effects.milestone) milestone(s, effects.milestone === '$jo
 js = patch(js, '    s.decision=null; s.decisionResult=null;\n    return true;', "    s.decision=null; s.decisionResult=null;\n    if (s.familyEvents.doom) { const reason = s.familyEvents.doom; delete s.familyEvents.doom; endLife(s, reason); }\n    return true;");
 js = patch(js, '      if (!engine.acknowledgeDecision()) return false;\n      clock.reset(); changed(); return true;', '      if (!engine.acknowledgeDecision()) return false;\n      clock.reset(); changed(); if (engine.state.dead) clock.stop(); return true;');
 // 2f. Concrete everyday events by place, class, period and stage; prefer fresh ones.
-js = patch(js, '// src/engine.js', read('daily2.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('daily2.js') + '\n' + read('midlife.js') + '\n// src/engine.js');
 js = patch(js, 'return pick(s,group.events.filter(e=>e.overrideChance===undefined).length ? group.events.filter(e=>e.overrideChance===undefined) : group.events);',
   'return pick(s,preferFresh(s,group.events.filter(e=>e.overrideChance===undefined).length ? group.events.filter(e=>e.overrideChance===undefined) : group.events));');
+js = patch(js, '  const group=groups.find(g=>(roll-=g.weight)<0)||groups.at(-1);', '  const group=personalFirst(s,groups,groups.find(g=>(roll-=g.weight)<0)||groups.at(-1));');
 js = patch(js, "weight:category==='historical'?20:40", "weight:category==='historical'?20:category==='personal'?55:25");
 // 2g. Birth lottery, hunger years, choice requirements, life report.
 js = patch(js, '// src/engine.js', read('lottery.js') + '\n' + read('summary.js') + '\n// src/engine.js');

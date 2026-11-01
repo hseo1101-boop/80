@@ -186,8 +186,20 @@ for (const e of dailyEvents) if (GENERIC_REWRITE[e.id]) e.text = GENERIC_REWRITE
 // Prefer one-off, concrete events over repeatable generic ones when both are available.
 // Order of preference: unseen one-off events, then specific repeatable ones, then the original generic set.
 function preferFresh(s, events) {
+  // The same everyday scene does not come back within four years if anything else fits.
+  const recent = new Set(s.log.filter(x => x.eventId && s.year - x.year < 4).map(x => x.eventId));
+  const rested = events.filter(e => !recent.has(e.id));
+  if (rested.length) events = rested;
   const fresh = events.filter(e => e.repeatable === false && !s.seenEvents?.includes(e.id));
   if (fresh.length && random(s) < .8) return fresh;
   const specific = events.filter(e => !/^daily-/.test(e.id));
-  return specific.length && random(s) < .7 ? specific : events;
+  // Generic adult filler ('daily-…') only when nothing fits the person, or now and then for texture.
+  return specific.length && random(s) < .88 ? specific : events;
+}
+
+function recentlySeen(s, id) { return s.log.some(x => x.eventId === id && s.year - x.year < 4); }
+// Past twenty, an everyday draw from the generic pool turns personal more often when a fresh personal scene exists.
+function personalFirst(s, groups, group) {
+  const personal = groups.find(g => g.category === 'personal');
+  return group?.category === 'universal' && personal && ageOf(s) >= 20 && random(s) < .8 && personal.events.some(e => !recentlySeen(s, e.id)) ? personal : group;
 }
