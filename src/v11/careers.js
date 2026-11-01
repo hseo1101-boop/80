@@ -17,9 +17,9 @@ const CAREERS = {
   officer:{label:'장교', ranks:[
     {label:'육군 소위', pay:2, rep:1},
     {label:'육군 중위', years:2, need:20, pay:2, rep:1, fast:[1792, 1799]},
-    {label:'육군 대위', years:3, need:35, pay:3, rep:1, fast:[1792, 1799]},
-    {label:'육군 대령', years:4, need:55, pay:4, rep:1, fast:[1792, 1799]},
-    {label:'육군 장군', years:4, need:72, pay:5, rep:1, fast:[1792, 1799]}]},
+    {label:'육군 대위', years:3, need:35, pay:3, rep:1, fast:[1792, 1799], nobleBefore:1789},
+    {label:'육군 대령', years:4, need:55, pay:4, rep:1, fast:[1792, 1799], nobleBefore:1789},
+    {label:'육군 장군', years:4, need:72, pay:5, rep:1, fast:[1792, 1799], nobleBefore:1789}]},
   science:{label:'과학자', ranks:[
     {label:'수학 교사', pay:1, rep:1},
     {label:'아카데미 통신회원', years:3, need:28, knowledge:68, pay:2, rep:2},
@@ -75,6 +75,8 @@ function careerYear(s) {
   if (!rank) return;
   if (s.job !== rank.label) { s.career = null; return; }
   changeStats(s, {재산: rank.pay});
+  const career = CAREERS[s.career.id];
+  if (career.risk && WAR_YEARS(s.year) && random(s) < career.risk.p) { endLife(s, career.risk.text); return; }
   const war = s.career.id === 'officer' && WAR_YEARS(s.year) ? 2 : 0;
   s.reputation = clamp(s.reputation + rank.rep + war + (currentFocus(s)?.id === 'work' ? 1 : 0));
   const next = CAREERS[s.career.id].ranks[s.career.rank + 1];
@@ -83,8 +85,8 @@ function careerYear(s) {
   if (s.year - s.career.since < (fast ? Math.ceil(next.years / 2) : next.years)) return;
   if ((next.fromYear && s.year < next.fromYear) || s.reputation < next.need) return;
   if ((next.knowledge && s.stats.지식 < next.knowledge) || (next.wealth && s.stats.재산 < next.wealth)) return;
-  // Before 1789 the higher officer ranks went to nobles; the Revolution removed that bar.
-  if (s.career.id === 'officer' && s.career.rank >= 1 && s.class !== '귀족' && s.year < 1789) return;
+  // Before 1789 some ranks (field officers, bishops) went to nobles; the Revolution removed that bar.
+  if (next.nobleBefore && s.year < next.nobleBefore && s.class !== '귀족') return;
   if (random(s) < (fast ? .6 : .3)) promote(s);
 }
 
@@ -101,7 +103,7 @@ const FIGURES = {
   lamarck:{name:'장바티스트 라마르크', sex:'남성', born:[1744,8], job:'박물학자', death:[1829,12], fate:'눈이 멀고 가난해진 라마르크가 세상을 떠났습니다. 생물이 변한다는 그의 생각을 믿는 사람은 아직 많지 않았습니다.'},
   david:{name:'자크루이 다비드', sex:'남성', born:[1748,8], job:'화가', death:[1825,12], fate:'망명지 브뤼셀에서 다비드가 세상을 떠났습니다. 왕정복고 정부는 그의 시신이 프랑스로 돌아오는 것을 허락하지 않았습니다.'}
 };
-const FIGURE_BY_NAME = Object.fromEntries(Object.entries(FIGURES).map(([id, f]) => [f.name, id]));
+let FIGURE_BY_NAME = Object.fromEntries(Object.entries(FIGURES).map(([id, f]) => [f.name, id]));
 function addFigure(s, id) {
   const f = FIGURES[id];
   if (!f || s.relations.some(r => r.name === f.name)) return;
@@ -192,7 +194,7 @@ for (const d of decisions) if (['apprentice','trade'].includes(d.id)) d.when.noC
     [{label:'회원으로 가입한다', result:'로베스피에르라는 그 변호사와 몇 마디를 나눴습니다. 말은 서툴지만 원칙에는 한 치의 양보도 없는 사람입니다.', effects:{figure:'robespierre', rep:5, path:{politics:'engaged'}}},
      no('방청석에서 지켜본다', '연설을 들으며 메모를 했습니다.')]);
 
-  H('roland-salon', [1791,3], {minAge:20, places:['파리'], jobMatch:LAW + '|' + PRESS + '|' + TRADE},
+  H('roland-salon', [1791,3], {minAge:20, places:['파리'], jobMatch:LAW + '|' + PRESS + '|' + TRADE + '|살롱|작가'},
     '롤랑 부인의 살롱',
     '게네고 거리의 롤랑 부부 집에 지롱드의 의원과 언론인들이 모입니다. 집주인 마농 롤랑은 누구보다 날카로운 논객입니다.',
     [{label:'살롱에 드나든다', result:'롤랑 부인은 당신의 이름을 기억해 주었습니다. 이곳에서 지롱드파의 계획이 오갑니다.', effects:{figure:'roland', rep:4, path:{politics:'gironde-friend'}}},

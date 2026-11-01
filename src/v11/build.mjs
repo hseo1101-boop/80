@@ -123,7 +123,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
