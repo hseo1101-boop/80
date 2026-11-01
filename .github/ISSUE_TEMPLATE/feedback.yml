@@ -1,0 +1,48 @@
+name: 플레이 소감
+description: 해 보니 어땠는지 알려 주세요. 짧아도 좋습니다.
+title: "[소감] "
+labels: ["feedback"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 게임 버전
+      description: 게임의 ⋯ 메뉴에서 '의견 보내기'로 오면 자동으로 채워집니다.
+      placeholder: v0.19
+  - type: dropdown
+    id: finished
+    attributes:
+      label: 한 인생을 끝까지 했나요?
+      options:
+        - 끝까지 했다
+        - 중간에 그만뒀다
+        - 여러 번 했다
+    validations:
+      required: true
+  - type: dropdown
+    id: again
+    attributes:
+      label: 다시 하고 싶나요?
+      options:
+        - 꼭 다시 하고 싶다
+        - 가끔 생각나면
+        - 별로
+  - type: textarea
+    id: liked
+    attributes:
+      label: 좋았던 순간
+      placeholder: 어떤 장면이나 결정이 기억에 남았나요?
+  - type: textarea
+    id: bored
+    attributes:
+      label: 지루하거나 헷갈렸던 곳
+      placeholder: 언제쯤, 무엇 때문에 그만두고 싶었나요?
+  - type: input
+    id: life
+    attributes:
+      label: 내 인물 (선택)
+      placeholder: 예) 장 뒤퐁, 1768 파리 · 인쇄공, 61세
+  - type: textarea
+    id: more
+    attributes:
+      label: 더 하고 싶은 말

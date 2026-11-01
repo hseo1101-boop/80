@@ -147,7 +147,8 @@ label.section{display:block}
 .sum-lines{margin:0;padding:0 0 0 18px;display:grid;gap:6px;color:var(--teal)}.sum-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .sum-cols h3{font-size:.9rem;margin:0 0 6px}.sum-list{list-style:none;margin:0;padding:0;font-size:.9rem;display:grid;gap:4px}.sum-list b{font-family:var(--mono);font-weight:500;color:var(--wine);margin-right:4px}.sum-list span{color:var(--muted)}
 .sum-share summary{cursor:pointer;font-weight:700}.sum-share img{display:block;width:100%;max-width:360px;margin:10px 0;border:1px solid var(--line);border-radius:6px}
-.sum-actions{display:flex;gap:8px}.choice-req{display:block;font-size:.78rem;margin-top:5px;font-weight:700}.choice-req.ok{color:var(--teal)}.choice-req.no{color:var(--bad)}
+.sum-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.share-story{display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);text-decoration:none;font-weight:700}.share-story:hover{border-color:var(--wine)}
+.menu-link{display:block;padding:10px 12px;border-radius:6px;color:var(--ink);text-decoration:none}.menu-link:hover{background:var(--chip)}.news-dot{font-size:.7rem;font-weight:800;color:#fff;background:var(--wine);border-radius:999px;padding:1px 7px;margin-left:4px}.menu-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--wine)}#menuButton{position:relative}.choice-req{display:block;font-size:.78rem;margin-top:5px;font-weight:700}.choice-req.ok{color:var(--teal)}.choice-req.no{color:var(--bad)}
 .choice:disabled{background:#f1f3f0;opacity:.75}.birth-top{display:flex;gap:14px;align-items:center;margin-bottom:10px}.birth-top img{width:48px;height:77px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%}
 .birth h2{font-family:var(--serif);margin:6px 0 0}.birth .sum-lines{margin:6px 0 18px}#birthLead{margin:0 0 4px;line-height:1.75}
 #notice{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(92vw,560px);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;z-index:30;font-size:.9rem;box-shadow:0 8px 24px #0005}
@@ -187,12 +188,15 @@ label.section{display:block}
     <button id="skipButton" class="ctl" data-action="skipToDecision" title="다음 중대 결정까지 건너뛰기"><span class="wide">다음 결정까지 »</span><span class="narrow">다음 »</span></button>
     <button id="autoButton" class="ctl tb-only-wide" data-action="toggleAuto" aria-pressed="false">자동 결정</button>
     <button id="musicButton" class="ctl tb-only-wide" data-action="toggleMusic" aria-pressed="false">♪ 음악</button>
-    <div class="menu-wrap"><button id="menuButton" class="ctl" data-action="toggleMenu" aria-haspopup="true" aria-expanded="false" aria-label="메뉴">⋯</button>
+    <div class="menu-wrap"><button id="menuButton" class="ctl" data-action="toggleMenu" aria-haspopup="true" aria-expanded="false" aria-label="메뉴">⋯<i id="menuDot" class="menu-dot" hidden></i></button>
       <div id="menu" class="menu" hidden>
         <button data-action="saveGame">기록 저장</button><button data-action="loadGame">기록 불러오기</button>
         <button data-action="exportGame">저장 코드 내보내기</button><button data-action="importGame">저장 코드 가져오기</button><hr>
         <button id="autoMenu" data-action="toggleAuto">자동 결정</button><button id="musicMenu" data-action="toggleMusic">♪ 음악</button><hr>
-        <button data-action="chooseLife">새 인생 시작…</button>
+        <button data-action="chooseLife">새 인생 시작…</button><hr>
+        <a id="linkUpdates" class="menu-link" target="_blank" rel="noopener">업데이트 노트 <span id="newsDot" class="news-dot" hidden>새 소식</span></a>
+        <a id="linkFeedback" class="menu-link" target="_blank" rel="noopener">의견 보내기</a>
+        <a id="linkStories" class="menu-link" target="_blank" rel="noopener">플레이어 이야기</a>
       </div></div>
   </div>
 </div></header>
@@ -238,7 +242,8 @@ label.section{display:block}
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
         <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
-        <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
+        <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button><a id="shareStory" class="share-story" target="_blank" rel="noopener">이 삶을 게시판에 공유하기 →</a></div>
+        <p class="note" style="margin:0">공유하기를 누르면 요약이 채워진 GitHub 글쓰기 화면이 열립니다(GitHub 계정 필요). 위의 공유용 이미지는 글쓰기 칸에 끌어다 놓으면 붙습니다.</p>
       </section>
       <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
       <div id="sceneDetail" class="scene-detail" hidden></div>
@@ -289,7 +294,7 @@ label.section{display:block}
   <p id="saveStatus" class="note" role="status" aria-live="polite"></p>
   <div class="ask-btns"><button id="saveClose">닫기</button><button id="saveFile">파일로 받기</button><button id="savePick">파일 고르기</button><button id="saveCopy" class="primary">복사</button><button id="saveLoad" class="primary">이 코드로 불러오기</button></div>
 </div></div>
-<div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
+<div class="foot">어느 프랑스인의 삶 <span id="gameVersion"></span> · <a href="https://hseo1101-boop.github.io/80/community.html" target="_blank" rel="noopener">광장(업데이트·의견·이야기)</a> · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
 <script>
 (() => {
 'use strict';
@@ -8428,7 +8433,7 @@ function autoDecide() {
     }
   }, engine.state.decisionResult ? 2200 : 1400);
 }
-function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
+function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); syncLinks(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
@@ -8473,6 +8478,32 @@ function importText(raw) {
 function startWithBirth() {
   if (!engine.state || prefs.auto) return;
   engine.state.runtime.paused = true; ui.render(); ui.showBirth();
+}
+// Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
+const GAME_VERSION = 'v0.19';
+const REPO = 'https://github.com/hseo1101-boop/80';
+const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
+function lifeLabel(s) { return s ? `${s.name}, ${s.born} ${s.place} · ${s.job}, ${ageOf(s)}세` : ''; }
+function syncLinks() {
+  const s = engine.state, q = new URLSearchParams({template:'feedback.yml', version:GAME_VERSION, ...(s ? {life:lifeLabel(s)} : {})});
+  $id('linkFeedback').href = `${REPO}/issues/new?${q}`;
+  $id('linkUpdates').href = `${COMMUNITY}#updates`;
+  $id('linkStories').href = `${COMMUNITY}#stories`;
+  const fresh = prefs.seenVersion !== GAME_VERSION;
+  $id('newsDot').hidden = !fresh; $id('menuDot').hidden = !fresh;
+  $id('gameVersion').textContent = GAME_VERSION;
+  if (s?.dead) $id('shareStory').href = storyURL(s);
+}
+function storyURL(s) {
+  const r = lifeReport(s), lines = [
+    `## ${r.name} (${r.french}) · ${r.born}–${r.died}`, `**${r.epitaph}**`, r.cause, '',
+    ...r.lines.map(x => `- ${x}`), '',
+    ...(r.historic.length ? ['### 역사의 현장', ...r.historic.map(h => `- ${h.year} ${h.title}${h.choice ? ` — ${h.choice}` : ''}`), ''] : []),
+    ...(r.figures.length ? ['### 만난 인물', ...r.figures.map(f => `- ${f.name} (${f.job})`), ''] : []),
+    ...(r.starred.length ? ['### 별표한 기억', ...r.starred.slice(0, 8).map(x => `- ${x}`), ''] : []),
+    '### 하고 싶은 이야기', '(이 삶에서 기억에 남는 장면을 적어 주세요. 공유용 이미지는 이 칸에 끌어다 놓으면 붙습니다.)', '', `_${GAME_VERSION}_`];
+  const q = new URLSearchParams({category:'player-stories', title:`${r.name} · ${r.born}–${r.died} · ${r.epitaph}`, body:lines.join('\n')});
+  return `${REPO}/discussions/new?${q}`;
 }
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
 const PRESETS = {
@@ -8521,6 +8552,7 @@ const actions = {
   exportGame:() => { if (engine.state) openSaveSheet('export'); }
 };
 document.addEventListener('click', event => {
+  if (event.target.closest('#linkUpdates')) { prefs.seenVersion = GAME_VERSION; savePrefs(); syncLinks(); }
   const button = event.target.closest('[data-action]');
   if (button) { if (button.closest('#menu')) closeMenu(); actions[button.dataset.action]?.(button); return; }
   if (!event.target.closest('#menu')) closeMenu();

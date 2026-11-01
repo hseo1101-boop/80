@@ -8,3 +8,9 @@
 - `src/v11/` — 소스와 빌드 스크립트: `node src/v11/build.mjs`
 - `original/french_life_v10.html` — 개편 전 원본
 - `docs/analysis.md` — 분석과 변경 기록
+
+## 광장 (커뮤니티)
+- `community.html` — 업데이트 노트 · 의견 보내기 · 플레이어 이야기 (GitHub Pages: `/community.html`)
+- `updates.md` — 업데이트 노트 원본. 맨 위에 `## v0.20 · 날짜 · 제목` 과 `- 항목`을 추가하면 커뮤니티 페이지에 바로 나옵니다.
+- `.github/ISSUE_TEMPLATE/` — 의견(플레이 소감)·버그 제보 양식
+- 플레이어 이야기는 GitHub Discussions의 `Player Stories` 카테고리를 씁니다. giscus 위젯을 켜려면 `community.html` 위쪽 `CONFIG`에 giscus.app에서 받은 `giscusRepoId`, `giscusCategoryId`를 넣으세요.

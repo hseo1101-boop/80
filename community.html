@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>어느 프랑스인의 삶 · 광장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script>
+// ───────────── 설정 ─────────────
+// giscus.app에서 이 저장소와 'Player Stories' 카테고리를 고르면 repoId·categoryId가 나옵니다. 여기에 붙여 넣으세요.
+// 비워 두면 게시판 위젯 대신 GitHub Discussions로 가는 버튼이 나옵니다.
+const CONFIG = {
+  repo: 'hseo1101-boop/80',
+  game: 'https://hseo1101-boop.github.io/80/',
+  storiesCategory: 'Player Stories',      // Discussions 카테고리 이름 (영문 권장)
+  storiesCategorySlug: 'player-stories',  // 위 이름의 주소용 표기
+  giscusRepoId: '',
+  giscusCategoryId: ''
+};
+</script>
+<style>
+/* Layout: one reading column with three tabs (updates · feedback · stories), same palette as the game. */
+:root{color-scheme:light;--bg:#eceeeb;--card:#f8f9f7;--line:#d6dbd6;--line2:#e6e9e5;--ink:#1c272a;--muted:#6d7672;--wine:#8c1c3c;--teal:#17695a;--dark:#16242a;
+  --sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;--serif:'Bitter',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere}
+a{color:var(--teal)}
+.wrap{max-width:820px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-family:var(--serif);font-size:2rem;margin:0;line-height:1.2;text-wrap:balance}h1 b{color:var(--wine)}
+.sub{margin:4px 0 0;color:var(--muted)}
+.play{display:inline-block;background:var(--dark);color:#fff;text-decoration:none;font-weight:700;padding:11px 18px;border-radius:9px}
+nav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
+nav a{padding:10px 14px;text-decoration:none;color:var(--muted);font-weight:700;border-bottom:3px solid transparent;white-space:nowrap}
+nav a[aria-current=page]{color:var(--ink);border-color:var(--wine)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:14px}
+h2{font-size:1.25rem;margin:0 0 6px}h3{font-size:1.05rem;margin:0}
+.muted{color:var(--muted)}
+.note{font-size:.88rem;color:var(--muted)}
+/* updates */
+.release{border-left:3px solid var(--wine);padding:2px 0 2px 16px;margin:0 0 22px}
+.release .meta{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.release h3{font-size:1.1rem;margin:2px 0 6px}
+.release ul{margin:6px 0 0;padding-left:20px}.release li{margin:3px 0}
+.release p{margin:6px 0}
+/* feedback */
+.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.action{display:grid;gap:4px;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+.action:hover{border-color:var(--wine)}.action b{color:var(--wine);font-size:1.05rem}.action span{color:var(--muted);font-size:.9rem}
+ol.steps{padding-left:20px}ol.steps li{margin:4px 0}
+code{font-family:var(--mono);font-size:.85em;background:#e6e9e5;padding:1px 5px;border-radius:4px}
+.giscus-wrap{margin-top:12px}
+[hidden]{display:none!important}
+a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2px}
+@media (max-width:560px){h1{font-size:1.6rem}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>어느 <b>프랑스인</b>의 삶 · 광장</h1><p class="sub">소식을 듣고, 의견을 남기고, 살아 본 삶을 나누는 곳</p></div>
+    <a class="play" id="playLink" href="./">게임 하러 가기 →</a>
+  </header>
+  <nav aria-label="광장 메뉴">
+    <a href="#updates" data-tab="updates">업데이트 노트</a>
+    <a href="#feedback" data-tab="feedback">의견 보내기</a>
+    <a href="#stories" data-tab="stories">플레이어 이야기</a>
+  </nav>
+
+  <section id="tab-updates" aria-labelledby="updatesTitle">
+    <div class="card"><h2 id="updatesTitle">업데이트 노트</h2><div id="updates"><p class="muted">업데이트 노트를 불러오는 중입니다…</p></div></div>
+  </section>
+
+  <section id="tab-feedback" hidden aria-labelledby="feedbackTitle">
+    <div class="card">
+      <h2 id="feedbackTitle">의견 보내기</h2>
+      <p>어디서 재밌었는지, 어디서 지루했는지, 이상한 장면은 없었는지 알려 주세요. 짧아도 큰 도움이 됩니다.</p>
+      <div class="actions">
+        <a class="action" id="feedbackLink" target="_blank" rel="noopener"><b>플레이 소감 남기기</b><span>얼마나 했는지, 다시 하고 싶은지, 좋았던 점과 아쉬운 점</span></a>
+        <a class="action" id="bugLink" target="_blank" rel="noopener"><b>버그·고증 오류 알리기</b><span>말이 안 되는 장면, 틀린 연도와 사실, 화면 문제</span></a>
+      </div>
+      <p class="note">GitHub 계정으로 로그인해야 글을 남길 수 있습니다. 남긴 글은 이 게임의 공개 저장소에 올라가 누구나 볼 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section id="tab-stories" hidden aria-labelledby="storiesTitle">
+    <div class="card">
+      <h2 id="storiesTitle">플레이어 이야기</h2>
+      <p>여러분이 살아 본 삶을 들려주세요. 게임이 끝나면 생애 요약의 <b>이 삶을 게시판에 공유하기</b>를 누르면 요약이 미리 채워진 글쓰기 화면이 열립니다. 공유용 이미지는 글쓰기 칸에 끌어다 놓으면 붙습니다.</p>
+      <div class="actions">
+        <a class="action" id="newStoryLink" target="_blank" rel="noopener"><b>새 이야기 쓰기</b><span>내 인물의 이름과 시대, 기억에 남는 장면</span></a>
+        <a class="action" id="allStoriesLink" target="_blank" rel="noopener"><b>모든 이야기 보기</b><span>다른 플레이어들의 삶 읽기</span></a>
+      </div>
+      <div id="giscusSetup" class="note" hidden><p>아래에 이야기 게시판을 바로 띄우려면 <a href="https://giscus.app/ko" target="_blank" rel="noopener">giscus</a> 설정값을 이 페이지 위쪽 <code>CONFIG</code>에 넣어 주세요.</p></div>
+      <div class="giscus-wrap"><div class="giscus"></div></div>
+    </div>
+  </section>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+// Minimal reader for updates.md: "## version · date · title", paragraphs and "- " bullets.
+function renderUpdates(md) {
+  const text = md.replace(/<!--[\s\S]*?-->/g, '');
+  const out = []; let open = null, list = false;
+  const close = () => { if (list) { open.push('</ul>'); list = false; } if (open) { out.push(open.join('') + '</article>'); open = null; } };
+  for (const raw of text.split('\n')) {
+    const line = raw.trimEnd();
+    if (/^#\s/.test(line)) continue;
+    const h = line.match(/^##\s+(.+)$/);
+    if (h) {
+      close();
+      const [ver, date, ...rest] = h[1].split(' · ');
+      open = [`<article class="release"><div class="meta">${esc(ver)}${date ? ' · ' + esc(date) : ''}</div><h3>${inline(rest.join(' · ') || ver)}</h3>`];
+      continue;
+    }
+    if (!open) continue;
+    const b = line.match(/^\s*-\s+(.+)$/);
+    if (b) { if (!list) { open.push('<ul>'); list = true; } open.push(`<li>${inline(b[1])}</li>`); continue; }
+    if (line.trim()) { if (list) { open.push('</ul>'); list = false; } open.push(`<p>${inline(line.trim())}</p>`); }
+  }
+  close();
+  return out.join('') || '<p class="muted">아직 업데이트 노트가 없습니다.</p>';
+}
+fetch('updates.md', {cache:'no-cache'}).then(r => r.ok ? r.text() : Promise.reject(r.status))
+  .then(md => { $('updates').innerHTML = renderUpdates(md); })
+  .catch(() => { $('updates').innerHTML = `<p class="muted">업데이트 노트를 불러오지 못했습니다. <a href="https://github.com/${CONFIG.repo}/blob/HEAD/updates.md" target="_blank" rel="noopener">GitHub에서 보기</a></p>`; });
+
+const repo = `https://github.com/${CONFIG.repo}`;
+$('feedbackLink').href = `${repo}/issues/new?template=feedback.yml`;
+$('bugLink').href = `${repo}/issues/new?template=bug.yml`;
+$('newStoryLink').href = `${repo}/discussions/new?category=${encodeURIComponent(CONFIG.storiesCategorySlug)}`;
+$('allStoriesLink').href = `${repo}/discussions/categories/${encodeURIComponent(CONFIG.storiesCategorySlug)}`;
+$('playLink').href = CONFIG.game;
+
+let giscusLoaded = false;
+function loadGiscus() {
+  if (giscusLoaded) return;
+  if (!CONFIG.giscusRepoId || !CONFIG.giscusCategoryId) { $('giscusSetup').hidden = false; return; }
+  giscusLoaded = true;
+  const s = document.createElement('script');
+  Object.entries({src:'https://giscus.app/client.js', 'data-repo':CONFIG.repo, 'data-repo-id':CONFIG.giscusRepoId,
+    'data-category':CONFIG.storiesCategory, 'data-category-id':CONFIG.giscusCategoryId, 'data-mapping':'specific',
+    'data-term':'플레이어 이야기 게시판', 'data-strict':'0', 'data-reactions-enabled':'1', 'data-emit-metadata':'0',
+    'data-input-position':'top', 'data-theme':'light', 'data-lang':'ko', crossorigin:'anonymous'}).forEach(([k, v]) => s.setAttribute(k, v));
+  s.async = true;
+  document.querySelector('.giscus-wrap').appendChild(s);
+}
+const TABS = ['updates', 'feedback', 'stories'];
+function show() {
+  const tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'updates';
+  for (const t of TABS) $('tab-' + t).hidden = t !== tab;
+  document.querySelectorAll('nav a').forEach(a => a.setAttribute('aria-current', a.dataset.tab === tab ? 'page' : 'false'));
+  if (tab === 'stories') loadGiscus();
+}
+addEventListener('hashchange', show); show();
+</script>
+</body>
+</html>

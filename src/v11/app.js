@@ -66,7 +66,7 @@ function autoDecide() {
     }
   }, engine.state.decisionResult ? 2200 : 1400);
 }
-function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
+function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); syncLinks(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
@@ -111,6 +111,32 @@ function importText(raw) {
 function startWithBirth() {
   if (!engine.state || prefs.auto) return;
   engine.state.runtime.paused = true; ui.render(); ui.showBirth();
+}
+// Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
+const GAME_VERSION = 'v0.19';
+const REPO = 'https://github.com/hseo1101-boop/80';
+const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
+function lifeLabel(s) { return s ? `${s.name}, ${s.born} ${s.place} · ${s.job}, ${ageOf(s)}세` : ''; }
+function syncLinks() {
+  const s = engine.state, q = new URLSearchParams({template:'feedback.yml', version:GAME_VERSION, ...(s ? {life:lifeLabel(s)} : {})});
+  $id('linkFeedback').href = `${REPO}/issues/new?${q}`;
+  $id('linkUpdates').href = `${COMMUNITY}#updates`;
+  $id('linkStories').href = `${COMMUNITY}#stories`;
+  const fresh = prefs.seenVersion !== GAME_VERSION;
+  $id('newsDot').hidden = !fresh; $id('menuDot').hidden = !fresh;
+  $id('gameVersion').textContent = GAME_VERSION;
+  if (s?.dead) $id('shareStory').href = storyURL(s);
+}
+function storyURL(s) {
+  const r = lifeReport(s), lines = [
+    `## ${r.name} (${r.french}) · ${r.born}–${r.died}`, `**${r.epitaph}**`, r.cause, '',
+    ...r.lines.map(x => `- ${x}`), '',
+    ...(r.historic.length ? ['### 역사의 현장', ...r.historic.map(h => `- ${h.year} ${h.title}${h.choice ? ` — ${h.choice}` : ''}`), ''] : []),
+    ...(r.figures.length ? ['### 만난 인물', ...r.figures.map(f => `- ${f.name} (${f.job})`), ''] : []),
+    ...(r.starred.length ? ['### 별표한 기억', ...r.starred.slice(0, 8).map(x => `- ${x}`), ''] : []),
+    '### 하고 싶은 이야기', '(이 삶에서 기억에 남는 장면을 적어 주세요. 공유용 이미지는 이 칸에 끌어다 놓으면 붙습니다.)', '', `_${GAME_VERSION}_`];
+  const q = new URLSearchParams({category:'player-stories', title:`${r.name} · ${r.born}–${r.died} · ${r.epitaph}`, body:lines.join('\n')});
+  return `${REPO}/discussions/new?${q}`;
 }
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
 const PRESETS = {
@@ -159,6 +185,7 @@ const actions = {
   exportGame:() => { if (engine.state) openSaveSheet('export'); }
 };
 document.addEventListener('click', event => {
+  if (event.target.closest('#linkUpdates')) { prefs.seenVersion = GAME_VERSION; savePrefs(); syncLinks(); }
   const button = event.target.closest('[data-action]');
   if (button) { if (button.closest('#menu')) closeMenu(); actions[button.dataset.action]?.(button); return; }
   if (!event.target.closest('#menu')) closeMenu();
