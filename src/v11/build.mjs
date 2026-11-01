@@ -1,6 +1,6 @@
 // Builds french_life_v11.html from the v0.10 single-file build plus the files in this folder.
 // Usage: node src/v11/build.mjs
-import {readFileSync, writeFileSync} from 'node:fs';
+import {readFileSync, writeFileSync, mkdirSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -125,4 +125,10 @@ js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id
 
 const html = read('head.html') + js + '</script></body></html>\n';
 writeFileSync(join(root, 'french_life_v11.html'), html);
+// The web build is the same game without the document skeleton, for hosts that wrap the page themselves.
+const page = html.replace(/^<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport"[^>]*>/, '').replace('</style></head><body>', '</style>').replace('</script></body></html>', '</script>')
+  // Embedded viewers block downloads; the copyable save code covers it there.
+  .replace('<button id="saveFile">', '<button id="saveFile" data-off="1">');
+mkdirSync(join(root, 'site'), {recursive:true});
+writeFileSync(join(root, 'site', 'index.html'), page);
 console.log(`french_life_v11.html: ${(html.length/1024).toFixed(1)} KB`);

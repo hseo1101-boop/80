@@ -63,42 +63,71 @@ function autoDecide() {
     else controller.choose(Math.floor(Math.random() * decisions.find(d => d.id === st.decision).choices.length));
   }, engine.state.decisionResult ? 2200 : 1400);
 }
-function render() { ui.render(); syncToggles(); autoDecide(); }
+function render() { ui.render(); syncToggles(); autoDecide(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
+}
+// In-page confirmation. Browsers inside embedded viewers block window.confirm, so every replacing
+// action asks here first and then runs with the controller's confirm answering yes.
+let confirmed = false;
+const $id = id => document.getElementById(id);
+function ask(message, yesLabel, run) {
+  $id('askText').textContent = message; $id('askYes').textContent = yesLabel;
+  $id('askOverlay').hidden = false; $id('askYes').focus();
+  $id('askYes').onclick = () => { $id('askOverlay').hidden = true; confirmed = true; try { run(); } finally { confirmed = false; } };
+  $id('askNo').onclick = () => { $id('askOverlay').hidden = true; };
+}
+function guarded(message, yesLabel, run) {
+  if (!engine.state || engine.state.dead) { confirmed = true; try { run(); } finally { confirmed = false; } }
+  else ask(message, yesLabel, run);
+}
+function hasSave() {
+  try { return !!(localStorage.getItem(AUTO_KEY) || localStorage.getItem(SAVE_KEY)); } catch { return false; }
+}
+function openSaveSheet(mode) {
+  const exporting = mode === 'export';
+  $id('saveTitle').textContent = exporting ? '저장 코드 내보내기' : '저장 코드 가져오기';
+  $id('saveHelp').textContent = exporting
+    ? '아래 코드를 복사해 두면 다른 기기나 브라우저에서 ‘저장 코드 가져오기’로 이어 할 수 있습니다.'
+    : '복사해 둔 저장 코드를 붙여 넣거나, 내보낸 저장 파일(.json)을 고르세요.';
+  $id('saveCode').value = exporting ? controller.exportSave() || '' : '';
+  $id('saveCode').readOnly = exporting;
+  for (const id of ['saveCopy','saveFile']) $id(id).hidden = !exporting || $id(id).dataset.off === '1';
+  for (const id of ['savePick','saveLoad']) $id(id).hidden = exporting;
+  $id('saveStatus').textContent = '';
+  $id('saveOverlay').hidden = false;
+  (exporting ? $id('saveCopy') : $id('saveCode')).focus();
+}
+function importText(raw) {
+  guarded('저장 코드의 기록으로 지금의 인생을 바꿀까요? 지금 인생은 자동 저장되어 있지만 덮어쓰게 됩니다.', '불러오기', () => {
+    if (controller.importSave(raw)) { $id('saveOverlay').hidden = true; ui.setChoosing(false); }
+  });
 }
 const clock = new GameClock(engine, {onFrame:ui.renderProgress, onChange:() => {
   controller.changed(); if (engine.state?.dead) clock.stop();
 }});
 controller = createController({engine, clock, render, notify:ui.notify,
-  storage:() => window.localStorage, confirm:message => window.confirm(message)});
+  storage:() => window.localStorage, confirm:() => confirmed});
 function closeMenu() { document.getElementById('menu').hidden = true; document.getElementById('menuButton').setAttribute('aria-expanded', 'false'); }
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    if (controller.newLife(null, {born})) ui.setChoosing(false);
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) ui.setChoosing(false); });
   },
-  schoolStory:() => { if (controller.newLife('school')) ui.setChoosing(false); },
+  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) ui.setChoosing(false); }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
   skipToDecision:() => controller.skipToDecision(),
-  saveGame:() => controller.saveGame(), loadGame:() => controller.loadGame(),
-  importGame:() => document.getElementById('importFile').click(),
+  saveGame:() => controller.saveGame(),
+  loadGame:() => guarded('저장해 둔 기록을 불러오면 지금 진행 중인 인생이 그 기록으로 바뀝니다. 계속할까요?', '불러오기', () => { if (controller.loadGame()) ui.setChoosing(false); }),
+  importGame:() => openSaveSheet('import'),
   toggleMenu:() => { const m = document.getElementById('menu'); m.hidden = !m.hidden; document.getElementById('menuButton').setAttribute('aria-expanded', String(!m.hidden)); },
   toggleAuto:() => { prefs.auto = !prefs.auto; savePrefs(); ui.notify(prefs.auto ? '자동 결정: 중대 결정을 무작위로 고르고 결과를 확인합니다.' : '자동 결정을 껐습니다.'); syncToggles(); autoDecide(); },
   toggleMusic:() => { if (music.on) music.stop(); else music.start(); prefs.music = music.on; savePrefs(); syncToggles(); },
   openFocus:() => { const c = document.getElementById('focusCard'); c.classList.toggle('open'); if (c.classList.contains('open')) c.scrollIntoView({block:'nearest', behavior:'smooth'}); },
-  exportGame:() => {
-    const raw = controller.exportSave();
-    if (!raw) return;
-    const url = URL.createObjectURL(new Blob([raw], {type:'application/json'}));
-    const link = document.createElement('a'); link.href = url;
-    link.download = `french-life-${engine.state.year}-${engine.state.month}.json`;
-    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-    ui.notify('저장 파일을 내보냈습니다. 다른 브라우저에서는 파일 가져오기를 사용하세요.');
-  }
+  exportGame:() => { if (engine.state) openSaveSheet('export'); }
 };
 document.addEventListener('click', event => {
   const button = event.target.closest('[data-action]');
@@ -107,16 +136,36 @@ document.addEventListener('click', event => {
 });
 document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => controller.setSpeed(Number(button.dataset.speed))));
 document.addEventListener('keydown', event => {
-  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden) return;
+  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden || !$id('askOverlay').hidden || !$id('saveOverlay').hidden) return;
   if (event.key === ' ' && !event.target.closest('button,[tabindex]')) { event.preventDefault(); controller.togglePause(); }
 });
 document.getElementById('importFile').addEventListener('change', async event => {
   const file = event.target.files[0];
   try {
     if (file && file.size > MAX_SAVE_BYTES) ui.notify('저장 파일이 너무 큽니다. 2 MiB 이하 파일을 선택해 주세요.');
-    else if (file) controller.importSave(await file.text());
+    else if (file) importText(await file.text());
   } catch { ui.notify('파일을 읽지 못했습니다. 파일 권한을 확인해 주세요.'); }
   finally { event.target.value = ''; }
+});
+$id('saveClose').addEventListener('click', () => { $id('saveOverlay').hidden = true; });
+$id('savePick').addEventListener('click', () => $id('importFile').click());
+$id('saveLoad').addEventListener('click', () => { const raw = $id('saveCode').value.trim(); if (raw) importText(raw); else $id('saveStatus').textContent = '붙여 넣은 저장 코드가 없습니다.'; });
+$id('saveCopy').addEventListener('click', () => {
+  const box = $id('saveCode');
+  navigator.clipboard?.writeText(box.value).then(() => { $id('saveStatus').textContent = '복사했습니다.'; },
+    () => { box.select(); $id('saveStatus').textContent = '복사가 막혀 있습니다. 선택된 코드를 직접 복사하세요.'; })
+    ?? (box.select(), $id('saveStatus').textContent = '선택된 코드를 직접 복사하세요.');
+});
+$id('saveFile').addEventListener('click', () => {
+  const url = URL.createObjectURL(new Blob([$id('saveCode').value], {type:'application/json'}));
+  const link = document.createElement('a'); link.href = url;
+  link.download = `french-life-${engine.state?.year || ''}-${engine.state?.month || ''}.json`;
+  link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $id('saveStatus').textContent = '파일이 받아지지 않으면 코드를 복사해 두세요.';
+});
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  $id('askOverlay').hidden = true; $id('saveOverlay').hidden = true;
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { controller.autosave(); clock.stop(); }

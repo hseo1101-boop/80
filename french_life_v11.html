@@ -1,8 +1,8 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>어느 프랑스인의 삶 0.11</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>어느 프랑스인의 삶</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eceeeb;--card:#f8f9f7;--line:#d6dbd6;--line2:#e6e9e5;--ink:#1c272a;--muted:#6d7672;--faint:#9aa29e;--wine:#8c1c3c;--teal:#17695a;--good:#17695a;--bad:#b23a32;--dark:#16242a;--chip:#e9edea;
+:root{color-scheme:light;--bg:#eceeeb;--card:#f8f9f7;--line:#d6dbd6;--line2:#e6e9e5;--ink:#1c272a;--muted:#6d7672;--faint:#9aa29e;--wine:#8c1c3c;--teal:#17695a;--good:#17695a;--bad:#b23a32;--dark:#16242a;--chip:#e9edea;
   --sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;--serif:'Bitter',Georgia,'Noto Serif KR',serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
@@ -14,7 +14,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
 
 /* ---- top bar ---- */
-.topbar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left)) 12px}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left)) 12px}
 .tb-inner{max-width:1360px;margin:0 auto;display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap}
 .tb-brand{font-family:var(--serif);font-weight:700;font-size:1.05rem;white-space:nowrap;color:var(--ink)}.tb-brand b{color:var(--wine)}
 .tb-age{display:flex;align-items:baseline;gap:4px}.tb-age b{font-family:var(--serif);font-size:3rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.tb-age span{font-size:1.4rem;font-weight:700}
@@ -131,6 +131,9 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .note{font-size:.84rem;color:var(--muted)}.modal .primary{width:100%;margin-top:8px}
 .hint{font-size:.8rem;color:var(--faint);text-align:center;margin:14px 0 0}
 
+.overlay.top{z-index:40}#askOverlay{z-index:50}.ask p{margin:0 0 18px;line-height:1.75;font-size:1rem}.ask-btns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.ask-btns .primary{width:auto;margin:0}
+#saveCode{display:block;width:100%;font-family:var(--mono);font-size:.72rem;line-height:1.5;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;color:var(--ink);resize:vertical;word-break:break-all}
+label.section{display:block}
 #notice{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(92vw,560px);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;z-index:30;font-size:.9rem;box-shadow:0 8px 24px #0005}
 .foot{max-width:1360px;margin:0 auto;padding:0 16px 28px;color:var(--faint);font-size:.75rem;text-align:center}
 .wide{display:inline}.narrow{display:none}
@@ -171,7 +174,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
     <div class="menu-wrap"><button id="menuButton" class="ctl" data-action="toggleMenu" aria-haspopup="true" aria-expanded="false" aria-label="메뉴">⋯</button>
       <div id="menu" class="menu" hidden>
         <button data-action="saveGame">기록 저장</button><button data-action="loadGame">기록 불러오기</button>
-        <button data-action="exportGame">저장 파일 내보내기</button><button data-action="importGame">저장 파일 가져오기</button><hr>
+        <button data-action="exportGame">저장 코드 내보내기</button><button data-action="importGame">저장 코드 가져오기</button><hr>
         <button id="autoMenu" data-action="toggleAuto">자동 결정</button><button id="musicMenu" data-action="toggleMusic">♪ 음악</button><hr>
         <button data-action="chooseLife">새 인생 시작…</button>
       </div></div>
@@ -190,7 +193,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
       <div class="chips" role="group" aria-label="빠른 선택"><button class="chip on" data-born="random">무작위</button><button class="chip" data-born="1760">1760 · 구체제</button><button class="chip" data-born="1772">1772 · 혁명 세대</button><button class="chip" data-born="1790">1790 · 나폴레옹 세대</button><button class="chip" data-born="1810">1810 · 7월 왕정 세대</button></div>
       <p id="birthHint" class="bp-hint"></p>
     </div>
-    <div class="btns"><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 파일 가져오기</button></div>
+    <div class="btns"><button id="resumeButton" class="primary" data-action="loadGame" hidden>지난 인생 이어 하기</button><button class="primary" data-action="newLife">새 인생 시작하기</button><button id="backToLife" data-action="backToLife" hidden>← 지금 인생으로 돌아가기</button><button data-action="loadGame">기록 불러오기</button><button data-action="importGame">저장 코드 가져오기</button></div>
     <div class="story-start"><b>유년기 · 학교에 보내 달라고 부탁할까?</b><p>1778년 · 8세 · 파리 · 장인 가정 — 이 결정에서 시작해 이후의 삶을 이어 갑니다.</p><button data-action="schoolStory">1778년 파리 이야기로 시작</button></div>
   </div>
 </div></section>
@@ -240,6 +243,13 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
     <p id="resultLearning" class="note"></p><p class="note">이 선택과 결과는 인생 기록에 남았습니다.</p>
     <button id="continueDecision" class="primary" data-action="continueDecision">결과를 확인하고 삶 이어 가기 →</button></section>
   <p id="decisionHint" class="hint"></p>
+</div></div>
+<div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
+<div id="saveOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="saveTitle" hidden><div class="modal">
+  <h2 id="saveTitle">저장 코드</h2><p id="saveHelp" class="note"></p>
+  <label for="saveCode" class="section">저장 코드</label><textarea id="saveCode" rows="7" spellcheck="false"></textarea>
+  <p id="saveStatus" class="note" role="status" aria-live="polite"></p>
+  <div class="ask-btns"><button id="saveClose">닫기</button><button id="saveFile">파일로 받기</button><button id="savePick">파일 고르기</button><button id="saveCopy" class="primary">복사</button><button id="saveLoad" class="primary">이 코드로 불러오기</button></div>
 </div></div>
 <div class="foot">어느 프랑스인의 삶 v0.11 · 저장은 브라우저와 내보낸 파일에 보관됩니다 · 역사 사건 수록: 1756~1851년 · 생애·경제·사망률은 단순화된 모델이며, ‘시대의 숫자’는 반올림한 근사치입니다 · 배경 음악: Petzold, Minuet in G (1725, 퍼블릭 도메인)</div>
 <script>
@@ -6597,42 +6607,71 @@ function autoDecide() {
     else controller.choose(Math.floor(Math.random() * decisions.find(d => d.id === st.decision).choices.length));
   }, engine.state.decisionResult ? 2200 : 1400);
 }
-function render() { ui.render(); syncToggles(); autoDecide(); }
+function render() { ui.render(); syncToggles(); autoDecide(); const r = document.getElementById('resumeButton'); if (r) r.hidden = !!engine.state || !hasSave(); }
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
+}
+// In-page confirmation. Browsers inside embedded viewers block window.confirm, so every replacing
+// action asks here first and then runs with the controller's confirm answering yes.
+let confirmed = false;
+const $id = id => document.getElementById(id);
+function ask(message, yesLabel, run) {
+  $id('askText').textContent = message; $id('askYes').textContent = yesLabel;
+  $id('askOverlay').hidden = false; $id('askYes').focus();
+  $id('askYes').onclick = () => { $id('askOverlay').hidden = true; confirmed = true; try { run(); } finally { confirmed = false; } };
+  $id('askNo').onclick = () => { $id('askOverlay').hidden = true; };
+}
+function guarded(message, yesLabel, run) {
+  if (!engine.state || engine.state.dead) { confirmed = true; try { run(); } finally { confirmed = false; } }
+  else ask(message, yesLabel, run);
+}
+function hasSave() {
+  try { return !!(localStorage.getItem(AUTO_KEY) || localStorage.getItem(SAVE_KEY)); } catch { return false; }
+}
+function openSaveSheet(mode) {
+  const exporting = mode === 'export';
+  $id('saveTitle').textContent = exporting ? '저장 코드 내보내기' : '저장 코드 가져오기';
+  $id('saveHelp').textContent = exporting
+    ? '아래 코드를 복사해 두면 다른 기기나 브라우저에서 ‘저장 코드 가져오기’로 이어 할 수 있습니다.'
+    : '복사해 둔 저장 코드를 붙여 넣거나, 내보낸 저장 파일(.json)을 고르세요.';
+  $id('saveCode').value = exporting ? controller.exportSave() || '' : '';
+  $id('saveCode').readOnly = exporting;
+  for (const id of ['saveCopy','saveFile']) $id(id).hidden = !exporting || $id(id).dataset.off === '1';
+  for (const id of ['savePick','saveLoad']) $id(id).hidden = exporting;
+  $id('saveStatus').textContent = '';
+  $id('saveOverlay').hidden = false;
+  (exporting ? $id('saveCopy') : $id('saveCode')).focus();
+}
+function importText(raw) {
+  guarded('저장 코드의 기록으로 지금의 인생을 바꿀까요? 지금 인생은 자동 저장되어 있지만 덮어쓰게 됩니다.', '불러오기', () => {
+    if (controller.importSave(raw)) { $id('saveOverlay').hidden = true; ui.setChoosing(false); }
+  });
 }
 const clock = new GameClock(engine, {onFrame:ui.renderProgress, onChange:() => {
   controller.changed(); if (engine.state?.dead) clock.stop();
 }});
 controller = createController({engine, clock, render, notify:ui.notify,
-  storage:() => window.localStorage, confirm:message => window.confirm(message)});
+  storage:() => window.localStorage, confirm:() => confirmed});
 function closeMenu() { document.getElementById('menu').hidden = true; document.getElementById('menuButton').setAttribute('aria-expanded', 'false'); }
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    if (controller.newLife(null, {born})) ui.setChoosing(false);
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) ui.setChoosing(false); });
   },
-  schoolStory:() => { if (controller.newLife('school')) ui.setChoosing(false); },
+  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) ui.setChoosing(false); }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
   skipToDecision:() => controller.skipToDecision(),
-  saveGame:() => controller.saveGame(), loadGame:() => controller.loadGame(),
-  importGame:() => document.getElementById('importFile').click(),
+  saveGame:() => controller.saveGame(),
+  loadGame:() => guarded('저장해 둔 기록을 불러오면 지금 진행 중인 인생이 그 기록으로 바뀝니다. 계속할까요?', '불러오기', () => { if (controller.loadGame()) ui.setChoosing(false); }),
+  importGame:() => openSaveSheet('import'),
   toggleMenu:() => { const m = document.getElementById('menu'); m.hidden = !m.hidden; document.getElementById('menuButton').setAttribute('aria-expanded', String(!m.hidden)); },
   toggleAuto:() => { prefs.auto = !prefs.auto; savePrefs(); ui.notify(prefs.auto ? '자동 결정: 중대 결정을 무작위로 고르고 결과를 확인합니다.' : '자동 결정을 껐습니다.'); syncToggles(); autoDecide(); },
   toggleMusic:() => { if (music.on) music.stop(); else music.start(); prefs.music = music.on; savePrefs(); syncToggles(); },
   openFocus:() => { const c = document.getElementById('focusCard'); c.classList.toggle('open'); if (c.classList.contains('open')) c.scrollIntoView({block:'nearest', behavior:'smooth'}); },
-  exportGame:() => {
-    const raw = controller.exportSave();
-    if (!raw) return;
-    const url = URL.createObjectURL(new Blob([raw], {type:'application/json'}));
-    const link = document.createElement('a'); link.href = url;
-    link.download = `french-life-${engine.state.year}-${engine.state.month}.json`;
-    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-    ui.notify('저장 파일을 내보냈습니다. 다른 브라우저에서는 파일 가져오기를 사용하세요.');
-  }
+  exportGame:() => { if (engine.state) openSaveSheet('export'); }
 };
 document.addEventListener('click', event => {
   const button = event.target.closest('[data-action]');
@@ -6641,16 +6680,36 @@ document.addEventListener('click', event => {
 });
 document.querySelectorAll('[data-speed]').forEach(button => button.addEventListener('click', () => controller.setSpeed(Number(button.dataset.speed))));
 document.addEventListener('keydown', event => {
-  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden) return;
+  if (event.target.closest('input,textarea') || !engine.state || !document.getElementById('overlay').hidden || !$id('askOverlay').hidden || !$id('saveOverlay').hidden) return;
   if (event.key === ' ' && !event.target.closest('button,[tabindex]')) { event.preventDefault(); controller.togglePause(); }
 });
 document.getElementById('importFile').addEventListener('change', async event => {
   const file = event.target.files[0];
   try {
     if (file && file.size > MAX_SAVE_BYTES) ui.notify('저장 파일이 너무 큽니다. 2 MiB 이하 파일을 선택해 주세요.');
-    else if (file) controller.importSave(await file.text());
+    else if (file) importText(await file.text());
   } catch { ui.notify('파일을 읽지 못했습니다. 파일 권한을 확인해 주세요.'); }
   finally { event.target.value = ''; }
+});
+$id('saveClose').addEventListener('click', () => { $id('saveOverlay').hidden = true; });
+$id('savePick').addEventListener('click', () => $id('importFile').click());
+$id('saveLoad').addEventListener('click', () => { const raw = $id('saveCode').value.trim(); if (raw) importText(raw); else $id('saveStatus').textContent = '붙여 넣은 저장 코드가 없습니다.'; });
+$id('saveCopy').addEventListener('click', () => {
+  const box = $id('saveCode');
+  navigator.clipboard?.writeText(box.value).then(() => { $id('saveStatus').textContent = '복사했습니다.'; },
+    () => { box.select(); $id('saveStatus').textContent = '복사가 막혀 있습니다. 선택된 코드를 직접 복사하세요.'; })
+    ?? (box.select(), $id('saveStatus').textContent = '선택된 코드를 직접 복사하세요.');
+});
+$id('saveFile').addEventListener('click', () => {
+  const url = URL.createObjectURL(new Blob([$id('saveCode').value], {type:'application/json'}));
+  const link = document.createElement('a'); link.href = url;
+  link.download = `french-life-${engine.state?.year || ''}-${engine.state?.month || ''}.json`;
+  link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $id('saveStatus').textContent = '파일이 받아지지 않으면 코드를 복사해 두세요.';
+});
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  $id('askOverlay').hidden = true; $id('saveOverlay').hidden = true;
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { controller.autosave(); clock.stop(); }
