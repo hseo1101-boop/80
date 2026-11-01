@@ -25,7 +25,7 @@ function patch(text, find, replace) {
 // 1. The 2 MB AI-image atlas and its SVG-based sprite UI are replaced by procedural pixel art.
 js = cut(js, '// src/data/pixel-atlas.js', '// src/characters.js', '');
 js = cut(js, '// src/characters.js', '// src/persistence.js', read('pixel.js') + '\n' + read('ui.js') + '\n');
-js = cut(js, '// src/app.js', '\n})();', read('guestbook.js') + '\n' + read('app.js'));
+js = cut(js, '// src/app.js', '\n})();', read('guestbook.js') + '\n' + read('archive.js') + '\n' + read('app.js'));
 // 2. Yearly focus and era facts.
 js = patch(js, '// src/engine.js', read('focus.js') + '\n// src/engine.js');
 js = patch(js, 'yearlyPaths(s); familyYear(s);', 'yearlyPaths(s); applyFocus(s); familyYear(s);');

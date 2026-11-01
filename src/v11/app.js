@@ -127,6 +127,7 @@ function syncLinks() {
   $id('newsDot').hidden = !fresh; $id('menuDot').hidden = !fresh;
   $id('gameVersion').textContent = GAME_VERSION;
   gbSyncShare(s);
+  syncArchive(s);
 }
 // 남겨진 묘비명: the start-screen list, the "모두 보기" sheet and the end-of-life share box.
 const SITE_LINK = () => { const a = document.createElement('a'); a.href = GUESTBOOK_SITE; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '웹사이트에서 보기 →'; return a; };
@@ -192,6 +193,70 @@ $id('gbSend').addEventListener('click', gbSubmit);
 $id('gbAll').addEventListener('click', gbOpenAll);
 $id('gbClose').addEventListener('click', gbCloseAll);
 $id('gbOverlay').addEventListener('click', e => { if (e.target.id === 'gbOverlay') gbCloseAll(); });
+// 나의 연대기: progress across lives, one scene to aim for, the codex, and what this life added.
+let chronTarget = null, archiveShownFor = '';
+function renderChronicle() {
+  const a = archiveLoad();
+  $id('chronSub').textContent = a.lives ? `지금까지 ${a.lives}번의 삶을 살았습니다. 가장 오래 산 삶은 ${a.longest}세였습니다.`
+    : '삶을 마칠 때마다 만난 역사의 현장과 인물, 오른 직업이 여기에 쌓입니다.';
+  $id('chronGrid').innerHTML = archiveCounts(a).map(([label, n, total]) =>
+    `<div class="chron-stat"><small>${label}</small><b>${n}<i> / ${total}</i></b><div class="chron-bar"><span style="width:${Math.round(n / total * 100)}%"></span></div></div>`).join('');
+  if (!chronTarget || a.scenes[chronTarget.id]) chronTarget = archiveTarget(a);
+  $id('chronTarget').hidden = !chronTarget;
+  if (chronTarget) {
+    const d = chronTarget, b = sceneBirth(d), who = sceneWho(d);
+    const p = $id('chronTargetText'); p.replaceChildren();
+    const t = document.createElement('b'); t.textContent = `${d.when.fromDate[0]}년 ${d.when.fromDate[1]}월 · ${scenePlace(d)}`;
+    const sm = document.createElement('small'); sm.textContent = `아직 보지 못한 장면이 기다립니다${who ? ` (${who})` : ''}. ${b.born}년${b.family ? ` ${b.family.place.replace(' 농촌', ' 시골')}의 ${b.family.class} 집안` : ''}에 태어나면 닿을 수 있을지도 모릅니다.`;
+    p.append(t, sm);
+  }
+}
+function openCodex(tab = 'scenes') {
+  const a = archiveLoad(), list = $id('codexList'); list.replaceChildren();
+  document.querySelectorAll('[data-codex]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.codex === tab)));
+  const row = (seen, when, title, sub, reveal = false) => {
+    const li = document.createElement('li'); li.className = seen ? '' : 'unseen';
+    const w = document.createElement('span'); w.className = 'when'; w.textContent = when;
+    const body = document.createElement('div'); const b = document.createElement('b'); b.textContent = seen || reveal ? title : '???';
+    const small = document.createElement('small'); small.textContent = sub; body.append(b, small);
+    li.append(w, body); list.append(li);
+  };
+  let n = 0, total = 0;
+  if (tab === 'scenes') for (const d of HISTORIC) { const seen = !!a.scenes[d.id]; n += seen; total++;
+    row(seen, `${d.when.fromDate[0]}.${String(d.when.fromDate[1]).padStart(2, '0')}`, d.title, [scenePlace(d), sceneWho(d)].filter(Boolean).join(' · ')); }
+  if (tab === 'figures') for (const [id, f] of Object.entries(FIGURES)) { const seen = !!a.figures[id]; n += seen; total++;
+    row(seen, `${f.born[0]}`, f.name, seen ? f.job : '이 시대의 이름난 인물'); }
+  if (tab === 'careers') for (const [id, c] of Object.entries(CAREERS)) { const seen = !!a.careers[id]; n += seen; total++;
+    row(seen, '', c.label, seen ? c.ranks.map(r => r.label).join(' → ') : `${c.ranks.length}단계의 길`); }
+  if (tab === 'births') for (const k of BIRTHPLACES) { const [place, cls] = k.split('|'); const seen = !!a.births[k]; n += seen; total++;
+    row(seen, seen ? '✓' : '', `${place} · ${cls}`, seen ? '이곳에서 태어나 보았습니다' : '아직 이곳에서 태어난 적이 없습니다', true); }
+  $id('codexNote').textContent = `${total}개 가운데 ${n}개를 찾았습니다.${tab === 'scenes' ? ' 보지 못한 장면은 때와 곳만 보입니다.' : ''}`;
+  $id('codexOverlay').hidden = false; $id('codexClose').focus();
+}
+function syncArchive(s) {
+  $id('decisionNew').hidden = !(s?.decision && !s.decisionResult && decisions.find(d => d.id === s.decision)?.historic && sceneIsNew(s.decision));
+  const box = $id('summaryArchive');
+  if (!s?.dead) { box.hidden = true; archiveShownFor = ''; return; }
+  const key = lifeKey(s); if (archiveShownFor === key) return;
+  archiveShownFor = key;
+  const fresh = archiveRecord(s);
+  const items = [...fresh.scenes.map(id => `역사의 현장 · ${HISTORIC.find(d => d.id === id)?.title}`),
+    ...fresh.figures.map(id => `인물 · ${FIGURES[id].name}`), ...fresh.careers.map(id => `직업 · ${CAREERS[id].label}`),
+    ...(fresh.birth ? [`태어난 곳 · ${lifeTouches(s).birthPlace} ${s.class}`] : [])];
+  box.hidden = false;
+  $id('summaryArchiveText').textContent = items.length ? `이번 삶으로 연대기에 ${items.length}개가 새로 남았습니다.` : '이번 삶에서는 새로 남은 기록이 없습니다. 다른 때, 다른 곳에서 태어나 보세요.';
+  $id('summaryArchiveList').innerHTML = items.map(x => `<li>${x.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</li>`).join('');
+}
+$id('codexOpen').addEventListener('click', () => openCodex('scenes'));
+$id('codexClose').addEventListener('click', () => { $id('codexOverlay').hidden = true; });
+$id('codexOverlay').addEventListener('click', e => { if (e.target.id === 'codexOverlay') $id('codexOverlay').hidden = true; const t = e.target.closest('[data-codex]'); if (t) openCodex(t.dataset.codex); });
+$id('chronTargetGo').addEventListener('click', () => {
+  if (!chronTarget) return;
+  const b = sceneBirth(chronTarget);
+  guarded(`${b.born}년에 새로 태어나면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?`, '태어나기', () => {
+    if (controller.newLife(null, {born:b.born, ...(b.family ? {family:b.family} : {})})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); }
+  });
+});
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
 const PRESETS = {
   paris1768:{label:'1768년 파리 이야기', born:1768, family:{place:'파리', class:'도시 평민'}},
@@ -203,6 +268,7 @@ function syncIntro() {
   const first = !prefs.played && !hasSave();
   document.getElementById('intro').classList.toggle('first', first);
   document.getElementById('startsHint').hidden = !first;
+  if (!engine.state || ui.choosing) renderChronicle();
   const starts = document.getElementById('starts'), pick = document.querySelector('.birth-pick');
   if (first && starts.nextElementSibling !== pick) pick.before(starts);
   if (!first && starts.previousElementSibling?.classList?.contains('btns') === false) document.querySelector('.intro-body').appendChild(starts);
@@ -225,7 +291,7 @@ const actions = {
     });
   },
   schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) { prefs.played = true; savePrefs(); ui.setChoosing(false); } }),
-  chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
+  chooseLife:() => { clock.stop(); ui.setChoosing(true); renderChronicle(); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
   skipToDecision:() => controller.skipToDecision(),
@@ -282,6 +348,7 @@ document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   if (!$id('askOverlay').hidden) { $id('askOverlay').hidden = true; return; }
   if (!$id('gbOverlay').hidden) gbCloseAll();
+  $id('codexOverlay').hidden = true;
   $id('saveOverlay').hidden = true;
   if (!$id('birthOverlay').hidden) $id('birthStart').click();
 });

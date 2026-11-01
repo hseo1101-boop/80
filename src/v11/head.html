@@ -132,6 +132,19 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .gb-share-foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:8px}.gb-share-foot .note{margin:0;flex:1;font-size:.8rem}.gb-count{font-family:var(--mono);font-size:.72rem;color:#a89a82;white-space:nowrap}
 .gb-err{margin:6px 0 0;color:var(--bad);font-size:.85rem}.gb-share .gb-send{margin-top:10px;width:auto;padding:10px 18px;background:#3a2c1c!important;border-color:#3a2c1c!important;color:#f6e7c1;font-family:var(--serif);letter-spacing:.04em}.gb-done{margin:0;color:#5c4a2c;font-weight:700}
 @media (max-width:560px){.gb-share{grid-template-columns:1fr}.gb-stone{max-width:170px;margin:0 auto}.gb-entry{grid-template-columns:42px 1fr;gap:10px}}
+.chron{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.chron-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.chron-head h2{font-size:1.05rem;margin:0}
+.chron-sub{margin:4px 0 12px;color:var(--muted);font-size:.88rem}.chron-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.chron-stat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px}.chron-stat small{display:block;color:var(--muted);font-size:.76rem}.chron-stat b{font-family:var(--serif);font-size:1.25rem;color:var(--ink)}.chron-stat b i{font-style:normal;font-size:.8rem;color:var(--faint);font-family:var(--mono)}
+.chron-bar{height:4px;background:#e3e7e3;border-radius:2px;margin-top:6px;overflow:hidden}.chron-bar span{display:block;height:100%;background:var(--wine)}
+.chron-target{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px;background:#16242a;color:#e9ecea;border-radius:10px;padding:12px 14px}
+.chron-target p{margin:0;font-size:.9rem;line-height:1.6}.chron-target b{font-family:var(--serif);color:#f3d37a}.chron-target small{display:block;color:#a9b4b0;font-size:.78rem}.chron-target button{background:#f3d37a;color:#16242a;border-color:#f3d37a;font-weight:800;white-space:nowrap}
+.codex{max-width:680px;width:100%}.codex-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:4px 0 10px;overflow-x:auto}.codex-tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:8px 10px;font-weight:700;color:var(--muted);white-space:nowrap}.codex-tabs button[aria-selected=true]{color:var(--ink);border-color:var(--wine)}
+.codex-list{list-style:none;margin:0;padding:0;max-height:min(62vh,600px);overflow-y:auto;display:grid;gap:4px}.codex-list li{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 10px;border-radius:6px;background:#fff;border:1px solid var(--line2)}
+.codex-list li.unseen{background:#f1f3f0;color:var(--muted)}.codex-list li .when{font-family:var(--mono);font-size:.75rem;color:var(--muted);padding-top:2px}.codex-list li b{font-family:var(--serif)}.codex-list li small{display:block;font-size:.78rem;color:var(--muted)}
+.codex-list li.unseen b{letter-spacing:.2em;color:var(--faint)}
+.sum-archive{margin:14px 0 0;padding:12px 14px;border:1px dashed var(--wine);border-radius:10px;background:#fbf3f5}.sum-archive h3{margin:0 0 4px;font-size:.95rem;color:var(--wine)}.sum-archive p{margin:0;font-size:.88rem;line-height:1.7}.sum-archive ul{margin:6px 0 0;padding-left:18px;font-size:.86rem}
+.pill.new{background:#f3d37a;color:#16242a;margin-left:6px}
+@media (max-width:560px){.chron-grid{grid-template-columns:repeat(2,1fr)}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .feedback-strip{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;margin-top:22px;padding:14px 16px;border-radius:10px;background:#f3f0ea;border:1px solid var(--line);color:var(--ink);text-decoration:none}
 .feedback-strip b{color:var(--wine)}.feedback-strip span{grid-column:1;color:var(--muted);font-size:.88rem}.feedback-strip i{grid-row:1/3;grid-column:2;font-style:normal;font-size:1.2rem;color:var(--wine)}.feedback-strip:hover{border-color:var(--wine)}
@@ -249,6 +262,12 @@ label.section{display:block}
         <button class="start-card" data-action="startPreset" data-preset="lyon1805"><b>1805 · 리옹</b><span>견직공의 아이</span><small>자카르 직기와 견직공 봉기, 7월 왕정의 도시</small></button>
       </div>
     </section>
+      <section id="chronicle" class="chron" aria-labelledby="chronTitle">
+        <div class="chron-head"><h2 id="chronTitle">나의 연대기</h2><button id="codexOpen" class="gb-all">도감 열기 →</button></div>
+        <p id="chronSub" class="chron-sub"></p>
+        <div id="chronGrid" class="chron-grid"></div>
+        <div id="chronTarget" class="chron-target" hidden><p id="chronTargetText"></p><button id="chronTargetGo">이 장면을 향해 태어나기</button></div>
+      </section>
       <section id="guestbook" class="guestbook" aria-labelledby="gbTitle">
         <div class="gb-head"><h2 id="gbTitle">남겨진 묘비명</h2><button id="gbAll" class="gb-all" hidden>모두 보기 →</button></div>
         <p class="gb-sub">다른 사람들이 살아 낸 프랑스인의 삶과, 그 비석에 새긴 말입니다. 마음에 남는 삶에는 촛불을 켜 주세요.</p>
@@ -274,6 +293,7 @@ label.section{display:block}
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
         <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
+        <section id="summaryArchive" class="sum-archive" hidden><h3>연대기에 새로 남은 것</h3><p id="summaryArchiveText"></p><ul id="summaryArchiveList"></ul></section>
         <section id="gbShare" class="gb-share" aria-labelledby="gbShareTitle" hidden>
           <div class="gb-stone" aria-hidden="true"><i>✝</i><b id="gbStoneName"></b><span id="gbStoneYears"></span><em id="gbStoneText"></em></div>
           <div>
@@ -315,7 +335,7 @@ label.section{display:block}
 
 <div id="notice" role="status" aria-live="polite" hidden></div><input id="importFile" type="file" accept=".json,application/json" hidden>
 <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="decisionTitle" aria-describedby="decisionMeta" hidden><div class="modal">
-  <div class="modal-top"><img id="decisionSprite" alt=""><div><span class="pill" id="decisionPill">중대 결정</span><p id="decisionMeta" class="decision-meta"></p></div></div>
+  <div class="modal-top"><img id="decisionSprite" alt=""><div><span class="pill" id="decisionPill">중대 결정</span><span class="pill new" id="decisionNew" hidden>처음 보는 장면</span><p id="decisionMeta" class="decision-meta"></p></div></div>
   <div class="steps" aria-label="결정 단계"><span>상황</span><span aria-hidden="true">→</span><span id="choiceStep" class="on">선택</span><span aria-hidden="true">→</span><span id="resultStep">결과</span></div>
   <h2 id="decisionTitle" tabindex="-1"></h2>
   <div id="decisionSituation"><p id="decisionText"></p><div class="section">선택지 · 가능한 결과</div></div>
@@ -332,6 +352,12 @@ label.section{display:block}
   <button id="birthStart" class="primary">삶을 시작하기 →</button>
 </div></div>
 <div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
+<div id="codexOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="codexTitle" hidden><div class="modal codex">
+  <div class="gb-modal-head"><h2 id="codexTitle">연대기 도감</h2><button id="codexClose">닫기</button></div>
+  <div class="codex-tabs" role="tablist"><button role="tab" data-codex="scenes" aria-selected="true">역사의 현장</button><button role="tab" data-codex="figures" aria-selected="false">인물</button><button role="tab" data-codex="careers" aria-selected="false">직업</button><button role="tab" data-codex="births" aria-selected="false">태어난 곳</button></div>
+  <p id="codexNote" class="gb-sub"></p>
+  <ol id="codexList" class="codex-list"></ol>
+</div></div>
 <div id="gbOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="gbAllTitle" hidden><div class="modal gb-modal">
   <div class="gb-modal-head"><h2 id="gbAllTitle">남겨진 묘비명</h2><button id="gbClose">닫기</button></div>
   <p class="gb-sub">최근에 세운 비석부터 보여 줍니다.</p><p id="gbAllStatus" class="gb-status" role="status"></p>

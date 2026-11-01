@@ -132,6 +132,19 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .gb-share-foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:8px}.gb-share-foot .note{margin:0;flex:1;font-size:.8rem}.gb-count{font-family:var(--mono);font-size:.72rem;color:#a89a82;white-space:nowrap}
 .gb-err{margin:6px 0 0;color:var(--bad);font-size:.85rem}.gb-share .gb-send{margin-top:10px;width:auto;padding:10px 18px;background:#3a2c1c!important;border-color:#3a2c1c!important;color:#f6e7c1;font-family:var(--serif);letter-spacing:.04em}.gb-done{margin:0;color:#5c4a2c;font-weight:700}
 @media (max-width:560px){.gb-share{grid-template-columns:1fr}.gb-stone{max-width:170px;margin:0 auto}.gb-entry{grid-template-columns:42px 1fr;gap:10px}}
+.chron{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.chron-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.chron-head h2{font-size:1.05rem;margin:0}
+.chron-sub{margin:4px 0 12px;color:var(--muted);font-size:.88rem}.chron-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.chron-stat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px}.chron-stat small{display:block;color:var(--muted);font-size:.76rem}.chron-stat b{font-family:var(--serif);font-size:1.25rem;color:var(--ink)}.chron-stat b i{font-style:normal;font-size:.8rem;color:var(--faint);font-family:var(--mono)}
+.chron-bar{height:4px;background:#e3e7e3;border-radius:2px;margin-top:6px;overflow:hidden}.chron-bar span{display:block;height:100%;background:var(--wine)}
+.chron-target{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px;background:#16242a;color:#e9ecea;border-radius:10px;padding:12px 14px}
+.chron-target p{margin:0;font-size:.9rem;line-height:1.6}.chron-target b{font-family:var(--serif);color:#f3d37a}.chron-target small{display:block;color:#a9b4b0;font-size:.78rem}.chron-target button{background:#f3d37a;color:#16242a;border-color:#f3d37a;font-weight:800;white-space:nowrap}
+.codex{max-width:680px;width:100%}.codex-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:4px 0 10px;overflow-x:auto}.codex-tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:8px 10px;font-weight:700;color:var(--muted);white-space:nowrap}.codex-tabs button[aria-selected=true]{color:var(--ink);border-color:var(--wine)}
+.codex-list{list-style:none;margin:0;padding:0;max-height:min(62vh,600px);overflow-y:auto;display:grid;gap:4px}.codex-list li{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 10px;border-radius:6px;background:#fff;border:1px solid var(--line2)}
+.codex-list li.unseen{background:#f1f3f0;color:var(--muted)}.codex-list li .when{font-family:var(--mono);font-size:.75rem;color:var(--muted);padding-top:2px}.codex-list li b{font-family:var(--serif)}.codex-list li small{display:block;font-size:.78rem;color:var(--muted)}
+.codex-list li.unseen b{letter-spacing:.2em;color:var(--faint)}
+.sum-archive{margin:14px 0 0;padding:12px 14px;border:1px dashed var(--wine);border-radius:10px;background:#fbf3f5}.sum-archive h3{margin:0 0 4px;font-size:.95rem;color:var(--wine)}.sum-archive p{margin:0;font-size:.88rem;line-height:1.7}.sum-archive ul{margin:6px 0 0;padding-left:18px;font-size:.86rem}
+.pill.new{background:#f3d37a;color:#16242a;margin-left:6px}
+@media (max-width:560px){.chron-grid{grid-template-columns:repeat(2,1fr)}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .feedback-strip{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;margin-top:22px;padding:14px 16px;border-radius:10px;background:#f3f0ea;border:1px solid var(--line);color:var(--ink);text-decoration:none}
 .feedback-strip b{color:var(--wine)}.feedback-strip span{grid-column:1;color:var(--muted);font-size:.88rem}.feedback-strip i{grid-row:1/3;grid-column:2;font-style:normal;font-size:1.2rem;color:var(--wine)}.feedback-strip:hover{border-color:var(--wine)}
@@ -249,6 +262,12 @@ label.section{display:block}
         <button class="start-card" data-action="startPreset" data-preset="lyon1805"><b>1805 · 리옹</b><span>견직공의 아이</span><small>자카르 직기와 견직공 봉기, 7월 왕정의 도시</small></button>
       </div>
     </section>
+      <section id="chronicle" class="chron" aria-labelledby="chronTitle">
+        <div class="chron-head"><h2 id="chronTitle">나의 연대기</h2><button id="codexOpen" class="gb-all">도감 열기 →</button></div>
+        <p id="chronSub" class="chron-sub"></p>
+        <div id="chronGrid" class="chron-grid"></div>
+        <div id="chronTarget" class="chron-target" hidden><p id="chronTargetText"></p><button id="chronTargetGo">이 장면을 향해 태어나기</button></div>
+      </section>
       <section id="guestbook" class="guestbook" aria-labelledby="gbTitle">
         <div class="gb-head"><h2 id="gbTitle">남겨진 묘비명</h2><button id="gbAll" class="gb-all" hidden>모두 보기 →</button></div>
         <p class="gb-sub">다른 사람들이 살아 낸 프랑스인의 삶과, 그 비석에 새긴 말입니다. 마음에 남는 삶에는 촛불을 켜 주세요.</p>
@@ -274,6 +293,7 @@ label.section{display:block}
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
         <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave" hidden>이미지 파일로 받기</button></details>
+        <section id="summaryArchive" class="sum-archive" hidden><h3>연대기에 새로 남은 것</h3><p id="summaryArchiveText"></p><ul id="summaryArchiveList"></ul></section>
         <section id="gbShare" class="gb-share" aria-labelledby="gbShareTitle" hidden>
           <div class="gb-stone" aria-hidden="true"><i>✝</i><b id="gbStoneName"></b><span id="gbStoneYears"></span><em id="gbStoneText"></em></div>
           <div>
@@ -315,7 +335,7 @@ label.section{display:block}
 
 <div id="notice" role="status" aria-live="polite" hidden></div><input id="importFile" type="file" accept=".json,application/json" hidden>
 <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="decisionTitle" aria-describedby="decisionMeta" hidden><div class="modal">
-  <div class="modal-top"><img id="decisionSprite" alt=""><div><span class="pill" id="decisionPill">중대 결정</span><p id="decisionMeta" class="decision-meta"></p></div></div>
+  <div class="modal-top"><img id="decisionSprite" alt=""><div><span class="pill" id="decisionPill">중대 결정</span><span class="pill new" id="decisionNew" hidden>처음 보는 장면</span><p id="decisionMeta" class="decision-meta"></p></div></div>
   <div class="steps" aria-label="결정 단계"><span>상황</span><span aria-hidden="true">→</span><span id="choiceStep" class="on">선택</span><span aria-hidden="true">→</span><span id="resultStep">결과</span></div>
   <h2 id="decisionTitle" tabindex="-1"></h2>
   <div id="decisionSituation"><p id="decisionText"></p><div class="section">선택지 · 가능한 결과</div></div>
@@ -332,6 +352,12 @@ label.section{display:block}
   <button id="birthStart" class="primary">삶을 시작하기 →</button>
 </div></div>
 <div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
+<div id="codexOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="codexTitle" hidden><div class="modal codex">
+  <div class="gb-modal-head"><h2 id="codexTitle">연대기 도감</h2><button id="codexClose">닫기</button></div>
+  <div class="codex-tabs" role="tablist"><button role="tab" data-codex="scenes" aria-selected="true">역사의 현장</button><button role="tab" data-codex="figures" aria-selected="false">인물</button><button role="tab" data-codex="careers" aria-selected="false">직업</button><button role="tab" data-codex="births" aria-selected="false">태어난 곳</button></div>
+  <p id="codexNote" class="gb-sub"></p>
+  <ol id="codexList" class="codex-list"></ol>
+</div></div>
 <div id="gbOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="gbAllTitle" hidden><div class="modal gb-modal">
   <div class="gb-modal-head"><h2 id="gbAllTitle">남겨진 묘비명</h2><button id="gbClose">닫기</button></div>
   <p class="gb-sub">최근에 세운 비석부터 보여 줍니다.</p><p id="gbAllStatus" class="gb-status" role="status"></p>
@@ -8582,6 +8608,90 @@ function gbLifeText(s, r) {
   return parts.join(' ');
 }
 
+// src/archive.js — 나의 연대기
+// What every finished life leaves behind in this browser: historic scenes witnessed, figures met, careers
+// reached and birthplaces tried. The start screen shows the progress and one scene still waiting, with a
+// way to be born for it; the codex lists everything, unseen entries as year and place only.
+const ARCHIVE_KEY = 'franceLife.archive';
+const HISTORIC = decisions.filter(d => d.historic).sort((a, b) => a.when.fromDate[0] - b.when.fromDate[0] || a.when.fromDate[1] - b.when.fromDate[1]);
+const BIRTHPLACES = families.map(f => `${f.place}|${f.class}`).filter((k, i, all) => all.indexOf(k) === i);
+const RANK_TO_CAREER = Object.fromEntries(Object.entries(CAREERS).flatMap(([id, c]) => c.ranks.map(r => [r.label, id])));
+
+function archiveLoad() {
+  try {
+    const a = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || {};
+    return {lives:a.lives || 0, longest:a.longest || 0, scenes:a.scenes || {}, figures:a.figures || {}, careers:a.careers || {}, births:a.births || {}, done:a.done || {}};
+  } catch { return {lives:0, longest:0, scenes:{}, figures:{}, careers:{}, births:{}, done:{}}; }
+}
+function archiveSave(a) { try { localStorage.setItem(ARCHIVE_KEY, JSON.stringify(a)); } catch { /* optional */ } }
+const lifeKey = s => `${s.name}|${s.born}|${s.year}|${s.month}`;
+
+// What a life touched, whether or not it is finished.
+function lifeTouches(s) {
+  const scenes = [...new Set(s.log.filter(x => x.eventId && HISTORIC.some(d => d.id === x.eventId)).map(x => x.eventId))];
+  const figures = Object.entries(FIGURES).filter(([, f]) => s.relations.some(r => r.role === '인물' && r.name === f.name)).map(([id]) => id);
+  const labels = [s.job, s.familyEvents?.career_top, ...s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1])].filter(Boolean);
+  const careers = [...new Set(labels.map(l => RANK_TO_CAREER[l]).filter(Boolean))];
+  const birthPlace = s.lifeMilestones.map(m => m.match(/^(?:\d+년 · )?(.+)에서 출생$/)?.[1]).find(Boolean) || s.place;
+  return {scenes, figures, careers, birth:`${birthPlace}|${s.class}`, birthPlace};
+}
+// Records a finished life once and returns what was new in it.
+function archiveRecord(s) {
+  if (!s?.dead) return null;
+  const a = archiveLoad(), key = lifeKey(s);
+  if (a.done[key]) return a.done[key];
+  const t = lifeTouches(s);
+  const fresh = {scenes:t.scenes.filter(id => !a.scenes[id]), figures:t.figures.filter(id => !a.figures[id]), careers:t.careers.filter(id => !a.careers[id]), birth:!a.births[t.birth]};
+  for (const id of t.scenes) a.scenes[id] = a.scenes[id] || s.born;
+  for (const id of t.figures) a.figures[id] = 1;
+  for (const id of t.careers) a.careers[id] = 1;
+  a.births[t.birth] = 1;
+  a.lives++; a.longest = Math.max(a.longest, ageOf(s));
+  a.done[key] = fresh;
+  const keys = Object.keys(a.done); if (keys.length > 60) delete a.done[keys[0]];
+  archiveSave(a);
+  return fresh;
+}
+const sceneIsNew = id => !archiveLoad().scenes[id];
+
+function scenePlace(d) {
+  const w = d.when;
+  if (w.places) return w.places.length > 2 ? '여러 도시' : w.places.join('·');
+  if (w.placeIncludes === '농촌') return '시골 마을';
+  return '어디서나';
+}
+function sceneWho(d) {
+  const w = d.when, bits = [];
+  if (w.classes) bits.push(w.classes.join('·'));
+  if (w.sexes) bits.push(w.sexes[0] === '여성' ? '여성' : '남성');
+  if (w.jobMatch || w.pathIs || w.knows) bits.push('특정한 일을 하는 사람');
+  if (w.minAge) bits.push(`${w.minAge}세 이상`);
+  return bits.join(' · ');
+}
+// A birth that can reach the scene: the right place and class, about 25 at the time.
+function sceneBirth(d) {
+  const w = d.when, year = w.fromDate[0];
+  const age = Math.max(w.minAge || 0, Math.min(25, (w.maxAge || 60) - 5));
+  const born = Math.min(BIRTH_CHOICE.max, Math.max(BIRTH_CHOICE.min, year - age));
+  const fit = families.filter(f => (!w.places || w.places.includes(f.place)) && (!w.placeIncludes || f.place.includes(w.placeIncludes))
+    && (!w.notPlaces || !w.notPlaces.includes(f.place)) && (!w.classes || w.classes.includes(f.class)));
+  const f = fit[(year + born) % Math.max(1, fit.length)];
+  return {born, family:f && (w.places || w.placeIncludes || w.classes) ? {place:f.place, class:f.class} : null, reachable:year - born >= (w.minAge || 0)};
+}
+function archiveCounts(a = archiveLoad()) {
+  return [
+    ['역사의 현장', Object.keys(a.scenes).length, HISTORIC.length],
+    ['만난 인물', Object.keys(a.figures).length, Object.keys(FIGURES).length],
+    ['오른 직업', Object.keys(a.careers).length, Object.keys(CAREERS).length],
+    ['태어난 곳', Object.keys(a.births).length, BIRTHPLACES.length]
+  ];
+}
+// One unseen scene to aim for; it changes each time the start screen opens.
+function archiveTarget(a = archiveLoad()) {
+  const open = HISTORIC.filter(d => !a.scenes[d.id] && sceneBirth(d).reachable && !d.when.knows);
+  return open.length ? open[Math.floor(Math.random() * open.length)] : null;
+}
+
 // src/music.js
 // A public-domain minuet (Petzold, Minuet in G, 1725) played as a soft harpsichord-like chiptune.
 function createMusic() {
@@ -8711,6 +8821,7 @@ function syncLinks() {
   $id('newsDot').hidden = !fresh; $id('menuDot').hidden = !fresh;
   $id('gameVersion').textContent = GAME_VERSION;
   gbSyncShare(s);
+  syncArchive(s);
 }
 // 남겨진 묘비명: the start-screen list, the "모두 보기" sheet and the end-of-life share box.
 const SITE_LINK = () => { const a = document.createElement('a'); a.href = GUESTBOOK_SITE; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '웹사이트에서 보기 →'; return a; };
@@ -8776,6 +8887,70 @@ $id('gbSend').addEventListener('click', gbSubmit);
 $id('gbAll').addEventListener('click', gbOpenAll);
 $id('gbClose').addEventListener('click', gbCloseAll);
 $id('gbOverlay').addEventListener('click', e => { if (e.target.id === 'gbOverlay') gbCloseAll(); });
+// 나의 연대기: progress across lives, one scene to aim for, the codex, and what this life added.
+let chronTarget = null, archiveShownFor = '';
+function renderChronicle() {
+  const a = archiveLoad();
+  $id('chronSub').textContent = a.lives ? `지금까지 ${a.lives}번의 삶을 살았습니다. 가장 오래 산 삶은 ${a.longest}세였습니다.`
+    : '삶을 마칠 때마다 만난 역사의 현장과 인물, 오른 직업이 여기에 쌓입니다.';
+  $id('chronGrid').innerHTML = archiveCounts(a).map(([label, n, total]) =>
+    `<div class="chron-stat"><small>${label}</small><b>${n}<i> / ${total}</i></b><div class="chron-bar"><span style="width:${Math.round(n / total * 100)}%"></span></div></div>`).join('');
+  if (!chronTarget || a.scenes[chronTarget.id]) chronTarget = archiveTarget(a);
+  $id('chronTarget').hidden = !chronTarget;
+  if (chronTarget) {
+    const d = chronTarget, b = sceneBirth(d), who = sceneWho(d);
+    const p = $id('chronTargetText'); p.replaceChildren();
+    const t = document.createElement('b'); t.textContent = `${d.when.fromDate[0]}년 ${d.when.fromDate[1]}월 · ${scenePlace(d)}`;
+    const sm = document.createElement('small'); sm.textContent = `아직 보지 못한 장면이 기다립니다${who ? ` (${who})` : ''}. ${b.born}년${b.family ? ` ${b.family.place.replace(' 농촌', ' 시골')}의 ${b.family.class} 집안` : ''}에 태어나면 닿을 수 있을지도 모릅니다.`;
+    p.append(t, sm);
+  }
+}
+function openCodex(tab = 'scenes') {
+  const a = archiveLoad(), list = $id('codexList'); list.replaceChildren();
+  document.querySelectorAll('[data-codex]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.codex === tab)));
+  const row = (seen, when, title, sub, reveal = false) => {
+    const li = document.createElement('li'); li.className = seen ? '' : 'unseen';
+    const w = document.createElement('span'); w.className = 'when'; w.textContent = when;
+    const body = document.createElement('div'); const b = document.createElement('b'); b.textContent = seen || reveal ? title : '???';
+    const small = document.createElement('small'); small.textContent = sub; body.append(b, small);
+    li.append(w, body); list.append(li);
+  };
+  let n = 0, total = 0;
+  if (tab === 'scenes') for (const d of HISTORIC) { const seen = !!a.scenes[d.id]; n += seen; total++;
+    row(seen, `${d.when.fromDate[0]}.${String(d.when.fromDate[1]).padStart(2, '0')}`, d.title, [scenePlace(d), sceneWho(d)].filter(Boolean).join(' · ')); }
+  if (tab === 'figures') for (const [id, f] of Object.entries(FIGURES)) { const seen = !!a.figures[id]; n += seen; total++;
+    row(seen, `${f.born[0]}`, f.name, seen ? f.job : '이 시대의 이름난 인물'); }
+  if (tab === 'careers') for (const [id, c] of Object.entries(CAREERS)) { const seen = !!a.careers[id]; n += seen; total++;
+    row(seen, '', c.label, seen ? c.ranks.map(r => r.label).join(' → ') : `${c.ranks.length}단계의 길`); }
+  if (tab === 'births') for (const k of BIRTHPLACES) { const [place, cls] = k.split('|'); const seen = !!a.births[k]; n += seen; total++;
+    row(seen, seen ? '✓' : '', `${place} · ${cls}`, seen ? '이곳에서 태어나 보았습니다' : '아직 이곳에서 태어난 적이 없습니다', true); }
+  $id('codexNote').textContent = `${total}개 가운데 ${n}개를 찾았습니다.${tab === 'scenes' ? ' 보지 못한 장면은 때와 곳만 보입니다.' : ''}`;
+  $id('codexOverlay').hidden = false; $id('codexClose').focus();
+}
+function syncArchive(s) {
+  $id('decisionNew').hidden = !(s?.decision && !s.decisionResult && decisions.find(d => d.id === s.decision)?.historic && sceneIsNew(s.decision));
+  const box = $id('summaryArchive');
+  if (!s?.dead) { box.hidden = true; archiveShownFor = ''; return; }
+  const key = lifeKey(s); if (archiveShownFor === key) return;
+  archiveShownFor = key;
+  const fresh = archiveRecord(s);
+  const items = [...fresh.scenes.map(id => `역사의 현장 · ${HISTORIC.find(d => d.id === id)?.title}`),
+    ...fresh.figures.map(id => `인물 · ${FIGURES[id].name}`), ...fresh.careers.map(id => `직업 · ${CAREERS[id].label}`),
+    ...(fresh.birth ? [`태어난 곳 · ${lifeTouches(s).birthPlace} ${s.class}`] : [])];
+  box.hidden = false;
+  $id('summaryArchiveText').textContent = items.length ? `이번 삶으로 연대기에 ${items.length}개가 새로 남았습니다.` : '이번 삶에서는 새로 남은 기록이 없습니다. 다른 때, 다른 곳에서 태어나 보세요.';
+  $id('summaryArchiveList').innerHTML = items.map(x => `<li>${x.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</li>`).join('');
+}
+$id('codexOpen').addEventListener('click', () => openCodex('scenes'));
+$id('codexClose').addEventListener('click', () => { $id('codexOverlay').hidden = true; });
+$id('codexOverlay').addEventListener('click', e => { if (e.target.id === 'codexOverlay') $id('codexOverlay').hidden = true; const t = e.target.closest('[data-codex]'); if (t) openCodex(t.dataset.codex); });
+$id('chronTargetGo').addEventListener('click', () => {
+  if (!chronTarget) return;
+  const b = sceneBirth(chronTarget);
+  guarded(`${b.born}년에 새로 태어나면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?`, '태어나기', () => {
+    if (controller.newLife(null, {born:b.born, ...(b.family ? {family:b.family} : {})})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); }
+  });
+});
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
 const PRESETS = {
   paris1768:{label:'1768년 파리 이야기', born:1768, family:{place:'파리', class:'도시 평민'}},
@@ -8787,6 +8962,7 @@ function syncIntro() {
   const first = !prefs.played && !hasSave();
   document.getElementById('intro').classList.toggle('first', first);
   document.getElementById('startsHint').hidden = !first;
+  if (!engine.state || ui.choosing) renderChronicle();
   const starts = document.getElementById('starts'), pick = document.querySelector('.birth-pick');
   if (first && starts.nextElementSibling !== pick) pick.before(starts);
   if (!first && starts.previousElementSibling?.classList?.contains('btns') === false) document.querySelector('.intro-body').appendChild(starts);
@@ -8809,7 +8985,7 @@ const actions = {
     });
   },
   schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) { prefs.played = true; savePrefs(); ui.setChoosing(false); } }),
-  chooseLife:() => { clock.stop(); ui.setChoosing(true); window.scrollTo(0, 0); },
+  chooseLife:() => { clock.stop(); ui.setChoosing(true); renderChronicle(); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
   skipToDecision:() => controller.skipToDecision(),
@@ -8866,6 +9042,7 @@ document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   if (!$id('askOverlay').hidden) { $id('askOverlay').hidden = true; return; }
   if (!$id('gbOverlay').hidden) gbCloseAll();
+  $id('codexOverlay').hidden = true;
   $id('saveOverlay').hidden = true;
   if (!$id('birthOverlay').hidden) $id('birthStart').click();
 });
