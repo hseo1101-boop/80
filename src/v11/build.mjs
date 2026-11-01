@@ -94,6 +94,12 @@ js = patch(js, '(s.year-s.born)*12+s.month-s.birthMonth<=c.maxAgeMonths);', `(s.
     && (c.minAptitude === undefined || (s.aptitude || 50) >= c.minAptitude)
     && (c.minKnowledge === undefined || s.stats.지식 >= c.minKnowledge)
     && (!c.noCareer || !s.career)
+    && (c.parentAgeMin === undefined || s.relations.some(r => ['아버지','어머니'].includes(r.role) && r.alive && ageOf(s, r) >= c.parentAgeMin))
+    && (!c.childAge || s.relations.some(r => r.role === '자녀' && r.alive && ageOf(s, r) >= c.childAge[0] && ageOf(s, r) <= c.childAge[1] && (!c.childSex || personSex(r) === c.childSex)))
+    && (!c.flagSet || !!s.flags[c.flagSet])
+    && (!c.after || [].concat(c.after.id).some(id => typeof s.familyEvents['t-' + id] === 'number' && s.year - s.familyEvents['t-' + id] >= c.after.years))
+    && (!c.careerIs || (s.career && c.careerIs.includes(s.career.id)))
+    && (c.minRank === undefined || (s.career && s.career.rank >= c.minRank))
     && (c.maxAptitude === undefined || (s.aptitude || 50) <= c.maxAptitude)
     && (c.minRelation === undefined || relationScore(s) >= c.minRelation)
     && (c.maxHealth === undefined || s.stats.건강 <= c.maxHealth)
@@ -126,8 +132,8 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('outcomes.js') + '\n// src/engine.js');
-js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('outcomes.js') + '\n// src/engine.js');
+js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  applyFamilyEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
 js = patch(js, "  for (const r of s.relations) {\n    if (!r.alive) continue;\n    const a = ageOf(s, r);", "  for (const r of s.relations) {\n    if (!r.alive || r.role === '인물') continue;\n    const a = ageOf(s, r);");

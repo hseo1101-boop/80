@@ -114,6 +114,7 @@ function decisionAllowed(s, d) {
   return n < 2 && (y === undefined || s.year - y >= 7);
 }
 function noteDecision(s, d) {
+  s.familyEvents['t-' + d.id] = s.year;  // when it was decided, for decisions that follow up years later
   if (d.when.unsetFlag) return;
   s.familyEvents['dc-' + d.id] = (s.familyEvents['dc-' + d.id] || 0) + 1;
   s.familyEvents['dy-' + d.id] = s.year;
