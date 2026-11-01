@@ -25,7 +25,7 @@ const FR_NAMES = {'장':'Jean','피에르':'Pierre','루이':'Louis','자크':'J
   '뒤부아':'Dubois','포르':'Faure','르클레르':'Leclerc','브뤼네':'Brunet','르브룅':'Lebrun','르고프':'Le Goff','르갈':'Le Gall',
   '뒤마':'Dumas','바이':'Bailly','콜랭':'Colin','아르노':'Arnaud','부셰':'Boucher','마송':'Masson','샤르팡티에':'Charpentier',
   '파브르':'Fabre','롤랑':'Roland','카라덱':'Caradec','바레':'Barré','라퐁':'Lafont','르블랑':'Leblanc'};
-function frenchName(name) { return name.split(' ').map(part => FR_NAMES[part] || part).join(' '); }
+function frenchName(name) { return name.split(' ').map(part => FR_NAMES[part] || REAL_FR[part] || part).join(' '); }
 function strHash(text) {
   let v = 2166136261;
   for (let i = 0; i < text.length; i++) v = Math.imul(v ^ text.charCodeAt(i), 16777619);

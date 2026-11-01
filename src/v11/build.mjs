@@ -133,12 +133,20 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  applyFamilyEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
 js = patch(js, "  for (const r of s.relations) {\n    if (!r.alive) continue;\n    const a = ageOf(s, r);", "  for (const r of s.relations) {\n    if (!r.alive || r.role === '인물') continue;\n    const a = ageOf(s, r);");
 js = patch(js, "education: '미정', reputation: 50,", "education: '미정', reputation: 10,");
+// 2i. Real lives: a rare birth as someone who lived; recorded turning points; no chance death on the record.
+js = patch(js, 'function createState(seed = Date.now(), options = {}) {', 'function createState(seed = Date.now(), options = {}) {\n  options = realLifeOptions(seed, options);');
+js = patch(js, '  earlierLoss(s);\n  birthLottery(s);\n  return s;', '  earlierLoss(s);\n  birthLottery(s);\n  applyRealLife(s, options.real);\n  return s;');
+js = patch(js, 'function endLife(s, reason) {\n  if (s.dead) return;', 'function endLife(s, reason) {\n  if (s.dead) return;\n  if (realGuard(s)) return;');
+js = patch(js, '    && (!c.knows ||', '    && (!c.real || s.familyEvents.real === c.real)\n    && (!c.onHistory || !s.familyEvents.realOff)\n    && (!c.knows ||');
+js = patch(js, '  applyCareerEffects(s, effects);\n', '  applyCareerEffects(s, effects);\n  applyRealEffects(s, effects);\n');
+js = patch(js, '    figureFates(s);\n', '    figureFates(s);\n    realKeep(s);\n');
+
 js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
     const c = object(v.career, '진로');
     if (!CAREERS[c.id]) throw new Error('알 수 없는 진로입니다.');

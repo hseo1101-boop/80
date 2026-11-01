@@ -161,7 +161,7 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 .modal{position:relative;max-width:620px;width:100%;max-height:92vh;overflow:auto;background:var(--card);border-radius:14px;padding:26px 28px;box-shadow:0 24px 70px #0008}
 .modal-top{display:flex;gap:14px;align-items:center}.modal-top img{width:40px;height:64px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%;flex:none}
 .pill{display:inline-block;background:var(--wine);color:#fff;border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700}
-.modal [tabindex="-1"]:focus{outline:none}.pill.historic{background:#1f4f8a}.history .major small{color:var(--wine)}
+.modal [tabindex="-1"]:focus{outline:none}.pill.historic{background:#1f4f8a}.pill.real{background:#8a6a1f}.history .major small{color:var(--wine)}
 .decision-meta{color:var(--muted);font-size:.85rem;margin:6px 0 0}
 .steps{display:flex;gap:8px;font-size:.78rem;color:var(--faint);margin:18px 0 6px}.steps .on{color:var(--ink);font-weight:800}
 .modal h2{font-family:var(--serif);font-size:1.55rem;line-height:1.3;margin:4px 0 10px}
@@ -362,7 +362,7 @@ label.section{display:block}
 <div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
 <div id="codexOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="codexTitle" hidden><div class="modal codex">
   <div class="gb-modal-head"><h2 id="codexTitle">연대기 도감</h2><button id="codexClose">닫기</button></div>
-  <div class="codex-tabs" role="tablist"><button role="tab" data-codex="scenes" aria-selected="true">역사의 현장</button><button role="tab" data-codex="figures" aria-selected="false">인물</button><button role="tab" data-codex="careers" aria-selected="false">직업</button><button role="tab" data-codex="births" aria-selected="false">태어난 곳</button></div>
+  <div class="codex-tabs" role="tablist"><button role="tab" data-codex="scenes" aria-selected="true">역사의 현장</button><button role="tab" data-codex="figures" aria-selected="false">인물</button><button role="tab" data-codex="careers" aria-selected="false">직업</button><button role="tab" data-codex="births" aria-selected="false">태어난 곳</button><button role="tab" data-codex="reals" aria-selected="false">실존 인물</button></div>
   <p id="codexNote" class="gb-sub"></p>
   <ol id="codexList" class="codex-list"></ol>
 </div></div>

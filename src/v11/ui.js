@@ -363,8 +363,8 @@ function createUI(doc, engine, handlers) {
       const d = decisions.find(x => x.id === s.decision), result = s.decisionResult;
       if (!shownDecision) previousFocus = doc.activeElement;
       $('decisionSprite').src = spriteURL(doc, characterLook(s));
-      $('decisionPill').textContent = d.historic ? `역사의 현장 · ${s.year}년 ${s.month}월` : `중대 결정 · ${decisionDomain(d)}`;
-      $('decisionPill').classList.toggle('historic', !!d.historic);
+      $('decisionPill').textContent = d.realLife ? `실존 인물의 삶 · ${s.year}년 ${s.month}월` : d.historic ? `역사의 현장 · ${s.year}년 ${s.month}월` : `중대 결정 · ${decisionDomain(d)}`;
+      $('decisionPill').classList.toggle('historic', !!d.historic && !d.realLife); $('decisionPill').classList.toggle('real', !!d.realLife);
       $('decisionMeta').textContent = decisionContext(s);
       $('decisionTitle').textContent = d.title;
       $('decisionText').textContent = decisionText(s, d);

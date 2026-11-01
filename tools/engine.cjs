@@ -1790,6 +1790,7 @@ function changeStats(s, delta = {}) {
   for (const key of STAT_KEYS) if (key in delta) s.stats[key] = clamp(s.stats[key] + (key === '지식' ? knowledgeDelta(s, delta[key]) : delta[key]));
 }
 function createState(seed = Date.now(), options = {}) {
+  options = realLifeOptions(seed, options);
   const s = {schemaVersion: SCHEMA_VERSION, rngState: (seed >>> 0) || 1};
   const picked = pickFamily(s), family = (options.family && families.find(f => f.place === options.family.place && f.class === options.family.class)) || picked, surname = pick(s, surnames);
   Object.assign(s, {
@@ -1819,6 +1820,7 @@ function createState(seed = Date.now(), options = {}) {
   milestone(s, `${s.place}에서 출생`);
   earlierLoss(s);
   birthLottery(s);
+  applyRealLife(s, options.real);
   return s;
 }
 
@@ -1890,6 +1892,8 @@ function matches(s, c = {}) {
     && (c.maxHealth === undefined || s.stats.건강 <= c.maxHealth)
     && (!c.notPlaceIncludes || !s.place.includes(c.notPlaceIncludes))
     && (!c.pathIs || Object.entries(c.pathIs).every(([k, v]) => s.paths[k] === v))
+    && (!c.real || s.familyEvents.real === c.real)
+    && (!c.onHistory || !s.familyEvents.realOff)
     && (!c.knows || c.knows.every(id => s.relations.some(r => r.role === '인물' && r.name === FIGURES[id]?.name)));
 }
 
@@ -1921,6 +1925,7 @@ function applyEffects(s, effects = {}) {
     milestone(s, `${partner}과(와) 혼인`);
   }
   applyCareerEffects(s, effects);
+  applyRealEffects(s, effects);
   applyFamilyEffects(s, effects);
   if (effects.doom) s.familyEvents.doom = String(effects.doom).slice(0, 300);
   if (effects.milestone) milestone(s, effects.milestone === '$job' ? `직업: ${s.job}` : effects.milestone);
@@ -1934,6 +1939,7 @@ function applyEffects(s, effects = {}) {
 
 function endLife(s, reason) {
   if (s.dead) return;
+  if (realGuard(s)) return;
   s.dead = true; s.runtime.paused = true; s.runtime.monthProgress = 0;
   s.decision = null; s.decisionResult = null; s.pendingDecisionYear = null;
   addLog(s, '생애의 끝', `${s.name}은(는) ${ageOf(s)}세에 생애를 마쳤습니다. ${reason}`, 'major');
@@ -3899,6 +3905,7 @@ for (const d of decisions) for (const c of d.choices) {
 // The yearly focus replaced these two filler decisions; the rest of the repeatable ones are rationed.
 const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
 function decisionAllowed(s, d) {
+  if (typeof realBlocks === 'function' && realBlocks(s, d)) return false;
   if (RETIRED_DECISIONS.has(d.id)) return false;
   // One-off decisions gated on a shared flag (e.g. 'marriage') also close on their own id.
   if (d.when.unsetFlag && d.when.unsetFlag !== d.id && s.flags[d.id]) return false;
@@ -5307,6 +5314,8 @@ function lifeReport(s) {
   const family = kids.length ? (kids.length === 1 ? `한 아이의 ${parent}` : `아이 ${NUM[kids.length] || kids.length}의 ${parent}`) : spouse ? `${spouse.name.split(' ')[0]}의 ${woman ? '아내' : '남편'}` : '';
   const epitaph = [who, family].filter(Boolean).join(' · ');
   const lines = [];
+  const real = typeof REAL_LIVES !== 'undefined' && REAL_LIVES[s.familyEvents?.real];
+  if (real) lines.push(s.familyEvents.realOff ? `실존 인물 ${real.name}(으)로 태어났지만, 역사와 다른 길을 걸었습니다.` : `실존 인물 ${real.name}의 삶을 기록된 그대로 살아 냈습니다.`);
   const out = outlivedPercent(s);
   if (age < 1) lines.push('첫돌을 맞지 못했습니다. 이 시대에는 드문 일이 아니었습니다.');
   else lines.push(`${age}세까지 살았습니다. 같은 해에 태어난 사람의 약 ${out}%보다 오래 산 셈입니다.`);
@@ -6651,6 +6660,353 @@ DECISION_DOMAINS.push({id:'health', label:'건강', target:0});
   }
 })();
 
+// src/data/real-lives.js — 실존 인물의 삶
+// Very rarely (about one random birth in two hundred) you are born as someone who really lived. The
+// life follows its recorded turning points as decisions in the month they happened. Taking the
+// historical choice keeps you on the record; any other choice (or some risky outcomes) leaves it,
+// and from then on the life is your own, with ordinary chances and an unwritten death. While on the
+// record, chance cannot end the life before its recorded end.
+DECISION_DOMAINS.push({id:'real', label:'실존 인물의 삶', target:0});
+const REAL_CHANCE = 5;   // per 1000 random births
+const REAL_LIVES = {
+  vigee:{name:'엘리자베트 비제르브룅', surname:'비제', fr:{'엘리자베트':'Élisabeth', '비제르브룅':'Vigée Le Brun', '비제':'Vigée'}, sex:'여성', born:[1755,4], died:[1842,3],
+    place:'파리', cls:'부르주아', family:{place:'파리', class:'부르주아'}, wealth:45, parentJob:'파스텔 초상화가',
+    intro:'훗날 마리 앙투아네트의 초상화가로 이름을 떨치는 엘리자베트 비제르브룅으로 태어났습니다.'},
+  germain:{name:'소피 제르맹', surname:'제르맹', fr:{'소피':'Sophie', '제르맹':'Germain'}, sex:'여성', born:[1776,4], died:[1831,6],
+    place:'파리', cls:'부르주아', family:{place:'파리', class:'부르주아'}, wealth:60, parentJob:'비단 상인',
+    intro:'학교 문턱을 넘지 못하고도 탄성 이론을 세운 수학자 소피 제르맹으로 태어났습니다.'},
+  galois:{name:'에바리스트 갈루아', surname:'갈루아', fr:{'에바리스트':'Évariste', '갈루아':'Galois'}, sex:'남성', born:[1811,10], died:[1832,5],
+    place:'파리', cls:'부르주아', family:{place:'파리', class:'부르주아'}, wealth:55, parentJob:'부르라렌 기숙학교장',
+    intro:'스무 해를 살고 대수학의 새 길을 연 에바리스트 갈루아로 태어났습니다. 파리 남쪽 부르라렌의 집입니다.'},
+  tristan:{name:'플로라 트리스탕', surname:'트리스탕', fr:{'플로라':'Flora', '트리스탕':'Tristan'}, sex:'여성', born:[1803,4], died:[1844,11],
+    place:'파리', cls:'도시 평민', family:{place:'파리', class:'도시 평민'}, wealth:30, parentJob:'페루 출신 귀족(사망)',
+    intro:'노동자와 여성의 연대를 외친 플로라 트리스탕으로 태어났습니다. 아버지를 일찍 잃고 집안은 기울었습니다.'},
+  ampere:{name:'앙드레마리 앙페르', surname:'앙페르', fr:{'앙드레마리':'André-Marie', '앙페르':'Ampère'}, sex:'남성', born:[1775,1], died:[1836,6],
+    place:'리옹', cls:'부르주아', family:{place:'리옹', class:'도시 평민'}, wealth:55, parentJob:'비단 상인',
+    intro:'전류의 법칙에 이름을 남기는 앙드레마리 앙페르로 태어났습니다.'},
+  recamier:{name:'쥘리에트 레카미에', surname:'베르나르', fr:{'쥘리에트':'Juliette', '레카미에':'Récamier', '베르나르':'Bernard'}, sex:'여성', born:[1777,12], died:[1849,5],
+    place:'리옹', cls:'부르주아', family:{place:'리옹', class:'도시 평민'}, wealth:55, parentJob:'공증인',
+    intro:'파리 사교계의 별이 될 쥘리에트 레카미에(태어난 이름은 쥘리 베르나르)로 태어났습니다.'},
+  gericault:{name:'테오도르 제리코', surname:'제리코', fr:{'테오도르':'Théodore', '제리코':'Géricault'}, sex:'남성', born:[1791,9], died:[1824,1],
+    place:'루앙', cls:'부르주아', family:{place:'루앙', class:'도시 평민'}, wealth:70, parentJob:'담배 사업가',
+    intro:'「메두사호의 뗏목」을 그릴 테오도르 제리코로 태어났습니다.'},
+  balzac:{name:'오노레 드 발자크', surname:'발자크', fr:{'오노레':'Honoré', '드':'de', '발자크':'Balzac'}, sex:'남성', born:[1799,5], died:[1850,8],
+    place:'투르', cls:'부르주아', family:{place:'투르', class:'귀족'}, wealth:55, parentJob:'군수 보급 관리',
+    intro:'「인간 희극」으로 한 시대를 통째로 소설에 담을 오노레 드 발자크로 태어났습니다.'},
+  chateaubriand:{name:'프랑수아르네 드 샤토브리앙', surname:'샤토브리앙', fr:{'프랑수아르네':'François-René', '드':'de', '샤토브리앙':'Chateaubriand'}, sex:'남성', born:[1768,9], died:[1848,7],
+    place:'브르타뉴 농촌', cls:'귀족', family:{place:'브르타뉴 농촌', class:'농민'}, wealth:60, parentJob:'선주 출신 백작',
+    intro:'낭만주의 문학의 아버지가 될 샤토브리앙으로 태어났습니다. 생말로에서 태어나 콩부르 성에서 자랍니다.'},
+  niepce:{name:'니세포르 니엡스', surname:'니엡스', fr:{'니세포르':'Nicéphore', '니엡스':'Niépce'}, sex:'남성', born:[1765,3], died:[1833,7],
+    place:'부르고뉴 농촌', cls:'부르주아', family:{place:'부르고뉴 농촌', class:'농민'}, wealth:60, parentJob:'왕실 변호사',
+    intro:'세계 최초의 사진을 찍을 니세포르 니엡스로 태어났습니다. 부르고뉴 샬롱쉬르손의 집입니다.'},
+  leon:{name:'폴린 레옹', surname:'레옹', fr:{'폴린':'Pauline', '레옹':'Léon'}, sex:'여성', born:[1768,9], died:[1838,10],
+    place:'파리', cls:'도시 평민', family:{place:'파리', class:'도시 평민'}, wealth:35, parentJob:'초콜릿 제조인',
+    intro:'혁명적 공화주의 여성 시민회를 세울 폴린 레옹으로 태어났습니다.'},
+  coignet:{name:'장로슈 쿠아녜', surname:'쿠아녜', fr:{'장로슈':'Jean-Roch', '쿠아녜':'Coignet'}, sex:'남성', born:[1776,8], died:[1865,12],
+    place:'부르고뉴 농촌', cls:'농민', family:{place:'부르고뉴 농촌', class:'농민'}, wealth:20, parentJob:'농부', literate:false,
+    intro:'목동에서 황제 근위대 척탄병이 되어 회고록을 남길 장로슈 쿠아녜로 태어났습니다.'}
+};
+const REAL_FR = Object.assign({}, ...Object.values(REAL_LIVES).map(p => p.fr));
+
+(() => {
+  const add = ([y, m], n) => { const t = y * 12 + m - 1 + n; return [Math.floor(t / 12), t % 12 + 1]; };
+  const R = (who, key, date, title, text, choices, window = 2) => decisions.push({id:`real-${who}-${key}`, domain:'real', priority:40, historic:true, realLife:true,
+    title, text, when:{real:who, onHistory:true, fromDate:date, toDate:add(date, window), unsetFlag:`real-${who}-${key}`},
+    choices:choices.map(c => ({...c, effects:{...(c.effects || {}), flags:[`real-${who}-${key}`]}}))});
+  const H = (label, result, effects = {}) => ({label, result, effects:{stats:{}, ...effects}});
+  const OFF = (label, result, effects = {}) => ({label, result, effects:{stats:{}, ...effects, realOff:true}});
+  const END = (label, result) => ({label, result, effects:{stats:{}, realEnd:true, doom:result}});
+  const O = (id, title, weight, result, effects = {}) => ({id, title, weight, result, effects});
+  const MAYBE = (label, survive, die) => ({label, preview:'역사와 다른 결말 / 그래도 같은 끝', outcomes:[
+    O('lives', '살아남았습니다', 45, survive, {stats:{건강:-6}, realOff:true}),
+    O('same', '그래도 같은 끝이었습니다', 55, die, {realEnd:true, doom:die})]});
+
+  // ── 엘리자베트 비제르브룅 ──
+  R('vigee', 'brush', [1770,6], '붓으로 집안을 먹여 살리다', '3년 전 아버지가 세상을 떠났습니다. 열다섯 살 엘리자베트의 초상화 솜씨가 소문나, 귀부인들이 모델이 되어 주겠다고 찾아옵니다.',
+    [H('주문을 받아 초상화를 그린다', '하루에 몇 명씩 앉혀 놓고 그렸습니다. 열다섯 살 소녀의 그림값으로 집안 살림이 돌아가기 시작했습니다.', {stats:{재산:6, 지식:3}, realJob:'초상화가', milestone:'직업: 초상화가'}),
+     OFF('어머니 뜻대로 얌전히 혼처를 기다린다', '붓을 내려놓았습니다. 사람들이 그 재능을 아까워했습니다.')]);
+  R('vigee', 'marry', [1776,1], '화상 르브룅의 청혼', '그림을 사고파는 화상 장바티스트피에르 르브룅이 청혼했습니다. 그림 공부에 쓸 명화를 마음껏 볼 수 있다는 말에 마음이 기웁니다.',
+    [H('혼인한다', '르브룅 부인이 되었습니다. 남편의 화랑에서 거장들의 그림을 베끼며 실력이 늘었지만, 남편은 도박으로 그녀의 수입을 탕진하곤 했습니다.', {stats:{행복:-1, 지식:3}, milestone:'화상 르브룅과 혼인'}),
+     OFF('거절한다', '청혼을 거절했습니다. 그녀의 이름은 끝까지 비제로 남습니다.')]);
+  R('vigee', 'queen', [1778,9], '왕비의 초상', '베르사유에서 부름이 왔습니다. 왕비 마리 앙투아네트가 자신의 초상을 맡기고 싶어 합니다.',
+    [H('베르사유로 간다', '왕비는 상냥했고, 당신이 그린 초상을 마음에 들어 했습니다. 이후 십 년 동안 서른 점이 넘는 왕비의 초상을 그리게 됩니다.', {stats:{재산:8, 행복:5}, rep:8, milestone:'마리 앙투아네트의 초상화가가 됨'}),
+     OFF('궁정 일은 사양한다', '파리의 화실에 남았습니다. 궁정과 거리를 둔 그 선택이 훗날 무엇을 바꿀지는 아무도 모릅니다.')]);
+  R('vigee', 'academy', [1783,5], '왕립 아카데미', '여성은 거의 받아 주지 않는 왕립 회화·조각 아카데미가 입회를 논의합니다. 남편이 화상이라는 이유로 반대가 거셉니다. 왕비가 힘을 써 주겠다고 합니다.',
+    [H('입회 작품을 낸다', '같은 날 라이벌 라비유귀아르와 함께 입회가 결정되었습니다. 아카데미의 여성 회원은 단 네 명입니다.', {stats:{행복:6, 지식:3}, rep:6, milestone:'왕립 회화·조각 아카데미 입회'}),
+     OFF('소란을 피해 물러선다', '입회를 포기했습니다. 아카데미 밖에서 그림을 계속 그렸습니다.')]);
+  R('vigee', 'flee', [1789,10], '파리를 떠나는 밤', '왕비의 화가라는 이름이 이제 위험합니다. 10월 6일 국왕 일가가 파리로 끌려온 날 밤, 딸 쥘리를 데리고 역마차에 오를 준비를 합니다.',
+    [H('딸과 함께 이탈리아로 떠난다', '허름한 옷으로 변장하고 국경을 넘었습니다. 로마, 나폴리, 빈, 상트페테르부르크… 망명지의 궁정마다 초상 주문이 줄을 섰습니다.', {stats:{행복:-4, 재산:3}, realJob:'망명 화가', milestone:'혁명을 피해 망명'}),
+     OFF('파리에 남는다', '떠나지 않기로 했습니다. 왕비의 화가가 혁명의 파리에서 어떻게 살아갈지, 이제 역사도 모릅니다.')]);
+  R('vigee', 'return', [1802,1], '열두 해 만의 귀국', '망명자 명단에서 이름이 지워졌습니다. 러시아 황실이 남아 달라고 붙잡지만, 파리가 그립습니다.',
+    [H('파리로 돌아온다', '열두 해 만에 파리 땅을 밟았습니다. 알던 얼굴의 절반은 단두대와 전쟁에 사라졌습니다.', {stats:{행복:3}, realJob:'초상화가'}),
+     OFF('러시아에 남는다', '상트페테르부르크에 남았습니다. 여생은 네바강 가에서 이어집니다.')]);
+  R('vigee', 'end', [1842,3], '회상록의 마지막 장', '여든여섯. 「회상록」을 마치고 루브시엔의 집과 파리를 오가며 조용히 지냅니다. 그린 초상은 육백육십 점이 넘습니다.',
+    [END('지난 삶을 돌아본다', '1842년 3월, 파리에서 여든여섯의 나이로 세상을 떠났습니다. 묘비에는 “여기서 나는 마침내 쉰다”라고 새겨졌습니다.')]);
+
+  // ── 소피 제르맹 ──
+  R('germain', 'archimedes', [1789,8], '아르키메데스의 죽음', '거리가 위험해 집 밖에 나가지 못하는 여름입니다. 열세 살 소피는 아버지 서재에서 로마 병사가 다가오는 줄도 모르고 도형에 몰두하다 죽은 아르키메데스 이야기를 읽었습니다.',
+    [H('그를 그렇게 사로잡은 수학을 공부한다', '라틴어와 그리스어부터 혼자 익혔습니다. 뉴턴과 오일러의 책을 사전과 씨름하며 읽기 시작했습니다.', {stats:{지식:6}, experience:{curiosity:3}}),
+     OFF('다른 소녀들처럼 바느질과 음악을 익힌다', '수학책을 다시 서가에 꽂았습니다.')]);
+  R('germain', 'candles', [1790,1], '얼어붙은 잉크', '딸이 밤새 공부하는 것을 걱정한 부모가 촛불과 난방, 옷까지 치워 버렸습니다. 한겨울 밤, 잉크병이 얼어 있습니다.',
+    [H('몰래 숨긴 초에 불을 붙이고 이불을 두른다', '아침에 부모는 이불을 두른 채 얼어붙은 잉크 옆에서 잠든 딸을 발견했습니다. 그날 이후 부모는 더 이상 말리지 않았습니다.', {stats:{지식:4, 건강:-2}}),
+     OFF('부모 뜻에 따른다', '그 겨울 이후 공부를 그만두었습니다.')]);
+  R('germain', 'leblanc', [1794,12], '르블랑이라는 이름', '새로 문을 연 이공과대학은 여학생을 받지 않습니다. 하지만 강의 노트는 구할 수 있습니다. 라그랑주 교수에게 과제를 보내려면 이름이 필요합니다.',
+    [H('남학생 ‘르블랑’의 이름으로 보낸다', '라그랑주는 과제에 감탄해 ‘르블랑’을 만나자고 했습니다. 정체가 드러났지만, 그는 오히려 그녀의 스승이 되어 주었습니다.', {stats:{지식:6, 행복:5}, realJob:'수학자(독학)', milestone:'라그랑주와 만남'}),
+     OFF('보내지 않는다', '노트를 덮었습니다. 학교 밖의 수학은 거기서 멈췄습니다.')]);
+  R('germain', 'gauss', [1806,11], '가우스를 지켜 주세요', '예나 전투 뒤 프랑스군이 브라운슈바이크로 진군합니다. 남자 이름으로 편지를 주고받던 수학자 가우스가 아르키메데스처럼 병사 손에 죽을까 걱정됩니다.',
+    [H('아는 장군에게 가우스를 보호해 달라고 부탁한다', '장교가 가우스를 찾아가 “제르맹 양의 부탁”이라고 전했습니다. 가우스는 그제야 편지 상대가 여성이었음을 알고 놀라움과 존경을 담은 답장을 보냈습니다.', {stats:{행복:5}, rep:3}),
+     H('조용히 소식을 기다린다', '가우스는 무사했습니다. 편지 상대가 누구인지는 끝내 몰랐습니다.')]);
+  R('germain', 'prize', [1816,1], '학술원 대상', '진동하는 판의 무늬를 설명하는 탄성 이론 공모에 세 번째로 도전한 끝에, 학술원이 대상을 주기로 했습니다. 여성 최초입니다.',
+    [H('상은 받되 시상식에는 가지 않는다', '심사위원들이 끝까지 자신을 진지하게 대하지 않았다는 생각에 시상식장에 나타나지 않았습니다. 그래도 이름은 남았습니다.', {stats:{행복:4}, rep:8, milestone:'과학 학술원 대상 수상'}),
+     H('시상식장에 직접 나간다', '자리를 가득 채운 남자들 사이로 걸어 나가 상을 받았습니다. 몇몇은 박수를 쳤고, 몇몇은 고개를 돌렸습니다.', {stats:{행복:5}, rep:8, milestone:'과학 학술원 대상 수상'})]);
+  R('germain', 'end', [1831,6], '가슴의 종양', '쉰다섯. 가슴에 생긴 종양이 깊어졌습니다. 가우스가 괴팅겐 대학의 명예 학위를 주자고 추천했다는 소식이 들립니다.',
+    [END('마지막 논문을 정리한다', '1831년 6월, 파리에서 세상을 떠났습니다. 사망 신고서의 직업 칸에는 ‘수학자’가 아니라 ‘연금 생활자’라고 적혔습니다.')]);
+
+  // ── 에바리스트 갈루아 ──
+  R('galois', 'college', [1823,10], '루이르그랑', '열두 살, 어머니에게 집에서 배우던 갈루아가 파리의 명문 루이르그랑 콜레주에 들어갑니다. 엄격한 규율로 이름난 곳입니다.',
+    [H('기숙 학교에 들어간다', '첫 학기에 학생들이 교장에 맞서 소동을 일으켰고, 수십 명이 쫓겨났습니다. 소년은 그 장면을 오래 기억합니다.', {stats:{지식:3}, education:'콜레주'}),
+     OFF('집에서 어머니에게 계속 배운다', '부르라렌의 집에 남았습니다.')]);
+  R('galois', 'legendre', [1827,2], '르장드르의 기하학', '수사학 수업이 지루해 유급까지 했습니다. 그런데 수학 시간에 받은 르장드르의 기하학 책을 소설처럼 이틀 만에 다 읽어 버렸습니다.',
+    [H('수학에 모든 것을 건다', '라그랑주와 아벨의 논문까지 혼자 읽었습니다. 선생님은 “수학의 광기가 이 아이를 지배한다”라고 적었습니다.', {stats:{지식:8}, experience:{curiosity:3}, realJob:'수학도'}),
+     OFF('다른 과목 성적도 챙긴다', '수학은 여러 과목 가운데 하나로 남았습니다.')]);
+  R('galois', 'exam', [1829,7], '아버지의 죽음과 두 번째 시험', '시장이던 아버지가 정적 신부의 음해에 시달리다 파리의 셋방에서 스스로 목숨을 끊었습니다. 며칠 뒤 이공과대학 두 번째 입학시험이 있습니다.',
+    [H('시험관의 질문에 분을 참지 않는다', '설명을 건너뛰는 답에 시험관이 고개를 젓자, 칠판지우개를 집어 던졌다고 전해집니다. 다시 떨어졌습니다.', {stats:{행복:-8}, milestone:'이공과대학 입학 실패'}),
+     {label:'꾹 참고 차근차근 설명한다', preview:'합격 / 그래도 낙방', outcomes:[
+       O('pass', '합격했습니다', 55, '이공과대학에 들어갔습니다. 역사에 없는 길입니다.', {stats:{행복:3}, education:'이공과대학', realOff:true}),
+       O('fail', '그래도 떨어졌습니다', 45, '시험관은 끝내 고개를 저었습니다.', {stats:{행복:-6}})]}]);
+  R('galois', 'july', [1830,7], '잠긴 교문', '7월 혁명의 사흘. 거리에서 총소리가 나는데, 고등사범 예비학교 교장이 학생들을 가두고 문을 잠갔습니다.',
+    [H('담을 넘어 거리로 나가려 한다', '담을 넘다 붙잡혔습니다. 몇 달 뒤 신문에 교장을 비판하는 편지를 써 학교에서 쫓겨났습니다.', {stats:{행복:-3}, path:{politics:'engaged'}, milestone:'예비학교에서 퇴학'}),
+     OFF('교실에 남는다', '혁명은 담 너머에서 끝났습니다. 학교에 남은 그에게 다른 길이 열립니다.')]);
+  R('galois', 'prison', [1831,7], '바스티유의 날의 제복', '해산된 국민방위대 포병대의 제복을 입고 무기를 든 채 7월 14일 행진에 나서자는 말이 돕니다. 이미 한 번 체포된 적이 있습니다.',
+    [H('제복을 입고 나간다', '퐁뇌프에서 체포되어 생트펠라지 감옥에 갇혔습니다. 감옥에서도 방정식을 붙들고 있었습니다.', {stats:{건강:-6, 행복:-4}, milestone:'생트펠라지 감옥 수감'}),
+     OFF('집에 머문다', '그날 거리로 나가지 않았습니다. 감옥 대신 책상 앞에서 여름을 보냈습니다.')]);
+  R('galois', 'duel', [1832,5], '결투 전날 밤', '한 여인을 둘러싼 다툼 끝에 결투 신청을 받았습니다. 내일 새벽입니다. 오늘 밤, 친구 슈발리에에게 지금까지의 연구를 정리한 긴 편지를 씁니다. 여백에 “시간이 없다”라고 적었습니다.',
+    [END('새벽에 결투장에 나간다', '1832년 5월 31일, 결투에서 입은 총상으로 스무 살에 세상을 떠났습니다. 전날 밤의 편지는 훗날 ‘갈루아 이론’의 출발점이 되었습니다.'),
+     OFF('결투를 피해 파리를 떠난다', '겁쟁이라는 소리를 들어도 좋았습니다. 살아남은 스무 살의 수학자 앞에 아직 쓰지 않은 논문들이 놓여 있습니다.', {stats:{행복:-3}})], 1);
+
+  // ── 플로라 트리스탕 ──
+  R('tristan', 'chazal', [1821,2], '판화가의 채색공', '판화가 앙드레 샤잘의 작업실에서 판화에 색을 입히는 일을 합니다. 주인이 청혼했습니다. 어머니는 가난에서 벗어날 기회라고 합니다.',
+    [H('샤잘과 혼인한다', '열여덟에 혼인했습니다. 남편은 질투가 심하고 거칠었습니다.', {stats:{행복:-4}, realJob:'판화 채색공', milestone:'판화가 샤잘과 혼인'}),
+     OFF('거절한다', '작업실을 나왔습니다. 다른 삶이 시작됩니다.')]);
+  R('tristan', 'leave', [1825,3], '남편을 떠나다', '셋째를 가진 몸입니다. 이혼은 법으로 금지되어 있습니다. 그래도 이 집에서는 더 살 수 없습니다.',
+    [H('아이들을 데리고 집을 나온다', '남편을 떠났습니다. 이름을 숨기고 영국에서 부잣집 하녀로 일하며 아이들을 키웠습니다.', {stats:{행복:-2, 재산:-4}, realJob:'하녀', milestone:'남편을 떠남'}),
+     OFF('참고 산다', '그 집에 남았습니다.')]);
+  R('tristan', 'peru', [1833,4], '페루로 가는 배', '아버지의 고향 페루의 큰집에 상속을 요구하러 갑니다. 다섯 달 넘는 항해입니다.',
+    [H('보르도에서 배에 오른다', '아레키파의 삼촌은 상속을 거절했지만, 그녀가 본 페루의 내전과 노예와 수녀원은 『어느 파리아의 편력』이 되었습니다.', {stats:{지식:5, 행복:2}, experience:{curiosity:4, inequality:3}, milestone:'페루 여행'}),
+     OFF('프랑스에 남는다', '배표를 물렀습니다.')]);
+  R('tristan', 'shot', [1838,9], '거리의 총성', '9월 10일, 별거 중인 남편 샤잘이 길에서 기다리고 있다가 권총을 쏘았습니다.',
+    [H('살아남는다', '총알이 가슴에 박힌 채 살아남았습니다. 남편은 20년 강제 노동형을 받았고, 그녀는 아이들의 양육권을 얻었습니다. 총알은 끝내 빼내지 못했습니다.', {stats:{건강:-14, 행복:-6}, milestone:'남편의 총격에서 살아남음'})]);
+  R('tristan', 'union', [1843,6], '『노동자 연합』', '모든 직종의 노동자가 하나로 뭉치고, 여성의 해방 없이는 노동자의 해방도 없다는 책을 썼습니다. 출판사는 모두 거절했습니다.',
+    [H('후원금을 모아 직접 낸다', '책이 나왔습니다. 마르크스보다 다섯 해 앞서 “노동자들이여 단결하라”를 외친 책입니다. 책을 들고 프랑스 일주를 떠나기로 했습니다.', {stats:{행복:4}, rep:6, realJob:'작가·노동 운동가', milestone:'『노동자 연합』 출간'}),
+     OFF('원고를 서랍에 넣는다', '원고는 서랍 속에 남았습니다.')]);
+  R('tristan', 'end', [1844,11], '보르도의 열병', '노동자들을 만나러 프랑스 도시를 돌던 중, 보르도에서 장티푸스에 걸렸습니다. 마흔한 살입니다.',
+    [END('끝까지 순회를 이어 간다', '1844년 11월, 보르도에서 세상을 떠났습니다. 보르도의 노동자들이 돈을 모아 그녀의 묘비를 세웠습니다.'),
+     MAYBE('순회를 멈추고 쉰다', '고비를 넘겼습니다. 역사에 없는 시간이 그녀 앞에 놓였습니다.', '1844년 11월, 보르도에서 장티푸스로 세상을 떠났습니다. 노동자들이 묘비를 세웠습니다.')]);
+
+  // ── 앙드레마리 앙페르 ──
+  R('ampere', 'encyclopedie', [1787,6], '백과전서', '학교에 가지 않고 아버지의 서재에서 혼자 배웁니다. 열두 살 앙드레마리는 디드로의 『백과전서』를 첫 권부터 차례로 읽기 시작했습니다.',
+    [H('A부터 Z까지 읽는다', '수십 년 뒤에도 그 항목들을 줄줄 외웠습니다. 리옹 도서관에서 라틴어로 된 수학책을 읽으려고 라틴어도 익혔습니다.', {stats:{지식:8}, experience:{curiosity:3}}),
+     OFF('아버지의 비단 장사를 배운다', '책 대신 장부를 펼쳤습니다.')]);
+  R('ampere', 'father', [1793,11], '아버지의 처형', '리옹이 포위 끝에 함락되었습니다. 치안판사였던 아버지가 혁명 재판에 넘겨져 단두대에 올랐습니다.',
+    [H('슬픔에 잠긴다', '일 년 넘게 거의 말을 하지 않았습니다. 다시 일어서게 한 것은 루소의 식물학 책이었습니다.', {stats:{행복:-14, 건강:-4}, milestone:'아버지가 리옹에서 처형됨'})]);
+  R('ampere', 'julie', [1799,8], '쥘리 카롱', '오래 마음에 둔 쥘리 카롱과 혼인합니다. 가정교사로 생계를 꾸립니다.',
+    [H('혼인한다', '이듬해 아들 장자크가 태어났습니다. 그러나 아내는 병약했습니다.', {stats:{행복:8}, realJob:'수학 가정교사'}),
+     OFF('혼인을 미룬다', '혼인을 미뤘습니다.')]);
+  R('ampere', 'loss', [1803,7], '아내를 잃다', '쥘리가 끝내 병을 이기지 못하고 세상을 떠났습니다.',
+    [H('일에 몸을 묻는다', '리옹을 떠나 파리로 갔습니다. 이후 평생 신앙과 수학 사이를 오갔습니다.', {stats:{행복:-10}, milestone:'아내 쥘리를 잃음'})]);
+  R('ampere', 'polytechnique', [1809,10], '이공과대학 교수', '파리 이공과대학에서 해석학 교수 자리를 제안합니다.',
+    [H('교수직을 맡는다', '정규 학위 하나 없는 독학자가 프랑스 최고의 학교 교단에 섰습니다.', {stats:{재산:5, 행복:3}, rep:6, realJob:'이공과대학 교수', realPlace:'파리', milestone:'이공과대학 교수'}),
+     OFF('리옹으로 돌아간다', '교수직을 사양했습니다.')]);
+  R('ampere', 'current', [1820,9], '외르스테드의 바늘', '9월 11일 학술원에서 덴마크의 외르스테드가 발견한 것이 소개되었습니다. 전류가 흐르는 전선 곁에서 나침반 바늘이 돌아간다고 합니다.',
+    [H('밤낮없이 실험한다', '일주일 뒤 학술원에 나가, 같은 방향으로 전류가 흐르는 두 전선은 서로 끌어당긴다는 것을 보여 주었습니다. 전기역학이 시작되었습니다.', {stats:{지식:8, 건강:-3}, rep:10, milestone:'전류 사이의 힘을 발견'}),
+     H('다른 이들의 결과를 기다린다', '몇 달 뒤 다른 사람의 논문을 읽었습니다.', {stats:{지식:2}})]);
+  R('ampere', 'end', [1836,6], '마르세유의 열', '대학 장학관으로 지방 순회를 하던 중 마르세유에서 폐렴에 걸렸습니다. 예순하나입니다.',
+    [END('순회를 끝까지 마치려 한다', '1836년 6월, 마르세유에서 세상을 떠났습니다. 묘비에는 “마침내 행복하다”라고 새겨졌습니다.'),
+     MAYBE('일정을 멈추고 쉰다', '열이 내렸습니다. 역사에 없는 노년이 시작됩니다.', '1836년 6월, 마르세유에서 폐렴으로 세상을 떠났습니다.')]);
+
+  // ── 쥘리에트 레카미에 ──
+  R('recamier', 'marry', [1793,4], '열다섯의 혼인', '공포 정치가 시작된 파리에서, 마흔두 살의 은행가 자크 레카미에가 열다섯 살 쥘리에게 청혼했습니다. 그가 실은 친아버지라는 소문까지 돕니다.',
+    [H('혼인한다', '레카미에 부인이 되었습니다. 혼인은 평생 이름뿐이었다고 전해집니다.', {stats:{재산:15, 행복:-2}, realPlace:'파리', milestone:'은행가 레카미에와 혼인'}),
+     OFF('거절한다', '청혼을 거절했습니다.')]);
+  R('recamier', 'salon', [1798,10], '레카미에 부인의 살롱', '남편이 사들인 쇼세당탱의 저택을 새로 꾸몄습니다. 파리의 정치가와 작가, 장군들이 저녁마다 모여듭니다.',
+    [H('살롱을 연다', '흰 모슬린 드레스의 레카미에 부인은 파리에서 가장 아름다운 여인으로 불렸습니다. 다비드와 제라르가 그녀의 초상을 그렸습니다.', {stats:{행복:6}, rep:8, realJob:'살롱 운영자', milestone:'살롱을 엶'}),
+     OFF('조용히 지낸다', '문을 닫고 지냈습니다.')]);
+  R('recamier', 'exile', [1811,9], '스탈 부인을 만나러', '나폴레옹이 미워하는 스탈 부인이 스위스 코페에서 오라고 합니다. 가면 당신도 추방될 것이라는 경고가 있습니다.',
+    [H('그래도 코페로 간다', '파리에서 40리외 밖으로 추방되었습니다. 황제의 경찰은 우정마저 죄로 다뤘습니다.', {stats:{행복:-4}, milestone:'나폴레옹에게 추방됨'}),
+     OFF('가지 않는다', '친구를 만나러 가지 않았습니다. 파리에 남았습니다.')]);
+  R('recamier', 'chateaubriand', [1817,5], '스탈 부인의 마지막 저녁', '병든 스탈 부인의 집에서 작가 샤토브리앙을 만났습니다. 차갑고 오만하다는 그가 당신 곁에서 오래 말이 없었습니다.',
+    [H('그와 대화를 나눈다', '삼십 년 가까이 이어질 우정이 시작되었습니다. 훗날 그는 매일 오후 아베오부아의 그녀를 찾아왔습니다.', {stats:{행복:6}, experience:{social:2}}),
+     H('인사만 하고 지나친다', '그날은 인사만 나누었습니다. 그래도 그는 다시 찾아왔습니다.', {stats:{행복:2}})]);
+  R('recamier', 'end', [1849,5], '콜레라의 봄', '일흔한 살, 거의 앞을 보지 못합니다. 샤토브리앙은 작년 여름 세상을 떠났습니다. 파리에 다시 콜레라가 돕니다.',
+    [END('파리에 머문다', '1849년 5월, 콜레라로 세상을 떠났습니다.'),
+     MAYBE('시골로 피신한다', '콜레라를 피했습니다. 몇 해가 더 주어졌습니다.', '1849년 5월, 피신한 곳에서도 콜레라를 피하지 못했습니다.')]);
+
+  // ── 테오도르 제리코 ──
+  R('gericault', 'vernet', [1808,6], '말 그림', '부유한 집 아들 테오도르는 말과 그림에만 빠져 있습니다. 아버지는 법률을 공부하라고 합니다.',
+    [H('카를 베르네의 화실에 들어간다', '말 그림으로 이름난 베르네의 화실에 들어갔고, 이어 게랭에게서 배웠습니다. 루브르의 루벤스를 베끼며 지냈습니다.', {stats:{지식:4}, realJob:'화가 지망생', realPlace:'파리'}),
+     OFF('아버지 뜻대로 법률을 공부한다', '붓을 내려놓았습니다.')]);
+  R('gericault', 'salon', [1812,11], '돌격하는 근위 기병', '스물한 살, 첫 살롱 출품작입니다. 뒷발로 선 말 위에서 뒤를 돌아보는 근위 기병 장교.',
+    [H('출품한다', '금메달을 받았습니다. 무명의 청년이 단번에 이름을 알렸습니다.', {stats:{행복:6}, rep:6, realJob:'화가', milestone:'살롱 금메달'}),
+     OFF('그림을 감춘다', '출품하지 않았습니다.')]);
+  R('gericault', 'medusa', [1818,6], '메두사호의 뗏목', '2년 전 세네갈 앞바다에서 난파한 메두사호의 생존자 수기를 읽었습니다. 뗏목 위의 147명 가운데 열다섯만 살아남았습니다.',
+    [H('머리를 밀고 작업실에 틀어박힌다', '생존자들을 만나고, 병원 시체 안치소에서 죽어 가는 이들을 그렸습니다. 여덟 달 동안 작업실 밖으로 거의 나오지 않았습니다.', {stats:{건강:-6, 지식:5}}),
+     OFF('다른 주제를 찾는다', '그 이야기는 다른 화가의 몫이 되었습니다.')]);
+  R('gericault', 'raft', [1819,8], '살롱의 논쟁', '가로 7미터의 「메두사호의 뗏목」이 살롱에 걸렸습니다. 정부의 무능을 고발하는 그림이라며 왕당파 신문이 들끓습니다.',
+    [H('비난을 견딘다', '왕은 “당신은 방금 그 그림을 그린 화가를 망하게 하지 않았소”라고 농담했다고 합니다. 그림은 영국 순회 전시에서 큰 인기를 끌었습니다.', {stats:{행복:3}, rep:10, milestone:'「메두사호의 뗏목」 발표'})]);
+  R('gericault', 'end', [1824,1], '낙마', '말에서 여러 번 떨어진 뒤 척추의 병이 깊어졌습니다. 서른두 살, 침대에서 일어나지 못합니다.',
+    [END('침대에서도 스케치를 이어 간다', '1824년 1월, 서른두 살에 세상을 떠났습니다. 루브르가 「메두사호의 뗏목」을 사들였습니다.'),
+     MAYBE('모든 것을 멈추고 요양한다', '고비를 넘겼습니다. 다시 붓을 들 날이 올지도 모릅니다.', '1824년 1월, 끝내 일어나지 못하고 세상을 떠났습니다.')], 1);
+
+  // ── 오노레 드 발자크 ──
+  R('balzac', 'vendome', [1807,6], '방돔 기숙학교', '여덟 살 오노레를 부모가 방돔의 오라토리오회 기숙학교에 보냅니다. 6년 동안 집에 오지 못합니다.',
+    [H('기숙학교에 간다', '벌로 자주 독방에 갇혔고, 거기서 손에 잡히는 대로 책을 읽었습니다.', {stats:{지식:4, 행복:-3}, education:'콜레주'}),
+     OFF('집 근처 학교에 다닌다', '부모 곁에 남았습니다.')]);
+  R('balzac', 'clerk', [1816,11], '법률사무소 서기', '파리로 이사한 뒤 아버지는 공증인이 되라며 법률사무소 서기 자리를 구해 주었습니다.',
+    [H('서기로 일한다', '삼 년 동안 유언장과 이혼 소송, 파산 서류를 베꼈습니다. 이 사무소에서 본 사람들이 훗날 소설 속에 그대로 걸어 나옵니다.', {stats:{지식:3}, realJob:'법률 서기', realPlace:'파리'})]);
+  R('balzac', 'attic', [1819,8], '레디기에르 거리의 다락방', '스무 살. 공증인 사무소 자리가 나왔지만, 작가가 되겠다고 선언했습니다. 가족이 2년만 지원해 주겠다고 합니다.',
+    [H('다락방에서 글을 쓴다', '레디기에르 거리 다락방에서 비극을 썼습니다. 가족 앞에서 읽었더니 반응이 싸늘했습니다. 그래도 그만두지 않았습니다.', {stats:{행복:-2, 재산:-4}, realJob:'무명 작가'}),
+     OFF('공증인 사무소에 들어간다', '공증인이 되었습니다. 펜은 계약서를 쓰는 데만 쓰입니다.')]);
+  R('balzac', 'print', [1826,6], '인쇄소를 사다', '책을 쓰는 것보다 찍는 쪽이 돈이 된다고 믿었습니다. 빚을 내서 인쇄소와 활자 주조소를 사들일 수 있습니다.',
+    [H('인쇄소를 산다', '2년 만에 망했습니다. 남은 빚이 수만 프랑, 평생 빚쟁이를 피해 다니게 됩니다.', {stats:{재산:-15, 행복:-4}, milestone:'인쇄업 파산'}),
+     OFF('원고에만 매달린다', '사업에 손대지 않았습니다. 빚 없는 발자크는 역사에 없습니다.')]);
+  R('balzac', 'chouans', [1829,3], '『올빼미당』', '처음으로 자기 이름을 걸고 낸 소설입니다. 브르타뉴 왕당파 반란 이야기.',
+    [H('발자크라는 이름으로 낸다', '평단이 처음으로 그를 알아보았습니다. 이후 하루 열다섯 시간, 블랙커피를 들이켜며 썼습니다.', {stats:{건강:-3, 행복:5}, rep:6, realJob:'소설가', milestone:'『올빼미당』 출간'})]);
+  R('balzac', 'hanska', [1833,9], '뇌샤텔의 귀부인', '‘이방인’이라는 서명으로 편지를 보내온 폴란드 귀부인 한스카 백작부인을 스위스 뇌샤텔에서 처음 만났습니다.',
+    [H('편지를 이어 간다', '그녀의 남편이 살아 있는 동안 둘은 편지로 이어졌습니다. 편지는 17년 동안 계속됩니다.', {stats:{행복:6}}),
+     OFF('만남을 끝으로 한다', '다시 편지를 쓰지 않았습니다.')]);
+  R('balzac', 'end', [1850,8], '긴 여행 뒤', '마침내 우크라이나에서 한스카 부인과 혼인하고 파리로 돌아왔습니다. 오랜 과로와 커피로 심장이 망가졌습니다.',
+    [END('파리의 새 집에 눕는다', '1850년 8월, 파리에서 세상을 떠났습니다. 장례식에서 빅토르 위고가 조사를 읽었습니다.'),
+     MAYBE('요양을 떠난다', '조금 나아졌습니다. 쓰지 못한 소설들이 아직 남아 있습니다.', '1850년 8월, 파리에서 세상을 떠났습니다. 빅토르 위고가 조사를 읽었습니다.')]);
+
+  // ── 샤토브리앙 ──
+  R('chateaubriand', 'combourg', [1777,6], '콩부르 성', '아버지가 사들인 콩부르의 중세 성으로 이사했습니다. 말 없는 아버지, 바람 소리, 누이 뤼실과 거니는 숲.',
+    [H('성의 고독 속에서 자란다', '훗날 “콩부르에서 나는 지금의 내가 되었다”라고 썼습니다.', {stats:{행복:-2, 지식:2}, experience:{curiosity:2}})]);
+  R('chateaubriand', 'navarre', [1786,9], '나바르 연대', '열여덟 살. 신부가 되라는 집안의 바람을 뒤로하고 소위 자리가 나왔습니다.',
+    [H('소위로 입대한다', '나바르 연대 소위가 되었고, 베르사유에서 국왕을 알현했습니다.', {realJob:'육군 소위'}),
+     OFF('신학교에 들어간다', '성직자의 길로 들어섰습니다.')]);
+  R('chateaubriand', 'america', [1791,4], '신대륙으로', '혁명의 소란 속에서, 북서 항로를 찾겠다며 생말로에서 아메리카행 배에 오를 수 있습니다.',
+    [H('배에 오른다', '볼티모어와 필라델피아, 나이아가라 폭포를 보았습니다. 숲과 원주민 이야기는 훗날 『아탈라』가 됩니다.', {stats:{지식:4, 행복:4}, experience:{curiosity:4}, milestone:'아메리카 여행'}),
+     OFF('프랑스에 남는다', '떠나지 않았습니다.')]);
+  R('chateaubriand', 'emigre', [1792,8], '왕자군', '국왕이 폐위되었습니다. 귀족들은 국경 너머 왕자군으로 모입니다.',
+    [H('왕자군에 가담한다', '티옹빌 포위에서 다치고 천연두까지 앓았습니다. 런던으로 건너가 7년 동안 다락방에서 가난하게 살았습니다.', {stats:{건강:-10, 재산:-10}, milestone:'망명'}),
+     OFF('브르타뉴에 숨는다', '국경을 넘지 않았습니다.')]);
+  R('chateaubriand', 'genie', [1802,4], '『기독교의 정수』', '나폴레옹이 교황과 정교 협약을 맺은 부활절, 종교의 아름다움을 노래한 책을 냅니다.',
+    [H('출간한다', '책은 한순간에 시대의 책이 되었습니다. 통령 보나파르트도 그를 외교관으로 썼습니다.', {stats:{행복:6}, rep:10, realJob:'작가·외교관', realPlace:'파리', milestone:'『기독교의 정수』 출간'})]);
+  R('chateaubriand', 'enghien', [1804,3], '앙갱 공작의 처형', '부르봉 왕가의 앙갱 공작이 납치되어 뱅센에서 총살되었습니다.',
+    [H('항의의 뜻으로 사직한다', '나폴레옹 정부를 떠났습니다. 황제와의 불화는 평생 이어졌습니다.', {stats:{행복:-2}, path:{politics:'engaged'}}),
+     OFF('자리를 지킨다', '사직하지 않았습니다.')]);
+  R('chateaubriand', 'minister', [1822,12], '외무장관', '부르봉 왕정에서 외무장관을 맡아 달라고 합니다.',
+    [H('맡는다', '이듬해 스페인 원정을 이끌었습니다. 그러나 18개월 만에 해임되었습니다.', {stats:{재산:6}, rep:6, realJob:'외무장관'})]);
+  R('chateaubriand', 'end', [1848,7], '무덤 너머의 회상', '여든 살. 2월 혁명이 왕정을 끝냈습니다. 평생 쓴 『무덤 너머의 회상』은 죽은 뒤에 내기로 했습니다. 레카미에 부인이 곁을 지킵니다.',
+    [END('마지막 원고를 덮는다', '1848년 7월 4일, 파리에서 세상을 떠났습니다. 유언대로 생말로 앞바다의 작은 섬 그랑베에 묻혔습니다.')]);
+
+  // ── 니세포르 니엡스 ──
+  R('niepce', 'army', [1792,5], '혁명군', '스물일곱. 오라토리오회 학교에서 가르치던 니엡스가 혁명군에 들어갈 수 있습니다.',
+    [H('입대한다', '이탈리아와 사르데냐에서 복무하다 장티푸스로 제대했습니다.', {stats:{건강:-6}, realJob:'군인'}),
+     OFF('학교에 남는다', '군에 가지 않았습니다.')]);
+  R('niepce', 'engine', [1807,7], '피레올로포르', '형 클로드와 석송 가루를 태워 움직이는 기관을 만들었습니다. 배를 거슬러 올라가게 할 수 있습니다.',
+    [H('특허를 신청한다', '황제 나폴레옹이 서명한 특허를 받았습니다. 세계 최초의 내연 기관 가운데 하나입니다.', {stats:{지식:6, 재산:-3}, rep:4, realJob:'발명가', milestone:'피레올로포르 특허'}),
+     OFF('장난감으로 남긴다', '특허를 신청하지 않았습니다.')]);
+  R('niepce', 'camera', [1816,5], '어두운 상자', '어두운 상자(카메라 옵스쿠라) 안에 비친 창밖 풍경을 그대로 붙잡아 둘 방법을 찾고 있습니다. 염화은 종이에 상이 맺혔지만 금세 검게 변합니다.',
+    [H('실험을 계속한다', '십 년 동안 수백 가지 재료를 시험했습니다. 집안 재산이 실험에 들어갔습니다.', {stats:{지식:6, 재산:-5}}),
+     OFF('그만둔다', '상자를 치웠습니다.')]);
+  R('niepce', 'gras', [1826,7], '르그라의 창', '백랍 판에 역청을 바르고, 다락방 창가에 어두운 상자를 놓았습니다. 며칠 동안 햇빛을 받게 둡니다.',
+    [H('판을 창가에 놓는다', '판에 지붕과 비둘기장, 배나무가 희미하게 남았습니다. 세계 최초의 사진입니다.', {stats:{행복:10, 지식:6}, rep:10, milestone:'세계 최초의 사진'}),
+     OFF('판을 거둔다', '실험을 멈췄습니다.')]);
+  R('niepce', 'daguerre', [1829,12], '다게르의 제안', '파리의 무대 화가 다게르가 함께 연구하자고 합니다. 수익은 반씩 나누는 조건입니다.',
+    [H('동업 계약에 서명한다', '계약을 맺었습니다. 그러나 사진술은 훗날 다게르의 이름으로 세상에 알려집니다.', {stats:{재산:2}}),
+     OFF('혼자 연구한다', '서명하지 않았습니다.')]);
+  R('niepce', 'end', [1833,7], '샬롱의 여름', '예순여덟. 실험에 재산을 다 썼습니다. 뇌졸중이 찾아왔습니다.',
+    [END('작업실에서 쓰러진다', '1833년 7월, 샬롱쉬르손에서 가난 속에 세상을 떠났습니다. 6년 뒤 세상은 ‘다게레오타입’에 열광했습니다.')]);
+
+  // ── 폴린 레옹 ──
+  R('leon', 'petition', [1792,3], '여성에게 무기를', '여성 319명이 서명한 청원서를 입법의회에서 읽게 되었습니다. 여성도 창과 총을 들고 조국을 지킬 권리를 달라는 내용입니다.',
+    [H('의회 연단에서 청원서를 읽는다', '의원들은 정중히 듣고 안건을 넘겼습니다. 그래도 여성의 목소리가 의회에 울렸습니다.', {stats:{행복:4}, rep:5, path:{politics:'engaged'}, milestone:'여성 무장권 청원'}),
+     OFF('서명만 하고 집에 남는다', '연단에 서지 않았습니다.')]);
+  R('leon', 'society', [1793,5], '혁명적 공화주의 여성 시민회', '클레르 라콩브와 함께 여성들만의 정치 클럽을 만들려 합니다.',
+    [H('클럽을 세운다', '생토노레 거리의 도서관에서 첫 모임을 열었습니다. 붉은 모자를 쓴 여성들이 회의를 이끌었습니다.', {stats:{행복:5}, rep:6, realJob:'혁명 여성회 지도자', milestone:'혁명적 공화주의 여성 시민회 창립'}),
+     OFF('물러선다', '클럽에 가지 않았습니다.')]);
+  R('leon', 'ban', [1793,10], '여성 클럽 금지', '국민공회가 모든 여성 클럽을 금지했습니다. 여성의 자리는 집이라는 이유입니다.',
+    [H('분노를 삼킨다', '클럽 문이 닫혔습니다. 한 달 뒤, 과격파 장테오필 르클레르와 혼인했습니다.', {stats:{행복:-6}, milestone:'르클레르와 혼인'})]);
+  R('leon', 'arrest', [1794,4], '뤽상부르 감옥', '남편과 함께 과격파로 몰려 체포되었습니다.',
+    [H('감옥에서 버틴다', '넉 달 뒤 테르미도르가 지나고 풀려났습니다. 그 뒤로 정치 무대에 다시 서지 않았습니다.', {stats:{건강:-6, 행복:-6}, milestone:'투옥'})]);
+  R('leon', 'teacher', [1796,9], '교실', '혁명이 지나간 뒤입니다. 먹고살 길이 필요합니다.',
+    [H('아이들을 가르친다', '교사가 되었습니다. 지난 일은 거의 말하지 않았습니다.', {realJob:'교사'})]);
+  R('leon', 'end', [1838,10], '조용한 노년', '일흔. 혁명을 기억하는 사람도 이제 많지 않습니다.',
+    [END('지난날을 떠올린다', '1838년 10월, 세상을 떠났습니다. 여성 무장권 청원서는 국립 문서고에 남아 있습니다.')]);
+
+  // ── 장로슈 쿠아녜 ──
+  R('coignet', 'runaway', [1784,10], '계모의 집', '어머니를 잃은 뒤 계모가 들어왔습니다. 여덟 살 장로슈와 형제들은 매일 맞습니다.',
+    [H('형제들과 집을 나온다', '이웃 마을에서 양치기와 소몰이로 일했습니다. 학교는 꿈도 꾸지 못했습니다.', {stats:{행복:-4}, realJob:'목동'}),
+     OFF('참고 남는다', '집에 남았습니다.')]);
+  R('coignet', 'conscript', [1799,9], '징집', '스물셋. 말 장수 일을 배우던 중 징집 명단에 이름이 올랐습니다.',
+    [H('입대한다', '척탄병이 되었습니다. 글은 읽지 못해도 키가 크고 힘이 셌습니다.', {realJob:'군인', milestone:'징집'}),
+     OFF('대리 복무자를 사서 빠진다', '그동안 모은 돈을 털어 대신 갈 사람을 샀습니다.', {stats:{재산:-10}})]);
+  R('coignet', 'marengo', [1800,6], '마렝고', '6월 14일, 오스트리아군의 포격 속에 아군 대포 한 문이 적에게 넘어가려 합니다.',
+    [H('대포를 되찾는다', '적병 다섯을 쓰러뜨리고 대포를 지켰습니다. 제1통령에게서 ‘명예의 소총’을 받았습니다.', {stats:{건강:-6, 행복:6}, rep:6, milestone:'마렝고에서 명예의 소총을 받음'})]);
+  R('coignet', 'letters', [1809,1], '서른셋에 배우는 글', '근위대 하사가 되려면 글을 알아야 합니다. 동료 둘이 밤마다 가르쳐 주겠다고 합니다.',
+    [H('ABC부터 배운다', '서른셋에 글을 깨쳤습니다. 이 글솜씨로 훗날 회고록을 쓰게 됩니다.', {stats:{지식:8, 행복:4}, education:'독학', milestone:'서른셋에 글을 배움'})]);
+  R('coignet', 'russia', [1812,11], '퇴각', '모스크바에서 돌아오는 길입니다. 영하 30도, 말고기를 굽고 눈을 녹여 마십니다.',
+    [H('대열을 놓치지 않는다', '근위대 짐수레를 지키며 끝까지 걸었습니다. 발가락 몇 개를 잃었습니다.', {stats:{건강:-12, 행복:-6}, milestone:'러시아 원정에서 살아 돌아옴'})]);
+  R('coignet', 'waterloo', [1815,6], '워털루', '황제의 마지막 전투. 당신은 근위대 사령부의 전령입니다.',
+    [H('끝까지 황제 곁을 지킨다', '저녁 무렵 근위대가 무너졌습니다. 황제를 따라 전장을 떠났습니다.', {stats:{행복:-8}, milestone:'워털루 전투'})]);
+  R('coignet', 'auxerre', [1816,3], '반급 장교', '부르봉 왕정은 황제의 군인들을 반급으로 내쳤습니다. 오세르에 자리를 잡습니다.',
+    [H('담배 가게를 연다', '오세르에서 담배 가게를 하며 혼인했습니다. 저녁마다 원정 이야기를 공책에 적었습니다.', {stats:{재산:3}, realJob:'담배 가게 주인'})]);
+  R('coignet', 'cahiers', [1850,6], '쿠아녜 대위의 공책', '일흔넷. 공책 몇 권을 채운 원정 이야기를 책으로 내자는 사람이 있습니다.',
+    [H('책으로 낸다', '『쿠아녜 대위의 공책』이 나왔습니다. 글을 서른셋에 배운 병사의 회고록이 나폴레옹 전쟁의 가장 생생한 기록이 되었습니다.', {stats:{행복:6}, rep:6})]);
+  R('coignet', 'end', [1865,12], '마지막 겨울', '여든아홉. 황제의 군대를 기억하는 사람이 이제 거의 없습니다.',
+    [END('난롯가에 앉는다', '1865년 12월, 오세르에서 여든아홉의 나이로 세상을 떠났습니다.')]);
+})();
+
+// Picks a real life for a fully random birth (or the one asked for).
+function realLifeOptions(seed, options) {
+  if (options.real && REAL_LIVES[options.real]) { const p = REAL_LIVES[options.real]; return {...options, born:p.born[0], family:p.family}; }
+  if (options.born !== undefined || options.family || options.noReal) return options;
+  const h = Math.imul((seed >>> 0) ^ 0x9e3779b9, 2654435761) >>> 0;
+  if (h % 1000 >= REAL_CHANCE) return options;
+  const ids = Object.keys(REAL_LIVES), id = ids[(h >>> 10) % ids.length], p = REAL_LIVES[id];
+  return {...options, born:p.born[0], family:p.family, real:id};
+}
+function applyRealLife(s, id) {
+  const p = REAL_LIVES[id]; if (!p) return;
+  const oldSurname = s.name.split(' ').at(-1), oldMonth = s.birthMonth;
+  s.name = p.name; s.sex = p.sex; s.place = p.place; s.class = p.cls; s.parentJob = p.parentJob;
+  s.birthMonth = p.born[1]; s.month = p.born[1];
+  for (const r of s.relations) {
+    if (r.birthMonth === oldMonth && r.birthYear === s.born) r.birthMonth = p.born[1];
+    if (r.name.endsWith(' ' + oldSurname)) r.name = r.name.slice(0, -oldSurname.length) + p.surname;
+  }
+  if (p.wealth) { s.stats.재산 = p.wealth; s.familyEvents.w0 = p.wealth; }
+  s.familyEvents.real = id;
+  addLog(s, '실존 인물의 삶', `${p.intro} 기록된 삶의 갈림길마다 선택이 찾아옵니다. 역사대로 걸을 수도, 다른 길로 갈 수도 있습니다.`, 'fact');
+}
+// While a real life is on the record, chance cannot end it before its recorded end.
+function realGuard(s) {
+  const f = s.familyEvents, p = REAL_LIVES[f.real];
+  if (!p || f.realOff || f.realDue) return false;
+  if (s.year * 12 + s.month >= p.died[0] * 12 + p.died[1] + 2) return false;
+  s.stats.건강 = Math.max(s.stats.건강, 20);
+  return true;
+}
+function applyRealEffects(s, e) {
+  if (!s.familyEvents.real) return;
+  if (e.realOff && !s.familyEvents.realOff) { s.familyEvents.realOff = true; milestone(s, '역사와 다른 길을 걷기 시작'); }
+  if (e.realJob) { s.familyEvents.realJob = e.realJob; s.job = e.realJob; s.familyEvents.career_top = e.realJob; s.career = null; milestone(s, `직업: ${e.realJob}`); }
+  if (e.realEnd) s.familyEvents.realDue = true;
+  if (e.realPlace && s.place !== e.realPlace) { s.place = e.realPlace; milestone(s, `${e.realPlace}(으)로 이주`); }
+  // Every one of them but the soldier learned letters as a child; he learned at thirty-three.
+  if ((REAL_LIVES[s.familyEvents.real].literate !== false || e.education) && ageOf(s) >= 8) s.literacy = 'basic';
+}
+// On the record, the recorded trade holds: chance careers and job changes from ordinary decisions wait.
+const realOnRecord = s => !!s.familyEvents?.real && !s.familyEvents.realOff;
+const CAREER_DOORS = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job))).map(d => d.id));
+function realBlocks(s, d) { return realOnRecord(s) && CAREER_DOORS.has(d.id); }
+function realKeep(s) {
+  const job = s.familyEvents?.realJob;
+  if (!realOnRecord(s) || !job || s.job === job) return;
+  s.job = job; s.familyEvents.career_top = job; s.career = null;
+}
+
 // src/engine.js
 
 
@@ -6733,6 +7089,7 @@ class GameEngine {
     familyMonth(s);
     if (s.dead) return true;
     figureFates(s);
+    realKeep(s);
     historicDecision(s);
     if (s.decision) return true;
     if ([3,7,11].includes(s.month)) dailyEvent(s);
@@ -6889,7 +7246,7 @@ const FR_NAMES = {'장':'Jean','피에르':'Pierre','루이':'Louis','자크':'J
   '뒤부아':'Dubois','포르':'Faure','르클레르':'Leclerc','브뤼네':'Brunet','르브룅':'Lebrun','르고프':'Le Goff','르갈':'Le Gall',
   '뒤마':'Dumas','바이':'Bailly','콜랭':'Colin','아르노':'Arnaud','부셰':'Boucher','마송':'Masson','샤르팡티에':'Charpentier',
   '파브르':'Fabre','롤랑':'Roland','카라덱':'Caradec','바레':'Barré','라퐁':'Lafont','르블랑':'Leblanc'};
-function frenchName(name) { return name.split(' ').map(part => FR_NAMES[part] || part).join(' '); }
+function frenchName(name) { return name.split(' ').map(part => FR_NAMES[part] || REAL_FR[part] || part).join(' '); }
 function strHash(text) {
   let v = 2166136261;
   for (let i = 0; i < text.length; i++) v = Math.imul(v ^ text.charCodeAt(i), 16777619);

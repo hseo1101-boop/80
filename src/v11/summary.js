@@ -26,6 +26,8 @@ function lifeReport(s) {
   const family = kids.length ? (kids.length === 1 ? `한 아이의 ${parent}` : `아이 ${NUM[kids.length] || kids.length}의 ${parent}`) : spouse ? `${spouse.name.split(' ')[0]}의 ${woman ? '아내' : '남편'}` : '';
   const epitaph = [who, family].filter(Boolean).join(' · ');
   const lines = [];
+  const real = typeof REAL_LIVES !== 'undefined' && REAL_LIVES[s.familyEvents?.real];
+  if (real) lines.push(s.familyEvents.realOff ? `실존 인물 ${real.name}(으)로 태어났지만, 역사와 다른 길을 걸었습니다.` : `실존 인물 ${real.name}의 삶을 기록된 그대로 살아 냈습니다.`);
   const out = outlivedPercent(s);
   if (age < 1) lines.push('첫돌을 맞지 못했습니다. 이 시대에는 드문 일이 아니었습니다.');
   else lines.push(`${age}세까지 살았습니다. 같은 해에 태어난 사람의 약 ${out}%보다 오래 산 셈입니다.`);

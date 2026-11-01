@@ -106,6 +106,7 @@ for (const d of decisions) for (const c of d.choices) {
 // The yearly focus replaced these two filler decisions; the rest of the repeatable ones are rationed.
 const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
 function decisionAllowed(s, d) {
+  if (typeof realBlocks === 'function' && realBlocks(s, d)) return false;
   if (RETIRED_DECISIONS.has(d.id)) return false;
   // One-off decisions gated on a shared flag (e.g. 'marriage') also close on their own id.
   if (d.when.unsetFlag && d.when.unsetFlag !== d.id && s.flags[d.id]) return false;

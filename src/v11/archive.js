@@ -3,22 +3,22 @@
 // reached and birthplaces tried. The start screen shows the progress and one scene still waiting, with a
 // way to be born for it; the codex lists everything, unseen entries as year and place only.
 const ARCHIVE_KEY = 'franceLife.archive';
-const HISTORIC = decisions.filter(d => d.historic).sort((a, b) => a.when.fromDate[0] - b.when.fromDate[0] || a.when.fromDate[1] - b.when.fromDate[1]);
+const HISTORIC = decisions.filter(d => d.historic && !d.realLife).sort((a, b) => a.when.fromDate[0] - b.when.fromDate[0] || a.when.fromDate[1] - b.when.fromDate[1]);
 const BIRTHPLACES = families.map(f => `${f.place}|${f.class}`).filter((k, i, all) => all.indexOf(k) === i);
 const RANK_TO_CAREER = Object.fromEntries(Object.entries(CAREERS).flatMap(([id, c]) => c.ranks.map(r => [r.label, id])));
 
 function archiveLoad() {
   try {
     const a = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || {};
-    return {lives:a.lives || 0, longest:a.longest || 0, scenes:a.scenes || {}, figures:a.figures || {}, careers:a.careers || {}, births:a.births || {}, done:a.done || {}};
-  } catch { return {lives:0, longest:0, scenes:{}, figures:{}, careers:{}, births:{}, done:{}}; }
+    return {lives:a.lives || 0, longest:a.longest || 0, scenes:a.scenes || {}, figures:a.figures || {}, careers:a.careers || {}, births:a.births || {}, reals:a.reals || {}, done:a.done || {}};
+  } catch { return {lives:0, longest:0, scenes:{}, figures:{}, careers:{}, births:{}, reals:{}, done:{}}; }
 }
 function archiveSave(a) { try { localStorage.setItem(ARCHIVE_KEY, JSON.stringify(a)); } catch { /* optional */ } }
 const lifeKey = s => `${s.name}|${s.born}|${s.year}|${s.month}`;
 
 // What a life touched, whether or not it is finished.
 function lifeTouches(s) {
-  const scenes = [...new Set(s.log.filter(x => x.eventId && HISTORIC.some(d => d.id === x.eventId)).map(x => x.eventId))];
+  const scenes = [...new Set(s.log.filter(x => x.eventId && x.title.includes('역사의 현장') && HISTORIC.some(d => d.id === x.eventId)).map(x => x.eventId))];
   const figures = Object.entries(FIGURES).filter(([, f]) => s.relations.some(r => r.role === '인물' && r.name === f.name)).map(([id]) => id);
   const labels = [s.job, s.familyEvents?.career_top, ...s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1])].filter(Boolean);
   const careers = [...new Set(labels.map(l => RANK_TO_CAREER[l]).filter(Boolean))];
@@ -36,6 +36,7 @@ function archiveRecord(s) {
   for (const id of t.figures) a.figures[id] = 1;
   for (const id of t.careers) a.careers[id] = 1;
   a.births[t.birth] = 1;
+  const real = s.familyEvents?.real; fresh.real = real && !a.reals[real] ? real : null; if (real) a.reals[real] = s.familyEvents.realOff ? (a.reals[real] || 'off') : 'kept';
   a.lives++; a.longest = Math.max(a.longest, ageOf(s));
   a.done[key] = fresh;
   const keys = Object.keys(a.done); if (keys.length > 60) delete a.done[keys[0]];

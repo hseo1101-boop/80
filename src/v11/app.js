@@ -111,9 +111,11 @@ function importText(raw) {
 function startWithBirth() {
   if (!engine.state || prefs.auto) return;
   engine.state.runtime.paused = true; ui.render(); ui.showBirth();
+  const real = REAL_LIVES[engine.state.familyEvents.real];
+  if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.21';
+const GAME_VERSION = 'v0.22';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -197,7 +199,8 @@ $id('gbOverlay').addEventListener('click', e => { if (e.target.id === 'gbOverlay
 let chronTarget = null, archiveShownFor = '';
 function renderChronicle() {
   const a = archiveLoad();
-  $id('chronSub').textContent = a.lives ? `지금까지 ${a.lives}번의 삶을 살았습니다. 가장 오래 산 삶은 ${a.longest}세였습니다.`
+  const realsMet = Object.keys(a.reals).length;
+  $id('chronSub').textContent = a.lives ? `지금까지 ${a.lives}번의 삶을 살았습니다. 가장 오래 산 삶은 ${a.longest}세였습니다.${realsMet ? ` 실존 인물로 ${realsMet}번 태어났습니다.` : ''}`
     : '삶을 마칠 때마다 만난 역사의 현장과 인물, 오른 직업이 여기에 쌓입니다.';
   $id('chronGrid').innerHTML = archiveCounts(a).map(([label, n, total]) =>
     `<div class="chron-stat"><small>${label}</small><b>${n}<i> / ${total}</i></b><div class="chron-bar"><span style="width:${Math.round(n / total * 100)}%"></span></div></div>`).join('');
@@ -230,11 +233,13 @@ function openCodex(tab = 'scenes') {
     row(seen, '', c.label, seen ? c.ranks.map(r => r.label).join(' → ') : `${c.ranks.length}단계의 길`); }
   if (tab === 'births') for (const k of BIRTHPLACES) { const [place, cls] = k.split('|'); const seen = !!a.births[k]; n += seen; total++;
     row(seen, seen ? '✓' : '', `${place} · ${cls}`, seen ? '이곳에서 태어나 보았습니다' : '아직 이곳에서 태어난 적이 없습니다', true); }
-  $id('codexNote').textContent = `${total}개 가운데 ${n}개를 찾았습니다.${tab === 'scenes' ? ' 보지 못한 장면은 때와 곳만 보입니다.' : ''}`;
+  if (tab === 'reals') for (const [id, p] of Object.entries(REAL_LIVES).sort((x, y) => x[1].born[0] - y[1].born[0])) { const got = a.reals[id]; n += !!got; total++;
+    row(!!got, `${p.born[0]}`, p.name, got ? (got === 'kept' ? '기록된 그대로 살아 냈습니다' : '태어났지만 다른 길을 걸었습니다') : `${p.place.replace(' 농촌', ' 시골')} · ${p.sex === '여성' ? '여성' : '남성'} · 아주 드물게, 무작위 출생으로만 만날 수 있습니다`); }
+  $id('codexNote').textContent = `${total}개 가운데 ${n}개를 찾았습니다.${tab === 'scenes' ? ' 보지 못한 장면은 때와 곳만 보입니다.' : tab === 'reals' ? ' 무작위로 태어날 때 약 200번에 한 번, 역사에 이름을 남긴 사람으로 태어납니다.' : ''}`;
   $id('codexOverlay').hidden = false; $id('codexClose').focus();
 }
 function syncArchive(s) {
-  $id('decisionNew').hidden = !(s?.decision && !s.decisionResult && decisions.find(d => d.id === s.decision)?.historic && sceneIsNew(s.decision));
+  $id('decisionNew').hidden = !(s?.decision && !s.decisionResult && (d => d?.historic && !d.realLife)(decisions.find(d => d.id === s.decision)) && sceneIsNew(s.decision));
   const box = $id('summaryArchive');
   if (!s?.dead) { box.hidden = true; archiveShownFor = ''; return; }
   const key = lifeKey(s); if (archiveShownFor === key) return;
@@ -242,7 +247,7 @@ function syncArchive(s) {
   const fresh = archiveRecord(s);
   const items = [...fresh.scenes.map(id => `역사의 현장 · ${HISTORIC.find(d => d.id === id)?.title}`),
     ...fresh.figures.map(id => `인물 · ${FIGURES[id].name}`), ...fresh.careers.map(id => `직업 · ${CAREERS[id].label}`),
-    ...(fresh.birth ? [`태어난 곳 · ${lifeTouches(s).birthPlace} ${s.class}`] : [])];
+    ...(fresh.birth ? [`태어난 곳 · ${lifeTouches(s).birthPlace} ${s.class}`] : []), ...(fresh.real ? [`실존 인물 · ${REAL_LIVES[fresh.real].name}`] : [])];
   box.hidden = false;
   $id('summaryArchiveText').textContent = items.length ? `이번 삶으로 연대기에 ${items.length}개가 새로 남았습니다.` : '이번 삶에서는 새로 남은 기록이 없습니다. 다른 때, 다른 곳에서 태어나 보세요.';
   $id('summaryArchiveList').innerHTML = items.map(x => `<li>${x.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</li>`).join('');
