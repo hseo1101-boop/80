@@ -46,11 +46,12 @@ h2{font-size:1.25rem;margin:0 0 6px}h3{font-size:1.05rem;margin:0}
 .action:hover{border-color:var(--wine)}.action b{color:var(--wine);font-size:1.05rem}.action span{color:var(--muted);font-size:.9rem}
 ol.steps{padding-left:20px}ol.steps li{margin:4px 0}
 code{font-family:var(--mono);font-size:.85em;background:#e6e9e5;padding:1px 5px;border-radius:4px}
-.gb-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.gb-write{font-weight:700;color:var(--wine);text-decoration:none}
-.gb-status{margin:0 0 10px;font-size:.88rem;color:var(--teal)}.gb-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.gb-entry{background:#fff;border:1px solid var(--line);border-left:3px solid var(--wine);border-radius:8px;padding:12px 14px}.gb-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
-.gb-top b{font-family:var(--serif)}.gb-top time{font-family:var(--mono);font-size:.75rem;color:var(--muted)}.gb-life{margin:2px 0 0;font-size:.88rem;color:var(--muted)}.gb-story{margin:6px 0 0;white-space:pre-line}
-.gb-more{margin-top:10px;width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
+.gb-status{margin:0 0 10px;font-size:.88rem;color:var(--muted)}.gb-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.gb-entry{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}.gb-top{display:flex;gap:6px 8px;align-items:baseline;flex-wrap:wrap}
+.gb-top b{font-family:var(--serif)}.gb-meta{font-size:.82rem;color:var(--muted)}.gb-top time{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.gb-life{margin:6px 0 0;font-size:.88rem;color:#4b5553}.gb-quote{margin:8px 0 0;padding-left:10px;border-left:3px solid var(--wine);font-family:var(--serif);white-space:pre-line}
+.gb-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.gb-like{font:inherit;font-size:.85rem;font-weight:700;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer}.gb-like.on{background:#f6e8ec;border-color:var(--wine);color:var(--wine)}
+.gb-report{background:none;border:0;padding:4px;font:inherit;font-size:.78rem;color:var(--muted);cursor:pointer}.gb-report:hover{color:#b23a32;text-decoration:underline}
 [hidden]{display:none!important}
 a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2px}
 @media (max-width:560px){h1{font-size:1.6rem}.card{padding:16px}}
@@ -66,7 +67,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2p
   <nav aria-label="광장 메뉴">
     <a href="#updates" data-tab="updates">업데이트 노트</a>
     <a href="#feedback" data-tab="feedback">의견 보내기</a>
-    <a href="#stories" data-tab="stories">플레이어 이야기</a>
+    <a href="#stories" data-tab="stories">함께 나눈 삶</a>
   </nav>
 
   <section id="tab-updates" aria-labelledby="updatesTitle">
@@ -87,11 +88,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c9a040;outline-offset:2p
 
   <section id="tab-stories" hidden aria-labelledby="storiesTitle">
     <div class="card">
-      <div class="gb-head"><h2 id="storiesTitle">플레이어 이야기</h2><a id="gbWrite" class="gb-write" target="_blank" rel="noopener" hidden>내 이야기 남기기 →</a></div>
-      <p>다른 플레이어들이 살아 본 삶이 방명록처럼 쌓입니다. 게임이 끝나면 생애 요약의 <b>방명록에 이 삶 남기기</b>로 바로 남길 수 있습니다.</p>
+      <h2 id="storiesTitle">함께 나눈 삶</h2>
+      <p>다른 사람들이 살아 낸 프랑스인의 삶과 남긴 한마디입니다. 생애를 마치면 생애 요약의 <b>이 삶을 나누기</b>에서 직접 남길 수 있습니다.</p>
       <p id="gbStatus" class="gb-status" role="status"></p>
       <ol id="gbList" class="gb-list"></ol>
-      <button id="gbMore" class="gb-more" hidden>더 보기</button>
     </div>
   </section>
 </div>
@@ -137,7 +137,16 @@ function show() {
   const tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'updates';
   for (const t of TABS) $('tab-' + t).hidden = t !== tab;
   document.querySelectorAll('nav a').forEach(a => a.setAttribute('aria-current', a.dataset.tab === tab ? 'page' : 'false'));
-  if (tab === 'stories' && !guestbookShown) { guestbookShown = true; guestbookMount({box:$('gbList'), status:$('gbStatus'), more:$('gbMore'), write:$('gbWrite')}, 10); }
+  if (tab === 'stories' && !guestbookShown) {
+    guestbookShown = true;
+    if (!gbReady()) { $('gbStatus').textContent = '곧 열립니다.'; return; }
+    $('gbStatus').textContent = '불러오는 중…';
+    gbLoad().then(posts => {
+      if (!posts || posts === 'error') { $('gbStatus').textContent = '지금은 불러오지 못했어요. 잠시 뒤에 다시 열어 주세요.'; return; }
+      $('gbStatus').textContent = posts.length ? '' : '아직 나눈 삶이 없어요.';
+      gbRenderList($('gbList'), posts, {limit:200, onReport:run => { if (confirm('이 글을 신고할까요? 신고가 쌓이면 가려집니다.')) run(); }});
+    });
+  }
 }
 addEventListener('hashchange', show); show();
 </script>

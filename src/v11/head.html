@@ -110,11 +110,19 @@ h2{font-size:1.05rem;margin:0;font-weight:800;letter-spacing:-.01em}
 #birthYear{width:100%;accent-color:var(--wine);margin:8px 0 2px}#birthYear.random{opacity:.45}
 .bp-marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:10px}
 .bp-hint{margin:10px 0 0;font-size:.88rem;color:#4b5553}
-.guestbook{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.gb-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.gb-head h2{font-size:1rem;margin:0}
-.gb-write{font-weight:700;color:var(--wine);text-decoration:none}.gb-write:hover{text-decoration:underline}.gb-sub{margin:4px 0 8px;color:var(--muted);font-size:.88rem}.gb-status{margin:0 0 10px;font-size:.85rem;color:var(--teal)}
-.gb-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}.gb-entry{background:#fff;border:1px solid var(--line);border-left:3px solid var(--wine);border-radius:8px;padding:12px 14px}
-.gb-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.gb-top b{font-family:var(--serif)}.gb-top time{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
-.gb-life{margin:2px 0 0;font-size:.85rem;color:var(--muted)}.gb-story{margin:6px 0 0;white-space:pre-line;line-height:1.7}.gb-more{margin-top:10px;width:100%}
+.guestbook{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.gb-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.gb-head h2{font-size:1.05rem;margin:0}
+.gb-all{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--wine);cursor:pointer}.gb-all:hover{text-decoration:underline}.gb-sub{margin:4px 0 10px;color:var(--muted);font-size:.88rem}.gb-status{margin:0 0 10px;font-size:.85rem;color:var(--muted)}.gb-status a{color:var(--teal);font-weight:700}
+.gb-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}.gb-entry{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.gb-top{display:flex;gap:6px 8px;align-items:baseline;flex-wrap:wrap}.gb-top b{font-family:var(--serif);font-size:1.02rem}.gb-meta{font-size:.82rem;color:var(--muted)}.gb-top time{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+.gb-life{margin:6px 0 0;font-size:.88rem;color:#4b5553;line-height:1.7}.gb-quote{margin:8px 0 0;padding-left:10px;border-left:3px solid var(--wine);font-family:var(--serif);line-height:1.7;white-space:pre-line}
+.gb-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.gb-like{font:inherit;font-size:.85rem;font-weight:700;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer}.gb-like:hover{border-color:var(--wine)}.gb-like.on{background:#f6e8ec;border-color:var(--wine);color:var(--wine)}
+.gb-report{background:none;border:0;padding:4px;font:inherit;font-size:.78rem;color:var(--faint);cursor:pointer}.gb-report:hover{color:var(--bad);text-decoration:underline}
+.gb-modal{max-width:620px;width:100%}.gb-modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}.gb-modal-head h2{margin:0;font-family:var(--serif)}.gb-modal .gb-list{max-height:min(68vh,640px);overflow-y:auto;padding-right:4px}
+.gb-share{margin:16px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.gb-share h3{margin:0 0 4px;font-size:1rem}.gb-who{margin:0 0 10px;font-size:.88rem;color:var(--muted)}.gb-who b{color:var(--ink);font-family:var(--serif)}
+.gb-share textarea{width:100%;min-height:92px;resize:vertical;font:inherit;line-height:1.7;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fbfcfb;color:var(--ink)}.gb-share textarea:focus{outline:2px solid var(--wine);outline-offset:1px}
+.gb-share-foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:8px}.gb-share-foot .note{margin:0;flex:1}.gb-count{font-family:var(--mono);font-size:.75rem;color:var(--faint);white-space:nowrap}
+.gb-err{margin:6px 0 0;color:var(--bad);font-size:.85rem}.gb-share .primary{margin-top:10px}.gb-done{margin:0;color:var(--teal);font-weight:700}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .feedback-strip{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;margin-top:22px;padding:14px 16px;border-radius:10px;background:#f3f0ea;border:1px solid var(--line);color:var(--ink);text-decoration:none}
 .feedback-strip b{color:var(--wine)}.feedback-strip span{grid-column:1;color:var(--muted);font-size:.88rem}.feedback-strip i{grid-row:1/3;grid-column:2;font-style:normal;font-size:1.2rem;color:var(--wine)}.feedback-strip:hover{border-color:var(--wine)}
 .starts{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.starts h2{font-size:1rem;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
@@ -232,11 +240,10 @@ label.section{display:block}
       </div>
     </section>
       <section id="guestbook" class="guestbook" aria-labelledby="gbTitle">
-        <div class="gb-head"><h2 id="gbTitle">플레이어 이야기</h2><a id="gbWrite" class="gb-write" target="_blank" rel="noopener" hidden>내 이야기 남기기 →</a></div>
-        <p class="gb-sub">다른 플레이어들이 살아 본 삶이 방명록처럼 쌓입니다. 게임이 끝나면 생애 요약에서 바로 남길 수 있습니다.</p>
+        <div class="gb-head"><h2 id="gbTitle">함께 나눈 삶</h2><button id="gbAll" class="gb-all" hidden>모두 보기 →</button></div>
+        <p class="gb-sub">다른 사람들이 살아 낸 프랑스인의 삶과 남긴 한마디입니다. 마음에 남는 삶에는 ‘기억해요’를 눌러 주세요.</p>
         <p id="gbStatus" class="gb-status" role="status"></p>
         <ol id="gbList" class="gb-list"></ol>
-        <button id="gbMore" class="gb-more" hidden>더 보기</button>
       </section>
       <a class="feedback-strip" href="https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header" target="_blank" rel="noopener"><b>의견 보내기</b><span>해 보고 느낀 점, 아쉬운 점, 이상한 장면을 알려 주세요. 로그인 없이 바로 쓸 수 있는 설문입니다.</span><i aria-hidden="true">→</i></a>
     </div>
@@ -257,8 +264,17 @@ label.section{display:block}
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
         <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
         <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
-        <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button><a id="shareStory" class="share-story" target="_blank" rel="noopener" hidden>방명록에 이 삶 남기기 →</a></div>
-        <p id="shareNote" class="note" style="margin:0" hidden>요약이 미리 채워진 설문이 열립니다. 로그인 없이 남길 수 있고, 시작 화면의 플레이어 이야기에 올라갑니다.</p>
+        <section id="gbShare" class="gb-share" aria-labelledby="gbShareTitle" hidden>
+          <h3 id="gbShareTitle">이 삶을 나누기</h3>
+          <p id="gbWho" class="gb-who"></p>
+          <div id="gbForm"><label class="sr-only" for="gbQuote">이 삶에 대한 한마디</label>
+            <textarea id="gbQuote" maxlength="140" placeholder="이 삶을 살고 느낀 점을 나눠 주세요. 예) 바스티유가 무너지던 날, 나는 빵 걱정뿐이었다."></textarea>
+            <div class="gb-share-foot"><p class="note">이 삶의 이야기와 당신의 말만 올라가요. 이름·연락처·링크는 쓸 수 없고, 신고가 쌓이면 가려져요. 시작 화면의 ‘함께 나눈 삶’에 올라갑니다.</p><span id="gbCount" class="gb-count">0/140</span></div>
+            <p id="gbErr" class="gb-err" role="alert" hidden></p>
+            <button id="gbSend" class="primary">나누기</button></div>
+          <p id="gbDone" class="gb-done" role="status" hidden></p>
+        </section>
+        <div class="sum-actions"><button class="primary" data-action="chooseLife">새 인생 시작</button></div>
       </section>
       <button id="sceneCaption" class="caption" aria-expanded="false" aria-controls="sceneDetail"> <span class="chev">▾</span></button>
       <div id="sceneDetail" class="scene-detail" hidden></div>
@@ -303,6 +319,11 @@ label.section{display:block}
   <button id="birthStart" class="primary">삶을 시작하기 →</button>
 </div></div>
 <div id="askOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="askText" hidden><div class="modal ask"><p id="askText"></p><div class="ask-btns"><button id="askNo">취소</button><button id="askYes" class="primary">계속</button></div></div></div>
+<div id="gbOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="gbAllTitle" hidden><div class="modal gb-modal">
+  <div class="gb-modal-head"><h2 id="gbAllTitle">함께 나눈 삶</h2><button id="gbClose">닫기</button></div>
+  <p class="gb-sub">최근에 나눈 삶부터 보여 줍니다.</p><p id="gbAllStatus" class="gb-status" role="status"></p>
+  <ol id="gbAllList" class="gb-list"></ol>
+</div></div>
 <div id="saveOverlay" class="overlay top" role="dialog" aria-modal="true" aria-labelledby="saveTitle" hidden><div class="modal">
   <h2 id="saveTitle">저장 코드</h2><p id="saveHelp" class="note"></p>
   <label for="saveCode" class="section">저장 코드</label><textarea id="saveCode" rows="7" spellcheck="false"></textarea>

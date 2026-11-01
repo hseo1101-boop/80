@@ -113,7 +113,7 @@ function startWithBirth() {
   engine.state.runtime.paused = true; ui.render(); ui.showBirth();
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.19';
+const GAME_VERSION = 'v0.20';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -126,18 +126,71 @@ function syncLinks() {
   const fresh = prefs.seenVersion !== GAME_VERSION;
   $id('newsDot').hidden = !fresh; $id('menuDot').hidden = !fresh;
   $id('gameVersion').textContent = GAME_VERSION;
-  if (s?.dead) {
-    const url = storyURL(s);
-    $id('shareStory').hidden = !url; $id('shareNote').hidden = !url;
-    if (url) $id('shareStory').href = url;
-  }
+  gbSyncShare(s);
 }
-function storyURL(s) {
-  const r = lifeReport(s);
-  const life = `${r.born}–${r.died} · ${r.epitaph} · ${r.age}세`;
-  const story = [r.cause, ...r.lines.slice(0, 3), ...(r.historic.length ? [`역사의 현장: ${r.historic.slice(0, 3).map(h => `${h.year} ${h.title}`).join(', ')}`] : [])].filter(Boolean).join('\n');
-  return guestbookShareURL(r.name, life, story);
+// 함께 나눈 삶: the start-screen list, the "모두 보기" sheet and the end-of-life share box.
+const SITE_LINK = () => { const a = document.createElement('a'); a.href = GUESTBOOK_SITE; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '웹사이트에서 보기 →'; return a; };
+function gbStatus(el, text, link) { el.replaceChildren(text); if (link) el.append(' ', SITE_LINK()); el.hidden = !text && !link; }
+const gbReportAsk = run => ask('이 글을 신고할까요? 신고가 쌓이면 모두에게서 가려지고, 이 브라우저에서는 바로 사라집니다.', '신고하기', run);
+let gbPosts = [];
+function gbShowPreview() {
+  const status = $id('gbStatus'), list = $id('gbList'), all = $id('gbAll');
+  if (GUESTBOOK_EMBEDDED) { gbStatus(status, '다른 사람들이 나눈 삶은 게임 웹사이트에서 읽고 나눌 수 있어요.', true); return; }
+  if (!gbReady()) { gbStatus(status, '곧 열립니다. 생애를 마치면 이 삶에 대한 한마디를 남길 수 있게 됩니다.'); return; }
+  gbStatus(status, '불러오는 중…');
+  gbLoad().then(posts => {
+    if (posts === 'error' || !posts) { gbStatus(status, '지금은 불러오지 못했어요. 잠시 뒤에 다시 열어 주세요.'); return; }
+    gbPosts = posts;
+    gbStatus(status, posts.length ? '' : '아직 나눈 삶이 없어요. 생애를 마치고 첫 번째 삶을 나눠 주세요.');
+    gbRenderList(list, posts, {limit:3, onReport:gbReportAsk});
+    all.hidden = posts.length <= 3; all.textContent = `모두 보기 (${posts.length}) →`;
+  });
 }
+function gbOpenAll() {
+  $id('gbOverlay').hidden = false; $id('gbClose').focus();
+  gbStatus($id('gbAllStatus'), gbPosts.length ? '' : '아직 나눈 삶이 없어요.');
+  gbRenderList($id('gbAllList'), gbPosts, {limit:200, onReport:gbReportAsk});
+}
+function gbCloseAll() { $id('gbOverlay').hidden = true; gbRenderList($id('gbList'), gbPosts, {limit:3, onReport:gbReportAsk}); }
+const gbLifeKey = s => `${s.name}|${s.born}|${s.year}|${s.month}`;
+const gbMeta = s => `프랑스 ${s.place.replace(' 농촌', '')} · ${s.sex === '여성' ? '여자' : '남자'} · ${ageOf(s)}세`;
+let gbShownFor = '';
+function gbSyncShare(s) {
+  const box = $id('gbShare');
+  if (!s?.dead || (!gbReady() && !GUESTBOOK_EMBEDDED)) { box.hidden = true; gbShownFor = ''; return; }
+  const key = gbLifeKey(s);
+  if (gbShownFor === key) return;
+  gbShownFor = key; box.hidden = false;
+  const who = $id('gbWho'); who.replaceChildren();
+  const b = document.createElement('b'); b.textContent = s.name; who.append(b, ` · ${gbMeta(s)}`);
+  const shared = gbStore.get('shared', []).includes(key);
+  $id('gbForm').hidden = shared || GUESTBOOK_EMBEDDED;
+  $id('gbQuote').value = ''; $id('gbCount').textContent = `0/${GB_QUOTE_MAX}`; $id('gbErr').hidden = true; $id('gbSend').disabled = false;
+  const done = $id('gbDone');
+  if (GUESTBOOK_EMBEDDED) gbStatus(done, '삶을 나누는 일은 게임 웹사이트에서 할 수 있어요.', true);
+  else gbStatus(done, shared ? '이 삶은 이미 나눴어요. 시작 화면의 ‘함께 나눈 삶’에서 볼 수 있어요.' : '');
+}
+function gbSubmit() {
+  const s = engine.state; if (!s?.dead) return;
+  const quote = $id('gbQuote').value.trim(), problem = gbCheckQuote(quote), err = $id('gbErr');
+  err.textContent = problem; err.hidden = !problem;
+  if (problem) { $id('gbQuote').focus(); return; }
+  $id('gbSend').disabled = true;
+  const key = gbLifeKey(s);
+  gbShare({name:s.name, meta:gbMeta(s), life:gbLifeText(s, lifeReport(s)), quote})
+    .then(() => {
+      const shared = gbStore.get('shared', []); shared.push(key); gbStore.set('shared', shared.slice(-100));
+      $id('gbForm').hidden = true;
+      gbStatus($id('gbDone'), '나눴어요. 고맙습니다. 시작 화면의 ‘함께 나눈 삶’에 올라갑니다.');
+      gbShowPreview();
+    })
+    .catch(() => { err.textContent = '보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'; err.hidden = false; $id('gbSend').disabled = false; });
+}
+$id('gbQuote').addEventListener('input', e => { $id('gbCount').textContent = `${e.target.value.length}/${GB_QUOTE_MAX}`; $id('gbErr').hidden = true; });
+$id('gbSend').addEventListener('click', gbSubmit);
+$id('gbAll').addEventListener('click', gbOpenAll);
+$id('gbClose').addEventListener('click', gbCloseAll);
+$id('gbOverlay').addEventListener('click', e => { if (e.target.id === 'gbOverlay') gbCloseAll(); });
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
 const PRESETS = {
   paris1768:{label:'1768년 파리 이야기', born:1768, family:{place:'파리', class:'도시 평민'}},
@@ -226,7 +279,9 @@ $id('saveFile').addEventListener('click', () => {
 });
 document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
-  $id('askOverlay').hidden = true; $id('saveOverlay').hidden = true;
+  if (!$id('askOverlay').hidden) { $id('askOverlay').hidden = true; return; }
+  if (!$id('gbOverlay').hidden) gbCloseAll();
+  $id('saveOverlay').hidden = true;
   if (!$id('birthOverlay').hidden) $id('birthStart').click();
 });
 document.addEventListener('visibilitychange', () => {
@@ -235,6 +290,6 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('pagehide', () => { controller.autosave(); clock.stop(); });
 window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden && !ui.choosing) clock.start(); });
-if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller};
-guestbookMount({box:$id('gbList'), status:$id('gbStatus'), more:$id('gbMore'), write:$id('gbWrite')});
+if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller, render};
+gbShowPreview();
 render();
