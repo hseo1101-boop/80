@@ -2110,7 +2110,7 @@ function createSchoolScenario(seed = Date.now()) {
     parentJob:'인쇄공',religion:'catholic',stats:{건강:82,행복:65,지식:s.stats.지식,재산:37},log:[],lifeMilestones:[]});
   addLog(s,'출생',`${s.name}이(가) 파리의 인쇄공 가정에서 태어났습니다.`,'major');
   milestone(s,'파리에서 출생');
-  s.year=1778; s.month=6; s.decision='school'; s.lastDecision=s.year;
+  s.year=1778; s.month=6; s.decision=s.sex==='여성' ? 'school-girls' : 'school'; s.lastDecision=s.year;
   addLog(s,'이야기의 시작','여덟 살이 된 당신은 작업장 심부름을 돕고 있습니다. 이웃집 아이가 학교에 다닌다는 이야기를 들었습니다.');
   return s;
 }
@@ -2155,6 +2155,9 @@ function matches(s, c = {}) {
     && (c.minAptitude === undefined || (s.aptitude || 50) >= c.minAptitude)
     && (c.minKnowledge === undefined || s.stats.지식 >= c.minKnowledge)
     && (!c.noCareer || !s.career)
+    && (c.maxAptitude === undefined || (s.aptitude || 50) <= c.maxAptitude)
+    && (c.minRelation === undefined || relationScore(s) >= c.minRelation)
+    && (c.maxHealth === undefined || s.stats.건강 <= c.maxHealth)
     && (!c.notPlaceIncludes || !s.place.includes(c.notPlaceIncludes))
     && (!c.pathIs || Object.entries(c.pathIs).every(([k, v]) => s.paths[k] === v))
     && (!c.knows || c.knows.every(id => s.relations.some(r => r.role === '인물' && r.name === FIGURES[id]?.name)));
@@ -3947,10 +3950,10 @@ function selectDaily(s,kind) {
 }
 function learningOpportunity(s) {
   const burden = s.paths.learning==='family' && s.paths.priority!=='study' ? .4 : 1;
-  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden;
+  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden*girlsLearningFactor(s);
 }
 function informalLearningOpportunity(s) {
-  return s.paths.learning==='family' && s.paths.priority!=='study' ? .08 : .24;
+  return (s.paths.learning==='family' && s.paths.priority!=='study' ? .08 : .24) * girlsLearningFactor(s);
 }
 function decisionDomain(d) { return DECISION_DOMAINS.find(domain=>domain.id===d.domain)?.label || '삶'; }
 function decisionContext(s) {
@@ -5182,12 +5185,13 @@ function requirementGaps(s, choice) {
   if (r.minKnowledge !== undefined && s.stats.지식 < r.minKnowledge) gaps.push(`지식 ${r.minKnowledge} 이상 (지금 ${Math.round(s.stats.지식)})`);
   if (r.minRelation !== undefined && relationScore(s) < r.minRelation) gaps.push(`관계 ${r.minRelation} 이상 (지금 ${relationScore(s)})`);
   if (r.literacy && literacyOf(s) !== 'basic') gaps.push('글을 읽고 쓸 수 있어야 함');
+  if (r.maxYear !== undefined && s.year > r.maxYear) gaps.push(`${r.maxYear}년까지만 가능`);
   return gaps;
 }
 function requirementLabel(choice) {
   const r = choice.requires; if (!r) return '';
   return [r.minWealth !== undefined && `재산 ${r.minWealth}+`, r.minKnowledge !== undefined && `지식 ${r.minKnowledge}+`,
-    r.minRelation !== undefined && `관계 ${r.minRelation}+`, r.literacy && '글 읽기'].filter(Boolean).join(' · ');
+    r.minRelation !== undefined && `관계 ${r.minRelation}+`, r.literacy && '글 읽기', r.maxYear !== undefined && `${r.maxYear}년까지`].filter(Boolean).join(' · ');
 }
 function choiceAvailable(s, choice) { return requirementGaps(s, choice).length === 0; }
 
@@ -5914,6 +5918,175 @@ function comrades(s) {
   const h = strHash(s.name + s.year);
   return [0, 1].map(i => ({name:`${male[(h >>> (i*5)) % male.length]} 전우`, role:'전우', sex:'남성', job:'군인', birthYear:s.born + i*2 - 1, birthMonth:1}));
 }
+
+// src/education-girls.js
+// Girls were taught, but apart from boys and less: by nuns, in sewing schools and convent boarding schools,
+// not in collèges, lycées or military schools. Boys' schooling decisions are made male-only and girls get
+// their own, with lower odds and more emphasis on catechism, reading and needlework than on writing.
+(() => {
+  for (const id of ['school', 'village-school', 'guizot-school', 'college', 'noble-tutor']) {
+    const d = decisions.find(x => x.id === id);
+    if (d) d.when.sexes = ['남성'];
+  }
+  const D = (id, when, title, text, choices) => decisions.push({id, domain:'education', priority:id === 'school-girls' ? 20 : 8, title, text,
+    when:{...when, sexes:['여성'], unsetFlag:when.unsetFlag || id},
+    choices:choices.map(c => ({...c, effects:{...(c.effects || {}), flags:[id, 'learn', ...((c.effects || {}).flags || [])]}}))});
+  const O = (id, title, weight, result, effects = {}, modifiers) => ({id, title, weight, result, effects, ...(modifiers ? {modifiers} : {})});
+
+  D('school-girls', {minAge:8, maxAge:11, fromYear:1770, toYear:1788, places:['파리'], classes:['도시 평민'], parentJobs:['인쇄공','직물공','제화공','장인'],
+      religions:['catholic'], livingRoles:['아버지','어머니'], literacy:['illiterate','learning'], unsetFlag:'school'},
+    '수녀들의 자선학교에 보내 달라고 할까?',
+    '이웃집 여자아이가 애덕 수녀회가 여는 자선학교에 다니기 시작했습니다. 교리 문답과 읽기, 바느질을 가르친다고 합니다.\n아버지는 여자아이에게는 글보다 바느질과 집안일이 먼저라고 말합니다. 어머니는 당신의 부탁을 들어 보겠다고 했습니다.',
+    [{label:'부모에게 자선학교에 보내 달라고 부탁한다', preview:'입학 허락 / 거절 / 바느질 학교만', effects:{flags:['school'], experience:{educationInterest:2}}, outcomes:[
+        O('approved', '자선학교에 다니게 되었습니다', 25, '어머니가 아버지를 설득했습니다. 수녀들에게 교리 문답과 읽기를 배웁니다. 쓰기는 조금만 가르쳐 줍니다.', {education:'수녀회 자선학교', literacy:'learning', stats:{지식:4, 행복:4}, path:{learning:'study'}, milestone:'수녀회 자선학교 입학'}, [{when:{minWealth:45}, amount:10}]),
+        O('refused', '허락받지 못했습니다', 50, '“여자아이가 글을 배워 무엇에 쓰겠느냐.” 아버지의 말에 더는 조르지 못했습니다.', {stats:{행복:-3}, path:{learning:'wait'}}),
+        O('sewing', '바느질 학교만 허락받았습니다', 25, '읽기 대신 바느질 학교에 다니기로 했습니다. 수놓는 틈틈이 기도서의 글자를 조금 익혔습니다.', {education:'바느질 학교', stats:{지식:1, 재산:1}, experience:{craft:2}, path:{learning:'family'}, milestone:'바느질 학교에 다님'})]},
+     {label:'어머니에게 기도서 읽는 법을 배운다', preview:'조금씩 읽기 / 시간이 없음', effects:{flags:['school']}, outcomes:[
+        O('taught', '기도서를 더듬더듬 읽게 되었습니다', 55, '저녁마다 어머니와 기도서를 펼쳤습니다. 쓰는 법은 모르지만 읽을 수는 있게 되었습니다.', {literacy:'learning', stats:{지식:2}, relationCloseness:{roles:['어머니'], amount:4}}),
+        O('busy', '어머니에게 그럴 여유가 없었습니다', 45, '어머니도 일이 많아 몇 번 하다 그만두었습니다.', {stats:{행복:-1}})]},
+     {label:'집안일과 작업장 심부름을 돕는다', preview:'가업 경험 / 교육 기회 감소', effects:{flags:['school']}, outcomes:[
+        O('family', '집안의 일손이 되었습니다', 1, '물을 긷고 동생을 돌보고 작업장 심부름을 합니다. 실 감는 손이 어른만큼 빨라졌습니다.', {stats:{재산:2}, path:{learning:'family'}, experience:{familyTrade:2, responsibility:2}})]}]);
+
+  D('village-school-girls', {minAge:6, maxAge:10, classes:['농민'], toYear:1835, unsetFlag:'learn'},
+    '여자아이 교리 학교',
+    '겨울이 되면 성당지기의 아내가 마을 여자아이 몇을 모아 교리 문답과 기도서 읽기, 실 잣기를 가르칩니다. 남자아이 학교와는 따로 엽니다.',
+    [{label:'보내 달라고 조른다', preview:'겨울 동안 배움 / 일손이 필요함', outcomes:[
+        O('yes', '겨울 동안 다녔습니다', 35, '난롯가에 앉아 기도문을 외우고 글자를 짚어 가며 읽었습니다. 봄이 되자 다시 들일을 도왔습니다.', {education:'여자아이 교리 학교', literacy:'learning', stats:{지식:3}, path:{learning:'study'}}, [{when:{minWealth:25}, amount:10}]),
+        O('no', '집에 일손이 필요하다고 했습니다', 65, '동생을 돌보고 물레를 돌려야 했습니다.', {stats:{행복:-2}, path:{learning:'family'}})]},
+     {label:'어머니 곁에서 실 잣기를 배운다', result:'물레 돌리는 법을 익혔습니다. 겨울밤 마실에서 어른들이 솜씨를 칭찬했습니다.', effects:{experience:{craft:2, familyTrade:1}, path:{learning:'family'}}}]);
+
+  D('girls-school-1836', {minAge:6, maxAge:11, fromYear:1836, unsetFlag:'learn'},
+    '여자아이 학교',
+    '1836년 법령으로 여자아이 학교를 세우는 코뮌이 늘고 있습니다. 대개 수녀들이 가르치고, 바느질과 읽기에 무게를 둡니다. 우리 코뮌에도 생길지 모릅니다.',
+    [{label:'학교에 다니고 싶다고 말한다', preview:'입학 / 학교가 없음', outcomes:[
+        O('yes', '여자아이 학교에 다니게 되었습니다', 50, '수녀 선생님에게 읽기와 쓰기, 셈과 바느질을 배웁니다.', {education:'여자아이 초등학교', literacy:'learning', stats:{지식:5, 행복:2}, path:{learning:'study'}, milestone:'초등학교 입학'}, [{when:{notPlaceIncludes:'농촌'}, amount:20}]),
+        O('none', '코뮌에 아직 여자아이 학교가 없습니다', 50, '남자아이 학교에는 다닐 수 없었습니다. 집에서 어머니에게 배우기로 했습니다.', {stats:{행복:-2}})]},
+     {label:'집안일을 돕는다', result:'학교 대신 집안일을 맡았습니다.', effects:{experience:{responsibility:1}, path:{learning:'family'}}}]);
+
+  D('convent-pension', {minAge:8, maxAge:13, classes:['부르주아','귀족'], excludeYears:[1792, 1801], unsetFlag:'learn'},
+    '수녀원 기숙학교',
+    '부모는 당신을 우르술라회 수녀원 기숙학교에 보낼지 고민합니다. 교리와 예절, 읽기와 쓰기, 자수와 음악을 배웁니다. 콜레주처럼 라틴어를 가르치지는 않습니다.',
+    [{label:'기숙학교에 간다', preview:'좋은 성적 / 향수병', outcomes:[
+        O('good', '수녀들의 칭찬을 받았습니다', 55, '프랑스어 작문과 자수로 상을 받았습니다. 몇몇 친구와는 평생 편지를 주고받을 사이가 되었습니다.', {education:'수녀원 기숙학교', literacy:'basic', stats:{지식:8, 재산:-4}, experience:{religious:2, social:2}, milestone:'수녀원 기숙학교'}, [{when:{minAptitude:60}, amount:15}]),
+        O('homesick', '집이 그리워 자주 울었습니다', 45, '규율이 엄격하고 겨울이 추웠습니다. 그래도 읽고 쓰는 법은 익혔습니다.', {education:'수녀원 기숙학교', literacy:'basic', stats:{지식:5, 행복:-4, 재산:-4}, milestone:'수녀원 기숙학교'})]},
+     {label:'집에서 어머니와 가정교사에게 배운다', result:'어머니 곁에서 살림과 예절, 읽기와 쓰기를 배웠습니다.', effects:{literacy:'learning', stats:{지식:4}, relationCloseness:{roles:['어머니'], amount:4}}}]);
+
+  D('noble-girl', {minAge:7, maxAge:12, classes:['귀족'], unsetFlag:'learn'},
+    '가문의 딸을 어떻게 가르칠까',
+    '가문의 딸에게 맞는 교육을 정할 때입니다. 1793년까지는 가난한 귀족 가문의 딸을 받아 주는 생시르의 왕립 여학교도 있습니다.',
+    [{label:'가정교사를 들인다', result:'가정교사에게 프랑스어와 이탈리아어, 하프와 그림을 배웁니다.', effects:{education:'가정교사', literacy:'basic', stats:{지식:7, 재산:-5}}},
+     {label:'생시르 왕립 여학교에 지원한다', preview:'입학 / 자리가 없음', requires:{maxYear:1792}, outcomes:[
+        O('in', '생시르에 들어갔습니다', 40, '엄격한 규율 속에 역사와 지리, 음악을 배웁니다. 스무 살이 되면 지참금을 받고 나옵니다.', {education:'생시르 왕립 여학교', literacy:'basic', stats:{지식:9, 재산:4}, milestone:'생시르 왕립 여학교 입학'}),
+        O('full', '자리가 없었습니다', 60, '추천서가 부족했습니다. 수녀원 기숙학교로 보내졌습니다.', {education:'수녀원 기숙학교', literacy:'basic', stats:{지식:5}})]},
+     {label:'어머니 곁에서 예법을 배운다', result:'살롱의 예법과 편지 쓰는 법을 어머니에게 배웠습니다.', effects:{literacy:'learning', stats:{지식:3}, experience:{social:2}}}]);
+})();
+// Girls had fewer chances to learn outside school, too.
+function girlsLearningFactor(s) { return s.sex === '여성' ? .6 : 1; }
+
+// src/outcomes.js
+// Every major decision now resolves by chance, like the school decision: a choice is an intention, and
+// what happens depends on luck and on the player's situation. The original decisions get hand-written
+// outcomes; every other choice without outcomes gets three variants (as hoped / better / worse) derived
+// from its own effects. The 'default' id is kept so saves made mid-decision still resolve.
+(() => {
+  const O = (id, title, weight, result, effects = {}, modifiers) => ({id, title, weight, result, effects, ...(modifiers ? {modifiers} : {})});
+  const set = (decisionId, label, preview, outcomes) => {
+    const c = decisions.find(d => d.id === decisionId)?.choices.find(x => x.label.includes(label));
+    if (c) { c.outcomes = outcomes; c.preview = preview; }
+  };
+
+  set('learn', '글을 배우기로', '배움이 시작됨 / 더딤 / 빠르게 익힘', [
+    O('default', '배움이 시작되었습니다', 55, '이웃 어른에게 저녁마다 글자를 배웁니다. 석판에 자기 이름을 처음 써 보았습니다.'),
+    O('slow', '배움이 더뎠습니다', 25, '일이 바빠 자주 빠졌고, 글자가 머리에 잘 들어오지 않았습니다. 그래도 몇 글자는 읽을 수 있게 되었습니다.', {stats:{지식:-8}}, [{when:{maxAptitude:40}, amount:20}]),
+    O('quick', '놀랄 만큼 빨리 익혔습니다', 20, '몇 달 만에 기도서를 혼자 읽게 되었습니다. 가르치던 어른이 혀를 내둘렀습니다.', {stats:{지식:5}, literacy:'basic'}, [{when:{minAptitude:65}, amount:25}])]);
+  set('learn', '가족의 일을', '가족의 신뢰 / 고된 일', [
+    O('default', '가족의 일손이 되었습니다', 70, '가족의 생계를 도왔습니다. 집안에서 당신을 든든하게 여기기 시작했습니다.', {relationCloseness:{roles:['아버지','어머니'], amount:3}}),
+    O('hard', '일이 고되었습니다', 30, '어린 나이에 하기엔 벅찬 일이었습니다. 자주 앓았습니다.', {stats:{건강:-3}})]);
+
+  set('apprentice', '가업을 배운다', '가업을 이음 / 아버지와 부딪침', [
+    O('default', '가업을 배우기 시작했습니다', 65, '아버지 곁에서 도구 다루는 법부터 다시 배웁니다.'),
+    O('clash', '아버지와 자주 부딪쳤습니다', 35, '일하는 방식을 두고 아버지와 언성을 높이는 날이 많아졌습니다.', {relationCloseness:{roles:['아버지'], amount:-8}, stats:{행복:-2}})]);
+  set('apprentice', '도제 생활', '좋은 장인 / 고된 장인', [
+    O('default', '장인 밑에서 일을 배웁니다', 50, '다른 장인의 작업장 다락에서 먹고 자며 일을 배웁니다.'),
+    O('good', '좋은 장인을 만났습니다', 25, '장인은 엄했지만 비법을 아낌없이 가르쳐 주었습니다.', {stats:{지식:3}, experience:{craft:2}}),
+    O('harsh', '고된 장인을 만났습니다', 25, '새벽부터 밤까지 심부름만 했고 매도 자주 맞았습니다.', {stats:{건강:-3, 행복:-4}})]);
+  set('apprentice', '임시 노동', '일감이 있음 / 일감이 끊김', [
+    O('default', '그날그날 일을 찾았습니다', 65, '부두와 장터를 돌며 그날 일거리를 찾습니다.'),
+    O('idle', '일감이 자주 끊겼습니다', 35, '일이 없는 날이 많아 집에 손을 벌려야 했습니다.', {stats:{재산:-3, 행복:-2}}, [{when:{years:[1788,1789,1795,1812,1816,1817,1846,1847]}, amount:30}])]);
+
+  set('move', '파리로', '자리를 잡음 / 혹독한 첫해 / 금방 일자리', [
+    O('default', '파리에 자리를 잡았습니다', 50, '포부르의 셋방을 얻었습니다. 고향 사람들이 모여 사는 골목이라 말이 통합니다.'),
+    O('rough', '첫해가 혹독했습니다', 30, '일자리를 구하지 못해 몇 달을 굶다시피 했습니다. 몇 번이나 돌아갈까 생각했습니다.', {stats:{재산:-5, 건강:-3, 행복:-3}}, [{when:{maxWealth:30}, amount:15}]),
+    O('lucky', '금방 좋은 일자리를 구했습니다', 20, '고향 사람의 소개로 첫 주에 일자리를 얻었습니다.', {stats:{재산:4, 행복:2}}, [{when:{minRelation:60}, amount:15}])]);
+  set('move', '고향에 남는다', '편안함 / 아쉬움', [
+    O('default', '고향에 남았습니다', 70, '익숙한 사람들 곁에서 생활을 이어 갑니다.'),
+    O('regret', '가끔 그 길을 떠올립니다', 30, '파리로 떠난 친구의 편지를 받을 때마다 마음이 흔들립니다.', {stats:{행복:-3}})]);
+  set('move', '친척에게', '답장 / 무소식', [
+    O('default', '친척에게서 답장이 왔습니다', 50, '그쪽 사정과 일자리 이야기가 빼곡히 적혀 있었습니다.', {stats:{지식:1}}),
+    O('silent', '답장이 오지 않았습니다', 50, '편지가 중간에 사라졌는지 끝내 소식이 없었습니다.', {stats:{행복:-1}})]);
+
+  // Marriage: a meeting is not yet a wedding. The spouse moves from the choice into its outcomes.
+  const meet = decisions.find(d => d.id === 'marriage')?.choices.find(x => x.label.includes('소개받은'));
+  if (meet) {
+    delete meet.effects.spouse; delete meet.effects.flag;
+    meet.preview = '혼인 / 서로 맞지 않음 / 집안의 반대';
+    meet.outcomes = [
+      O('default', '혼인했습니다', 55, '몇 번 만나 이야기를 나누고, 양가가 혼인 계약을 맺었습니다. 성당에서 혼례를 올렸습니다.', {spouse:true, flag:'marriage', milestone:'혼인'}),
+      O('mismatch', '서로 맞지 않았습니다', 25, '좋은 사람이었지만 마음이 가지 않았습니다. 혼담은 조용히 없던 일이 되었습니다.', {stats:{행복:-2}}),
+      O('family', '집안이 반대했습니다', 20, '지참금 문제로 상대 집안이 혼담을 거절했습니다.', {stats:{행복:-4}}, [{when:{maxWealth:25}, amount:20}])];
+  }
+
+  set('war', '군 관련 일자리', '품삯 / 부상', [
+    O('default', '군수품 일을 맡았습니다', 65, '고향에서 군수품을 나르고 말을 돌봅니다. 전선에는 가지 않습니다.', {job:'군 관련 노동자'}),
+    O('hurt', '짐을 나르다 다쳤습니다', 35, '포탄 상자를 옮기다 허리를 다쳤습니다.', {job:'군 관련 노동자', stats:{건강:-4}})]);
+  set('hardship', '지출을 줄인다', '버팀 / 몸이 상함', [
+    O('default', '허리띠를 졸라맸습니다', 65, '끼니와 땔감을 줄여 겨우 버텼습니다.'),
+    O('weak', '몸이 축났습니다', 35, '너무 아끼다 겨울에 크게 앓았습니다.', {stats:{건강:-4}})]);
+  set('hardship', '이웃과 서로', '함께 버팀 / 도움이 돌아옴', [
+    O('default', '이웃과 함께 버텼습니다', 60, '빵과 땔감을 나누며 겨울을 났습니다.'),
+    O('returned', '도움이 돌아왔습니다', 40, '몇 달 뒤 당신이 앓아누웠을 때 이웃들이 먹을 것을 날라 주었습니다.', {stats:{건강:2, 행복:2}, closeness:3})]);
+  set('trade', '작은 사업', '번창 / 그럭저럭 / 실패', [
+    O('thrive', '가게가 번창했습니다', 30, '단골이 늘어 첫해에 밑천을 되찾았습니다.', {stats:{재산:15, 행복:4}}, [{when:{minKnowledge:60}, amount:15}]),
+    O('default', '그럭저럭 꾸려 갑니다', 40, '큰돈은 못 벌지만 내 가게라는 자부심이 있습니다.', {stats:{재산:4}}),
+    O('fail', '문을 닫았습니다', 30, '빚을 갚느라 가게를 정리했습니다.', {stats:{재산:-6, 행복:-6}, job:'임시 노동자'}, [{when:{maxWealth:40}, amount:10}])]);
+  set('familychoice', '교육을 돕는다', '아이가 잘 배움 / 형편이 버거움', [
+    O('default', '아이가 학교에 다닙니다', 60, '학비와 책값을 마련하느라 빠듯하지만 아이가 글을 깨쳐 갑니다.'),
+    O('strain', '학비가 버거웠습니다', 40, '두 해 만에 학교를 그만두게 했습니다. 아이가 많이 울었습니다.', {stats:{재산:-3, 행복:-3}}, [{when:{maxWealth:30}, amount:20}])]);
+
+  // ---- Every other choice: as hoped / better / worse, derived from its own effects ----
+  const FLAVOR = {
+    family:['가족도 당신의 선택을 반겼습니다.', '그러나 가까운 사람과 사이가 조금 서먹해졌습니다.'],
+    marriage:['양가 모두 기뻐했습니다.', '그러나 뒷말이 한동안 따라다녔습니다.'],
+    parenting:['아이가 잘 따라 주었습니다.', '그러나 아이와 실랑이가 잦았습니다.'],
+    economy:['때마침 운이 따라 생각보다 넉넉했습니다.', '그러나 뜻하지 않은 지출이 생겼습니다.'],
+    career:['윗사람의 눈에 들었습니다.', '그러나 일이 생각만큼 풀리지 않았습니다.'],
+    housing:['새 생활이 금방 몸에 익었습니다.', '그러나 적응하는 데 애를 먹었습니다.'],
+    relationships:['이 일로 오히려 사이가 깊어졌습니다.', '그러나 작은 오해가 남았습니다.'],
+    religion:['마음이 한결 편안해졌습니다.', '그러나 마음 한구석이 계속 불편했습니다.'],
+    politics:['다행히 큰 탈 없이 지나갔고, 사람들 사이에서 이름이 좋게 오르내렸습니다.', '그러나 이 일로 곤란한 말을 들었습니다.'],
+    history:['그날의 일은 오래도록 좋은 기억으로 남았습니다.', '그러나 그날의 일은 오래 마음을 무겁게 했습니다.'],
+    education:['어른들이 칭찬해 주었습니다.', '그러나 생각만큼 잘되지는 않았습니다.'],
+    childhood:['어른들이 웃으며 머리를 쓰다듬어 주었습니다.', '그러나 그날 밤 괜히 울적했습니다.'],
+    'old-age':['몸도 마음도 생각보다 가벼웠습니다.', '그러나 몸이 따라 주지 않았습니다.']
+  };
+  const half = v => Math.max(1, Math.round(Math.abs(v) / 2));
+  const shift = (stats, better) => {
+    const out = {};
+    for (const [k, v] of Object.entries(stats || {})) if (v) out[k] = (v > 0) === better ? half(v) : -half(v);
+    if (!Object.keys(out).length) out.행복 = better ? 2 : -2;
+    return out;
+  };
+  for (const d of decisions) for (const c of d.choices) {
+    if (c.outcomes || c.effects?.doom) continue;
+    const [good, bad] = FLAVOR[d.domain] || FLAVOR.family;
+    const base = c.result || '선택한 대로 되었습니다.';
+    c.outcomes = [
+      O('default', '생각한 대로 되었습니다', 60, base),
+      O('better', '생각보다 잘 풀렸습니다', 20, `${base} ${good}`, {stats:shift(c.effects?.stats, true)}, [{when:{minKnowledge:65}, amount:5}, {when:{minRelation:60}, amount:5}]),
+      O('worse', '뜻대로 되지 않았습니다', 20, `${base} ${bad}`, {stats:shift(c.effects?.stats, false)}, [{when:{maxWealth:20}, amount:5}, {when:{maxHealth:35}, amount:5}])];
+    if (!c.preview) c.preview = '대개 예상대로 · 때로 더 좋거나 나쁘게';
+  }
+})();
 
 // src/engine.js
 

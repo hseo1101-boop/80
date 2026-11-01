@@ -84,11 +84,12 @@ function requirementGaps(s, choice) {
   if (r.minKnowledge !== undefined && s.stats.지식 < r.minKnowledge) gaps.push(`지식 ${r.minKnowledge} 이상 (지금 ${Math.round(s.stats.지식)})`);
   if (r.minRelation !== undefined && relationScore(s) < r.minRelation) gaps.push(`관계 ${r.minRelation} 이상 (지금 ${relationScore(s)})`);
   if (r.literacy && literacyOf(s) !== 'basic') gaps.push('글을 읽고 쓸 수 있어야 함');
+  if (r.maxYear !== undefined && s.year > r.maxYear) gaps.push(`${r.maxYear}년까지만 가능`);
   return gaps;
 }
 function requirementLabel(choice) {
   const r = choice.requires; if (!r) return '';
   return [r.minWealth !== undefined && `재산 ${r.minWealth}+`, r.minKnowledge !== undefined && `지식 ${r.minKnowledge}+`,
-    r.minRelation !== undefined && `관계 ${r.minRelation}+`, r.literacy && '글 읽기'].filter(Boolean).join(' · ');
+    r.minRelation !== undefined && `관계 ${r.minRelation}+`, r.literacy && '글 읽기', r.maxYear !== undefined && `${r.maxYear}년까지`].filter(Boolean).join(' · ');
 }
 function choiceAvailable(s, choice) { return requirementGaps(s, choice).length === 0; }

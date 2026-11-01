@@ -94,6 +94,9 @@ js = patch(js, '(s.year-s.born)*12+s.month-s.birthMonth<=c.maxAgeMonths);', `(s.
     && (c.minAptitude === undefined || (s.aptitude || 50) >= c.minAptitude)
     && (c.minKnowledge === undefined || s.stats.지식 >= c.minKnowledge)
     && (!c.noCareer || !s.career)
+    && (c.maxAptitude === undefined || (s.aptitude || 50) <= c.maxAptitude)
+    && (c.minRelation === undefined || relationScore(s) >= c.minRelation)
+    && (c.maxHealth === undefined || s.stats.건강 <= c.maxHealth)
     && (!c.notPlaceIncludes || !s.place.includes(c.notPlaceIncludes))
     && (!c.pathIs || Object.entries(c.pathIs).every(([k, v]) => s.paths[k] === v))
     && (!c.knows || c.knows.every(id => s.relations.some(r => r.role === '인물' && r.name === FIGURES[id]?.name)));`);
@@ -123,7 +126,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('outcomes.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
@@ -138,6 +141,10 @@ js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
 // 2i. Soldiers at the front: no home-town everyday events, discharge in peacetime.
 js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) &&');
 js = patch(js, 'familyYear(s); careerYear(s);', 'familyYear(s); careerYear(s); armyYear(s);');
+// 2j. Girls' schooling and fewer informal chances to learn; the school scenario follows the player's sex.
+js = patch(js, "  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden;", "  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden*girlsLearningFactor(s);");
+js = patch(js, "  return s.paths.learning==='family' && s.paths.priority!=='study' ? .08 : .24;", "  return (s.paths.learning==='family' && s.paths.priority!=='study' ? .08 : .24) * girlsLearningFactor(s);");
+js = patch(js, "s.decision='school'; s.lastDecision=s.year;", "s.decision=s.sex==='여성' ? 'school-girls' : 'school'; s.lastDecision=s.year;");
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },
