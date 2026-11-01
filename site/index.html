@@ -4130,7 +4130,7 @@ function fateYear(s) {
   const frail = (h < 25 ? 3 : h < 45 ? 1.8 : 1) * wealthRisk * crisisFactor(s);
   const risks = [];
   if (age < 5) risks.push([.006, '어린 시절 열병을 이겨 내지 못했습니다.']);
-  else if (age < 15) risks.push([.002, '천연두에 걸려 끝내 회복하지 못했습니다.']);
+  else if (age < 15) risks.push(smallpoxImmune(s) ? [.0017, '이질에 걸려 끝내 회복하지 못했습니다.'] : [.002, '천연두에 걸려 끝내 회복하지 못했습니다.']);
   else risks.push([.003 + Math.max(0, age - 40)*.0005, '갑작스러운 병으로 세상을 떠났습니다.']);
   if (age >= 14 && /노동|농|직물|인쇄|제화|도제|장인|보조/.test(job)) risks.push([.0015, '작업 중 사고를 당해 목숨을 잃었습니다.']);
   const war = (s.year >= 1792 && s.year <= 1815) || (s.year >= 1756 && s.year <= 1763);
@@ -4187,6 +4187,13 @@ function noteDecision(s, d) {
   if (d.when.unsetFlag) return;
   s.familyEvents['dc-' + d.id] = (s.familyEvents['dc-' + d.id] || 0) + 1;
   s.familyEvents['dy-' + d.id] = s.year;
+}
+
+// Inoculation (variolation) and vaccination both gave lasting protection; a child who had either cannot
+// die of smallpox later. Read from the decision log, so saves made before this rule are covered too.
+function smallpoxImmune(s) {
+  return s.log.some(x => (x.eventId === 'inoculation' && x.desc.includes('선택: 부모가 접종을 받게 한다'))
+    || (x.eventId === 'vaccine' && x.desc.includes('선택: 접종을 받는다')));
 }
 
 // src/data/decisions-era.js
