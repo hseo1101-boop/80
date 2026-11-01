@@ -117,7 +117,7 @@ function logAge(s, x) { return Math.max(0, x.year - s.born - (x.month < s.birthM
 function logLabel(x) {
   if (x.type === 'history') return '역사';
   if (x.type === 'fact') return '시대의 숫자';
-  if (x.title.startsWith('중대 결정')) return '결정 · ' + x.title.split(' · ').at(-1);
+  if (x.title.startsWith('중대 결정')) return (x.title.includes('역사의 현장') ? '역사의 현장 · ' : '결정 · ') + x.title.split(' · ').at(-1);
   return x.title.includes(' · ') ? x.title.split(' · ').at(-1) : x.title;
 }
 function logText(x) {
@@ -284,7 +284,8 @@ function createUI(doc, engine, handlers) {
       const d = decisions.find(x => x.id === s.decision), result = s.decisionResult;
       if (!shownDecision) previousFocus = doc.activeElement;
       $('decisionSprite').src = spriteURL(doc, characterLook(s));
-      $('decisionPill').textContent = `중대 결정 · ${decisionDomain(d)}`;
+      $('decisionPill').textContent = d.historic ? `역사의 현장 · ${s.year}년 ${s.month}월` : `중대 결정 · ${decisionDomain(d)}`;
+      $('decisionPill').classList.toggle('historic', !!d.historic);
       $('decisionMeta').textContent = decisionContext(s);
       $('decisionTitle').textContent = d.title;
       $('decisionText').textContent = decisionText(s, d);
