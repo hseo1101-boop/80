@@ -115,7 +115,7 @@ js = patch(js, "dailyCategories:{universal:0,personal:0,historical:0}});", "dail
 js = patch(js, 'stats:{건강:82,행복:65,지식:4,재산:37}', 'stats:{건강:82,행복:65,지식:s.stats.지식,재산:37}');
 js = patch(js, '  s.experience=emptyExperience();', "  s.aptitude = number(v.aptitude,'선천적 능력',1,100,legacyAptitude(v));\n  s.experience=emptyExperience();");
 // 2e. Historic participation decisions ("역사의 현장"), opened in the month of the event.
-js = patch(js, '// src/engine.js', read('historic.js') + '\n' + read('historic2.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('historic.js') + '\n' + read('historic2.js') + '\n' + read('historic3.js') + '\n// src/engine.js');
 js = patch(js, '    familyMonth(s);\n    if (s.dead) return true;', '    familyMonth(s);\n    if (s.dead) return true;\n    historicDecision(s);\n    if (s.decision) return true;');
 js = patch(js, "  if (effects.milestone) milestone(s, effects.milestone === '$job'", "  if (effects.doom) s.familyEvents.doom = String(effects.doom).slice(0, 300);\n  if (effects.milestone) milestone(s, effects.milestone === '$job'");
 js = patch(js, '    s.decision=null; s.decisionResult=null;\n    return true;', "    s.decision=null; s.decisionResult=null;\n    if (s.familyEvents.doom) { const reason = s.familyEvents.doom; delete s.familyEvents.doom; endLife(s, reason); }\n    return true;");
