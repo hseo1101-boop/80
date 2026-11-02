@@ -8817,8 +8817,8 @@ function pauseCareer(s) { if (s.career && !['은퇴'].includes(s.job)) s.familyE
     // One offer per life (whichever comes first); learning stops the rest anyway.
     D(id, 'education', 18, {...when, literacy:['illiterate', 'learning'], unsetFlag:'adult-letters'}, title, text,
       [{label:'배워 본다', preview:'글을 깨침 / 더딤 / 포기', outcomes:[
-         O('read', '글을 깨쳤습니다', 28, `${way} 몇 달 만에 기도서와 신문을 더듬더듬 읽게 되었습니다. 처음으로 자기 이름을 서명했습니다.`, {literacy:'basic', stats:{지식:4, 행복:4}, milestone:'어른이 되어 글을 깨침'}, [{when:{minAptitude:60}, amount:20}]),
-         O('slow', '더디지만 배우는 중입니다', 30, '글자는 알아보지만 읽는 데 한참 걸립니다. 그래도 그만두지 않았습니다.', {literacy:'learning', stats:{지식:2}, path:{learning:'study'}}),
+         O('read', '글을 깨쳤습니다', 20, `${way} 몇 달 만에 기도서와 신문을 더듬더듬 읽게 되었습니다. 처음으로 자기 이름을 서명했습니다.`, {literacy:'basic', stats:{지식:4, 행복:4}, milestone:'어른이 되어 글을 깨침'}, [{when:{minAptitude:60}, amount:8}]),
+         O('slow', '더디지만 배우는 중입니다', 30, '글자는 알아보지만 읽는 데 한참 걸립니다. 서명은 할 수 있게 되었지만, 책 한 쪽을 읽기는 아직 버겁습니다.', {literacy:'learning', stats:{지식:2}}),
          O('quit', '그만두었습니다', 42, '일이 고되어 저녁마다 졸았습니다. 몇 주 만에 그만두었습니다.', {stats:{행복:-1}}, [{when:{maxAptitude:40}, amount:15}])]},
        {label:'이 나이에 무슨 글이냐며 사양한다', result:'지금까지 글 없이 살았습니다.', effects:{}}], .15);
   }
