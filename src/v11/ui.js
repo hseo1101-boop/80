@@ -284,7 +284,7 @@ function createUI(doc, engine, handlers) {
       const dead = x.title === '생애의 끝' || /세상을 떠났/.test(x.desc);
       rows.push(`<li class="row ${e(x.type)}${x.star ? ' starred' : ''}" data-i="${i}" tabindex="0" aria-label="${x.star ? '별표한 기록. ' : ''}${logAge(s,x)}세 ${e(logLabel(x))}">
         <span class="age">${logAge(s, x)}세${dead ? ' <b>†</b>' : ''}</span>
-        <div class="txt">${(p => `<small>${x.year}년 ${x.month}월 · ${e(p.kicker)}</small>${p.title ? `<b class="ttl">${e(p.title)}</b>` : ''}<p>${e(p.text)}</p>${p.chips.length ? `<span class="fx">${p.chips.map(([k,v]) => `<i class="${v > 0 ? 'up' : 'down'}">${e(k)} ${v > 0 ? '+' : '−'}${Math.abs(v)}</i>`).join('')}</span>` : ''}`)(logParts(x))}</div>
+        <div class="txt">${(p => `<small>${x.year}년 ${x.month}월 · ${e(p.kicker)}${(g => g ? ` · <span class="grp grp-${g}">${EVENT_GROUPS[g]}</span>` : '')(x.eventId && typeof eventGroupOf === 'function' ? eventGroupOf(x.eventId) : null)}</small>${p.title ? `<b class="ttl">${e(p.title)}</b>` : ''}<p>${e(p.text)}</p>${p.chips.length ? `<span class="fx">${p.chips.map(([k,v]) => `<i class="${v > 0 ? 'up' : 'down'}">${e(k)} ${v > 0 ? '+' : '−'}${Math.abs(v)}</i>`).join('')}</span>` : ''}`)(logParts(x))}</div>
         <span class="star" aria-hidden="true">${x.star ? '★' : '☆'}</span></li>`);
       if (rows.length >= 400) return;
     });
