@@ -75,7 +75,9 @@ function bondPick(s, spec = {}) {
     && s.year - b.year >= (spec.minYears || 0) && (!spec.here || bondHere(s, b)) && (!spec.risen || b.done.includes('r'))).sort((a, b) => a.year - b.year)[0] || null;
 }
 function bondFill(s, d, text) {
-  if (!d?.when?.bond || typeof text !== 'string' || !text.includes('{')) return text;
+  if (typeof text !== 'string') return text;
+  if (typeof placeTokens === 'function') text = placeTokens(s, text);
+  if (!d?.when?.bond || !text.includes('{')) return text;
   const b = bondPick(s, d.when.bond);
   return text.replaceAll('{옛사람}', b?.name || '옛 지인').replaceAll('{몇년}', b ? String(s.year - b.year) : '여러')
     .replaceAll('{직함}', b ? bondTitle(s, b.fate) : '관리').replaceAll('{그일}', b?.memo || '그 일');
@@ -103,7 +105,7 @@ function shiftBond(s, spec) {
 function applyBondEffects(s, e) {
   if (e.bond) makeBond(s, e.bond);
   if (e.bondShift) shiftBond(s, e.bondShift);
-  if (e.moveTo && s.place !== e.moveTo) { s.place = e.moveTo; milestone(s, `${e.moveTo}(으)로 이주`); }
+  if (e.moveTo) { const to = e.moveTo === 'rural-home' ? pick(s, ['부르고뉴 농촌', '오베르뉴 농촌', '브르타뉴 농촌']) : e.moveTo; if (s.place !== to) { s.place = to; milestone(s, `${to}(으)로 이주`); } }
 }
 
 // Yearly: futures arrive. At home you see it and feel it; from elsewhere a letter brings only the news.

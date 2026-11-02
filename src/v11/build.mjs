@@ -133,7 +133,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n' + read('era52.js') + '\n' + read('childhood52.js') + '\n' + read('bonds2.js') + '\n' + read('facets.js') + '\n' + read('exile.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n' + read('era52.js') + '\n' + read('childhood52.js') + '\n' + read('bonds2.js') + '\n' + read('facets.js') + '\n' + read('exile.js') + '\n' + read('voice.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  applyFamilyEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
@@ -151,7 +151,7 @@ js = patch(js, '    && (!c.real || s.familyEvents.real === c.real)', '    && (!c
 js = patch(js, '  applyRealEffects(s, effects);\n', '  applyRealEffects(s, effects);\n  applyBondEffects(s, effects);\n  applyFacetEffects(s, effects);\n');
 js = patch(js, 'careerYear(s); crisisYear(s);', 'careerYear(s); bondYear(s); kinMarry(s); crisisYear(s);');
 js = patch(js, "    if (r.deathYear !== undefined) p.deathYear = number(r.deathYear,'사망 연도',p.birthYear,s.year);", "    if (r.deathYear !== undefined) p.deathYear = number(r.deathYear,'사망 연도',p.birthYear,s.year);\n    if (Number.isInteger(r.married)) p.married = r.married;");
-js = patch(js, 'function decisionText(s,d) {', 'function decisionText(s,d) {\n  if (d.when?.bond) return bondFill(s, d, d.text);');
+js = patch(js, 'function decisionText(s,d) {', 'function decisionText(s,d) {\n  if (d.id !== \'school\') return bondFill(s, d, voiceText(s, d));');
 js = patch(js, '\\n선택: ${choice.label}\\n결과: ${outcome.title}\\n${outcome.result}`', '\\n선택: ${bondFill(s, d, choice.label)}\\n결과: ${outcome.title}\\n${bondFill(s, d, outcome.result)}`');
 
 js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {

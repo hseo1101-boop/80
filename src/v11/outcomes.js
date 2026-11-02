@@ -87,13 +87,16 @@
   const half = v => Math.max(1, Math.round(Math.abs(v) / 2));
   const shift = (stats, better) => {
     const out = {};
-    for (const [k, v] of Object.entries(stats || {})) if (v) out[k] = (v > 0) === better ? half(v) : -half(v);
+    // Better luck always helps and worse luck always hurts, whatever the sign of the base effect.
+    for (const [k, v] of Object.entries(stats || {})) if (v) out[k] = better ? half(v) : -half(v);
     if (!Object.keys(out).length) out.행복 = better ? 2 : -2;
     return out;
   };
   for (const d of decisions) for (const c of d.choices) {
     if (c.outcomes || c.effects?.doom) continue;
-    const [good, bad] = FLAVOR[d.domain] || FLAVOR.family;
+    // Staying put or waiting gets its own wording rather than the domain's (no "your superior noticed you" for staying home).
+    const quiet = /머문다|남는다|지켜본다|기다린다|미룬다|그만둔다|사양한다|거절한다|숨는다|문을 닫는다/.test(c.label);
+    const [good, bad] = quiet ? ['조용히 지나간 것이 오히려 다행이었습니다.', '그러나 나중에 그 선택을 여러 번 곱씹었습니다.'] : FLAVOR[d.domain] || FLAVOR.family;
     const base = c.result || '선택한 대로 되었습니다.';
     c.outcomes = [
       O('default', '생각한 대로 되었습니다', 60, base),
