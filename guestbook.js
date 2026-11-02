@@ -152,7 +152,7 @@ function gbRenderList(box, posts, {limit = 20, onReport} = {}) {
 function gbLifeText(s, r) {
   const w0 = s.familyEvents?.w0;
   const home = typeof w0 !== 'number' ? '' : w0 < 25 ? '넉넉하지 않은 ' : w0 < 50 ? '평범한 ' : w0 < 75 ? '형편이 좋은 ' : '부유한 ';
-  const kin = {'농민':'농민 집', '도시 평민':'장인 집', '부르주아':'부르주아 집안', '귀족':'귀족 집안'}[s.class] || '집';
+  const kin = {'농민':'농민 집', '도시 평민':'장인 집', '부르주아':'부르주아 집안', '귀족':'귀족 집안'}[s.familyEvents?.birthClass || s.class] || '집';
   const place = s.place.includes('농촌') ? s.place.replace(' 농촌', '의 시골 마을') : s.place;
   const parts = [`${r.born}년 프랑스 ${place}의 ${home}${kin}에서 ${s.sex === '여성' ? '여자' : '남자'}아이로 태어났습니다.`];
   if (r.age >= 12) parts.push(literacyOf(s) === 'basic' ? '글을 읽고 쓸 줄 알았습니다.' : '글을 익히지 못했습니다.');

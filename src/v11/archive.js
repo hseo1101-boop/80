@@ -23,7 +23,7 @@ function lifeTouches(s) {
   const labels = [s.job, s.familyEvents?.career_top, ...s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1])].filter(Boolean);
   const careers = [...new Set([...labels.map(l => RANK_TO_CAREER[l]), ...Object.keys(s.familyEvents || {}).filter(k => k.startsWith('cr_')).map(k => k.slice(3))].filter(id => id && CAREERS[id]))];
   const birthPlace = s.lifeMilestones.map(m => m.match(/^(?:\d+년 · )?(.+)에서 출생$/)?.[1]).find(Boolean) || s.place;
-  return {scenes, figures, careers, birth:`${birthPlace}|${s.class}`, birthPlace};
+  return {scenes, figures, careers, birth:`${birthPlace}|${s.familyEvents?.birthClass || s.class}`, birthPlace};
 }
 // Records a finished life once and returns what was new in it.
 function archiveRecord(s) {

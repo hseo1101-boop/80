@@ -88,7 +88,7 @@ function careerYear(s) {
   }
   const rank = careerRank(s);
   if (!rank) return;
-  if (s.job !== rankLabel(s, rank)) { s.career = null; return; }
+  if (s.job !== rankLabel(s, rank)) { if (typeof pauseCareer === 'function') pauseCareer(s); s.career = null; return; }
   changeStats(s, {재산: rank.pay});
   const career = CAREERS[s.career.id];
   if (career.risk && WAR_YEARS(s.year) && random(s) < career.risk.p) { endLife(s, career.risk.text); return; }

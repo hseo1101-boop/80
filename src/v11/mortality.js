@@ -107,6 +107,7 @@ for (const d of decisions) for (const c of d.choices) {
 const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
 function decisionAllowed(s, d) {
   if (typeof realBlocks === 'function' && realBlocks(s, d)) return false;
+  if (typeof lifeFixBlocks === 'function' && lifeFixBlocks(s, d)) return false;
   // Abroad, home-town decisions and the ordinary career ladder wait.
   if (typeof isAbroad === 'function' && isAbroad(s) && !d.historic && (d.domain === 'career' || d.domain === 'housing' || d.when.places || d.when.placeIncludes || d.when.notPlaces || d.when.notPlaceIncludes)) return false;
   if (RETIRED_DECISIONS.has(d.id)) return false;
