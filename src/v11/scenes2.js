@@ -11,6 +11,7 @@ function sceneRoleOf(s) {
 function sceneRoleBase(s) {
   const j = s.job || '';
   if (j === '은퇴') return 'elder';
+  if (/서기|변호사|교사|의사|외과|관청|사무관|공증|기자|교정원|팸플릿|국장|행정관|필경/.test(j)) return 'clerk';
   if (/노동자|날품|물장수|짐꾼/.test(j)) return 'labor';
   if (/하녀|하인|가정부|요리사/.test(j)) return 'servant';
   if (/자영업자|상인|점원|도매상|장수|판매원/.test(j)) return 'shop';
