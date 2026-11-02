@@ -37,7 +37,7 @@
     '농사일이 한가한 겨울 몇 달 동안 마을 학교가 열립니다. 교사는 성당지기를 겸하는 사람이고, 한 달에 몇 수씩 수업료를 내야 합니다.',
     [{label:'겨울 학교에 보내 달라고 조른다', preview:'입학 / 형편상 거절', outcomes:[
         O('yes', '겨울 동안 학교에 다녔습니다', 55, '난롯가에 둘러앉아 글자와 셈을 배웠습니다. 봄이 되면 다시 들일을 돕습니다.', {education:'마을 학교(겨울 학기)', literacy:'learning', stats:{지식:4, 재산:-2}, path:{learning:'study'}, milestone:'마을 학교 입학'}, [{when:{minWealth:25}, amount:15}]),
-        O('no', '수업료를 낼 형편이 안 됩니다', 45, '아버지는 올겨울 땔감값부터 걱정했습니다. 학교는 다음 기회로 미뤘습니다.', {stats:{행복:-2}, path:{learning:'wait'}}, [{when:{maxWealth:18}, amount:20}])]},
+        O('no', '수업료를 낼 형편이 안 됩니다', 8, '아버지는 올겨울 땔감값부터 걱정했습니다. 학교는 다음 기회로 미뤘습니다.', {stats:{행복:-2}, path:{learning:'wait'}}, [{when:{maxWealth:35}, amount:30}, {when:{maxWealth:18}, amount:20}])]},
      {label:'집에서 가축을 돌본다', result:'겨울 동안 가축을 돌보며 집안일을 도왔습니다.', effects:{stats:{재산:2}, experience:{familyTrade:2, responsibility:1}, path:{learning:'family'}}}]);
 
   D('guizot-school', 'education', 8, {minAge:6, maxAge:11, fromYear:1834, unsetFlag:'learn'},

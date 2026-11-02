@@ -145,7 +145,7 @@ for (const d of decisions) if (['apprentice','trade'].includes(d.id)) d.when.noC
     '법학부에서 몇 해 공부하고 학위를 사면 변호사가 될 수 있습니다. 돈이 들고 인맥도 필요하지만, 법률가는 이 시대 출세의 지름길입니다.',
     [{label:'법학부에 등록한다', preview:'법률 서기로 시작 / 학비에 막힘', requires:{minWealth:25}, outcomes:[
         O('in', '법률 사무소에 들어갔습니다', 75, '랭스에서 학위를 받고 공증인 사무소의 서기로 일을 시작했습니다. 첫 소송 서류를 베껴 쓰며 밤을 새웁니다.', {career:'law', rep:5, education:'법학 학위', stats:{재산:-6, 지식:4}}, [{when:{minAptitude:70}, amount:15}]),
-        O('out', '학비를 감당하지 못했습니다', 25, '두 해 만에 학업을 그만두었습니다. 그래도 법전 읽는 법은 배웠습니다.', {stats:{재산:-6, 지식:3}})]},
+        O('out', '학비를 감당하지 못했습니다', 4, '두 해 만에 학업을 그만두었습니다. 그래도 법전 읽는 법은 배웠습니다.', {stats:{재산:-6, 지식:3}}, [{when:{maxWealth:45}, amount:22}])]},
      no('집안 일을 잇는다', '법률가의 꿈은 접었습니다.')]);
 
   D('door-press', 6, {minAge:18, maxAge:35, literacy:['basic'], minKnowledge:58, notPlaceIncludes:'농촌', noCareer:true, fromYear:1780},

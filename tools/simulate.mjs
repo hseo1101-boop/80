@@ -48,7 +48,8 @@ for (let i = 0; i < N; i++) {
   const top = s.familyEvents.career_top;
   if (top) {
     const id = Object.keys(G.CAREERS).find(k => G.CAREERS[k].ranks.some(r => r.label === top));
-    stats.careers[G.CAREERS[id].label] = (stats.careers[G.CAREERS[id].label] || 0) + 1;
+    const label = id ? G.CAREERS[id].label : '기타(실존 인물·망명 등)';
+    stats.careers[label] = (stats.careers[label] || 0) + 1;
     stats.tops[top] = (stats.tops[top] || 0) + 1;
   }
   stats.figures += s.relations.filter(r => r.role === '인물').length;

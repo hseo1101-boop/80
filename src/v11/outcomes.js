@@ -66,7 +66,8 @@
     O('fail', '문을 닫았습니다', 30, '빚을 갚느라 가게를 정리했습니다.', {stats:{재산:-6, 행복:-6}, job:'임시 노동자'}, [{when:{maxWealth:40}, amount:10}])]);
   set('familychoice', '교육을 돕는다', '아이가 잘 배움 / 형편이 버거움', [
     O('default', '아이가 학교에 다닙니다', 60, '학비와 책값을 마련하느라 빠듯하지만 아이가 글을 깨쳐 갑니다.'),
-    O('strain', '학비가 버거웠습니다', 40, '두 해 만에 학교를 그만두게 했습니다. 아이가 많이 울었습니다.', {stats:{재산:-3, 행복:-3}}, [{when:{maxWealth:30}, amount:20}])]);
+    // Only a household that is actually short of money pulls the child out of school.
+    O('strain', '학비가 버거웠습니다', 3, '두 해 만에 학교를 그만두게 했습니다. 아이가 많이 울었습니다.', {stats:{재산:-3, 행복:-3}}, [{when:{maxWealth:30}, amount:35}, {when:{maxWealth:50}, amount:12}])]);
 
   // ---- Every other choice: as hoped / better / worse, derived from its own effects ----
   const FLAVOR = {
