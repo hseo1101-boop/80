@@ -337,8 +337,12 @@ function applyRealEffects(s, e) {
 }
 // On the record, the recorded trade holds: chance careers and job changes from ordinary decisions wait.
 const realOnRecord = s => !!s.familyEvents?.real && !s.familyEvents.realOff;
-const CAREER_DOORS = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id));
-function realBlocks(s, d) { return realOnRecord(s) && CAREER_DOORS.has(d.id); }
+// Built on first use, so decisions added by later modules (moves, careers) are included.
+let CAREER_DOORS_SET = null;
+const careerDoors = () => CAREER_DOORS_SET || (CAREER_DOORS_SET = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id)));
+// On the record, the recorded turning points are the life's history: ordinary historic scenes (barricades, battles,
+// plebiscites) would contradict it, so they wait until the life leaves the record.
+function realBlocks(s, d) { return realOnRecord(s) && (careerDoors().has(d.id) || (d.historic && !d.realLife)); }
 function realKeep(s) {
   const job = s.familyEvents?.realJob;
   if (!realOnRecord(s) || !job || s.job === job) return;

@@ -7485,8 +7485,12 @@ function applyRealEffects(s, e) {
 }
 // On the record, the recorded trade holds: chance careers and job changes from ordinary decisions wait.
 const realOnRecord = s => !!s.familyEvents?.real && !s.familyEvents.realOff;
-const CAREER_DOORS = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id));
-function realBlocks(s, d) { return realOnRecord(s) && CAREER_DOORS.has(d.id); }
+// Built on first use, so decisions added by later modules (moves, careers) are included.
+let CAREER_DOORS_SET = null;
+const careerDoors = () => CAREER_DOORS_SET || (CAREER_DOORS_SET = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id)));
+// On the record, the recorded turning points are the life's history: ordinary historic scenes (barricades, battles,
+// plebiscites) would contradict it, so they wait until the life leaves the record.
+function realBlocks(s, d) { return realOnRecord(s) && (careerDoors().has(d.id) || (d.historic && !d.realLife)); }
 function realKeep(s) {
   const job = s.familyEvents?.realJob;
   if (!realOnRecord(s) || !job || s.job === job) return;
@@ -9579,6 +9583,24 @@ function politicalMood(s, event) {
       {label:'종신 연금으로 바꿔 남은 생을 편하게 산다', result:'집을 종신 연금(비아제)으로 팔았습니다. 매달 연금이 들어옵니다. 산 사람은 당신이 오래 살지 않기를 바랄 것입니다.', effects:{stats:{재산:6, 행복:2}, flags:['inheritance', 'inheritance-none']}}]});
 })();
 
+// src/bugfix.js — data corrections found by the audit (tools: scratch audit scripts)
+// Texts that assumed family members the player may not have, and similar small mismatches.
+(() => {
+  const ev = id => [...dailyEvents, ...childhoodEvents].find(e => e.id === id);
+  const dc = id => decisions.find(d => d.id === id);
+  const need = (e, role) => { if (e) e.when.livingRoles = [...new Set([...(e.when.livingRoles || []), role])]; };
+  need(ev('daily-child-bad-1'), '어머니');
+  need(ev('daily-child-bad-3'), '아버지');
+  const t = (e, from, to) => { if (e && e.text.includes(from)) e.text = e.text.replace(from, to); };
+  t(ev('daily-adult-good-4'), '아이들 몫으로 사탕 몇 알을 샀습니다', '식구들 몫으로 사탕 몇 알을 샀습니다');
+  t(ev('m-spouse-evening'), '아이들이 잠든 뒤 배우자와', '하루 일을 마치고 배우자와');
+  t(ev('e-old-age'), '손주들이 믿지 않습니다', '젊은 사람들이 믿지 않습니다');
+  t(dc('memoir'), '손주들이 옛날이야기를 조릅니다.', '젊은 사람들이 옛날이야기를 청합니다.');
+  t(dc('mobilization-women'), '남편과 형제들이 군인 수첩을 들고', '마을 남자들이 군인 수첩을 들고');
+  t(dc('move-paris'), '아이들은 좁은 셋방에서 기침을 하고', '식구들은 좁은 셋방에서 기침을 하고');
+  t(dc('inheritance-only'), '다만 배우자의 노후와,', '다만 남은 식구의 노후와,');
+})();
+
 // src/groups.js — 사건 분류: 공통 · 신분별 · 직업별 · 관계
 // Every everyday event and decision falls into one of four groups, read from its conditions:
 //   관계   — about family, spouse, children, parents, friends (relationship roles, family domains)
@@ -10994,7 +11016,8 @@ function normalizeState(input) {
   if (v.career != null) {
     const c = object(v.career, '진로');
     if (!CAREERS[c.id]) throw new Error('알 수 없는 진로입니다.');
-    s.career = {id:c.id, rank:number(c.rank, '진로 단계', 0, CAREERS[c.id].ranks.length - 1), since:number(c.since, '진로 시작 연도', 1600, 2200)};
+    s.career = {id:c.id, rank:number(c.rank, '진로 단계', 0, Math.max(CAREERS[c.id].ranks.length, (CAREERS[c.id].women || []).length) - 1), since:number(c.since, '진로 시작 연도', 1600, 2200)};
+    if (typeof c.npc === 'string' && c.npc.length <= 40) s.career.npc = c.npc;
   } else s.career = null;
   s.aptitude = number(v.aptitude,'선천적 능력',1,100,legacyAptitude(v));
   s.experience=emptyExperience();
@@ -11566,7 +11589,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.37';
+const GAME_VERSION = 'v0.38';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -11815,7 +11838,7 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('pagehide', () => { controller.autosave(); clock.stop(); });
 window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden && !ui.choosing) clock.start(); });
-if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller, render};
+if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller, render, encodeSave, decodeSave};
 gbShowPreview();
 render();
 

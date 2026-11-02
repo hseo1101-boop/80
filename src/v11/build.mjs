@@ -133,7 +133,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('womenwork.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n' + read('era52.js') + '\n' + read('childhood52.js') + '\n' + read('bonds2.js') + '\n' + read('facets.js') + '\n' + read('exile.js') + '\n' + read('voice.js') + '\n' + read('lifefix.js') + '\n' + read('scenes2.js') + '\n' + read('scenes3.js') + '\n' + read('scenes4.js') + '\n' + read('politics.js') + '\n' + read('groups.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('womenwork.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n' + read('era52.js') + '\n' + read('childhood52.js') + '\n' + read('bonds2.js') + '\n' + read('facets.js') + '\n' + read('exile.js') + '\n' + read('voice.js') + '\n' + read('lifefix.js') + '\n' + read('scenes2.js') + '\n' + read('scenes3.js') + '\n' + read('scenes4.js') + '\n' + read('politics.js') + '\n' + read('bugfix.js') + '\n' + read('groups.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  applyFamilyEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
@@ -158,7 +158,8 @@ js = patch(js, '\\n선택: ${choice.label}\\n결과: ${outcome.title}\\n${outcom
 js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
     const c = object(v.career, '진로');
     if (!CAREERS[c.id]) throw new Error('알 수 없는 진로입니다.');
-    s.career = {id:c.id, rank:number(c.rank, '진로 단계', 0, CAREERS[c.id].ranks.length - 1), since:number(c.since, '진로 시작 연도', 1600, 2200)};
+    s.career = {id:c.id, rank:number(c.rank, '진로 단계', 0, Math.max(CAREERS[c.id].ranks.length, (CAREERS[c.id].women || []).length) - 1), since:number(c.since, '진로 시작 연도', 1600, 2200)};
+    if (typeof c.npc === 'string' && c.npc.length <= 40) s.career.npc = c.npc;
   } else s.career = null;
   s.aptitude = number(`);
 // 2i. Soldiers at the front: no home-town everyday events, discharge in peacetime.

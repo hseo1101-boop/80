@@ -7091,8 +7091,12 @@ function applyRealEffects(s, e) {
 }
 // On the record, the recorded trade holds: chance careers and job changes from ordinary decisions wait.
 const realOnRecord = s => !!s.familyEvents?.real && !s.familyEvents.realOff;
-const CAREER_DOORS = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id));
-function realBlocks(s, d) { return realOnRecord(s) && CAREER_DOORS.has(d.id); }
+// Built on first use, so decisions added by later modules (moves, careers) are included.
+let CAREER_DOORS_SET = null;
+const careerDoors = () => CAREER_DOORS_SET || (CAREER_DOORS_SET = new Set(decisions.filter(d => !d.realLife && d.choices.some(c => [c, ...(c.outcomes || [])].some(x => x.effects?.career || x.effects?.job || x.effects?.moveTo || d.domain === "housing"))).map(d => d.id)));
+// On the record, the recorded turning points are the life's history: ordinary historic scenes (barricades, battles,
+// plebiscites) would contradict it, so they wait until the life leaves the record.
+function realBlocks(s, d) { return realOnRecord(s) && (careerDoors().has(d.id) || (d.historic && !d.realLife)); }
 function realKeep(s) {
   const job = s.familyEvents?.realJob;
   if (!realOnRecord(s) || !job || s.job === job) return;
@@ -9183,6 +9187,24 @@ function politicalMood(s, event) {
       {label:'평생 곁에 있어 준 사람에게 남긴다', result:'오래 돌봐 준 이웃(하녀)에게 집과 살림을 남겼습니다. 친척들이 소송을 걸겠다고 수군댔습니다.', effects:{stats:{행복:4}, flags:['inheritance', 'inheritance-none']}},
       {label:'구빈원과 교구 학교에 기부한다', result:'유언장에 따라 구빈원에 침대 둘이 생기고, 교구 학교에 당신 이름의 장학금이 생겼습니다.', effects:{stats:{행복:4}, experience:{religious:1}, flags:['inheritance', 'inheritance-none']}},
       {label:'종신 연금으로 바꿔 남은 생을 편하게 산다', result:'집을 종신 연금(비아제)으로 팔았습니다. 매달 연금이 들어옵니다. 산 사람은 당신이 오래 살지 않기를 바랄 것입니다.', effects:{stats:{재산:6, 행복:2}, flags:['inheritance', 'inheritance-none']}}]});
+})();
+
+// src/bugfix.js — data corrections found by the audit (tools: scratch audit scripts)
+// Texts that assumed family members the player may not have, and similar small mismatches.
+(() => {
+  const ev = id => [...dailyEvents, ...childhoodEvents].find(e => e.id === id);
+  const dc = id => decisions.find(d => d.id === id);
+  const need = (e, role) => { if (e) e.when.livingRoles = [...new Set([...(e.when.livingRoles || []), role])]; };
+  need(ev('daily-child-bad-1'), '어머니');
+  need(ev('daily-child-bad-3'), '아버지');
+  const t = (e, from, to) => { if (e && e.text.includes(from)) e.text = e.text.replace(from, to); };
+  t(ev('daily-adult-good-4'), '아이들 몫으로 사탕 몇 알을 샀습니다', '식구들 몫으로 사탕 몇 알을 샀습니다');
+  t(ev('m-spouse-evening'), '아이들이 잠든 뒤 배우자와', '하루 일을 마치고 배우자와');
+  t(ev('e-old-age'), '손주들이 믿지 않습니다', '젊은 사람들이 믿지 않습니다');
+  t(dc('memoir'), '손주들이 옛날이야기를 조릅니다.', '젊은 사람들이 옛날이야기를 청합니다.');
+  t(dc('mobilization-women'), '남편과 형제들이 군인 수첩을 들고', '마을 남자들이 군인 수첩을 들고');
+  t(dc('move-paris'), '아이들은 좁은 셋방에서 기침을 하고', '식구들은 좁은 셋방에서 기침을 하고');
+  t(dc('inheritance-only'), '다만 배우자의 노후와,', '다만 남은 식구의 노후와,');
 })();
 
 // src/groups.js — 사건 분류: 공통 · 신분별 · 직업별 · 관계
