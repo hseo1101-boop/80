@@ -200,6 +200,11 @@ function preferFresh(s, events) {
 function recentlySeen(s, id) { return s.log.some(x => x.eventId === id && s.year - x.year < 4); }
 // Past twenty, an everyday draw from the generic pool turns personal more often when a fresh personal scene exists.
 function personalFirst(s, groups, group) {
+  // Children: a generic draw turns to a scene of their own time when one is fresh.
+  if (group?.category === 'universal' && ageOf(s) < 12 && random(s) < .5) {
+    const era = groups.find(g => g.category === 'historical' && g.events.some(e => !s.seenEvents?.includes(e.id) && !recentlySeen(s, e.id)));
+    if (era) return era;
+  }
   const personal = groups.find(g => g.category === 'personal');
   return group?.category === 'universal' && personal && ageOf(s) >= 20 && random(s) < .8 && personal.events.some(e => !recentlySeen(s, e.id)) ? personal : group;
 }
