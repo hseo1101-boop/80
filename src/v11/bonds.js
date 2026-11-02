@@ -57,6 +57,8 @@ const FATES = {
     favor:['시의원의 도움', '{n} 시의원이 당신 아이를 새 공립 학교의 교사 자리에 추천했습니다.', {재산:4, 행복:4}],
     grudge:['시의원의 눈총', '{n} 시의원이 동네 사람들 앞에서 당신이 1871년에 한 일을 꺼냈습니다.', {행복:-4}]}
 };
+// How often a bond's future comes true, and how often it is then acted on.
+const BOND_RISE_CHANCE = .65, BOND_PAY_CHANCE = .55;
 function bondTitle(s, fate) { return FATES[fate]?.title || '관리'; }
 const placeShort = p => (p || '').replace(' 농촌', ' 시골');
 function bondsOf(s) {
@@ -70,7 +72,7 @@ const bondHere = (s, b) => !FATES[b.fate]?.local || !b.place || b.place === s.pl
 // The oldest living bond that fits {kind:[…], fate:[…], minYears, here}.
 function bondPick(s, spec = {}) {
   return bondsOf(s).filter(b => b.rel?.alive && (!spec.kind || spec.kind.includes(b.kind)) && (!spec.fate || spec.fate.includes(b.fate))
-    && s.year - b.year >= (spec.minYears || 0) && (!spec.here || bondHere(s, b))).sort((a, b) => a.year - b.year)[0] || null;
+    && s.year - b.year >= (spec.minYears || 0) && (!spec.here || bondHere(s, b)) && (!spec.risen || b.done.includes('r'))).sort((a, b) => a.year - b.year)[0] || null;
 }
 function bondFill(s, d, text) {
   if (!d?.when?.bond || typeof text !== 'string' || !text.includes('{')) return text;
@@ -108,22 +110,26 @@ function applyBondEffects(s, e) {
 function bondYear(s) {
   for (const b of bondsOf(s)) {
     const F = FATES[b.fate];
-    if (!F || !b.rel?.alive || b.done.includes('r') || s.year < F.rise || ageOf(s, b.rel) < 25) continue;
+    if (!F || !b.rel?.alive || b.done.includes('r') || b.done.includes('x') || s.year < F.rise || ageOf(s, b.rel) < 25) continue;
+    // Not everyone rises: some stay ordinary people, and the bond stays a memory.
+    if (random(s) >= BOND_RISE_CHANCE) { b.done += 'x'; bondSet(s, b); continue; }
     b.rel.job = F.title; b.done += 'r';
     const back = `${s.year - b.year}년 전 당신이 ${b.memo} 그 사람입니다.`;
     if (!bondHere(s, b)) addLog(s, '고향에서 온 편지', `고향 ${placeShort(b.place)}에서 편지가 왔습니다. ${F.news(b)} ${back}`, 'normal');
     else {
       addLog(s, '돌아온 이름', `${F.news(b)} ${back}`, b.kind === 'favor' ? 'good' : b.kind === 'grudge' ? 'bad' : 'normal');
       const pay = F[b.kind];
-      if (pay) { changeStats(s, pay[2]); addLog(s, pay[0], pay[1].replaceAll('{n}', b.name).replaceAll('{y}', String(s.year - b.year)).replaceAll('{m}', b.memo), Object.values(pay[2]).some(v => v < 0) ? 'bad' : 'good'); }
-      F.special?.(s, b);
+      // A favour may be repaid, a grudge may be acted on; neither is certain.
+      if (pay && random(s) < BOND_PAY_CHANCE) { changeStats(s, pay[2]); addLog(s, pay[0], pay[1].replaceAll('{n}', b.name).replaceAll('{y}', String(s.year - b.year)).replaceAll('{m}', b.memo), Object.values(pay[2]).some(v => v < 0) ? 'bad' : 'good'); }
+      else if (pay) addLog(s, '조용한 이름', b.kind === 'favor' ? `${b.name}에게서는 아무 연락도 없었습니다. 옛일을 잊었는지, 자리가 자리인지라 몸을 사리는지 알 수 없습니다.` : `${b.name}은(는) 옛일을 들추지 않았습니다. 잊은 것인지, 기다리는 것인지는 모르겠습니다.`, 'normal');
+      if (random(s) < BOND_PAY_CHANCE) F.special?.(s, b);
     }
     if (F.next && b.rel.alive && random(s) < F.next[1]) { b.fate = F.next[0]; b.done = b.done.replace(/r/g, ''); }
     bondSet(s, b);
   }
   // An old friend in old age.
   const old = bondPick(s, {kind:['favor'], minYears:30});
-  if (old && ageOf(s) >= 55 && !old.done.includes('o') && random(s) < .3) {
+  if (old && ageOf(s) >= 55 && !old.done.includes('o') && random(s) < .07) {
     old.done += 'o'; bondSet(s, old); changeStats(s, {행복:4});
     addLog(s, '오래된 인연', `늙은 ${old.name}이(가) 찾아와 ${s.year - old.year}년 전 당신이 ${old.memo} 날 이야기를 꺼냈습니다. “그때 당신이 아니었으면 나는 없었소.”`, 'good');
   }
@@ -193,7 +199,7 @@ function terrorRisk(s) {
   const T = (id, date, until, when, title, text, choices, chance) => decisions.push({id, domain:'history', priority:30, historic:true, title, text, chance,
     when:{...when, fromDate:date, toDate:until, unsetFlag:'terror-bond'}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:['terror-bond', id]}}))});
   const GUILLOTINE = '혁명 재판소에서 사형 판결을 받고 단두대에 올랐습니다.';
-  T('terror-grudge', [1793,9], [1794,7], {minAge:16, bond:{kind:['grudge'], fate:['committee', 'deputy', 'mayor'], here:true}}, '고발장에 적힌 이름',
+  T('terror-grudge', [1793,9], [1794,7], {minAge:16, bond:{kind:['grudge'], fate:['committee', 'deputy', 'mayor'], here:true, risen:true}}, '고발장에 적힌 이름',
     '혐의자 법이 공포되었습니다. 구역 감시위원회에서 출두하라는 쪽지가 왔습니다. 고발한 사람은 {옛사람}. 이제 {직함}입니다. {몇년}년 전 당신이 {그일} 일을, 그는 잊지 않았습니다.',
     [{label:'출두해 해명한다', preview:'풀려남 / 투옥 / 단두대', outcomes:[
        O('freed', '풀려났습니다', 55, '이웃들이 증언해 주었습니다. 위원회는 당신을 돌려보냈지만 {옛사람}은(는) 끝까지 당신을 노려보았습니다.', {stats:{행복:-4}}),
@@ -203,11 +209,13 @@ function terrorRisk(s) {
        O('hid', '숨어서 버텼습니다', 75, '먼 친척 집 다락에서 몇 달을 숨어 지냈습니다. 그동안 집과 가게는 봉인되었습니다.', {stats:{재산:-10, 행복:-6}, milestone:'공포 정치 때 피신'}),
        O('caught', '붙잡혔습니다', 25, '성문에서 붙잡혀 감옥으로 끌려갔습니다.', {stats:{건강:-10, 재산:-8, 행복:-8}, milestone:'공포 정치 때 투옥'})]},
      {label:'다른 옛 인연에게 도움을 청한다', requires:{bondFavor:true}, preview:'구명 / 소용없음', outcomes:[
-       O('saved', '도움을 받았습니다', 80, '당신이 예전에 도와준 사람이 위원회에 나와 당신 편을 들었습니다. 고발은 거둬졌습니다.', {stats:{행복:3}, milestone:'옛 인연 덕에 공포 정치를 넘김'}),
-       O('vain', '소용없었습니다', 20, '그도 자기 몸을 사리느라 나서지 못했습니다. 넉 달을 감옥에서 보냈습니다.', {stats:{건강:-8, 재산:-6, 행복:-8}})]}], .14);
-  T('terror-favor', [1793,9], [1794,7], {minAge:16, terrorRisk:true, bond:{kind:['favor'], fate:['committee', 'deputy', 'mayor'], here:true}}, '명단에서 지워진 이름',
+       O('saved', '도움을 받았습니다', 55, '당신이 예전에 도와준 사람이 위원회에 나와 당신 편을 들었습니다. 고발은 거둬졌습니다.', {stats:{행복:3}, milestone:'옛 인연 덕에 공포 정치를 넘김'}),
+       O('vain', '소용없었습니다', 45, '그도 자기 몸을 사리느라 나서지 못했습니다. 넉 달을 감옥에서 보냈습니다.', {stats:{건강:-8, 재산:-6, 행복:-8}})]}], .14);
+  T('terror-favor', [1793,9], [1794,7], {minAge:16, terrorRisk:true, bond:{kind:['favor'], fate:['committee', 'deputy', 'mayor'], here:true, risen:true}}, '명단에서 지워진 이름',
     '혐의자 명단이 돌고 있습니다. 당신 이름도 올라 있다는 소문입니다. 그날 밤 {옛사람}이(가) 조용히 찾아왔습니다. 이제 {직함}입니다. “{몇년}년 전 당신이 {그일} 일을 나는 잊지 않았소.”',
-    [{label:'그의 도움을 받는다', result:'이튿날 명단에서 당신 이름이 사라졌습니다. 공포 정치가 끝날 때까지 아무도 당신을 부르지 않았습니다.', effects:{stats:{행복:6}, milestone:'옛 인연 덕에 공포 정치를 넘김'}},
+    [{label:'그의 도움을 받는다', preview:'명단에서 지워짐 / 그도 어쩔 수 없음', outcomes:[
+       O('saved', '명단에서 이름이 사라졌습니다', 65, '이튿날 명단에서 당신 이름이 사라졌습니다. 공포 정치가 끝날 때까지 아무도 당신을 부르지 않았습니다.', {stats:{행복:6}, milestone:'옛 인연 덕에 공포 정치를 넘김'}),
+       O('failed', '그도 막지 못했습니다', 35, '그는 애썼지만 위원회의 다른 사람들이 고집을 꺾지 않았습니다. 석 달을 감옥에서 보냈습니다. 그래도 그가 아니었다면 더 나빴을 것입니다.', {stats:{건강:-8, 재산:-4, 행복:-5}, milestone:'공포 정치 때 투옥'})]},
      {label:'그를 위험에 빠뜨릴 수 없어 사양한다', preview:'무사함 / 투옥', outcomes:[
        O('ok', '무사히 넘겼습니다', 60, '운이 좋았습니다. 위원회는 당신을 부르지 않았습니다.', {stats:{행복:2}}),
        O('jailed', '감옥에 갇혔습니다', 40, '석 달을 감옥에서 보냈습니다. 풀려나던 날 {옛사람}이(가) 성문 앞에 서 있었습니다.', {stats:{건강:-8, 재산:-5, 행복:-6}, milestone:'공포 정치 때 투옥'})]}], .14);
