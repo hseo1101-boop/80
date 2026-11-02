@@ -135,6 +135,7 @@ Object.assign(VOICE, {
 function voiceText(s, d) {
   const v = VOICE[d.id]; if (!v) return d.text;
   const k = voiceKind(s), job = typeof jobKind === 'function' ? jobKind(s.job) : '';
-  for (const key of [`job:${job}`, `${s.class}|${s.sex}|${k}`, `${s.class}|${s.sex}`, `${s.class}|${k}`, s.class, `${s.sex}|${k}`, s.sex, k]) if (v[key]) return v[key];
+  const role = typeof sceneRoleOf === 'function' ? sceneRoleOf(s) : null;
+  for (const key of [`role:${role}`, `job:${job}`, `${s.class}|${s.sex}|${k}`, `${s.class}|${s.sex}`, `${s.class}|${k}`, s.class, `${s.sex}|${k}`, s.sex, k]) if (v[key]) return v[key];
   return d.text;
 }
