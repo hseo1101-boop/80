@@ -7,20 +7,28 @@
 // 3. Royalist officers who stay can be purged, arrested, tried and guillotined; émigré officers can
 //    die at Quiberon.
 const isAbroad = s => !!s?.familyEvents?.emigre && !s.dead;
-const SOLDIER_RE = /^(군인|육군)/;
+const SOLDIER_RE = /^(군인|육군)/, CLERGY_RE = /신학생|신부|참사회원|주교|수녀|사제/;
+const exileOf = s => isAbroad(s) ? s.familyEvents.exileTo || '국외' : '';
 function applyFacetEffects(s, e) {
   if (e.emigrate && !s.familyEvents.emigre) {
     s.familyEvents.emigre = s.year;
     s.familyEvents.preEmigreJob = s.job;
-    const officer = SOLDIER_RE.test(s.job) || s.career?.id === 'officer';
-    s.job = officer ? '망명군 장교' : '망명자'; s.career = null;
-    s.paths.politics = 'royalist';
-    milestone(s, officer ? '국경을 넘어 망명군에 합류' : '국경을 넘어 망명');
+    const officer = SOLDIER_RE.test(s.job) || s.career?.id === 'officer', priest = CLERGY_RE.test(s.job);
+    // Where exile begins: the princes' court at Koblenz until 1792, then London, Hamburg or Switzerland.
+    const to = typeof e.emigrate === 'string' ? e.emigrate : s.year <= 1792 ? '코블렌츠' : officer ? '콩데 군 진영'
+      : s.class === '부르주아' ? '함부르크' : pick(s, ['런던', '런던', '로잔', '함부르크']);
+    s.familyEvents.exileTo = to;
+    s.job = officer ? '망명군 장교' : priest ? '망명 사제' : '망명자'; s.career = null;
+    s.paths.politics = priest ? 'refractory' : 'royalist';
+    milestone(s, `국경을 넘어 ${to}(으)로 망명`);
+  }
+  if (e.exileMove && isAbroad(s) && s.familyEvents.exileTo !== e.exileMove) {
+    s.familyEvents.exileTo = e.exileMove; milestone(s, `망명지를 ${e.exileMove}(으)로 옮김`);
   }
   if (e.returnHome && s.familyEvents.emigre) {
-    const years = s.year - s.familyEvents.emigre;
-    delete s.familyEvents.emigre;
-    s.job = e.returnHome === true ? '없음' : e.returnHome;
+    const years = s.year - s.familyEvents.emigre, was = s.familyEvents.preEmigreJob || '없음';
+    delete s.familyEvents.emigre; delete s.familyEvents.exileTo;
+    s.job = e.returnHome !== true ? e.returnHome : CLERGY_RE.test(was) ? was : '없음';
     milestone(s, `${years}년 만에 망명에서 귀국`);
   }
 }

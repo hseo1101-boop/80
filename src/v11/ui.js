@@ -78,6 +78,7 @@ function homeLabel(s) {
   return '초가 농가';
 }
 function placeTitle(s) {
+  if (typeof isAbroad === 'function' && isAbroad(s)) return `망명지 ${exileOf(s)}`;
   if (s.place.includes('농촌')) return s.place.replace('농촌', '농촌 마을');
   return s.place.includes('파리') ? '파리 시내' : s.place + ' 시내';
 }
@@ -256,7 +257,7 @@ function createUI(doc, engine, handlers) {
       <dl class="id-fields">
         <dt>성별</dt><dd>${e(s.sex)}</dd>
         <dt>출생</dt><dd>${e(place)} · ${s.born}년 ${s.birthMonth}월</dd>
-        <dt>거주</dt><dd>${e(s.place)}</dd>
+        <dt>거주</dt><dd>${e(typeof isAbroad === 'function' && isAbroad(s) ? `망명 중 · ${exileOf(s)} (고향 ${s.place})` : s.place)}</dd>
         <dt>신분</dt><dd>${e(s.class)} · ${s.class === '귀족' ? '제2신분' : '제3신분'}</dd>
         <dt>종교</dt><dd>${e(RELIGION[s.religion] || '기록 없음')}</dd>
         <dt>출신 가정</dt><dd class="dots" aria-label="5단계 중 ${dots}">${'●'.repeat(dots)}<span>${'○'.repeat(5-dots)}</span></dd>

@@ -165,7 +165,7 @@ FIGURE_BY_NAME = Object.fromEntries(Object.entries(FIGURES).map(([id, f]) => [f.
   H('september-1792', [1792,9], {jobMatch:CLERGY, pathIs:{politics:'refractory'}},
     '추방령과 9월',
     '선서 거부 신부에게 국외 추방령이 내렸습니다. 파리에서는 감옥의 신부들이 학살되었다는 소식이 들립니다.',
-    [{label:'스페인(또는 영국)으로 망명한다', result:'낯선 나라의 수도원에 몸을 의탁했습니다. 1802년 정교 협약 뒤에야 돌아왔습니다.', effects:{stats:{행복:-8, 재산:-5}, rep:2}},
+    [{label:'영국으로 망명한다', result:'르아브르에서 배를 타고 영국으로 건너갔습니다. 정교 협약이 맺어지기 전까지는 돌아갈 수 없습니다.', effects:{stats:{행복:-8, 재산:-5}, rep:2, emigrate:'런던'}},
      {label:'남아서 숨어 지내며 미사를 드린다', preview:'숨어 지냄 / 붙잡힘', outcomes:[
         O('hidden', '신자들이 숨겨 주었습니다', 70, '헛간과 다락을 옮겨 다니며 몰래 세례와 장례를 집전했습니다.', {rep:8, experience:{religious:3}, stats:{건강:-4}}),
         O('caught', '붙잡혔습니다', 30, '로슈포르 앞바다의 감옥선에 갇혔습니다. 살아 돌아온 사람은 절반도 되지 않았습니다.', {doom:'선서 거부 신부로 붙잡혀 감옥선에서 숨을 거두었습니다.'})]}]);

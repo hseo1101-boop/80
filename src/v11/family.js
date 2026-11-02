@@ -19,7 +19,7 @@ function applyFamilyEffects(s, e) {
   if (e.foundling) { const r = familyTarget(s, {age:[0, 1]}); if (r) { r.role = '맡긴 아이'; r.job = '기아 보호소'; r.closeness = 0; } }
   if (e.divorce) { const r = s.relations.find(x => x.role === '배우자' && x.alive); if (r) { r.role = '전 배우자'; r.closeness = Math.min(r.closeness, 30); milestone(s, '이혼'); } }
   if (e.addRelation) {
-    const a = e.addRelation, sex = a.sex || pick(s, ['남성','여성']);
+    const a = e.addRelation, sex = a.sex || (a.role === '배우자' ? (s.sex === '남성' ? '여성' : '남성') : pick(s, ['남성','여성']));
     const surname = a.ownSurname ? s.name.split(' ').at(-1) : pick(s, surnames);
     s.relations.push({name:freshName(s, sex === '남성' ? male : female, surname), role:a.role, sex, birthYear:s.year - (a.age || 0),
       birthMonth:a.age ? 1 : s.month, alive:true, closeness:a.closeness ?? 60, job:a.job || '없음'});
