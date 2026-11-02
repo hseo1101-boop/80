@@ -12,6 +12,10 @@ function familyTarget(s, spec = {}) {
 function applyFamilyEffects(s, e) {
   if (e.childJob) { const r = familyTarget(s, e.childJob); if (r) r.job = e.childJob.job; }
   if (e.childDies) { const r = familyTarget(s, e.childDies); if (r) { r.alive = false; r.deathYear = s.year; changeStats(s, {행복:-12}); milestone(s, `${r.name}과(와) 작별`); } }
+  if (e.childMarry) {
+    const r = s.relations.filter(x => x.role === '자녀' && x.alive && !x.married && ageOf(s, x) >= 16).sort((a, b) => a.birthYear - b.birthYear)[0];
+    if (r) { r.married = s.year; milestone(s, `${r.name.split(' ')[0]} 혼인`); }
+  }
   if (e.foundling) { const r = familyTarget(s, {age:[0, 1]}); if (r) { r.role = '맡긴 아이'; r.job = '기아 보호소'; r.closeness = 0; } }
   if (e.divorce) { const r = s.relations.find(x => x.role === '배우자' && x.alive); if (r) { r.role = '전 배우자'; r.closeness = Math.min(r.closeness, 30); milestone(s, '이혼'); } }
   if (e.addRelation) {
@@ -58,11 +62,11 @@ DECISION_DOMAINS.push({id:'health', label:'건강', target:0});
     '자녀의 혼사',
     '다 자란 자녀에게 혼담이 들어왔습니다. 상대 집안은 지참금 이야기부터 꺼냅니다.',
     [{label:'지참금을 마련해 혼인시킨다', preview:'좋은 혼처 / 빚을 짐', requires:{minWealth:25}, outcomes:[
-        O('default', '혼인을 시켰습니다', 65, '혼인 계약서에 서명하고 잔치를 열었습니다. 자녀가 새 집으로 떠났습니다.', {stats:{재산:-6, 행복:5}}),
-        O('debt', '지참금 때문에 빚을 졌습니다', 35, '체면을 지키느라 무리했습니다. 몇 해 동안 빚을 갚았습니다.', {stats:{재산:-10, 행복:2}})]},
+        O('default', '혼인을 시켰습니다', 65, '혼인 계약서에 서명하고 잔치를 열었습니다. 자녀가 새 집으로 떠났습니다.', {stats:{재산:-6, 행복:5}, childMarry:true}),
+        O('debt', '지참금 때문에 빚을 졌습니다', 35, '체면을 지키느라 무리했습니다. 몇 해 동안 빚을 갚았습니다.', {stats:{재산:-10, 행복:2}, childMarry:true})]},
      {label:'자녀가 원하는 사람과 하게 둔다', preview:'행복한 혼인 / 집안의 체면', outcomes:[
-        O('default', '자녀가 원하는 사람과 혼인했습니다', 60, '가진 것은 없지만 서로 아끼는 짝입니다.', {relationCloseness:{roles:['자녀'], amount:8}, stats:{행복:4}}),
-        O('talk', '친척들이 수군거렸습니다', 40, '“그런 집안과 사돈을 맺다니.” 한동안 뒷말을 들었습니다.', {stats:{행복:-2}, relationCloseness:{roles:['자녀'], amount:6}})]},
+        O('default', '자녀가 원하는 사람과 혼인했습니다', 60, '가진 것은 없지만 서로 아끼는 짝입니다.', {relationCloseness:{roles:['자녀'], amount:8}, stats:{행복:4}, childMarry:true}),
+        O('talk', '친척들이 수군거렸습니다', 40, '“그런 집안과 사돈을 맺다니.” 한동안 뒷말을 들었습니다.', {stats:{행복:-2}, relationCloseness:{roles:['자녀'], amount:6}, childMarry:true})]},
      {label:'아직은 집에 둔다', result:'혼담을 미뤘습니다. 자녀는 섭섭한 눈치입니다.', effects:{relationCloseness:{roles:['자녀'], amount:-6}, stats:{재산:1}}}]);
 
   D('son-conscription', 'parenting', 9, {minAge:38, childAge:[20, 21], childSex:'남성', fromYear:1799, excludeYears:[1814, 1817]},
@@ -243,3 +247,14 @@ DECISION_DOMAINS.push({id:'health', label:'건강', target:0});
         O('limp', '평생 절뚝이게 되었습니다', 40, '뼈가 비뚤게 붙었습니다.', {stats:{건강:-5}})]},
      {label:'참고 일을 계속한다', result:'이를 악물고 일했습니다. 그 상처는 늙어서까지 쑤셨습니다.', effects:{stats:{건강:-6, 재산:1}}}], .03);
 })();
+
+// Grown children and siblings marry in their own time (first marriages came late: about 26–28).
+function kinMarry(s) {
+  for (const r of s.relations) {
+    if (!r.alive || r.married || !['자녀', '형제자매'].includes(r.role)) continue;
+    const a = ageOf(s, r);
+    if (a < 19 || a > 40 || random(s) >= (a < 23 ? .05 : a < 32 ? .13 : .05)) continue;
+    r.married = s.year;
+    if (r.role === '자녀') addLog(s, '자녀의 혼인', `${r.name}이(가) ${a}세에 혼인했습니다. 혼인 미사가 끝나고 작은 잔치를 열었습니다.`, 'good');
+  }
+}

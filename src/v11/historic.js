@@ -217,7 +217,9 @@ function historicDecision(s) {
   if (s.dead || s.decision) return;
   // Someone serving at the front is not in the home-town crowd; battles open only for some units.
   const away = typeof atFront === 'function' && atFront(s);
-  const d = decisions.find(d => d.historic && decisionAllowed(s, d) && matches(s, d.when)
+  // An émigré abroad lives only the scenes written for exiles (and a real life's own turning points).
+  const exile = typeof isAbroad === 'function' && isAbroad(s);
+  const d = decisions.find(d => d.historic && decisionAllowed(s, d) && matches(s, d.when) && (!exile || d.when.abroad || d.realLife || /망명군/.test(d.when.jobMatch || ''))
     && !(away && (d.when.places || d.when.placeIncludes || d.when.notPlaces) && !d.when.jobMatch)
     && (d.chance === undefined || random(s) < d.chance));
   if (d) s.decision = d.id;

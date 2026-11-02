@@ -44,6 +44,9 @@ function createMusic() {
 const engine = new GameEngine();
 let controller;
 const prefs = (() => { try { return JSON.parse(localStorage.getItem('franceLife.prefs')) || {}; } catch { return {}; } })();
+// Light is the default; dark is chosen from the menu and remembered per browser.
+const applyTheme = () => { if (prefs.theme === 'dark') document.documentElement.dataset.theme = 'dark'; else delete document.documentElement.dataset.theme; };
+applyTheme();
 const savePrefs = () => { try { localStorage.setItem('franceLife.prefs', JSON.stringify(prefs)); } catch { /* optional */ } };
 const ui = createUI(document, engine, {
   choose:index => controller.choose(index), setFocus:id => controller.setFocus(id), toggleStar:i => controller.toggleStar(i),
@@ -70,6 +73,7 @@ function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); syncL
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
+  const t = document.getElementById('themeMenu'); t.textContent = prefs.theme === 'dark' ? '☀ 화이트 모드' : '🌙 다크 모드'; t.setAttribute('aria-pressed', String(prefs.theme === 'dark'));
 }
 // In-page confirmation. Browsers inside embedded viewers block window.confirm, so every replacing
 // action asks here first and then runs with the controller's confirm answering yes.
@@ -115,7 +119,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.25';
+const GAME_VERSION = 'v0.26';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -305,6 +309,7 @@ const actions = {
   importGame:() => openSaveSheet('import'),
   toggleMenu:() => { const m = document.getElementById('menu'); m.hidden = !m.hidden; document.getElementById('menuButton').setAttribute('aria-expanded', String(!m.hidden)); },
   toggleAuto:() => { prefs.auto = !prefs.auto; savePrefs(); ui.notify(prefs.auto ? '자동 결정: 중대 결정을 무작위로 고르고 결과를 확인합니다.' : '자동 결정을 껐습니다.'); syncToggles(); autoDecide(); },
+  toggleTheme:() => { prefs.theme = prefs.theme === 'dark' ? 'light' : 'dark'; savePrefs(); applyTheme(); syncToggles(); },
   toggleMusic:() => { if (music.on) music.stop(); else music.start(); prefs.music = music.on; savePrefs(); syncToggles(); },
   openFocus:() => { const c = document.getElementById('focusCard'); c.classList.toggle('open'); if (c.classList.contains('open')) c.scrollIntoView({block:'nearest', behavior:'smooth'}); },
   exportGame:() => { if (engine.state) openSaveSheet('export'); }

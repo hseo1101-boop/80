@@ -62,7 +62,7 @@ function applyCareerEffects(s, e) {
   if (e.careerEnd) s.career = null;
 }
 function careerYear(s) {
-  if (s.dead) return;
+  if (s.dead || (typeof isAbroad === 'function' && isAbroad(s))) return;
   // A common soldier who can read may be commissioned in wartime; the Revolution opened this door.
   if (!s.career && s.job === '군인' && WAR_YEARS(s.year) && (literacyOf(s) !== 'illiterate' || s.reputation >= 40)
       && (s.year >= 1792 || s.class === '귀족') && random(s) < .12) {
@@ -87,6 +87,8 @@ function careerYear(s) {
   if ((next.knowledge && s.stats.지식 < next.knowledge) || (next.wealth && s.stats.재산 < next.wealth)) return;
   // Before 1789 some ranks (field officers, bishops) went to nobles; the Revolution removed that bar.
   if (next.nobleBefore && s.year < next.nobleBefore && s.class !== '귀족') return;
+  // A royalist or noble officer is not promoted by the Republic.
+  if (s.career.id === 'officer' && s.year >= 1792 && s.year <= 1799 && (s.class === '귀족' || s.paths.politics === 'royalist')) return;
   if (random(s) < (fast ? .6 : .3)) promote(s);
 }
 

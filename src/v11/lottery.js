@@ -80,6 +80,8 @@ for (const [id, label, req] of CHOICE_REQUIREMENTS) {
 }
 function requirementGaps(s, choice) {
   const r = choice.requires, gaps = [];
+  // A choice with its own `when` is shown only to those it fits.
+  if (choice.when && !matches(s, choice.when)) return ['__hidden'];
   if (!r) return gaps;
   if (r.minWealth !== undefined && s.stats.재산 < r.minWealth) gaps.push(`재산 ${r.minWealth} 이상 (지금 ${Math.round(s.stats.재산)})`);
   if (r.minKnowledge !== undefined && s.stats.지식 < r.minKnowledge) gaps.push(`지식 ${r.minKnowledge} 이상 (지금 ${Math.round(s.stats.지식)})`);

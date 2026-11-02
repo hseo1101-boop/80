@@ -133,7 +133,7 @@ js = patch(js, '  earlierLoss(s);\n  return s;', '  earlierLoss(s);\n  birthLott
 js = patch(js, 'familyYear(s); fateYear(s);', 'familyYear(s); crisisYear(s); fateYear(s);');
 js = patch(js, 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index]) return false;', 'if (!s || s.dead || !d || s.decisionResult || !Number.isInteger(index) || !d.choices[index] || !choiceAvailable(s, d.choices[index])) return false;');
 // 2h. Careers with ranks and reputation, career doors, historical figures you meet.
-js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n' + read('era52.js') + '\n' + read('childhood52.js') + '\n' + read('bonds2.js') + '\n// src/engine.js');
+js = patch(js, '// src/engine.js', read('careers.js') + '\n' + read('careers2.js') + '\n' + read('army.js') + '\n' + read('girls.js') + '\n' + read('family.js') + '\n' + read('careermid.js') + '\n' + read('mid19.js') + '\n' + read('outcomes.js') + '\n' + read('reallives.js') + '\n' + read('bonds.js') + '\n' + read('revolution2.js') + '\n' + read('era52.js') + '\n' + read('childhood52.js') + '\n' + read('bonds2.js') + '\n' + read('facets.js') + '\n// src/engine.js');
 js = patch(js, "  if (effects.doom) s.familyEvents.doom", "  applyCareerEffects(s, effects);\n  applyFamilyEffects(s, effects);\n  if (effects.doom) s.familyEvents.doom");
 js = patch(js, 'familyYear(s); crisisYear(s);', 'familyYear(s); careerYear(s); crisisYear(s);');
 js = patch(js, '    historicDecision(s);\n    if (s.decision) return true;', '    figureFates(s);\n    historicDecision(s);\n    if (s.decision) return true;');
@@ -147,9 +147,10 @@ js = patch(js, '    && (!c.knows ||', '    && (!c.real || s.familyEvents.real ==
 js = patch(js, '  applyCareerEffects(s, effects);\n', '  applyCareerEffects(s, effects);\n  applyRealEffects(s, effects);\n');
 js = patch(js, '    figureFates(s);\n', '    figureFates(s);\n    realKeep(s);\n');
 // 2j. Bonds that return decades later, and the same revolution seen from different places.
-js = patch(js, '    && (!c.real || s.familyEvents.real === c.real)', '    && (!c.bond || !!bondPick(s, c.bond))\n    && (!c.terrorRisk || terrorRisk(s))\n    && (c.maxBonds === undefined || bondsOf(s).filter(b => s.year - b.year < 30).length < c.maxBonds)\n    && (!c.politicsIn || c.politicsIn.includes(s.paths.politics))\n    && (!c.real || s.familyEvents.real === c.real)');
-js = patch(js, '  applyRealEffects(s, effects);\n', '  applyRealEffects(s, effects);\n  applyBondEffects(s, effects);\n');
-js = patch(js, 'careerYear(s); crisisYear(s);', 'careerYear(s); bondYear(s); crisisYear(s);');
+js = patch(js, '    && (!c.real || s.familyEvents.real === c.real)', '    && (!c.bond || !!bondPick(s, c.bond))\n    && (!c.terrorRisk || terrorRisk(s))\n    && (c.maxBonds === undefined || bondsOf(s).filter(b => s.year - b.year < 30).length < c.maxBonds)\n    && (!c.politicsIn || c.politicsIn.includes(s.paths.politics))\n    && (!c.abroad || isAbroad(s))\n    && (!c.royalOfficer || royalOfficer(s))\n    && (!c.real || s.familyEvents.real === c.real)');
+js = patch(js, '  applyRealEffects(s, effects);\n', '  applyRealEffects(s, effects);\n  applyBondEffects(s, effects);\n  applyFacetEffects(s, effects);\n');
+js = patch(js, 'careerYear(s); crisisYear(s);', 'careerYear(s); bondYear(s); kinMarry(s); crisisYear(s);');
+js = patch(js, "    if (r.deathYear !== undefined) p.deathYear = number(r.deathYear,'사망 연도',p.birthYear,s.year);", "    if (r.deathYear !== undefined) p.deathYear = number(r.deathYear,'사망 연도',p.birthYear,s.year);\n    if (Number.isInteger(r.married)) p.married = r.married;");
 js = patch(js, 'function decisionText(s,d) {', 'function decisionText(s,d) {\n  if (d.when?.bond) return bondFill(s, d, d.text);');
 js = patch(js, '\\n선택: ${choice.label}\\n결과: ${outcome.title}\\n${outcome.result}`', '\\n선택: ${bondFill(s, d, choice.label)}\\n결과: ${outcome.title}\\n${bondFill(s, d, outcome.result)}`');
 
@@ -160,7 +161,7 @@ js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
   } else s.career = null;
   s.aptitude = number(`);
 // 2i. Soldiers at the front: no home-town everyday events, discharge in peacetime.
-js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) &&');
+js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) && !(isAbroad(s) && (e.when.places || e.when.placeIncludes || e.when.notPlaceIncludes || e.when.classes)) &&');
 js = patch(js, 'familyYear(s); careerYear(s);', 'familyYear(s); careerYear(s); armyYear(s);');
 // 2j. Girls' schooling and fewer informal chances to learn; the school scenario follows the player's sex.
 js = patch(js, "  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden;", "  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden*girlsLearningFactor(s);");

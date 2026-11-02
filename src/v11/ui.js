@@ -143,7 +143,7 @@ function logLabel(x) { const p = logParts(x); return p.title ? `${p.kicker} · $
 function createUI(doc, engine, handlers) {
   const $ = id => doc.getElementById(id), e = escapeHTML;
   const scene = createScene($('scene'), doc);
-  let choosing = false, summaryKey = '';
+  let choosing = false, summaryKey = '', relTab = null;
   function renderSummary(s) {
     const r = lifeReport(s), look = characterLook(s), sp = sceneSpec(s, []);
     $('summaryPortrait').src = portraitURL(doc, look, sp);
@@ -330,10 +330,17 @@ function createUI(doc, engine, handlers) {
     renderHistory(s, false);
     // Passport and people
     $('idcard').innerHTML = idCard(s);
-    $('relations').innerHTML = s.relations.map(r => {
+    // People in three tabs: family of birth, the household you made, and everyone else.
+    const groupOf = r => ['배우자', '전 배우자', '자녀', '맡긴 아이', '손주'].includes(r.role) ? 'home' : ['친구', '지인', '인물'].includes(r.role) ? 'friends' : 'family';
+    const counts = {family:0, home:0, friends:0}; for (const r of s.relations) counts[groupOf(r)]++;
+    const tab = relTab && (counts[relTab] || relTab === 'family') ? relTab : counts.home ? 'home' : 'family';
+    doc.querySelectorAll('[data-rel]').forEach(b => { b.setAttribute('aria-selected', String(b.dataset.rel === tab)); b.innerHTML = `${{family:'가족', home:'배우자·자녀', friends:'친구·지인'}[b.dataset.rel]}<i>${counts[b.dataset.rel]}</i>`; });
+    const people = s.relations.filter(r => groupOf(r) === tab).sort((a, b) => b.alive - a.alive);
+    $('relations').innerHTML = people.map(r => {
       const look = characterLook(s, r);
-      return `<li class="${r.alive ? '' : 'dead'}"><img alt="" src="${spriteURL(doc, look)}"><div><b>${r.role === '인물' ? '역사 인물' : e(r.role)}</b> ${e(r.name)}<small>${r.alive ? ageOf(s, r) + '세' : (r.deathYear ? r.deathYear + '년 사망' : '사망')} · ${e(r.job)}</small></div><i title="친밀도 ${r.closeness}"><u style="width:${r.closeness}%"></u></i></li>`;
-    }).join('') || '<li class="muted">아직 기록된 사람이 없습니다.</li>';
+      const wed = r.married && r.alive && ['자녀', '형제자매', '손주'].includes(r.role) ? '<span class="wed">기혼</span>' : '';
+      return `<li class="${r.alive ? '' : 'dead'}"><img alt="" src="${spriteURL(doc, look)}"><div><b>${r.role === '인물' ? '역사 인물' : e(r.role)}</b> ${e(r.name)}${wed}<small>${r.alive ? ageOf(s, r) + '세' : (r.deathYear ? r.deathYear + '년 사망' : '사망')} · ${e(r.job)}</small></div><i title="친밀도 ${r.closeness}"><u style="width:${r.closeness}%"></u></i></li>`;
+    }).join('') || `<li class="muted">${{family:'아직 기록된 가족이 없습니다.', home:'아직 배우자나 자녀가 없습니다.', friends:'아직 친구나 지인이 없습니다.'}[tab]}</li>`;
     $('relationExtra').textContent = `생존 ${s.relations.filter(r => r.alive).length}명 · 전체 ${s.relations.length}명`;
     // Right column
     const lifeEnd = s.year + s.month/12, span = [1740, 1915];
@@ -393,11 +400,14 @@ function createUI(doc, engine, handlers) {
         $('resultTitle').focus({preventScroll:true});
       } else {
         $('decisionHint').textContent = '선택한 뒤 결과를 확인할 때까지 시간이 멈춥니다.';
+        let shown = 0;
         d.choices.forEach((choice, i) => {
-          const b = doc.createElement('button'); b.className = 'choice';
           const gaps = requirementGaps(s, choice), need = requirementLabel(choice);
+          if (gaps[0] === '__hidden') return;
+          shown++;
+          const b = doc.createElement('button'); b.className = 'choice';
           b.disabled = gaps.length > 0;
-          b.innerHTML = `<span class="n">${gaps.length ? '🔒' : i+1}</span><span><span class="choice-label">${e(bondFill(s, d, choice.label))}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}${need ? `<span class="choice-req ${gaps.length ? 'no' : 'ok'}">${gaps.length ? '필요: ' + e(gaps.join(' · ')) : '✓ 조건 충족 · ' + e(need)}</span>` : ''}</span>`;
+          b.innerHTML = `<span class="n">${gaps.length ? '🔒' : shown}</span><span><span class="choice-label">${e(bondFill(s, d, choice.label))}</span>${choice.preview ? `<span class="choice-preview">가능한 결과 · ${e(choice.preview)}</span>` : ''}${need ? `<span class="choice-req ${gaps.length ? 'no' : 'ok'}">${gaps.length ? '필요: ' + e(gaps.join(' · ')) : '✓ 조건 충족 · ' + e(need)}</span>` : ''}</span>`;
           b.addEventListener('click', () => { if (!b.disabled && engine.state?.decision === d.id && !engine.state.decisionResult) handlers.choose(i); });
           $('decisionChoices').appendChild(b);
         });
@@ -434,6 +444,7 @@ function createUI(doc, engine, handlers) {
   const onResize = () => { scene.resize(); if (spec) spec.drawn = false; if (introScene) introScene.resize(); renderProgress(); };
   globalThis.addEventListener('resize', onResize);
   $('birthYear').addEventListener('input', () => { handlers.setBorn(Number($('birthYear').value)); renderBirthPick(); });
+  doc.querySelectorAll('[data-rel]').forEach(b => b.addEventListener('click', () => { relTab = b.dataset.rel; render(); }));
   doc.querySelectorAll('[data-born]').forEach(b => b.addEventListener('click', () => { handlers.setBorn(b.dataset.born === 'random' ? null : Number(b.dataset.born)); renderBirthPick(); }));
   return {render, renderProgress, showBirth, setChoosing(v) { choosing = v; render(); }, get choosing() { return choosing; }, notify(message) {
     $('notice').textContent = message; $('notice').hidden = false;
