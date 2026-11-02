@@ -332,7 +332,7 @@ function createUI(doc, engine, handlers) {
     // Passport and people
     $('idcard').innerHTML = idCard(s);
     // People in three tabs: family of birth, the household you made, and everyone else.
-    const groupOf = r => ['배우자', '전 배우자', '자녀', '맡긴 아이', '손주'].includes(r.role) ? 'home' : ['친구', '지인', '인물'].includes(r.role) ? 'friends' : 'family';
+    const groupOf = r => ['배우자', '전 배우자', '자녀', '맡긴 아이', '손주'].includes(r.role) ? 'home' : ['친구', '지인', '인물', '고용주'].includes(r.role) ? 'friends' : 'family';
     const counts = {family:0, home:0, friends:0}; for (const r of s.relations) counts[groupOf(r)]++;
     const tab = relTab && (counts[relTab] || relTab === 'family') ? relTab : counts.home ? 'home' : 'family';
     doc.querySelectorAll('[data-rel]').forEach(b => { b.setAttribute('aria-selected', String(b.dataset.rel === tab)); b.innerHTML = `${{family:'가족', home:'배우자·자녀', friends:'친구·지인'}[b.dataset.rel]}<i>${counts[b.dataset.rel]}</i>`; });

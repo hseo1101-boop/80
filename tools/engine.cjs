@@ -5432,18 +5432,33 @@ const CAREERS = {
     {label:'은행가', years:5, need:65, wealth:78, pay:4, rep:1}]}
 };
 const WAR_YEARS = y => (y >= 1792 && y <= 1815) || (y >= 1756 && y <= 1763);
-function careerRank(s) { const c = s.career && CAREERS[s.career.id]; return c ? c.ranks[s.career.rank] : null; }
+// Women follow their own ladder where a career was closed to them: the top places become assistant posts to a named man.
+function ranksOf(s, id) { const c = CAREERS[id]; return c ? (s.sex === '여성' && c.women) || c.ranks : []; }
+function rankLabel(s, r) { return r ? r.label.replace('○○', s.career?.npc || '○○') : ''; }
+function careerRank(s) { return s.career ? ranksOf(s, s.career.id)[s.career.rank] || null : null; }
+// An assistant post comes with the man whose post it is.
+function employerFor(s, r) {
+  if (!r?.npcJob || !s.career) return;
+  const name = freshName(s, male, pick(s, surnames));
+  s.career.npc = name.split(' ').at(-1) + ' 씨';
+  s.relations.push({name, role:'고용주', sex:'남성', birthYear:s.year - rand(s, 35, 55), birthMonth:s.month, alive:true, closeness:rand(s, 40, 60), job:r.npcJob});
+}
 function startCareer(s, id, rank = 0) {
+  if (s.sex === '여성' && CAREERS[id]?.womenGo) id = CAREERS[id].womenGo;
   const c = CAREERS[id]; if (!c) return;
+  const ranks = ranksOf(s, id); rank = Math.min(rank, ranks.length - 1);
   s.career = {id, rank, since:s.year};
-  s.flags.career = true;
-  s.job = c.ranks[rank].label;
+  s.flags.career = true; s.familyEvents['cr_' + id] = true;
+  employerFor(s, ranks[rank]);
+  s.job = rankLabel(s, ranks[rank]);
   s.familyEvents.career_top = s.job;
   milestone(s, `진로: ${c.label} · ${s.job}`);
 }
 function promote(s, text) {
-  const c = CAREERS[s.career.id];
-  s.career.rank++; s.career.since = s.year; s.job = c.ranks[s.career.rank].label;
+  const c = CAREERS[s.career.id], ranks = ranksOf(s, s.career.id);
+  s.career.rank++; s.career.since = s.year;
+  if (ranks[s.career.rank].npcJob) employerFor(s, ranks[s.career.rank]);
+  s.job = rankLabel(s, ranks[s.career.rank]);
   s.familyEvents.career_top = s.job;
   addLog(s, '🌿 좋은 일 · 승진', text || `${s.job}(으)로 올라섰습니다. ${c.label}의 길에서 한 걸음 더 나아갔습니다.`, 'good');
   milestone(s, `${s.job}`);
@@ -5453,7 +5468,7 @@ function applyCareerEffects(s, e) {
   if (e.career) startCareer(s, e.career, e.rank || 0);
   if (e.rep) s.reputation = clamp(s.reputation + e.rep);
   if (e.figure) addFigure(s, e.figure);
-  if (e.promote && s.career && CAREERS[s.career.id].ranks[s.career.rank + 1]) promote(s);
+  if (e.promote && s.career && ranksOf(s, s.career.id)[s.career.rank + 1]) promote(s);
   if (e.careerEnd) s.career = null;
 }
 function careerYear(s) {
@@ -5468,13 +5483,13 @@ function careerYear(s) {
   }
   const rank = careerRank(s);
   if (!rank) return;
-  if (s.job !== rank.label) { s.career = null; return; }
+  if (s.job !== rankLabel(s, rank)) { s.career = null; return; }
   changeStats(s, {재산: rank.pay});
   const career = CAREERS[s.career.id];
   if (career.risk && WAR_YEARS(s.year) && random(s) < career.risk.p) { endLife(s, career.risk.text); return; }
   const war = s.career.id === 'officer' && WAR_YEARS(s.year) ? 2 : 0;
   s.reputation = clamp(s.reputation + rank.rep + war + (currentFocus(s)?.id === 'work' ? 1 : 0));
-  const next = CAREERS[s.career.id].ranks[s.career.rank + 1];
+  const next = ranksOf(s, s.career.id)[s.career.rank + 1];
   if (!next) return;
   const fast = next.fast && s.year >= next.fast[0] && s.year <= next.fast[1];
   if (s.year - s.career.since < (fast ? Math.ceil(next.years / 2) : next.years)) return;
@@ -6704,6 +6719,33 @@ function kinMarry(s) {
       O('worse', '뜻대로 되지 않았습니다', 20, `${base} ${bad}`, {stats:shift(c.effects?.stats, false)}, [{when:{maxWealth:20}, amount:5}, {when:{maxHealth:35}, amount:5}])];
     if (!c.preview) c.preview = '대개 예상대로 · 때로 더 좋거나 나쁘게';
   }
+})();
+
+// src/data/women-work.js — 여성의 일, 고증대로
+// Before 1914 a woman could not be a banker, an army officer, a priest, a deputy or prefect, a police
+// commissioner, a lawyer or a doctor (the first Frenchwoman took a medical degree in 1875). She could be a
+// marchande, a forewoman or workshop mistress, a schoolmistress, a midwife, a nun, a painter, an actress,
+// a writer, a salonnière, and — often — the one who kept the books and did the work of the man whose name
+// was on the door. Each career below gets a women's ladder in which the closed posts become assistant
+// posts to a named employer (○○ is filled with his name).
+(() => {
+  const W = (id, ranks, extra = {}) => { const c = CAREERS[id]; if (!c) return;
+    c.women = ranks.map((r, i) => ({...c.ranks[Math.min(i, c.ranks.length - 1)], fast:undefined, nobleBefore:undefined, fromYear:undefined, ...r}));
+    Object.assign(c, extra); };
+  W('trade', [{label:'상점 점원'}, {label:'상인'}, {label:'도매상 ○○의 장부 담당', npcJob:'도매상'}, {label:'은행가 ○○의 회계 보조', npcJob:'은행가'}]);
+  W('industry', [{label:'여공 반장'}, {label:'작업장 여주인'}, {label:'공장주 ○○의 경영 보조', npcJob:'공장주'}]);
+  W('press', [{label:'인쇄소 교정 보조'}, {label:'팸플릿 작가'}, {label:'신문 기고자'}, {label:'신문 발행인 ○○의 편집 보조', npcJob:'신문 발행인'}]);
+  W('teaching', [{label:'보조 교사'}, {label:'마을 여학교 교사'}, {label:'도시 여학교 교사'}, {label:'여자 리세 교사', fromYear:1881}]);
+  W('law', [{label:'법률 사무소 필경 보조'}, {label:'변호사 ○○의 서류 담당', npcJob:'변호사'}]);
+  W('science', [{label:'천문대 계산 보조'}, {label:'학자 ○○의 조수·번역가', npcJob:'학사원 회원'}]);
+  W('medicine', [{label:'병원 간호 보조'}, {label:'외과의 ○○의 조수', npcJob:'외과의'}, {label:'병원 간호 책임자'}]);
+  W('bureau', [{label:'관청 필경 보조'}, {label:'우체국 사무원', fromYear:1850}, {label:'시골 우체국장', fromYear:1850}]);
+  W('officer', [{label:'종군 상인(캉티니에르)'}, {label:'연대의 종군 상인'}]);
+  W('police', [{label:'여자 감옥 간수'}, {label:'여자 감옥 간수장'}]);
+  W('sea', [{label:'그물 수선공'}, {label:'어시장 상인'}]);
+  W('engineering', [{label:'측량 사무소 제도 보조'}, {label:'토목 기사 ○○의 제도 담당', npcJob:'토목 기사'}]);
+  // The priesthood is closed; a woman called to the Church goes to the convent.
+  if (CAREERS.clergy) CAREERS.clergy.womenGo = 'convent';
 })();
 
 // src/data/real-lives.js — 실존 인물의 삶

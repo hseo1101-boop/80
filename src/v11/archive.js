@@ -21,7 +21,7 @@ function lifeTouches(s) {
   const scenes = [...new Set(s.log.filter(x => x.eventId && x.title.includes('역사의 현장') && HISTORIC.some(d => d.id === x.eventId)).map(x => x.eventId))];
   const figures = Object.entries(FIGURES).filter(([, f]) => s.relations.some(r => r.role === '인물' && r.name === f.name)).map(([id]) => id);
   const labels = [s.job, s.familyEvents?.career_top, ...s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1])].filter(Boolean);
-  const careers = [...new Set(labels.map(l => RANK_TO_CAREER[l]).filter(Boolean))];
+  const careers = [...new Set([...labels.map(l => RANK_TO_CAREER[l]), ...Object.keys(s.familyEvents || {}).filter(k => k.startsWith('cr_')).map(k => k.slice(3))].filter(id => id && CAREERS[id]))];
   const birthPlace = s.lifeMilestones.map(m => m.match(/^(?:\d+년 · )?(.+)에서 출생$/)?.[1]).find(Boolean) || s.place;
   return {scenes, figures, careers, birth:`${birthPlace}|${s.class}`, birthPlace};
 }
