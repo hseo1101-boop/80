@@ -11,7 +11,7 @@ const BAD=/\{[가-힣a-z]+\}|○○|undefined|NaN|null(?!\w)|\[object/;
 const MALE_ONLY=/^(군인|육군|사제|보좌 신부|본당 신부|주교|신학생|변호사|법률 서기|국민 대표 의원|도지사|지방 행정관|순경|경찰|은행가|도매상|공장주|산업가|이공대학|학사원|외과의|의사|선장|항해사|토목 기사)/;
 for(let i=0;i<N;i++){const f=fams[i%fams.length];let s;
  try{e.replace(G.createState(5000+i*131,{born:EN?1745+Math.floor(rnd()*60):1745+Math.floor(rnd()*116),...(f?{family:f}:{})}));s=e.state;}catch(err){add('createState throws',String(err));continue}
- let n=0,lastLog=0;const seen={};
+ let n=0,lastLog=null;const seen={};
  try{while(!s.dead&&n++<5000){
   if(EN&&s.year>1820)break;
   if(s.decision){if(s.decisionResult){e.acknowledgeDecision();continue}
@@ -25,9 +25,9 @@ for(let i=0;i<N;i++){const f=fams[i%fams.length];let s;
   for(const [k,v] of Object.entries(s.stats))if(!(v>=0&&v<=100))add('stat out of range',k+'='+v+' '+s.year);
   if(s.sex==='여성'&&MALE_ONLY.test(s.job)&&!/의 /.test(s.job))add('woman in male-only job',s.job+' '+s.year);
   if(G.ageOf(s)<10&&!['없음','도제','목동','방적공'].includes(s.job)&&s.job)add('child with job',s.job+' age '+G.ageOf(s));
-  for(let k=lastLog;k<s.log.length;k++){const x=s.log[k];if(BAD.test(x.title+' '+x.desc))add('bad token in log',x.title+' :: '+(x.title+' '+x.desc).match(BAD)[0]+' :: '+x.desc.slice(0,80));}
-  if(EN)for(let k=lastLog;k<s.log.length;k++){const x=s.log[k];for(const t of [x.title,x.desc]){const r=G.L(t);if(HANGUL.test(r.replace(/\{[^}]*\}/g,'')))add('Korean in English log',t.slice(0,90));else if(ENBAD.test(r))add('placeholder left in English',r.slice(0,90));}}
-  lastLog=s.log.length;
+  for(let k=0;k<s.log.length&&s.log[k]!==lastLog;k++){const x=s.log[k];if(BAD.test(x.title+' '+x.desc))add('bad token in log',x.title+' :: '+(x.title+' '+x.desc).match(BAD)[0]+' :: '+x.desc.slice(0,80));}
+  if(EN)for(let k=0;k<s.log.length&&s.log[k]!==lastLog;k++){const x=s.log[k];for(const t of [x.title,x.desc]){const r=G.L(t);if(HANGUL.test(r.replace(/\{[^}]*\}/g,'')))add('Korean in English log',t.slice(0,90));else if(ENBAD.test(r))add('placeholder left in English',r.slice(0,90));}}
+  lastLog=s.log[0];
  }}catch(err){add('runtime error',String(err&&err.stack||err).split('\n').slice(0,3).join(' | '));continue}
  // post-life checks
  const sp=s.relations.filter(r=>r.role==='배우자');if(s.relations.filter(r=>r.role==='배우자'&&r.alive).length>1)add('two living spouses',s.year);for(const r of sp)if(r.sex&&r.sex===s.sex)add('same-sex spouse',r.name);

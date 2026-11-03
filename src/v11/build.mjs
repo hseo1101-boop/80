@@ -166,6 +166,9 @@ js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
     if (typeof c.npc === 'string' && c.npc.length <= 40) s.career.npc = c.npc;
   } else s.career = null;
   s.aptitude = number(`);
+// A decision's log entry remembers whether it left you better off (mood 'up') or worse (mood 'down').
+js = patch(js, '    s.decisionResult = {choiceIndex:index,outcomeId:outcome.id,statsBefore};', "    { const net = STAT_KEYS.reduce((a, k) => a + s.stats[k] - statsBefore[k], 0), x = s.log[0]; if (x && x.eventId === d.id && Math.abs(net) >= 0.5) x.mood = net > 0 ? 'up' : 'down'; }\n    s.decisionResult = {choiceIndex:index,outcomeId:outcome.id,statsBefore};");
+js = patch(js, "...(x.star === true ? {star:true} : {})};", "...(x.star === true ? {star:true} : {}), ...(x.mood === 'up' || x.mood === 'down' ? {mood:x.mood} : {})};");
 // 2i. Soldiers at the front: no home-town everyday events, discharge in peacetime.
 js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && enHas(e.text) && enHas(e.title) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) && !(isAbroad(s) && (e.when.places || e.when.placeIncludes || e.when.notPlaceIncludes || e.when.classes)) && !(e.when.parentJobs && ageOf(s) >= 14 && !e.when.parentJobs.some(p => (s.job || \'\').includes(p))) &&');
 js = patch(js, 'familyYear(s); careerYear(s);', 'familyYear(s); careerYear(s); armyYear(s);');

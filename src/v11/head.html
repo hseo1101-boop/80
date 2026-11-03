@@ -81,15 +81,16 @@ html[lang="en"] .stat span{font-size:.72rem;white-space:nowrap;overflow:hidden;t
 .log-head h2{font-size:1.35rem}.link{border:0;background:none;padding:4px 0;color:var(--muted);font-size:.88rem}.link:hover{background:none!important;color:var(--ink)}
 .popline{color:var(--teal);margin:8px 0 6px;font-size:.98rem}
 .history{list-style:none;margin:0;padding:0;max-height:640px;overflow:auto;overflow-anchor:none}
-.history .row{display:grid;grid-template-columns:62px 1fr 22px;gap:12px;padding:16px 2px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:1.02rem}
+.history .row{display:grid;grid-template-columns:56px 1fr 20px;gap:10px;padding:9px 2px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:.93rem}
 .history .row:hover{background:var(--tint)}.history .row:first-child{animation:fade .35s}
 .history .age{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}.history .age b{font-weight:400;margin-left:4px}
-.history small{display:block;color:var(--faint);font-size:.75rem;line-height:1.4;margin-bottom:2px}.history p{margin:0;white-space:pre-line;line-height:1.7}
-.history small{font-size:.78rem;color:var(--muted)}.history .ttl{display:block;font-weight:800;font-size:1.02rem;line-height:1.5;margin:1px 0 2px;color:var(--ink)}
+.history small{display:block;color:var(--faint);font-size:.75rem;line-height:1.4;margin-bottom:1px}.history p{margin:0;white-space:pre-line;line-height:1.55;font-weight:400;color:var(--ink)}
+.history small{font-size:.74rem;color:var(--muted)}.history .ttl{display:block;font-weight:700;font-size:.95rem;line-height:1.4;margin:0 0 1px;color:var(--ink)}.history .pick{display:block;font-size:.8rem;color:var(--muted);margin-bottom:1px}
 .history .fx{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.history .fx i{font-style:normal;font-size:.75rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:1px 7px;background:var(--paper)}.history .fx .up{color:var(--good)}.history .fx .down{color:var(--bad)}
 .history .grp{font-weight:700}.history .grp-class{color:#8a6a1f}.history .grp-job{color:var(--teal)}.history .grp-relation{color:var(--wine)}.history .grp-common{color:var(--faint)}
 .history .star{color:var(--line3);text-align:center}.history .starred .star{color:#d39b1d}
-.history .bad p{color:var(--bad)}.history .good p{color:var(--good)}.history .major p{font-weight:500}.history .history p{color:var(--hist-ink)}.history .history small{color:#9a6a86}
+.history .bad p{color:var(--bad)}.history .good p,.history .normal p,.history .major p{color:var(--ink)}
+.history p.m-up,#resultText.m-up{color:var(--ink);font-weight:700}.history p.m-down,#resultText.m-down{color:var(--bad);font-weight:400}.history .history p{color:var(--hist-ink)}.history .history small{color:#9a6a86}
 .history .fact p{color:var(--ink)}.history .fact small{color:var(--teal)}.history .empty{padding:24px 0;color:var(--muted)}
 @keyframes fade{from{opacity:.2;transform:translateY(-4px)}to{opacity:1}}
 
@@ -213,7 +214,7 @@ label.section{display:block}
   .wide{display:none}.narrow{display:inline}.play{min-width:52px}
   .card{padding:14px 16px}.caption{padding:14px 16px;font-size:1rem}
   .stats{gap:10px;grid-template-columns:repeat(auto-fit,minmax(44px,1fr))}.stat b{font-size:1.05rem}
-  .history .row{grid-template-columns:48px 1fr 18px;gap:8px;font-size:1rem}
+  .history .row{grid-template-columns:44px 1fr 18px;gap:8px;font-size:.92rem}
   .modal{padding:20px 18px;border-radius:14px 14px 0 0;max-height:94vh}.overlay{align-items:flex-end;padding:0}
   .id-body{grid-template-columns:80px 1fr}.id-photo{width:80px;height:97px}.id-name b{font-size:1.45rem}
   .intro h1{font-size:1.7rem}.intro-body{padding:20px}
@@ -222,7 +223,7 @@ label.section{display:block}
 #starFilter{min-height:40px;padding:8px 0}.foot a{display:inline-block;padding:8px 2px}
 @media (max-width:420px){
   .seg button[data-speed="2"]:not(.on),.seg button[data-speed="12"]:not(.on){display:none}
-  .card{padding:14px 12px}.history .row{grid-template-columns:38px 1fr 16px;gap:8px;padding:14px 0}.history .age{font-size:.85rem}
+  .card{padding:14px 12px}.history .row{grid-template-columns:36px 1fr 16px;gap:8px;padding:8px 0}.history .age{font-size:.85rem}
   .chron-target button,.gb-send{width:100%}
   .history .age b{display:block;margin:0}.sum-dates{font-size:.8rem}
 }

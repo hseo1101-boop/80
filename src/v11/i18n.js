@@ -118,6 +118,9 @@ function i18nFill(tpl, args) {
 const I18N_RULES = [
   [/^(\d+)세 ([\s\S]+)$/, m => `Age ${m[1]} · ${trLeaf(m[2], false)}`],
   [/^(\d+)년 (\d+)월 · ([\s\S]+)$/, m => `${MONTHS_EN[+m[2]]} ${m[1]} · ${trPart(m[3], false)}`],
+  // An old bond: “(n years ago) the person you … ” — the memory is an English relative clause.
+  [/^(?:(\d+)년 전 )?당신이 (.+) 그 사람입니다\.$/, m => Object.hasOwn(EN, m[2]) ? `It is the person ${EN[m[2]]}${m[1] ? `, ${m[1]} years ago` : ''}.` : null],
+  [/^늙은 (.+?)이\(가\) 찾아와 (\d+)년 전 당신이 (.+) 날 이야기를 꺼냈습니다\.$/, m => Object.hasOwn(EN, m[3]) ? `Old ${frenchName(m[1])} came to see you and talked about the day, ${m[2]} years ago, that made them the person ${EN[m[3]]}.` : null],
   // A child's wedding in the milestones names the child by first name only.
   [/^(\S+) 혼인$/, m => FR_NAMES[m[1]] ? `${FR_NAMES[m[1]]} married` : null],
 ];

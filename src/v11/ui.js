@@ -136,20 +136,26 @@ function logAge(s, x) { return Math.max(0, x.year - s.born - (x.month < s.birthM
 const EVENT_INDEX = new Map([...dailyEvents, ...childhoodEvents].map(ev => [ev.id, ev]));
 const KICKER = {history:'📜 역사', fact:'📊 시대의 숫자'};
 // Splits a log entry into a small kicker line, an optional bold title, the text and stat-change chips.
+// Emoji are left out of the record: the kicker words carry the meaning.
+const noEmoji = t => String(t).replace(/[\p{Extended_Pictographic}\u2600-\u27BF\uFE0F]+\s*/gu, '').trim();
 function logParts(x) {
   const daily = x.eventId && EVENT_INDEX.get(x.eventId);
   if (x.title.startsWith('중대 결정')) {
     const historic = x.title.includes('역사의 현장');
-    return {kicker: historic ? '🏛 역사의 현장' : '⚖ 중대 결정', title: x.title.split(' · ').at(-1),
-      text: x.desc.split('\n').slice(1).filter(line => line !== '결과: 선택의 결과').join('\n'), chips: []};
+    // desc: context / 선택: … / 결과: outcome title / outcome text
+    const lines = x.desc.split('\n'), pick = (lines.find(l => l.startsWith('선택: ')) || '').slice(4);
+    const start = lines.findIndex(l => l.startsWith('결과: '));
+    const head = start >= 0 && lines[start] !== '결과: 선택의 결과' ? lines[start].slice(4) : '';
+    return {kicker: historic ? '역사의 현장' : '중대 결정', title: x.title.split(' · ').at(-1), pick,
+      text: [head, ...lines.slice(start + 1)].filter(Boolean).join('\n'), chips: [], mood: x.mood};
   }
   if (daily && x.title.includes(' · ')) {
-    const [kicker, ...rest] = x.title.split(' · ');
+    const [kicker, ...rest] = x.title.split(' · ').map(noEmoji);
     const chips = Object.entries(daily.effects?.stats || {}).filter(([,v]) => v).map(([k,v]) => [k, v]);
     return {kicker, title: rest.join(' · '), text: x.desc, chips};
   }
-  if (KICKER[x.type]) return {kicker: KICKER[x.type], title: '', text: x.desc, chips: []};
-  return {kicker: x.title, title: '', text: x.desc, chips: []};
+  if (KICKER[x.type]) return {kicker: noEmoji(KICKER[x.type]), title: '', text: x.desc, chips: []};
+  return {kicker: noEmoji(x.title), title: '', text: x.desc, chips: []};
 }
 function logLabel(x) { const p = logParts(x); return p.title ? `${p.kicker} · ${p.title}` : p.kicker; }
 
@@ -296,7 +302,7 @@ function createUI(doc, engine, handlers) {
       const dead = x.title === '생애의 끝' || /세상을 떠났/.test(x.desc);
       rows.push(`<li class="row ${e(x.type)}${x.star ? ' starred' : ''}" data-i="${i}" tabindex="0" aria-label="${x.star ? '별표한 기록. ' : ''}${logAge(s,x)}세 ${e(logLabel(x))}">
         <span class="age">${logAge(s, x)}세${dead ? ' <b>†</b>' : ''}</span>
-        <div class="txt">${(p => `<small>${x.year}년 ${x.month}월 · ${e(p.kicker)}${(g => g ? ` · <span class="grp grp-${g}">${EVENT_GROUPS[g]}</span>` : '')(x.eventId && typeof eventGroupOf === 'function' ? eventGroupOf(x.eventId) : null)}</small>${p.title ? `<b class="ttl">${e(p.title)}</b>` : ''}<p>${e(p.text)}</p>${p.chips.length ? `<span class="fx">${p.chips.map(([k,v]) => `<i class="${v > 0 ? 'up' : 'down'}">${e(k)} ${v > 0 ? '+' : '−'}${Math.abs(v)}</i>`).join('')}</span>` : ''}`)(logParts(x))}</div>
+        <div class="txt">${(p => `<small>${x.year}년 ${x.month}월 · ${e(p.kicker)}${(g => g ? ` · <span class="grp grp-${g}">${EVENT_GROUPS[g]}</span>` : '')(x.eventId && typeof eventGroupOf === 'function' ? eventGroupOf(x.eventId) : null)}</small>${p.title ? `<b class="ttl">${e(p.title)}</b>` : ''}${p.pick ? `<span class="pick">선택 · ${e(p.pick)}</span>` : ''}<p${p.mood ? ` class="m-${p.mood}"` : ''}>${e(p.text)}</p>${p.chips.length ? `<span class="fx">${p.chips.map(([k,v]) => `<i class="${v > 0 ? 'up' : 'down'}">${e(k)} ${v > 0 ? '+' : '−'}${Math.abs(v)}</i>`).join('')}</span>` : ''}`)(logParts(x))}</div>
         <span class="star" aria-hidden="true">${x.star ? '★' : '☆'}</span></li>`);
       if (rows.length >= 400) return;
     });
@@ -401,12 +407,10 @@ function createUI(doc, engine, handlers) {
         const choice = d.choices[result.choiceIndex], outcome = outcomeFor(choice, result.outcomeId);
         $('resultChoice').textContent = `나의 선택 · ${choice.label}`;
         $('resultTitle').textContent = outcome.title; $('resultText').textContent = bondFill(s, d, outcome.result);
-        $('resultChanges').replaceChildren();
-        for (const k of STAT_KEYS) {
-          const delta = s.stats[k] - result.statsBefore[k]; if (!delta) continue;
-          const li = doc.createElement('li'); li.className = delta > 0 ? 'up' : 'down';
-          li.textContent = `${k} ${delta > 0 ? '+' : ''}${Number(delta.toFixed(2))}`; $('resultChanges').appendChild(li);
-        }
+        // No +/− list: the stat bars move, and the outcome reads bold for a gain, thin and red for a loss.
+        $('resultChanges').replaceChildren(); $('resultChanges').hidden = true;
+        const net = STAT_KEYS.reduce((a, k) => a + s.stats[k] - result.statsBefore[k], 0);
+        $('resultText').className = net >= 0.5 ? 'm-up' : net <= -0.5 ? 'm-down' : '';
         $('resultLearning').hidden = d.id !== 'school';
         $('resultLearning').textContent = `교육: ${s.education === '미정' ? '아직 정규 교육을 시작하지 않음' : s.education} · 가업 친숙도: ${s.experience.familyTrade}`;
         $('decisionHint').textContent = s.runtime.paused ? '결과를 확인한 뒤에도 일시정지를 유지합니다.' : `결과를 확인하면 ${s.runtime.speed}배속으로 삶이 이어집니다.`;
