@@ -1,0 +1,79 @@
+# Milestones written by decisions.
+81d30112	Followed the king to Ghent in the Hundred Days
+a57eebac	Took part in the fall of the Bastille as a soldier
+3fc2c9c9	Moved to Paris
+35e73a98	Started at the parish charity school
+914becda	parish charity school
+6f6ee98b	Started at the parish charity school while helping in the family trade
+e7837114	parish charity school, alongside the family trade
+1060edcb	Began learning letters and sums from a neighbour
+cfc090a4	letters and sums from a neighbour
+eca2108e	Began running errands for the family trade
+58ed66e3	Entered the collège
+65bcb2f1	Spent the winter sweeping chimneys in Paris
+6aacc490	Marriage contract
+b682fea6	Joined the army of the Republic
+a79d309d	Conscripted, sent home wounded
+ba4cea37	Emigrated
+d93fb970	Imprisoned as a suspect
+23c9b4b9	Wounded in the attack on the Bastille
+b99a4fa3	Took part in the Festival of the Federation, 1790
+4a4ba126	Represented the regiment at the Festival of the Federation
+c4a8582c	Volunteered for the army, 1792
+9133c460	Wounded in the attack on the Tuileries
+cb8f2f42	Wounded at Valmy
+8a6673b5	Witnessed the execution of Louis XVI
+b0cba017	On guard at the king's execution
+f28e1b03	Arrested on suspicion of royalism
+290c1d79	Joined the Chouan rising
+67803ec0	9 Thermidor
+d3e32b8e	Entered the Hôtel de Ville on 9 Thermidor
+d31ddd17	Helped put down the rising of 13 Vendémiaire
+52a41c6d	Fought at Austerlitz
+fa444e9c	Wounded at Austerlitz
+d33c77bf	Came back alive from the Russian campaign
+100f2d7a	Prisoner in Russia
+db1e038f	Fought at Waterloo
+ad18c502	Wounded at Waterloo
+34bcd47d	Hid a non-juring priest
+a67a2135	Peasant volunteers, 1814
+3fb0fdca	The machine-breaking at Rouen
+bae7c9cb	Volunteered for the Tours garrison
+71699cd2	Bordeaux declares for the Bourbons
+3c91cdf2	Defence of Paris, 1814
+271d5302	Fought at the siege of Toulon
+5e9f01f8	Worked on David's coronation painting
+339c4917	Shareholder in the Banque de France
+e0da1c61	The Battle of Trafalgar
+a79af6ac	Went to a sewing school
+691a4c67	Entered the royal girls' school at Saint-Cyr
+ddf5c3e5	To Paris, fleeing debts
+4c7f6276	Joined the patriotic army of Bordeaux
+912339bc	Hid from the White Terror
+1ba6c637	Caught while deserting
+ef500cbf	Arrested in a royalist plot
+06c8b49f	Released, escaping the guillotine
+9e281afd	Dismissed in the purge of noble officers
+f06da984	Imprisoned during the Terror
+2885a85c	Escaped from Quiberon
+5d02b219	Left Paris for the countryside
+5d2eb7b9	Elected deputy of the nation
+=이 시대 프랑스 아기 {0}명 중 {1}명도 채 되지 않는 {2} 가정에서 태어났습니다.	In this period fewer than {1} in {0} French babies were born into {2} families.
+={0}에서 태어나는 아기는 {1}명 중 {2}명이 채 되지 않습니다.	In {0}, fewer than {2} babies in {1} are born.
+=학교	School
+=예수회 콜레주	Jesuit collège
+=오라토리오회 콜레주	Oratorian collège
+=중앙학교(에콜 상트랄)	École centrale
+={0} 입학	Entered {0}
+=예수회 콜레주 입학	Entered a Jesuit collège
+=오라토리오회 콜레주 입학	Entered an Oratorian collège
+=중앙학교(에콜 상트랄) 입학	Entered an École centrale
+=리세 입학	Entered a lycée
+=가정교사 입학	Began lessons with a tutor at home
+=수녀원 기숙학교 입학	Entered a convent boarding school
+=예수회 콜레주의 기숙사에 들어갔습니다. 라틴어 문법과 수사학, 그리고 매일 아침 미사입니다.	You entered the boarding house of a Jesuit collège: Latin grammar and rhetoric, and Mass every morning.
+=오라토리오회 콜레주의 기숙생이 되었습니다. 라틴어와 함께 수학과 프랑스어 작문도 배웁니다.	You became a boarder at an Oratorian collège. Along with Latin, you learn mathematics and French composition.
+=혁명이 옛 콜레주를 없애고 세운 중앙학교에 들어갔습니다. 라틴어 대신 화학과 도안, 박물학을 배웁니다.	You entered one of the Écoles centrales the Revolution founded in place of the old collèges. Instead of Latin you learn chemistry, drawing and natural history.
+=제국(왕국)의 리세에 기숙생으로 들어갔습니다. 북소리에 일어나고, 라틴어 작문과 수학으로 하루를 보냅니다.	You entered a lycée of the Empire (or the kingdom) as a boarder. You rise to the drum and spend the day on Latin composition and mathematics.
+=수녀원이 문을 닫은 시절이라, 집에 가정교사가 와서 읽기와 쓰기, 음악과 바느질을 가르칩니다.	The convents are closed in these years, so a tutor comes to the house to teach reading and writing, music and sewing.
+=수녀원 기숙학교에 들어갔습니다. 읽기와 쓰기, 교리, 음악과 자수, 그리고 좋은 혼처를 위한 예법을 배웁니다.	You entered a convent boarding school. You learn reading and writing, the catechism, music and embroidery, and the manners that make a good match.

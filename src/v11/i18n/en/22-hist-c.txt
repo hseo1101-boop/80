@@ -1,0 +1,179 @@
+# Scenes of history, part 3.
+0229e644	12 March: the white cockade
+c18100cd	When the British entered Bordeaux, the mayor took off the tricolour cockade and declared for the Bourbons. White cockades flutter in the streets.
+ecef7c6d	Put on the white cockade and greet the Duke of Angoulême
+00e05fd5	The Duke of Angoulême entered the city amid cries of “Vive le Roi!” You hope the port will open again.
+4ca94695	Do not give up the tricolour
+ba2534ca	Some of the neighbours gave you dark looks.
+34d073f2	You watched the British uniforms through the window.
+29726e07	The plebiscite on the Consulate for life
+49e7b415	“Shall Napoleon Bonaparte be Consul for life?” Registers for Yes and No lie open at the town hall. It is not a secret ballot: you must write your name.
+dedb9313	Sign the Yes register
+c4de3f86	The mayor nodded. Across the country three and a half million voted Yes, and fewer than ten thousand No.
+00a87bbe	Sign the No register
+c6209b58	Conviction / a marked man
+22ae7cbc	You put your name down
+06aae0d5	There were only a few names in the No register. The mayor looked at you for a long time.
+d9e70f38	You went on a police list
+2ce2b9ee	For years a gendarme would pass by your house now and then.
+5d81df2f	Do not vote
+88846bd1	You left your name out of the registers.
+9f1b4dec	The Emperor's wedding
+974ee9dd	The Emperor is marrying Marie-Louise of Austria. Free food and wine are handed out on the Champs-Élysées, and there are fireworks at night.
+b57e988c	Go to the celebrations
+f60c33a3	A happy night / an accident in the crush
+ef7b46e6	It was a happy night
+3b3f5681	Free sausage and wine, fireworks embroidering the sky. For the first time in a long while, the whole family laughed.
+7b43855a	You were hurt in the crush
+4fc489e3	People pushed and fell in front of the food carts.
+eb28b869	You spent a quiet night. Only the sound of fireworks reached you from afar.
+d752f7c0	The hunt for deserters
+c4cbbfee	A mobile column has come to the village to catch young men hiding in the woods to dodge conscription. Households that produce a deserter are punished by having soldiers quartered on them. The neighbours' son asks you to hide him in your barn.
+f8c2a923	Hide him
+81a55e1a	He held out three days under the hay. The column left empty-handed. The neighbours will never forget it.
+7b1fed2d	You were found out
+da5e7f17	The young man was taken away, and as punishment four soldiers were quartered in your house for a month.
+5908fa81	The young man went back into the woods. A few days later you heard he had been caught.
+975e44e0	Hunger in Normandy, 1812
+5741ce7d	When a bad harvest sent grain prices soaring, there were riots in Caen and the mills were attacked. The Emperor sent troops and had the ringleaders executed. The air is tense in the markets of Rouen too. The town hall is handing out ‘Rumford soup’.
+f94fa882	Go and protest to the grain merchant
+14f0a10c	Prices lowered / arrested
+5a0cab21	The merchant lowered his price a little
+0fff10fa	With the women in front, the merchant took fright and lowered his price.
+1cdb2d5c	After the executions in Caen, the police were harsh. You spent months in prison.
+389ff8b8	Queue for the soup
+0f654daf	In the town hall courtyard you were given a soup of boiled beans and barley. It had no taste, but it filled you.
+98f78405	The defence of the Clichy gate
+d8c93cf7	30 March: the Allies are at the gates of Paris. Marshal Moncey leads the National Guard in defence of the Barrière de Clichy. Word is the city will surrender tomorrow.
+b62ee2e2	Defend the gate with the National Guard
+cf952bd2	Holding out / wounded / killed
+7f29b46c	You held out until dusk
+04027019	You fired from before the gate. At night came word of the surrender. The next day you watched the Tsar ride into the Champs-Élysées.
+54749146	You were wounded
+22b95b7c	You were hit by a shell splinter that came over the wall.
+874066f9	You fell before the gate
+6e224343	Before Paris that day, tens of thousands on both sides were killed or wounded.
+adb03280	You hid in the cellar with your family. The next day you heard that Cossacks had tethered their horses on the Champs-Élysées.
+3fb60266	The Duchess of Angoulême's appeal
+897a3e7c	When Napoleon returned, the Duchess of Angoulême, then in Bordeaux, came before the National Guard and appealed to them to fight for the king. The Emperor, they say, called her “the only man in the Bourbon family”.
+6535c6bd	Stand with the Duchess
+fcaf06ac	Honour / reprisals
+4d90c65e	You stayed at her side to the end
+ba99c3d0	The soldiers would not follow her, and the Duchess left for England by ship. You saw her off from the quay.
+8f1609af	You were under suspicion during the Hundred Days
+796e4a84	When the Emperor's general entered the city, your name went on a list of royalists and you spent months in hiding.
+5cb499a3	Welcome the Emperor's general
+c84f6553	When General Clauzel's troops came in, you hung out the tricolour again. You did not know that in three months you would be hanging out the white flag once more.
+9182c0a2	The port was quiet. The ships did not move.
+339a613f	The little Chouannerie of 1815
+1d9b5a0c	When the Emperor returned, the old Chouans of the west rose again. They say refuse conscription in the king's name.
+7520f45b	Safe / wounded
+f21efe1a	It ended within weeks
+85a1e6d2	When news of Waterloo came, the fighting ended of itself. You hid your musket again.
+4213d305	You were wounded in a skirmish
+82f4c14b	You were hurt facing gendarmes who had once served in the republican army.
+155df9ed	You carried on with the field work.
+0b451597	The Jacobin Club
+9ed1e52c	The ‘Society of the Friends of the Constitution’ meets in the old Jacobin convent in the Rue Saint-Honoré. A punctilious lawyer from Arras stands at the rostrum.
+5cd00e44	Join as a member
+feafd542	You exchanged a few words with that lawyer, Robespierre. He is no great speaker, but he will not yield an inch on principle.
+1c3e9c2a	Watch from the public gallery
+042e1a94	You took notes on the speeches.
+72cd0729	Madame Roland's salon
+ef832c84	Girondin deputies and journalists gather at the Rolands' house in the Rue Guénégaud. The hostess, Manon Roland, is the sharpest debater of them all.
+ffbcb7d6	Frequent the salon
+411a6a2f	Madame Roland remembered your name. Here the Girondins' plans are laid.
+6ed8999e	You did not want to be caught up in factions.
+5e637c18	Voting on the king's fate
+c34c4b23	One by one, the members of the Convention mount the rostrum to vote in public on Louis Capet's sentence. Your turn is coming.
+9dab2cd5	“Death.”
+8aead08b	The deputies of the Mountain nodded. You came to sit on the benches of the Mountain.
+090dc82b	“Let the people decide.”
+b1566fc9	With the Girondins you called for an appeal to the people. Jeers poured down from the Mountain.
+c8825b96	“Detention until the war is over.”
+bbeb4d9c	You voted with the quiet majority of the middle benches, the Plain.
+1743b887	The Convention besieged
+28e1b9db	Armed men of the sections surround the Convention and demand the arrest of the Girondin deputies. One by one, your colleagues are taken away or flee.
+0635975f	Flee to the provinces and call for a rising
+8255bf18	In hiding / caught
+af21a7b6	You stayed in hiding
+387cf4e9	You wandered through Normandy and Bordeaux in hiding. Only after Thermidor did you return to your seat.
+cf2772fb	You were caught and executed
+84727553	In October you mounted the scaffold with your fellow Girondin deputies.
+9ef95d56	Stay and keep silent
+427eef80	Left off the list / imprisoned
+055cc253	You were left off the list
+0da49481	You did not add your name to the protest of the seventy-three. You escaped prison, but you could not hold your head up in the Convention.
+741ade91	You were imprisoned
+59d2cfa3	You spent ten months in prison and were freed after Thermidor.
+0b60c6fc	9 Thermidor in the Convention
+52bd76a4	Saint-Just's speech is cut short and shouting breaks out. “Down with the tyrant!” A motion is put to arrest Robespierre.
+a3058ee6	Vote for the arrest
+21d22887	Robespierre and his comrades were led out. The Terror was over.
+d9049981	Defend Robespierre
+90d1e5b4	Arrested / a narrow escape
+851f6f54	You fell with them
+7ba33d9a	That night you were taken with them at the Hôtel de Ville, and the next day you went to the scaffold.
+247ad162	You barely escaped disaster
+03b89008	At the last moment you held your tongue. For years you were looked at with suspicion.
+554b096c	Desmoulins's newspaper
+a1ca1308	Camille Desmoulins, the young lawyer who roused the crowd at the Palais-Royal, is founding a newspaper, Les Révolutions de France et de Brabant, and looking for writers.
+4575bf19	Send him your writing
+658bf37c	Desmoulins stammers, but his pen is as sharp as a sword. Your piece appeared in his paper.
+21ade4fb	Do not write for another man's paper
+54777012	You decided to go it alone.
+6ce1e6df	L'Ami du peuple
+29805076	In a cellar print shop in the Cordeliers district, Jean-Paul Marat prints L'Ami du peuple. Even while hiding from arrest, he brings out the paper every day.
+c31906b0	Help with the printing
+f4857444	Marat, a vinegar-soaked cloth wrapped round him for his skin disease, revised his copy all night. His writing is full of rage.
+6b9521e5	Marat's violence frightened you.
+e31b7b45	Le Vieux Cordelier
+50d0fd42	In his new paper Desmoulins writes that the Terror must stop and a ‘committee of clemency’ be set up. He asks you to write with him.
+ceaa6d48	Call for clemency with him
+6d5bbdc8	Remembered by history / executed
+a6cfddbe	After Desmoulins's arrest you went into hiding. His words stayed in people's hearts.
+20172082	You were executed with Desmoulins
+25608357	In April you rode in the same cart to the Place de la Révolution.
+5456c53d	Stay out of it this time
+9917ac64	You could not stop your friend. You regretted it for a long time.
+753ac7a6	The decree closing the newspapers
+345d9654	By order of the First Consul, sixty of the seventy-three political newspapers in Paris have been shut down. Those left are censored by the police.
+a9226306	Move to the government's paper
+7d9ee4da	At Le Moniteur you polish official bulletins. The pay is steady, but you cannot write what you want.
+5446202f	Turn to a literary review
+f6bb5117	Instead of politics, you write theatre criticism.
+6911346a	The siege of Toulon
+efe424a2	A siege to retake the port of Toulon, held by the British fleet. A young Corsican artillery captain is pushing through a daring placement of the batteries.
+20bf5e1f	Fight in his battery
+5311a26d	Victory and promotion / wounded
+ead488eb	You took Toulon back
+f130401d	Captain Bonaparte was promoted general, and your name went into the report too.
+c13a0424	You were hit by a shell
+36864513	The same day, Bonaparte took a bayonet in the thigh.
+4c0c037d	Hold another position
+aab7804d	You heard the guns from a distance.
+29cac580	The expedition to Ireland
+3130ae68	Hoche, the young general risen from the ranks, is leading a landing in Ireland. The winter sea is rough, and the fleet has already begun to scatter.
+22113d02	Sail with the expedition
+449f3e31	Turned back / shipwrecked
+ba4e6485	You came back without landing
+a3633bc5	Storms off Bantry Bay forced you back. General Hoche's ship never even reached the bay.
+9597aa0c	Your ship was wrecked
+6aa88c02	You were barely rescued from the cold sea.
+10665091	Stay with the Army of the Rhine
+c246641f	You stayed on the land front.
+c1bc6227	With the return of the monarchy, thousands of officers of Napoleon's army were sent home on half pay. Old imperial officers gather in the cafés and mutter.
+2daa5a9f	Hold out on half pay
+0c0d65ae	In your worn uniform you pass the time in cafés with old comrades.
+a0ad920c	Swear loyalty to the king's army
+2616dec8	You put on the white cockade and stayed in the army. Your old comrades turned their backs on you.
+f6fd530e	The expedition to measure the meridian
+a38b9834	To fix the new unit of length, the ‘metre’, Delambre and Méchain are measuring the meridian from Dunkirk to Barcelona. They are looking for assistants.
+25fc8c54	Join the survey party
+e160c11f	You climbed church towers to measure angles, were suspected of spying by revolutionary officials, and spent years on the road.
+d2011f96	Stay in Paris and do the calculations
+b2622f48	You worked up the figures the survey party sent back.
+59a46cc1	The laboratory at the Arsenal
+5f4aa778	Lavoisier's laboratory at the Arsenal is looking for someone to help with calculations. Madame Marie-Anne Lavoisier records the experiments and draws them.
+da086f21	Go in as an assistant
+8fdab5a5	You learned to weigh gases on precise balances. You understood in your bones the saying that ‘nothing is lost’.

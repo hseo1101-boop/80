@@ -1,0 +1,96 @@
+# Interface and engine lines, third harvest.
+=배우	actor
+=선원	sailor
+=화가	painter
+=의사	physician
+=기자	reporter
+=병사	soldier
+=가게 주인	shopkeeper
+=배우의 길에서 한 걸음 더 나아갔습니다.	One more step along the road of the actor.
+=화가의 길에서 한 걸음 더 나아갔습니다.	One more step along the road of the painter.
+=선원의 길에서 한 걸음 더 나아갔습니다.	One more step along the road of the sailor.
+=선원(으)로 올라섰습니다.	You rose to sailor.
+=진로: 배우	Path: actor
+=진로: 선원	Path: sailor
+ff77a637	shopkeeper
+7ad1822b	Lost their life in the rising of {1} Vendémiaire, Year {0}.
+ff64f056	Saw the first manned balloon flight
+912f3ebc	Took part in the fall of the Bastille
+41f805d6	Took part in the march on Versailles
+d49cf826	Took part in the Festival of the Federation, {0}
+58ffa1c2	Took part in the attack on the Tuileries
+12f00120	Witnessed the execution of Louis {0:roman}
+5c937629	Took part in the Festival of the Supreme Being
+f3607dfe	Saw Napoleon's coronation procession
+42877eb1	Joined the National Guard
+9f5d270e	Came to know {0}
+1e7e01f3	Hid the church's statue of a saint
+832bfed9	Welcomed the Emperor in the Hundred Days
+396365bb	With the July Monarchy, {1} became {2}.
+e7fb473d	It is the half-pay officer you gave a room to {0} years ago.
+3d77d744	{0} of five
+89f43d51	Defence of {1}, {0}
+899bf14c	The {0}'s recommendation
+32c08959	{0} of two
+8ab90bfd	A scene you have not seen yet is waiting (age {0} or over).
+e30ef02b	Born in {0} into a {2} family in {1}, you might reach it.
+a2ee583e	Historical {0}s
+45424c6d	The {1} {0} recommended someone from your family for a government post.
+c58b7c05	Planted a Tree of Liberty
+1634abdb	Volunteered for the army, {0}
+f8b9fa7e	Hid a non-juring {0}
+80ffd56c	Lost their life defending {2} in {1:month} {0}.
+87bd708a	Joined the National Guard
+aa860386	After the failed harvest of ‘the year without a summer’, the price of bread rose above a day's wage.
+19c59024	Burned the lord's registers in the Great Fear
+f2ae7200	It is the person you sold grain to at a high price in a bad year, {0} years ago.
+1247535d	Took part in the Quiberon expedition
+38a73d85	Lost their life in the attack on the Tuileries, {2} {1:month} {0}.
+9cd9f40f	📜 The fate of someone you knew
+c5fe11b7	Arrested on suspicion of being a {0}
+22a5cdcd	Acquitted by the Revolutionary Tribunal
+b9f57edd	Former {0}
+a7d442ff	It is the person you shared grain with on credit in a bad year, {0} years ago.
+38a966fb	Old {0} came to see you and talked about the day {1} years ago when you brought firewood and bread.
+fdfb4c2a	News from the scaffold
+05557d2c	News came that {0}, deputy to the Convention, had gone to the guillotine.
+d30b3c14	It is the person whose request for a loan you turned down.
+ed8dff65	Fought at Valmy
+a4dd70f6	Took part in the meridian survey for the metric system
+543fa845	The {0}'s watch
+16f7ef11	The {1} {0} put you on the list of ‘subversives’, and the {2} began calling.
+6b7dad37	{0} Thermidor
+cec4c589	The shopkeeper's {0}
+25505ef5	Went over to the Emperor in the Hundred Days
+62ac7c53	Farewell to {0}
+={0}년 프랑스에는 약 {1}만 명이 살고 있어요	In {0}, about {1:man} people live in France
+={0}에서 태어나는 아기는 {1}명 중 {2}명꼴입니다.	In {0}, about {2} babies in {1} are born.
+=가정교사	tutor at home
+=가정에서 배움	learning at home
+=고등사범학교	École normale
+=공립 여학교	girls' state school
+=군사학교	military school
+=기숙 학교	boarding school
+=독학	self-taught
+=리세	lycée
+=마을 학교(겨울 학기)	village school (winter term)
+=바느질 학교	sewing school
+=법학 학위	law degree
+=사관학교 준비	preparing for military school
+=생시르 사관학교	Saint-Cyr military school
+=생시르 왕립 여학교	royal girls' school at Saint-Cyr
+=소신학교	minor seminary
+=수녀원 기숙학교	convent boarding school
+=수녀회 자선학교	sisters' charity school
+=수녀회 학교	convent school
+=신학교	seminary
+=여자아이 교리 학교	girls' catechism school
+=여자아이 초등학교	girls' primary school
+=의학 학위	medical degree
+=이공과대학	École polytechnique
+=이공대학	École polytechnique
+=코뮌 초등학교	communal primary school
+=코뮌 초등학교(간간이)	communal primary school (off and on)
+=콜레주	collège
+=콜레주(리세)	collège (lycée)
+={0}에 다님	Attends {0}

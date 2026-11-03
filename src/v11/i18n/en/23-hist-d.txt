@@ -1,0 +1,181 @@
+# Scenes of history, part 4.
+42aaefca	You carry on with your own research.
+4e48f617	The Academy abolished
+7f50a26c	The Convention has abolished all the royal academies. Scholars must now work through committees and the new schools.
+23df3501	Work on the Commission of Weights and Measures
+42ee5c36	The Academy is gone, but the work on the metric system goes on.
+3749e73b	Withdraw to the country for a while
+a9c472ba	You studied quietly in the country until the Terror was over.
+b161f328	The Museum of Natural History
+35825e57	The King's Garden has become the National Museum of Natural History. Lamarck, in charge of insects and worms, is looking for someone to help sort specimens.
+ba1bb20f	Work in the specimen room
+2472992c	Lamarck says living things change over long ages. A bold idea.
+8775f7b0	Concentrate on mathematics
+968d5360	You decided to stick to your own field.
+4eaff44a	The Oath of the Horatii
+06448d7d	Crowds throng before the picture David, back from Rome, has hung at the Salon. His studio, they say, is taking new pupils.
+7c94d627	Join David's studio
+758143d8	“Look to the ancients.” David was strict, but he studied your drawing for a long time.
+96667d71	Stay with your present master
+47617466	You kept faith.
+85990146	A Salon open to all
+94e0c61b	For the first time, painters who are not members of the Academy may submit work to the Salon.
+d366fb69	Submit a painting
+f8529749	Accepted / panned
+3e4f03e4	Your picture was hung
+582a912a	Your picture hung high on the wall of the Salon at the Louvre. One critic mentioned it briefly.
+27f94afb	You were panned
+7b7b836e	“The colour is muddy.” One line in a newspaper lodged in your heart.
+2d571b76	The time is not yet right
+b413902f	You wait for the next Salon.
+e5a65b52	The Coronation of Napoleon
+f46ac26a	David is painting the coronation on a canvas nearly ten metres wide. He needs hands to fill in the figures in the background.
+a1ca168f	Join the work
+51132ab4	You painted the faces of a few people in the crowd. No one will know, but you do.
+fc47c72f	Paint your own pictures
+3d1a0adc	You decided to step out of your master's shadow.
+44eef69f	An army contractor
+34f8ecc3	Contractors are wanted to supply boots, bread and fodder to fourteen armies. Huge sums change hands, but some contractors have gone to the scaffold for corruption.
+d8d3f19b	Win an army contract
+196c5ca4	A fortune / denounced
+c67d81b9	You delivered hundreds of wagonloads of boots.
+71e3ac8c	You were denounced for fraudulent supplies
+8a371cf8	The fine swallowed nearly all you had made.
+1f435068	Decline dangerous money
+0a31023f	You carry on with your usual business.
+637088bc	The founding of the Banque de France
+bfc3287c	The Banque de France, backed by the First Consul, is seeking shareholders.
+2ae3d572	Buy shares
+696de167	You put your name in the register of shareholders. A dividend comes in every year.
+c3f8cec0	Land is safer
+d2e42050	You decided not to trust banks.
+3fb0dbda	The oath to the Civil Constitution of the Clergy
+fb09478d	Every parish priest must swear loyalty to the nation and the constitution. The Pope is still silent, but people say that to swear is to break with Rome.
+f8bfe03d	Swear the oath (a constitutional priest)
+e2764f02	You swore the oath before the altar. Like Abbé Grégoire, you believe the Revolution and the faith can go together. Half your flock stopped coming to Mass.
+059b9bae	Refuse (a non-juring priest)
+c02279a8	You refused the oath. You were driven out of the parish, but many of the faithful come to you in secret.
+c204d494	Deportation and September
+5457956d	Non-juring priests have been ordered to leave the country. From Paris comes word that priests in the prisons have been massacred.
+f9f48fd3	Flee to England
+5290f3ca	You took ship at Le Havre and crossed to England. You cannot return until a concordat is signed.
+49fde89d	Stay, hide and say Mass
+bcf42228	The faithful hid you
+0afd517a	Moving between barns and lofts, you secretly baptised and buried.
+fb6335b9	You were confined on a prison hulk off Rochefort. Fewer than half came back alive.
+eff5635a	The Concordat
+d0271d0a	Under the agreement between Napoleon and the Pope, the churches reopen. Constitutional and non-juring priests meet again in the same diocese.
+bb6b7c76	Return to your parish
+ddd446a9	The bells rang again at Easter Mass. The faithful, who had waited so long, filled the church.
+28391949	The convents closed
+3bb372dc	The Assembly has closed all the remaining monasteries and convents. The nuns must go home or put on lay clothes.
+0582649a	Return to your family
+766e2b44	You took off the habit and went home. In secret you teach children their letters and the catechism.
+f1d53bae	Carry on living in community with your sisters in secret
+a878ad67	Holding out / imprisoned
+d43733a5	You held out for some years
+f0db35f0	In lay clothes, you lived together in a small house and nursed the sick.
+e72338fc	You were held for months as suspects and released after Thermidor.
+5d98da67	The ‘flying ambulance’
+59d098d3	Larrey, surgeon to the Army of Italy, runs light carriages that dash into the heart of the battlefield to bring out the wounded. He is looking for surgeons.
+d48c52bd	Volunteer as an army surgeon
+1b96bc3d	Renown / the dangers of the field
+64635e48	You saved hundreds
+245f368c	You operated on the most urgent cases first, whatever their rank. Larrey praised your hands.
+b6076aae	You were hit by a shell splinter
+3e3dc08c	You were hurt carrying the wounded.
+4f46c6ca	Stay at the town hospital
+52c10529	You kept to the hospital wards.
+4d4959b3	The doctor who struck off the chains
+57d0a028	Pinel at the Salpêtrière means to take the chains off the insane and give them ‘moral treatment’. His colleagues call it madness.
+60cac387	Work on Pinel's ward
+855657c1	You learned a new medicine of talking with patients and keeping records.
+8a3a33de	Stay at another hospital
+8d673718	You kept to the traditional methods.
+0bcd400c	The Jacquard loom
+20b202f2	The Emperor visited Lyon and saw Jacquard's new loom. Weaving patterns from punched cards, one machine does the work of a weaver and a helper. The weavers threaten to smash it.
+7a07b731	Install the new loom
+d66720c2	Output doubled. Weavers who lost their jobs hang about outside the workshop.
+4af20beb	Keep to the old ways
+7e72b08b	You kept faith with the weavers, but began to fall behind the competition.
+920c2d4d	The birth of the prefecture
+2459a5e5	A prefect appointed from Paris is taking up his post in every département. Local administration has been bound into a single ladder.
+2e036cf7	Move to the prefecture's offices
+00cec41e	Under the new prefect you handle conscription, taxes and statistics.
+76177119	Stay where you are
+4160eab9	You kept your quiet post.
+97148037	The ‘infernal machine’
+e3270459	On 24 December a powder keg exploded behind the First Consul's carriage on its way to the Opéra. Minister Fouché is convinced the culprits are royalists.
+5361ef65	Throw yourself into the investigation
+3236a2f7	From the shoes of the horse that drew the exploding cart, you traced the blacksmith. Fouché asked your name.
+6971f5a2	Just follow orders from above
+8d35dab2	You helped draw up a list of Jacobin suspects.
+e3c509fc	The split at the Comédie-Française
+2e57b87d	The actors of the national theatre have split over the revolutionary play Charles IX. The young Talma is moving with his colleagues to the new theatre in the Rue de Richelieu.
+6631e9a5	Follow Talma
+c515de82	Talma, playing in a toga, seemed a true Roman.
+651a3a65	Stay with the old company
+690a18e1	You kept to tradition.
+7b186f0e	The Declaration of the Rights of Woman and of the Female Citizen
+0f81b40e	The playwright Olympe de Gouges has published a pamphlet rewriting the Declaration of the Rights of Man. “Woman is born free and remains equal to man in rights.”
+e19cf263	Go to her and join her
+0dc207a2	De Gouges wanted to sell the declaration, dedicated to the queen, in the streets as well. You helped put the manuscript in order.
+5faadf84	Only read it
+508a9e2c	You thought it bold writing.
+d2cdba5c	Madame de Staël's salon
+8bb77642	At the Swedish embassy in the Rue du Bac, Madame de Staël receives politicians and writers. It is said she moves governments by conversation.
+20cd3d0f	Madame de Staël talked without pause, and everyone listened. There were barbed jokes about the young General Bonaparte too.
+da3afbc3	You did not want to be caught up in politics.
+3e66f11f	By the king's commission, Madame du Coudray is giving a two-month course in a nearby town. She teaches with a life-size model of childbirth made of cloth and leather.
+fc1e24af	Attend the course
+4c56f6cf	On the model you learned how to turn a breech baby. Back in the village, you saved a baby that way for the first time.
+b11c13f9	Experience is enough
+eef65ec0	You decided to do as your mother taught you.
+80734707	The Minister of Fashion
+527602ac	Rose Bertin, the queen's dressmaker, is looking for a skilled seamstress for her shop, Le Grand Mogol.
+2f766b6a	Move to Bertin's shop
+04062e6d	You sewed ribbons onto the queen's gowns. Bertin is exacting, but she knows skill when she sees it.
+41846e49	Stay at your present shop
+5e7a0aab	Trafalgar
+8d388140	Off Cádiz the combined French and Spanish fleet faces Nelson's British fleet. Your ship, pressed into the navy, has taken its place in the line.
+85d587ac	Keep firing to the end
+798cb982	Survived / captured / killed
+32be77a0	You came back alive
+6174f17d	More than half the fleet was lost. You limped back to Cádiz in a shattered ship.
+6ac58890	You were taken prisoner by the British
+0d3d20f3	You spent several years on a prison hulk in England.
+9450ffe8	You went down with the ship
+d94d1c3a	The ship sank amid storm and gunfire.
+0f07e595	The privateers of Saint-Malo
+eaae0488	News comes that Surcouf, the young captain from Saint-Malo, has taken the British East India Company's ship Kent in the Indian Ocean. He is gathering men for his next cruise.
+29b7ab62	Sign on with the privateer
+aaee77b7	A big share / captured
+17713fbc	You got a big share
+f03f33d0	Your share of the prize cargo was worth the price of a house.
+ac2e73c7	You were taken by a British warship
+88a3a428	You were taken prisoner, then exchanged and came home.
+48e9b60c	Stay with the merchant ships
+e63e982e	You chose the safe routes.
+2ce80093	Hold out
+c66682ca	You were released
+f22f3ddc	You were thrown into prison
+d2172be2	The revolutionary tribunal reached its verdict in half a day.
+0fbe957c	Released / imprisoned / the guillotine
+8cf2c0b6	The electors at the Hôtel de Ville
+58b155c8	On 13 July the electors gathered at the Hôtel de Ville are organising a bourgeois militia. Gunsmiths' shops have been looted and the customs posts at the gates burned. Someone must keep order, they say. Outside the window, crowds stream past towards the Bastille.
+fcb43541	Join the militia and patrol the streets
+2061dbf8	Wearing a blue and red cockade, you guarded the shopping streets. A few days later the militia became the National Guard under Lafayette.
+59f0008a	Follow the crowd to the Bastille
+75a54217	There when it falls / wounded
+dd7698fc	In your good coat you mingled with the crowd. In the fortress courtyard you stood shoulder to shoulder with workmen and cheered.
+193bab26	You fell and were hurt in the surging crowd.
+312296e5	You pulled down the shutters and carried the ledgers and the strongbox to the cellar. The tocsin rang all night.
+03044b30	The first emigration
+f221f842	Three days after the Bastille fell, the king's brother, the Comte d'Artois, left for the frontier in the night. People walking past noble houses look at them differently now. Your relatives want you to leave with them.
+8cae7fd4	Cross the frontier with your relatives
+90088872	The émigré court at Koblenz / property confiscated
+42cbea0e	At Koblenz you joined the princes' court. When you came back years later, your house had been sold as national property.
+a0148e4e	Stay and accept the new order
+ed5bcff2	You put on the cockade and stood in local elections. People called you a liberal noble.
+d3541510	Go down to your country estate and watch how things go
+4698608f	You left Paris. But in the countryside the Great Fear was beginning.

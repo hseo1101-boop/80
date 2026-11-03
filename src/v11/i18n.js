@@ -68,7 +68,7 @@ function i18nRe() {
   // A women's ladder rank with its employer's name filled in (변호사 뒤퐁 씨의 서류 담당).
   const ranks = typeof CAREERS === 'object' ? Object.values(CAREERS).flatMap(c => c.women || []).map(r => r.label).filter(l => l.includes('○○')) : [];
   const npcRanks = ranks.map(l => esc(l).replace('○○', `(?:${sur}) 씨`)).join('|') || '(?!)';
-  I18N_RE = new RegExp(`(?<![가-힣])(${npcRanks})${after}|(?<![가-힣])((?:${given}) (?:${sur}))|(?<![가-힣])(${terms})${after}|(\\d+(?:\\.\\d+)?)|(?<![가-힣])((?:${sur}) 씨)${after}`, 'g');
+  I18N_RE = new RegExp(`(?<![가-힣])(${npcRanks})${after}|(?<![가-힣])((?:${given}) (?:${sur}))|(?<![가-힣])(${terms})${after}|(\\d{1,3}(?:,\\d{3})+|\\d+(?:\\.\\d+)?)|(?<![가-힣])((?:${sur}) 씨)${after}`, 'g');
   return I18N_RE;
 }
 // Korean particles after a placeholder take either form; the key keeps one.
@@ -105,6 +105,8 @@ function i18nFill(tpl, args) {
     const a = args[+i]; if (!a) return all;
     if (fmt === 'month') return MONTHS_EN[+a.text] || a.text;
     if (fmt === 'roman') return ROMAN(+a.text);
+    // Korean counts in units of 10,000 (만).
+    if (fmt === 'man') { const n = parseFloat(a.text.replace(/,/g, '')) * 10000; return n >= 1e6 ? `${(n / 1e6).toFixed(1).replace(/\.0$/, '')} million` : n.toLocaleString('en-US'); }
     if (fmt === 's') return +a.text === 1 ? '' : 's';
     if (fmt === 'cap') { const t = argText(a); return t.charAt(0).toUpperCase() + t.slice(1); }
     if (fmt === 'low') return argText(a).toLowerCase();
@@ -174,6 +176,23 @@ function enHas(text) {
   return !hasHangul(trPart(text, false));
 }
 const enChoice = c => LANG !== 'en' || enHas(c.label) && enHas(c.preview) && enHas(c.result) && (c.outcomes || []).every(o => enHas(o.title) && enHas(o.result));
+// A choice is shown when its conditions hold and, in English, when it is translated. A station's own
+// choices that are not translated yet leave the player with the scene's general choices.
+let CHOICE_OWNER = null;
+function choiceVisible(s, c) {
+  if (!enChoice(c)) return false;
+  if (!c.when) return true;
+  if (LANG === 'en' && (c.when.sceneRole || c.when.sceneRoleNot) && typeof sceneRoleOf === 'function') {
+    if (!CHOICE_OWNER) { CHOICE_OWNER = new Map(); for (const d of decisions) for (const x of d.choices) CHOICE_OWNER.set(x, d); }
+    const d = CHOICE_OWNER.get(c), role = sceneRoleOf(s);
+    if (!(d && d.choices.some(x => x.when?.sceneRole === role && enChoice(x)))) {
+      if (c.when.sceneRole) return false;
+      const {sceneRoleNot, ...rest} = c.when;
+      return matches(s, rest);
+    }
+  }
+  return matches(s, c.when);
+}
 const EN_DECISION_OK = new Map();
 function enDecision(d) {
   if (LANG !== 'en') return true;

@@ -1,0 +1,140 @@
+# Scenes of history, part 5.
+52eb8be9	The gates on fire
+1feecc52	Even before the news from Paris, the people of Lyon set fire to the toll gates where wine and meat are taxed on entry. The silk workers pour out and throw the customs ledgers into the river.
+09d7b78e	Join in burning the gates
+8a5b9aba	Cheap wine / arrest
+3245e2b4	The gates burned
+9d23b679	For days wine came in untaxed. There was a festive air on the Croix-Rousse.
+c5f19f7d	You were caught by the bourgeois militia and held for a few days. Some were hanged.
+d91470a0	You sat at your loom. The night sky was red.
+a336572b	Guard the gates
+00268842	The silk workers are burning the toll gates. The merchants want to form a bourgeois militia and restore order.
+2202948a	Join the militia
+c87eac91	You shouldered a musket and guarded the gates. A few of the arsonists who were caught were executed as an example. The weavers up on the hill did not forget.
+7d61d91d	Look only to guarding the warehouses
+191a4709	You locked the doors of the silk warehouse.
+0392eab6	The patriotic army of Bordeaux
+964a8881	The news from Paris has come by stagecoach. Merchants and shipowners have gathered at the exchange to form a ‘patriotic army’ and are calling for volunteers to help Paris.
+6cde255a	Put your name down for the patriotic army
+df25c75e	You drilled alongside the young merchants of the Chartrons quay. For the first time the name of the Gironde became a politics of its own.
+846f6c38	Worry about your ships and your books
+ca0bb68b	You prayed only that the cargoes on the West Indies route were safe.
+6af6cbc8	The château's archives
+3fcba559	A letter has come from your country estate in Touraine. The peasants have come in a crowd, it says, demanding the registers of dues. The steward asks whether to call in troops.
+269e6a5e	Have the registers burned before the villagers yourself
+710f664c	The steward burned the registers in the courtyard. The château was unharmed, and the villagers began to see you differently.
+8ac943a2	Call the mounted constabulary
+a82ecc76	The constabulary came and took several people away. You kept the registers, but the village's looks turned to ice.
+7e8d7934	News of the night of 4 August
+f8e3cfab	Word has reached the village that the National Assembly at Versailles declared in a single night that ‘feudalism is entirely abolished’. But there is talk that the dues must be bought out for a price.
+6cfcf1b5	From now on, pay not a sou in dues
+0fb86d3f	Freedom / the lord sues
+9bba9653	No one came to collect
+ea731a2a	The lord's collector never came again. In 1793 the remaining dues are abolished without compensation.
+78697a56	The lord took you to court
+56e748a3	The court sided with the lord. Still, a few years later that debt vanished along with the law.
+f12e6efd	Wait until the law is settled
+a209a56f	You handed over the sheaves as custom required. The neighbours called you a fool.
+b7cc8477	The night privileges were laid down
+8ab268b9	At the rostrum of the Assembly the Vicomte de Noailles and the Duc d'Aiguillon proposed that the nobility give up its privileges of its own accord. Hunting rights, seigneurial justice, tax exemptions… your family's rights too vanish in a single night.
+63fb0a60	Accept it as the tide of the times
+03843bad	The family elders were outraged, but you decided to put your hopes in the new constitution.
+551743e3	Insist on your rights to the end
+fe4a7e49	You demanded dues from the peasants of the estate as before. No one came.
+c6663415	Defend the palace?
+9c6f545d	At dawn on 10 August your section's National Guard battalion is ordered to the Tuileries to defend the king. Battalions from other sections, they say, are going to attack the palace.
+1587d330	Go to defend the palace as ordered
+df3476cd	Withdrawal / massacre
+670804e6	You pulled back before the shooting began
+22b1e10e	When the king took refuge with the Assembly, the battalion scattered. Hundreds of Swiss Guards died that day.
+aa3fc37f	You were swept away by the crowd on the palace stairs.
+137507a0	Say you are ill and stay at home
+29fe016b	Smoke rose beyond the window. In the evening you heard the monarchy was over.
+ac9a8474	Join the battalions on the other side
+3713bb54	The birth of the Republic / wounded
+ff4be377	Despite the suspicious looks at someone of bourgeois birth, you advanced with them to the end.
+de05e839	You were hit by a musket ball in the palace forecourt.
+5a9b3786	The section's watch committee
+8d654972	The section assembly has chosen you as a member of the watch committee. On your desk today lies a denunciation naming an old shopkeeper from your own street. He goes to Mass in secret, it says, and tried to refuse assignats.
+8366d6d0	Put him on the list
+a999911e	The shopkeeper was taken away. On the committee they called you a reliable patriot.
+17ccb82e	Bury the denunciation for lack of evidence
+dc6b90a9	Unnoticed / suspected yourself
+c8f8c65f	No one noticed
+cc3c7b1d	The denunciation vanished beneath the piles of paper. The shopkeeper never knew, but his son will find out.
+c8279de6	You came under suspicion yourself
+3941f2b5	Talk of you as a ‘moderate’ began to go round. You stepped down from the committee.
+d4c5bf5c	The White Terror
+a5d638f0	After Thermidor the wind blows the other way. Young men known as the ‘Companies of Jehu’ are hunting down former Jacobins. In Lyon, word is, Jacobins held in the prisons have been massacred. Your name may be on their list too.
+7e5c1315	Take refuge in the countryside
+df398443	You lived in hiding for months. When you came back, some of your old comrades were gone.
+bb7e00d4	Safe / attacked
+d4885944	The singing passed beneath your window, but no one knocked at the door.
+900751a1	You were attacked
+78c5db05	On a dark road you were seized by young men with cudgels and badly hurt.
+cd3222a9	Bodies surfaced in the Rhône.
+b3a4ad73	An officer after 10 August
+5d5860dd	The monarchy has fallen. General Lafayette crossed the frontier with his staff and was taken by the Austrians. Two-thirds of the officers of noble birth have already gone. The Assembly's commissioner demands an oath of loyalty to the Republic from the officers who remain.
+2506b93e	Swear the oath and stay in the army of the Republic
+9462a1b1	You signed the oath. Some of your fellow officers called you a traitor, and the commissioner still eyes you with suspicion.
+a4a46d61	Leave the unit at night and cross the frontier
+5a88ae0d	Join the émigré army / caught
+a3b58266	You crossed the frontier
+bc1a576a	You joined the princes' army at Koblenz. Now you are an enemy of France.
+86eb1a34	You were caught at the frontier
+44c02268	You were taken as a deserting officer and thrown into prison. In September, rumours of massacres run through every prison.
+a22d7fd6	Stay in Paris and join a plot to save the king
+2e8173c1	Undiscovered / exposed
+603a6e44	The plan to free the king from the Temple tower was never carried out. Your name was left nowhere.
+8fb42eb9	The plot was discovered
+780aa0ba	A comrade was caught and gave names. In the middle of the night the National Guard knocked at your door.
+c0fac77b	The Revolutionary Tribunal
+c9c031f4	The prison door opened and your name was called. Fouquier-Tinville, the public prosecutor of the Revolutionary Tribunal, reads the indictment: “Conspiracy against the Republic, attempted emigration, collusion with the tyrant.” Two witnesses; no counsel.
+7ccba23b	Declare your loyalty to the king openly
+ad16bf5f	The guillotine
+1a5f098d	You were sentenced to death
+1f46b750	“Vive le Roi!” That is what you cried when the verdict was given.
+1276503e	The verdict was put off
+d64bfcd2	The papers were mixed up and your name slipped to the next month's list. Meanwhile, Thermidor came.
+2773fda1	Plead that you have been loyal to the Republic
+e1ba8631	Soldiers of your regiment testified that you had cared for your men. By a miracle you were released.
+c7e19a99	You went back to prison
+165b4257	With the verdict deferred, you saw Thermidor come from your cell.
+f6f13cd4	Your defence was over in a few minutes.
+6b1559c8	The order to arrest noble officers
+ed59204e	Generals Custine and Biron have gone to the scaffold. Commissioners are sifting every unit for officers of ‘noble birth’ and ‘royalists’. You have been warned that your turn comes tomorrow.
+f4f43332	Stay and face the inquiry
+303958f0	Thanks to your soldiers' petition, you were stripped of your rank and released. A sergeant-major of common birth took your place.
+17555efd	You were transferred to a prison in Paris and released only after Thermidor.
+fe3e2b68	Abandon the unit and go over to the enemy
+d2a8aa80	Emigration / caught
+4752241a	You went over
+584a6ae2	Like General Dumouriez, you went over to the enemy. Now there is nowhere to go back to.
+a65a20d4	You were caught at the outposts and handed to a military commission as a deserting officer.
+05e1250c	The Army of Condé
+f8e5e341	The Prince de Condé's émigré army fights along the Rhine beside the Austrians. In the trenches opposite is the army of the French Republic. Someone from your home region may be among them.
+35853359	Take your place in the line of attack
+4efe70f3	In the forest of Haguenau, Frenchmen crossed bayonets with Frenchmen. The joy of victory did not last.
+00ba2458	A republican bullet went through your leg.
+8aaacf9b	You fell in the mud of the Rhine bank.
+6f1e60d9	Leave the army and go into trade in Hamburg
+95fde98a	You took off the uniform and worked in Hamburg as a French tutor and a wine broker.
+ae0e279a	The landing at Quiberon
+94634f9d	The British fleet has agreed to land émigré regiments on the Quiberon peninsula in Brittany. The plan is to join the Chouans and raise the west. Rumour says General Hoche's republican army is waiting.
+3b607239	Join the landing force
+f32c78a8	Escape / captured and shot
+8b0a2d3a	You got away by boat
+7466b7af	At the tip of the peninsula you threw yourself into the sea and were hauled aboard a British ship. Hundreds of your comrades were left on the beach.
+b2280e4d	You were captured and shot
+c3fa2b94	You believed the promise that those who surrendered would be spared. The military commission showed no mercy to émigrés.
+a15276d4	Sit out this expedition
+7ea5a74d	You stayed in England. A few weeks later the news of Quiberon reached London: more than seven hundred had been shot.
+6f2f04db	Danton's arrest
+67ec9edb	On the night of 31 March 1794, Danton and Camille Desmoulins were arrested. The Committee of Public Safety is sweeping away the ‘Indulgents’. Tomorrow in the Convention the deputy Legendre means to defend them. Will you stand up and speak with him?
+3dc09609	Stand up and defend Danton
+0e0fd3cc	Survival / the guillotine
+ec609615	You sat down under Saint-Just's cold gaze. Four months later, Thermidor came.
+8bbfa5de	You went to the guillotine
+7fbe1e19	Within two days came a denunciation: “one of Danton's gang”. The Revolutionary Tribunal gave its verdict in half a day.
+b33c6ebe	Keep silent
+46baf077	On 5 April Danton, they say, cried from the scaffold: “Show my head to the people. It is worth the trouble.” You sat in your seat with your head bowed.

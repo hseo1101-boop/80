@@ -1,0 +1,172 @@
+# Scenes of history, part 2.
+1bc964db	As the golden coach went by, people cried “Vive l'Empereur!” Your hands were frozen stiff.
+a432680f	Earn wages working on the decorations
+59a124bb	You worked putting up triumphal decorations and lamps.
+3c14365b	In your warm house you listened to the stories the neighbours brought.
+a44c9a22	The sun of Austerlitz
+47cae450	At dawn on 2 December the fog lifts from the Pratzen Heights and the sun rises. The order to attack comes down the line.
+5bcb530a	Charge the heights
+fef67c76	A great victory / wounded
+bd84a791	A great victory
+40193ce4	In the evening the Emperor rode past the troops. “You need only say, ‘I was at Austerlitz,’ and people will answer, ‘There goes a brave man!’”
+8a0d5b01	You were shot
+166d3de4	You were carried off the frozen field on a stretcher.
+3002f016	Ask to stay with the reserve
+9c75d27e	You heard the guns from the rear.
+a52e6dc0	Crossing the Niemen
+2268655a	The six hundred thousand men of the Grande Armée cross the Niemen into Russia. Endless plains and dust, and for now it is still summer.
+23cf7b1e	March on Moscow with the main army
+bdf1db37	Return / captured / killed
+fc807ffa	You came back alive
+66ffea9c	You saw Moscow burn and crossed the Berezina. You came back missing two frozen toes.
+691d7da0	You were taken prisoner by the Russians
+34fa0ffe	You spent two years in a camp near Siberia before coming home.
+23a4aa54	You did not come back from the snow
+2ec1bcb7	You fell to the cold and hunger of the retreat. Hundreds of thousands never came back from this campaign.
+4def7fb5	Ask to be transferred to the supply train
+d5a06d8a	Duty in the rear / the retreat all the same
+2e51aaeb	You stayed at the supply depot in Poland
+c54f4d51	You heard of the horrors at the front only by rumour.
+fbf996d5	In the end you were swept into the retreat
+148c5d71	You barely came back alive through the hunger and cold.
+bc376960	The Emperor is back
+8cc47cab	Napoleon has escaped from Elba and is marching north with an army. Every force sent against him, they say, goes over to the Emperor.
+e8c51b58	Go out into the street to greet the Emperor
+3d5b2c99	Amid cries of “Vive l'Empereur!” you pinned the tricolour cockade on again.
+d233f611	Stay loyal to the king
+6fd11b21	You put the white cockade away deep in a drawer. You quietly bide your time.
+e0a83285	Once again you watched the world change from your window.
+426620a1	(Soldier) Go over to the Emperor with the regiment
+0543ef44	On the field of Laffrey the Emperor threw open his greatcoat. “If there is a soldier among you who wants to kill his Emperor, here I am!” No one fired.
+0fdc5ac1	(Royalist officer) Follow the king to Ghent
+62c1a006	You followed Louis XVIII to Ghent in Belgium. Three months later, when Waterloo was over, you came back with the king. The king did not forget the loyal.
+8a12fcb2	The fields of Mont-Saint-Jean
+a56db1af	18 June, rain-soaked fields in Belgium. The bombardment begins at noon, and in the evening the Guard goes forward in its last charge.
+76b43fe8	Hold the line to the end
+8c39beaa	Rout / wounded / killed
+5ab67941	You survived the rout
+ad04d902	When the Prussians appeared the line broke. You walked south all night.
+a5521a01	You were shot in the leg
+9ed99b67	You lay on the field a whole day before you were rescued.
+3694b46c	You fell on the field
+66c59718	Tens of thousands were killed or wounded in that one day.
+fe32047e	Volunteer to escort the wagons
+b86e00ca	You heard of the defeat in the rear.
+9dde6819	Lock the shop door
+4c769d36	The Great Fear
+d3f9807f	“Brigands are coming to cut the grain!” The rumour spreads from village to village. People gather with sickles and pitchforks, and someone cries out to go to the lord's château and burn the registers of dues.
+3315b28b	Go to the château with the crowd and burn the registers
+ab36221b	Freed of your dues / caught
+ac646f40	The registers went up in flames
+2ebe0078	The château's steward fled, and generations of records of dues burned in the courtyard. You shared wine with the neighbours.
+e64b62d1	You were held for some weeks and then released.
+1aa72eb5	Stand guard at the edge of the village
+5bc6efa2	All night you waited for the brigands with a torch in your hand, but they never came.
+30ca57e3	You hid the grain and the animals in the barn and locked the door. A few days later the rumours died down.
+2e099927	(Noble) Open the gates and hand over the registers
+8586ac75	You had the registers piled up in the courtyard. The peasants burned only the registers and went home. The château was unharmed.
+7f7e4d0d	(Noble) Arm the servants and defend the château
+0c3871e3	Held / the château burns
+1ac1ac3c	You held out
+be1d4a87	A few shots and the crowd scattered. Things with the village can never be mended.
+bc747347	The château burned
+577d0d26	One wing of the château burned in the night. You fled to the town with your family.
+6c0f8d61	The Tree of Liberty
+7dcee144	Today a ‘Tree of Liberty’ is to be planted in the square. A young poplar hung with tricolour ribbons is set up, the mayor gives a speech, and everyone dances around the tree.
+09a74813	Plant the tree together and dance
+037bbeaf	You covered the roots with earth and watered it. Songs and dancing went on all evening.
+1c924335	Watch from a distance
+81c80ad8	A festival without the priest felt somehow strange.
+e754ae2f	The priest in hiding
+e53665d6	The parish priest who refused the constitutional oath has been ordered into exile. At night he knocks on your door and asks you to hide him for a few days.
+93383952	Hide him in the granary
+fa25ae07	Safe / discovered
+d7d6818b	For weeks Mass was said in secret in the granary loft. The neighbours pretended to see nothing.
+f0cf6561	The National Guard burst in
+0fd69780	The priest was taken away, and you were fined and put on the list of suspects.
+cee0c4f3	The priest nodded and vanished into the dark. It stayed on your mind for a long time.
+092d5c37	Inform the town hall
+2bd90df9	The priest was caught and sent to a port. People in the village look at you differently now.
+07404db0	The day the bells come down
+958a607a	On the orders of the representative on mission, the church bells are to be taken down and cast into cannon, and the church turned into a ‘Temple of Reason’. You are told to keep the ‘décadi’, a rest day every ten days, instead of Sunday.
+d05e7592	Secretly hide a statue of a saint at home
+208e2040	Saved / found
+9808a5fa	You saved the statue
+76328448	You hid it in a pile of straw in the barn. When the church reopens some years from now, you will put it back.
+97b44fbd	It was found in a search
+4aeb0d14	You were called a ‘fanatic’ and fined.
+e64886e3	Take part in the Festival of Reason
+25772b50	In the church you saw a young woman dressed as the goddess of Liberty. The old people shook their heads.
+ebdb8029	You quietly said the rosary at home.
+155c4f2a	The landing at Quiberon
+627ff73d	The British fleet has put an émigré force ashore on the Quiberon peninsula. The Chouans send word for everyone to gather. General Hoche's republican army is closing in too.
+90122cc4	Join the royalist army
+531e15e3	Escape / captured / killed
+49d86edf	You slipped away to the woods in the defeat
+aaf62a05	You crossed the marshes and escaped before the peninsula was sealed off.
+807bf690	You were taken prisoner and then released
+54664971	The émigré nobles were shot, but most of the peasants who joined were set free.
+094091a9	You did not come back from the beach
+507f9dd2	You fell on the encircled peninsula.
+ccf472d7	You carried on with the field work. You could hear the guns in the distance.
+c8a91100	Join the rising
+0857fa17	The Cossacks are coming
+6fa77037	The Allies have reached Dijon. Cossack horsemen are requisitioning horses and grain in every village, and in the woods peasants are banding together to resist.
+aa04ce5d	Join the peasant volunteers in the woods
+c25752bf	Holding out / reprisals
+f0ce0765	Several raids succeeded
+68329e2d	You attacked the requisition wagons and took back the grain.
+6121cf82	The village suffered reprisals
+8f795205	Two barns were burned.
+efd0e79d	Hide the animals in the woods
+2bbd8274	You tied the cows and pigs near a pond deep in the woods. You saved most of them.
+2a8c78df	Hand over what they demand
+cb1d4698	You gave up half the grain, and the village was left alone.
+47f577c3	Take over the town hall
+bb59f789	When the news from Paris arrived, the citizens marched on the town hall, drove out the old town council and set up a new committee. Men are being enlisted for the National Guard.
+f683349c	Join the National Guard
+3ab68041	With a tricolour cockade, you help patrol the town gates every night.
+a885dce2	Help guard the grain stores
+6ab4ca49	You guarded the stores with citizens trying to prevent bread riots.
+9aa824e9	You kept the shop open and waited for news.
+de595173	Smash the English machines!
+2b814554	Furious at the English-style spinning machines taking their jobs, the workers march on the mill.
+2e7af75b	Go to the mill with them
+0d935de6	Machines smashed / arrested
+d4361f22	The spinning machines were smashed
+22f6307a	You smashed the machines with hammers and burned the bobbins. No one knows whether the jobs will come back.
+61d456d8	You were seized by the troops
+ee6f44ed	You were taken for a ringleader and locked up for several months.
+62631c9c	You turned your spinning wheel and waited for the trouble to pass.
+bd772bf0	News from Saint-Domingue
+56a63ee8	News has reached the port of Bordeaux that the slaves have risen on Saint-Domingue, the island of sugar and coffee. The merchants fear for their ships and cargoes.
+3a28e653	Get out of the colonial trade
+a73624bb	You hurried to sell your remaining shares. You took a loss, but avoided a bigger one.
+5e4298b5	Buy up the shares now going cheap
+6899284a	Recovery / ruin
+93ce813c	You salvaged some of it
+1d8f743a	For a while the price of sugar soared and you made a profit.
+2f0e8a8b	You lost the ships and cargoes
+ec13bdfc	The plantations on the island burned, and the money invested never came back.
+8c54b4f4	Take an interest in the ‘Friends of the Blacks’, who call for abolishing slavery
+3357e2db	You became an outsider among the people of the port, but your mind did not change.
+dfa97b98	Bordeaux and the Girondins
+5dc12e58	When the Girondin deputies were arrested in the Convention, Bordeaux rose up. The city wants to raise an army to stand against Paris.
+9fd53b42	Put your name down for the Bordeaux volunteers
+db23b353	Fizzles out / a target of the Terror
+cdd59986	The army never set out
+0fd47c3a	Within a few weeks the movement fizzled out.
+16438eb7	In the autumn you became a target of the revolutionary committee
+d26829e9	When the committee led by Tallien moved in, your name went on the list; you paid a fine and lived in hiding for months.
+96b84f74	In the city you were called a traitor, but you escaped the purge that autumn.
+a24205e3	You threw yourself into work at the port.
+650acca4	Saumur has fallen
+a28f76f6	The royalist army of the Vendée has taken Saumur, down the Loire. Tours, where the republican army has its headquarters, could quickly be next.
+f55f9d99	Volunteer for the guard on the Loire bridge
+fc5a7c74	Safe / drawn into battle
+48221af5	The Vendéans did not come to Tours
+02370718	You guarded the bridge for weeks. The Vendéan army turned towards Nantes.
+202c7c6d	You were taken to the western front
+3c66c50f	You saw the horrors of the war in the Vendée.
+86c38120	Take the family and flee north
+787e61a2	You came back a few weeks later. The city was unharmed.

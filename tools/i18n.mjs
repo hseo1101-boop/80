@@ -46,6 +46,8 @@ function collectStatic(G) {
   for (const f of Object.values(G.FIGURES)) { add(f.name, 'figures', 2); add(f.job, 'figures', 3); if (!f.death || f.death[0] <= PHASE_END) add(f.fate, 'figures', 4); }
   for (const e of G.historicalEvents) if (e.year <= PHASE_END) { add(e.text, 'history', 3); for (const i of e.impacts || []) add(i.text, 'history', 3); }
   for (const e of [...G.dailyEvents, ...G.childhoodEvents]) if (inPhase(e.when) && !abroad(e.when)) { add(e.title, 'daily', 4); add(e.text, 'daily', 4); }
+  // Words an effect writes into the record: milestones, jobs, schooling.
+  const fx = e => { if (!e) return; if (typeof e.milestone === 'string' && e.milestone !== '$job') add(e.milestone, 'milestones', 3); if (typeof e.job === 'string') add(e.job, 'milestones', 3); if (typeof e.education === 'string') add(e.education, 'milestones', 3); };
   for (const d of G.decisions) {
     if (d.realLife || d.when.real || d.when.bond || abroad(d.when) || !inPhase(d.when)) continue;
     const src = d.historic ? 'historic' : 'decisions', pr = d.historic ? 5 : 4;
@@ -53,7 +55,8 @@ function collectStatic(G) {
     for (const c of d.choices) {
       if (c.when?.sceneRole || abroad(c.when)) continue;
       add(c.label, src, pr); add(c.preview, src, pr); add(c.result, src, pr);
-      for (const o of c.outcomes || []) { add(o.title, src, pr); add(o.result, src, pr); }
+      for (const o of c.outcomes || []) { add(o.title, src, pr); add(o.result, src, pr); fx(o.effects); }
+      fx(c.effects);
     }
     for (const [k, v] of Object.entries(G.VOICE[d.id] || {})) if (!k.startsWith('role:')) add(v, 'voice', 6);
   }
@@ -73,6 +76,7 @@ function collectRuntime(G, lives) {
         const d = G.decisions.find(x => x.id === s.decision);
         for (const t of [d.title]) G.L(t);
         const open = d.choices.map((c, j) => [c, j]).filter(([c]) => G.choiceAvailable(s, c));
+        if (!open.length) break;
         engine.choose(open[Math.floor(rnd() * open.length)][1]);
       } else engine.skipToDecision(24);
     }

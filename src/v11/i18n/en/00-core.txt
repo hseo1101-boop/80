@@ -9,7 +9,7 @@
 7e288609	A
 cec9bbba	French
 023bd7c9	 Life
-3ca66247	age
+3ca66247	yrs
 817b2d5a	Until next birthday
 537d188b	Skip to the next major decision
 5dfb701d	To next decision »
@@ -72,7 +72,7 @@ ca665711	{0}·{1}
 7137a272	Scene of the present life
 3756bf4b	Life summary
 6ee0b79f	Scenes of history
-ee55709b	{0}s met
+ee55709b	{0:cap}s met
 3d136e4a	Starred memories
 43651f6b	Had it been another life
 5e55a842	Be born again somewhere else →
@@ -152,7 +152,7 @@ d4259203	{0}, in town
 5edb7e19	Baby
 634126a7	Swaddling clothes.
 fca67127	Family members present: {0}.
-d6ab2b01	At the end of the {1}th century about {2}0,000 people live in {0}, the largest city of the kingdom.
+d6ab2b01	At the end of the {1}th century about {2:man} people live in {0}, the largest city of the kingdom.
 2131ad82	Health
 f4148883	Happiness
 fe131626	Knowledge
@@ -165,8 +165,7 @@ b6c878be	Newborn
 db10b5c5	From age two you can choose a focus.
 cd6c6c44	You first meet the world inside a house in {0}.
 099e28b9	For now, the care of the grown-ups nearby fills most of the day.
-ae00f3d9	In {0}, about {1}.{2} million people live in France
-daab4db5	At the end of the {1}th century about {2}0,000 people live in {0}, the largest city of the kingdom
+daab4db5	At the end of the {1}th century about {2:man} people live in {0}, the largest city of the kingdom
 4670fa21	Age {0} 📊 Numbers of the age
 50a32833	age {0}
 13a6e615	📊 Numbers of the age
@@ -231,8 +230,8 @@ d0ba4605	And one in four will not live to their first birthday.
 f8f85f7d	The Seven Years' War goes on.
 9ba33fb9	A rented room in town
 be04b4eb	With parents
-3ff7b3f8	About {1}0,000 people live in {0}, the city of silk.
-89e7d706	About {1}0,000 people live in {0}, the city of silk
+3ff7b3f8	About {1:man} people live in {0}, the city of silk.
+89e7d706	About {1:man} people live in {0}, the city of silk
 0d5f6c35	Age {0} Family memory
 893920be	Below average
 79c2fbe2	Died {0}
@@ -334,7 +333,6 @@ eebdff90	keeps out of politics
 # runtime
 45597127	End of life
 77945820	A second bad harvest in a row pushed the price of bread above a day's wage.
-92355673	In {0}, about {3} babies in {1},{2} are born.
 8f56b2a5	{0} ended their life at {1}.
 34ca122b	It was a long life.
 2478ba9b	News of family and {0}s

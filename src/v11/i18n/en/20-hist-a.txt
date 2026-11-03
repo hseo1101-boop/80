@@ -1,0 +1,184 @@
+# Scenes of history, part 1.
+7ba98141	The Emperor is back: the regiment's choice
+a74c096b	The Emperor has left Elba and is nearing Grenoble. The king's order is “Stop the usurper.” But the soldiers are already pulling the old tricolour cockades out of their packs.
+ec6d8cb2	Go over to the Emperor with the regiment
+da8b9a2d	“Vive l'Empereur!” The whole regiment went over to the eagle. Three months later, Waterloo awaits.
+87a2a154	(Royalist) Follow the king to Ghent
+ffc109be	You followed Louis XVIII to Ghent in Belgium and came back with the king after Waterloo. The king did not forget the loyal.
+afd64047	Hold the barracks and watch
+41f63d99	Three months in which orders and loyalty alike grew blurred. When the king returned, you were labelled a ‘turncoat’.
+82fff0e8	The regiment on the Champ de Mars
+59899157	In July the king gathered twenty thousand troops around Paris. Your regiment too has pitched camp on the Champ de Mars. The French Guards, they say, have already gone over to the crowd. On the morning of the 14th, shots ring out from the direction of the Bastille.
+1526b647	Haul the cannon to the Bastille with your comrades of the French Guards
+eab988dc	Hero of its fall / treason
+c440ff9d	The Bastille fell
+e8095b37	Following Sergeant Hulin and Lieutenant Élie, you set five cannon before the fortress. By evening you were a ‘conqueror of the Bastille’.
+da0fedf4	You were wounded
+0258de47	You were hit by a shot fired from the walls.
+827a0196	Stay in camp as ordered
+79888fb8	The order never came. Baron de Besenval withdrew the troops, and the king came to Paris and accepted the tricolour cockade.
+afad2155	(Noble officer) Keep the men from deserting
+d8ca6769	The look in the soldiers' eyes had already changed. That night half the unit vanished. An age has come when a noble officer's orders no longer carry.
+a8d2edd7	A man who flies
+1f4cce36	Today, they say, the Montgolfier brothers' balloon will rise from the gardens of the Château de la Muette carrying men. All Paris is flocking to watch.
+10fc1912	Go and watch
+55db8294	The great balloon rose slowly and vanished beyond the Seine. People cheered and threw their hats in the air. A sight you will never forget.
+1ead63f8	Stay at home
+07429661	Work kept you from going. In the evening the neighbours could talk of nothing but the man who flew.
+f01df116	To the Bastille!
+d68cfcdd	The morning of 14 July. Having seized muskets at the Invalides, the crowd surges towards the fortress of the Bastille by the Porte Saint-Antoine in search of powder. The tocsin rings in every street.
+0acc65e2	Go to the fortress with the crowd
+61c85732	There when it falls / wounded / killed
+e24d1dbc	At five in the afternoon the drawbridge came down. Amid the roar you stepped into the inner courtyard. One day your name will be on the list of the ‘conquerors of the Bastille’.
+2cb15007	You were hit by a musket ball
+9be30191	A shot from the walls grazed your arm. You were carried out bleeding, but in the evening you heard the fortress had fallen.
+0d4c13c3	You did not come back
+fc0c57bb	You fell before the inner courtyard. About a hundred of the attackers lost their lives that day.
+0c1148cf	Carry paving stones for barricades, and food
+f3c84c71	Hearing the gunfire in the distance, you carried bread and water to people.
+537e61b2	You bolted the door and stayed at home. The roar outside went on late into the night.
+d9eabf54	Bread! To Versailles
+cd48c4fa	On 5 October the market women, unable to find bread, gather outside the Hôtel de Ville and cry out to march to Versailles. Rain is falling, yet the procession swells to thousands.
+a85a7fa9	Join the march
+e598eb88	The royal family to Paris / hurt in the turmoil
+abee5df1	You brought back “the baker, the baker's wife and the baker's boy”
+18c74812	You held out all night before the palace. The next day you walked back behind the carriages bringing the royal family to Paris.
+8fff1ad7	You were hurt in the tumult inside the palace
+bbe294f1	At dawn you fell and were hurt in the crowd that burst into the palace.
+cf248e33	You watched the procession go by from the window.
+02b0a579	(Soldier) Follow the march to Versailles with the National Guard
+1c1d6023	You marched through the night behind Lafayette. At dawn you stood between the crowd storming the palace and the Life Guards.
+7658ef9a	The Festival of the Federation
+0395efce	On the first anniversary of the fall of the Bastille, delegates of the National Guards of the whole country gather on the Champ de Mars to swear loyalty to the nation, the law and the king. Every village holds a festival the same day.
+05d0ad7d	Join the festival and take the oath
+3cef6141	Before the altar you raised your hand and swore with the others. People of different estates sat at one table.
+81b184fa	Watch quietly
+23a9d7d4	You heard the drums and the cheering from afar.
+189e250f	(Soldier) Stand before the altar of the fatherland for your regiment
+8ba38018	You carried the regiment's colours and took the oath before the altar on the Champ de Mars. Officers and men stood in one line.
+431be3b6	(Noble) Lay down your title and swear as a citizen
+24b915d1	Two months ago hereditary titles were abolished. Wearing a coat without arms, you took the oath among the citizens.
+cb4cbd6e	(Clergy) Concelebrate Mass at the altar
+7a29393f	Priests stood in rows at the altar Mass said by Bishop Talleyrand. The rain poured down, but three hundred thousand people knelt.
+ad1e88ed	The petition of the Champ de Mars
+4789a2ae	After the king was caught fleeing, the Cordeliers Club calls people to the Champ de Mars to sign a petition for his deposition. There are rumours that martial law has been declared.
+aa5c2ef1	Go and sign the petition
+8d37e670	Safe / shots fired
+fb80b9fa	You signed and came home
+5038ec7f	You wrote your name on the petition laid on the altar of the fatherland. Towards evening, hearing that shots had rung out there, you shuddered.
+92d8f250	The National Guard opened fire
+dff0866d	The red flag went up and shots rang out. You fell in the crowd and were hurt.
+edd2add2	You could not escape the bullets
+54ee82ab	Dozens lost their lives on the Champ de Mars that day.
+d5fcba84	(Soldier · National Guard) Stand guard on the square
+56f815e5	The order to fire
+f7b87226	The order to fire was given
+64a7f59e	The red flag of martial law went up and the muskets turned on the crowd. You pulled the trigger too. That night you could not sleep.
+f1cb5a4b	You fired into the air
+81a8fdd3	You raised your musket to the sky. You hoped no one had seen.
+8b29591e	The fatherland in danger
+8945d0a5	The Assembly has declared “the fatherland in danger”. Tents have gone up in the squares and the registers of volunteers lie open.
+ecc60fb3	Volunteer
+2cfcab1f	You wrote your name in the register and were given a tricolour cockade. In a few days you leave with the battalion for the eastern front.
+7d645496	Stay for your family
+1b15a15b	You saw your departing friends off.
+c6d980dd	10 August, the Tuileries
+0e989d33	The tocsin rang all night. The sans-culottes of the sections and the fédérés of Marseille are advancing on the Tuileries palace. The palace is held by the Swiss Guards.
+e2a4d569	Advance with your section's battalion
+fcf4b98b	The fall of the monarchy / wounded / killed
+af555018	The monarchy fell
+926d22b6	The palace was taken and the royal family took refuge with the Assembly. You saw the last day of the monarchy with your own eyes.
+98d56067	You were shot on the staircase
+6106adc5	You went down under the Guards' volley and were carried out by your comrades.
+88a15c34	You fell in the palace forecourt
+65c65537	Hundreds of the attackers were killed or wounded that day.
+df1cdce2	The palace fell
+a825b28a	The guns of Valmy
+7f11ea6b	20 September, the heights of Valmy. The Prussians advance out of the fog. General Kellermann puts his hat on the point of his sword and cries “Vive la Nation!”
+efb80fc1	Hold the line and cry out with him
+c8cb0ef4	Victory / hit by shellfire
+b0a4080c	The Prussians fell back
+19ce6e1e	After the cannonade the enemy withdrew. The next day word came that the Republic had been proclaimed.
+d544235c	You were hit by a shell splinter
+e5d5745c	You spent several weeks in the field hospital.
+a3282187	Shrink back behind the line in fear
+91bfa2e0	You were ashamed, but you survived.
+01e8c18b	Morning on the Place de la Révolution
+70fa103e	21 January. Citizen Louis Capet mounts the scaffold in the Place de la Révolution. The drums have been beating since dawn, and troops line the streets.
+e2b83ca1	Go to the square
+350542c5	Among the crowd you saw the moment the drums fell silent. Some cheered; some turned their heads away.
+5a44180f	Pray quietly at home
+e8cf2780	You closed the shutters and prayed. The church bells did not ring.
+64ef9c7f	You went to work. The streets were strangely quiet.
+2ce487e4	(Soldier) Stand guard around the scaffold
+a6673be3	The drums drowned out the king's last words. You stood with your back to the scaffold.
+3ddffd71	(Royalist) Put on mourning in secret and hear Mass
+65933ad2	Unnoticed / denounced
+ef6e4118	No one found out
+d6744f2b	In a cellar, a non-juring priest said Mass for the king.
+fda46f64	You were denounced
+5a8bf791	A neighbour told the watch committee. A few days later you were arrested and taken to prison.
+83577cdd	The levy of 300,000 and the rising in the west
+5b1dc19a	At the news that the Republic is conscripting three hundred thousand men, the villages of the west have risen. In the woods the ‘Chouans’, who use the hoot of an owl as their signal, are gathering men.
+33979ea6	Join the Chouans
+9291b5c9	War in the woods / captured / killed
+df6dddbf	You held out in the woods for years
+a63a8b15	By day you ploughed, by night you ambushed republican convoys in the woods. The villagers secretly brought you food.
+38f0bffa	You were taken by the republican army
+0e6703e0	You spent months in prison and were freed under an amnesty.
+f825b1cd	You did not come back from the woods
+290e3108	You fell in an ambush.
+897b9826	Answer the levy
+e6f8e796	You joined the republican army. The people of your home region turned their backs on you.
+11fc8def	Take no side and lie low
+d62f198b	You lived holding your breath, keeping out of sight of both sides.
+6c09237c	You survived
+9f01d88a	The siege of Lyon
+797e2fcd	Lyon rose against the Convention, and the republican army has laid siege to the city. Shells are falling and bread is running out.
+370d0290	Go to defend the walls
+de3ea1d4	Holding out / punished after the fall / killed
+e58ab5fa	You held out for two months
+7d961fd1	The city fell in October. Your name was not on the lists, and you survived.
+8eb92cc8	You were imprisoned after the fall
+ab751ff4	You were taken before the revolutionary tribunal and barely released. Many of your neighbours were shot on the Brotteaux plain.
+7c79abb2	You fell to a shell
+f8e11221	You fell below the hill of Fourvière.
+4285c11d	Slip out to the countryside
+f7259040	At night you crossed the Rhône and took refuge with relatives. You left house and workshop behind.
+93089849	You hid in the cellar and endured the bombardment.
+29cbd9e3	The Festival of the Supreme Being
+1cd42457	The ‘Festival of the Supreme Being’ presided over by Robespierre is being held. Citizens carrying flowers and ears of wheat march to the artificial mountain on the Champ de Mars.
+0a8dd443	March carrying flowers
+46d7557f	You saw the vast stage designed by the painter David. People enjoyed it, but you heard muttering behind it too.
+90ea695a	You kept to the back streets to avoid the procession.
+323501cc	The night of 9 Thermidor
+e8aa4821	The Convention has arrested Robespierre. The Paris Commune is ringing the tocsin in the sections to rescue him. You must decide which side to stand on.
+707ad150	Go to the Hôtel de Ville, on the Commune's side
+abe28174	Dispersed / arrested
+2330e65b	Rain fell and the crowd scattered
+af046628	After midnight the people in the square drifted home one by one. You went home too.
+1617ea35	Your name went on the arrest list
+6080b954	You spent several weeks in prison.
+82faab89	Stand with the Convention
+b55e9571	You went to the Hôtel de Ville with the Convention's forces. The Terror was over.
+0cffae0c	From the window you listened to the rain and the tocsin.
+cfb20dd5	(Soldier · gendarme) Enter the Hôtel de Ville with the Convention's troops
+0b1cbcf5	At two in the morning you ran up the steps of the Hôtel de Ville. A shot rang out, and Robespierre was hit in the jaw.
+c01fa504	13 Vendémiaire
+b5a8e4cf	Sections close to the royalists have armed themselves against the Convention. The Convention, they say, has put a young artillery officer, Bonaparte, in charge of its defence.
+1f60bc67	March with your section's battalion
+a23c34bc	Retreat / grapeshot
+0b8de7f1	The guns drove you back
+81c8f212	The cannon fired in front of the church of Saint-Roch. You barely got clear.
+7fe0e593	You could not escape the grapeshot
+de840e6a	You fell on the church steps.
+5e023f23	You kept the shop shut until the cannon fell silent.
+4a65b81e	(Royalist) Join the rising of the royalist sections
+5846d2c7	You scattered and fled
+7bfad43c	Before the church of Saint-Roch, young General Bonaparte's grapeshot rained down. You scattered into the alleys.
+09e7eec6	You fell on the church steps.
+8b385fa7	(Soldier) Serve in General Bonaparte's battery
+33eb11df	With the cannon hauled in from Les Sablons you swept the front of Saint-Roch. That night the nickname ‘General Grapeshot’ was born.
+2a1f0418	The coronation at Notre-Dame
+b5fe01a8	On 2 December Napoleon is crowned Emperor in the cathedral of Notre-Dame. It is a bitterly cold day, yet the streets are full of onlookers.
+03c6690c	Go out to see the procession
