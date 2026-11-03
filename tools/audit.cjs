@@ -19,6 +19,7 @@ for(let i=0;i<N;i++){const f=fams[i%fams.length];let s;
    const o=d.choices.map((c,j)=>[c,j]).filter(([c])=>G.choiceAvailable(s,c));
    if(!o.length){add('no available choice',d.id+' '+s.job+' '+s.year);break}
    seen[d.id]=(seen[d.id]||0)+1;
+   if(['marriage','veillee','arranged-match','dowry'].includes(d.id)&&s.relations.some(r=>r.role==='배우자'&&r.alive))add('courtship while married',d.id+' '+s.year);
    e.choose(o[Math.floor(rnd()*o.length)][1]);
   }else e.skipToDecision();
   for(const [k,v] of Object.entries(s.stats))if(!(v>=0&&v<=100))add('stat out of range',k+'='+v+' '+s.year);
@@ -29,7 +30,7 @@ for(let i=0;i<N;i++){const f=fams[i%fams.length];let s;
   lastLog=s.log.length;
  }}catch(err){add('runtime error',String(err&&err.stack||err).split('\n').slice(0,3).join(' | '));continue}
  // post-life checks
- const sp=s.relations.filter(r=>r.role==='배우자');for(const r of sp)if(r.sex&&r.sex===s.sex)add('same-sex spouse',r.name);
+ const sp=s.relations.filter(r=>r.role==='배우자');if(s.relations.filter(r=>r.role==='배우자'&&r.alive).length>1)add('two living spouses',s.year);for(const r of sp)if(r.sex&&r.sex===s.sex)add('same-sex spouse',r.name);
  for(const r of s.relations){if(r.birthYear>s.year)add('relation born in future',r.role+' '+r.birthYear+'>'+s.year);if(r.role==='자녀'&&r.birthYear-s.born<14)add('child born when player <14',r.birthYear-s.born);if(r.role==='자녀'&&s.sex==='여성'&&r.birthYear-s.born>50&&r.alive!==undefined&&!/맡긴|조카/.test(r.role))add('child born to woman >50',r.birthYear-s.born);
   if(['아버지','어머니'].includes(r.role)&&s.born-r.birthYear<14)add('parent too young',r.role+' '+(s.born-r.birthYear));}
  for(const x of s.log){if(x.year>s.year)add('log after death/current',x.year+'>'+s.year+' '+x.title)}

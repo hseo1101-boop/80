@@ -58,7 +58,7 @@ DECISION_DOMAINS.push({id:'exile', label:'망명', target:0});
   const H = (id, date, until, when, title, text, choices, chance) => decisions.push({id, domain:'history', priority:33, historic:true, title, text, ...(chance ? {chance} : {}),
     when:{abroad:true, ...when, fromDate:date, toDate:until, unsetFlag:id}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:[id, ...((c.effects || {}).flags || [])]}}))});
   const D = (id, when, title, text, choices, chance) => decisions.push({id, domain:'exile', priority:28, title, text, ...(chance ? {chance} : {}),
-    when:{abroad:true, ...when, unsetFlag:id}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:[id]}}))});
+    when:{abroad:true, ...when, unsetFlag:id}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:[...(c.effects?.flags || []), id]}}))});
   const O = (id, title, weight, result, effects = {}) => ({id, title, weight, result, effects});
 
   H('princes-army-ends', [1792,11], [1793,3], {minAge:16, exileIn:['코블렌츠']}, '흩어지는 왕자들의 군대',

@@ -105,8 +105,17 @@ for (const d of decisions) for (const c of d.choices) {
 }
 // The yearly focus replaced these two filler decisions; the rest of the repeatable ones are rationed.
 const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
+// Courtship and marriage decisions never open while a spouse is alive, whatever path the marriage took
+// (an exile's wedding abroad, a real life, a remarriage).
+const COURTSHIP = new Set(['marriage', 'veillee', 'arranged-match', 'dowry']);
+const ADDS_SPOUSE = new Map();
+function addsSpouse(d) {
+  if (!ADDS_SPOUSE.has(d.id)) ADDS_SPOUSE.set(d.id, d.choices.some(c => [c.effects, ...(c.outcomes || []).map(o => o.effects)].some(e => e?.addRelation?.role === '배우자')));
+  return ADDS_SPOUSE.get(d.id);
+}
 function decisionAllowed(s, d) {
   if (!enDecision(d)) return false;
+  if ((COURTSHIP.has(d.id) || addsSpouse(d)) && s.relations.some(r => r.role === '배우자' && r.alive)) return false;
   if (typeof realBlocks === 'function' && realBlocks(s, d)) return false;
   if (typeof lifeFixBlocks === 'function' && lifeFixBlocks(s, d)) return false;
   // Abroad, home-town decisions and the ordinary career ladder wait.

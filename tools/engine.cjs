@@ -8070,8 +8070,17 @@ for (const d of decisions) for (const c of d.choices) {
 }
 // The yearly focus replaced these two filler decisions; the rest of the repeatable ones are rationed.
 const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
+// Courtship and marriage decisions never open while a spouse is alive, whatever path the marriage took
+// (an exile's wedding abroad, a real life, a remarriage).
+const COURTSHIP = new Set(['marriage', 'veillee', 'arranged-match', 'dowry']);
+const ADDS_SPOUSE = new Map();
+function addsSpouse(d) {
+  if (!ADDS_SPOUSE.has(d.id)) ADDS_SPOUSE.set(d.id, d.choices.some(c => [c.effects, ...(c.outcomes || []).map(o => o.effects)].some(e => e?.addRelation?.role === '배우자')));
+  return ADDS_SPOUSE.get(d.id);
+}
 function decisionAllowed(s, d) {
   if (!enDecision(d)) return false;
+  if ((COURTSHIP.has(d.id) || addsSpouse(d)) && s.relations.some(r => r.role === '배우자' && r.alive)) return false;
   if (typeof realBlocks === 'function' && realBlocks(s, d)) return false;
   if (typeof lifeFixBlocks === 'function' && lifeFixBlocks(s, d)) return false;
   // Abroad, home-town decisions and the ordinary career ladder wait.
@@ -12298,7 +12307,7 @@ DECISION_DOMAINS.push({id:'exile', label:'망명', target:0});
   const H = (id, date, until, when, title, text, choices, chance) => decisions.push({id, domain:'history', priority:33, historic:true, title, text, ...(chance ? {chance} : {}),
     when:{abroad:true, ...when, fromDate:date, toDate:until, unsetFlag:id}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:[id, ...((c.effects || {}).flags || [])]}}))});
   const D = (id, when, title, text, choices, chance) => decisions.push({id, domain:'exile', priority:28, title, text, ...(chance ? {chance} : {}),
-    when:{abroad:true, ...when, unsetFlag:id}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:[id]}}))});
+    when:{abroad:true, ...when, unsetFlag:id}, choices:choices.map(c => ({...c, effects:{stats:{}, ...(c.effects || {}), flags:[...(c.effects?.flags || []), id]}}))});
   const O = (id, title, weight, result, effects = {}) => ({id, title, weight, result, effects});
 
   H('princes-army-ends', [1792,11], [1793,3], {minAge:16, exileIn:['코블렌츠']}, '흩어지는 왕자들의 군대',
