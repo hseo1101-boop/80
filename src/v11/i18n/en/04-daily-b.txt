@@ -1,0 +1,202 @@
+# Everyday events, part 2.
+6f01152c	The steward's report
+4101ee6a	The steward brought the ledgers of rents and timber sales. This year's income is a little down on last year's.
+71d3c001	National Guard drill
+4e34c062	Every Sunday you drill with the National Guard in the square. Shouldering a musket and keeping in line is harder than it looks.
+1dcc2546	The Maximum
+fa677cff	Once maximum prices were set on grain and necessities, the shop shelves emptied. Goods change hands only through the back door.
+50b2a51e	The Law of Suspects
+feb92137	A neighbour was taken away as a suspect. These are days when every word, every letter, must be guarded.
+b7029bd9	The Peace of Amiens
+4e8299de	A peace treaty has been signed with Britain. People drank toasts in the streets to the first peace in ten years.
+d7fb89ae	The bells ring again
+53d95e6b	Under the Concordat the church reopened and the Easter bells rang. Old people wept as they went in to Mass.
+cda391ab	The bulletin of the Grande Armée
+b7ffc036	After Sunday Mass the mayor read the bulletin of the Grande Armée aloud. Victory follows victory in lands with far-off names.
+25d114dc	No sugar
+dbcce108	Because of the Continental Blockade the price of sugar and coffee has shot sky-high. You roast chicory root and drink it in place of coffee.
+547519ec	Boy conscripts
+c52573c2	Even neighbour boys not yet eighteen have been taken for the army. People call them the ‘Marie-Louises’.
+38e31520	Billeted troops
+6bf908ff	Two Allied soldiers have been quartered in your house. You must give them food and firewood.
+5047682b	The credit book
+fe1e6adc	Leafing through the credit book you found twelve names that had not paid in three months. Two of them died last winter.
+692a0230	A petty thief
+7cfb8b05	In the market-day crush, goods vanished from your stall. You gave chase but lost the thief in the alleys.
+18bdc529	The licence tax
+dbebde79	A demand for the trading licence tax, the patente, came from the town hall. It is assessed on the size of the shop and the number of windows, and you seriously thought of boarding up a window.
+d78b936d	A new shop across the street
+bddee9cb	A shop selling the same goods opened across the street. It marked its prices a sou lower, and a few of your regulars crossed over.
+f24abf8d	A regular customer
+878889db	An old lady who has been a customer for twenty years brought her granddaughter and told her, “This shop has the best of everything.”
+1d1e24e0	You took the plunge and gave the shop front a wide glass window. Passers-by stop and look in.
+f71b3159	A boundary-stone quarrel
+82a05f18	Overnight a neighbour moved the boundary stone of your field a hand's breadth. Voices were raised before the village elders, but nothing was settled.
+1acf1d03	Planting potatoes
+69f6f430	For the first time you planted potatoes, which people say are only fit for pigs, in a corner of the field. To keep from starving in a bad year you have to try anything.
+8b395699	A new well
+8734f7a1	You pooled labour with three neighbours and dug a well in the yard. Twelve feet down, cold water welled up.
+70cec5fc	Dividing the land
+244b2687	Before the notary you divided your few fields among your children. Under the new law of equal shares, each one's portion came out the size of a palm.
+ab045498	A back that isn't what it was
+a6141371	You swung the scythe beside labourers your son's age, but before the sun was low you could not straighten your back.
+fe2a7a08	A debt for seed
+0f679dbc	You borrowed the money for spring seed from the village's rich farmer. You will repay in grain in the autumn, half a measure more for every measure.
+36e85090	Dawn at the Place de Grève
+990add4d	At five in the morning you stood among the men looking for work and waited for the foreman's nod. Today you were lucky and picked to haul stone.
+7cbf8f01	A winter without work
+d1c8ce5f	When the river froze and building stopped, the work dried up at once. You pawned your coat and bought bread.
+487a1d1e	A crushed finger
+269cd4f4	Unloading, you caught a finger between two stones. For a week you sat with your hand bound up and no wages.
+a05d1872	Wages withheld
+8f13092c	When you went for a week's wages, the master said the job wasn't finished and paid only half. There is nowhere to complain.
+fdb666db	The Emperor's building sites
+06916861	The Ourcq canal and the new market halls were short of hands, so wages rose. For a few months you lived with the smell of meat on the table.
+81e38d2f	A set of silver spoons
+4b7030a8	When a set of the household's silver spoons went missing, every eye turned to you. Three days later they turned up behind the dresser, but no one apologised.
+ab45e229	Sunday afternoon
+30d6ad94	On your one Sunday afternoon a month, you danced with maids from your home region at a tavern beyond the walls.
+4d181d8e	Money sent home
+d511cdc2	You sent your savings home with a carter going that way. A workmate who could write wrote the letter for you.
+458d650d	A new mistress
+8d731fd0	The master remarried and a new mistress came into the house. From the first day she said you polished the silver wrong and made you start again.
+9c483fe7	Taking an apprentice
+57abfc0a	You took a thirteen-year-old as an apprentice. The parents drew a cross on the indenture instead of signing, and that night the child cried in the attic.
+0ebd277f	The compagnonnage
+8d9776fb	Journeymen on their Tour de France stopped at the workshop with their canes and ribbons. They have greetings and songs only they know.
+41a485e3	To move to a new workshop you need your old master's signature in your livret. He put off signing, saying you still owed him money.
+97f55991	A big order
+e50eb02d	A big order came in ahead of a wedding in a good family. For three months you kept the lamp burning late, but your purse grew fat.
+05b39dea	A workshop cough
+c5f668b4	After twenty years of work in dust and oil smoke, the cough will not stop in the mornings.
+7018318d	The silk slump
+65526b96	Paris fashions changed and silk orders dried up. One by one, the looms up on the Croix-Rousse fell silent.
+e80bc053	Night patrol
+74e555dc	You walked the streets at night with a lantern. You pulled apart two drunken journeymen and took a lost child home.
+0bdecfd8	Denunciations
+5443d022	Every week notes in which neighbour denounces neighbour pile up on the desk. Most come from debts or jealousy.
+e62233e7	A knock in the night
+f528d0f9	At a knock on the door after midnight you took your bag and set out. After an hour's walk down a muddy road you arrived before dawn.
+57ea4edd	A difficult birth
+8af0905c	The baby was breech. You saved the child, but the mother died of fever three days later.
+19987d75	Vaccination
+1ce75e45	You vaccinated the village children against smallpox. When frightened parents heard it meant putting in pus from a cow, you went from house to house to persuade them.
+63cbde65	A child who learned to read
+a59fcd37	The blacksmith's son, who had stumbled all autumn, read a whole page without a stop for the first time. You were happier than he was.
+ccc4007d	Easter confessions
+2a45a8c5	Before Easter you heard a long line of confessions. Knowing too many of your neighbours' secrets is a burden too.
+c63bb43f	Answering back
+a1d8cc11	Your child, now in their teens, answered you back to your face for the first time. After the door slammed, supper was quiet.
+e683df9f	Apprenticing a child
+b9fbb93e	You sent your child to apprentice in someone else's workshop. You watched for a long time as they walked off with a single bundle, trying not to look back.
+ebab74a3	One sheet and one towel at a time, you are filling your daughter's bridal chest. She embroidered the initials herself.
+36f52a22	A first grandchild
+02162e86	Your first grandchild was born. While the godparents held the baby at the christening, you secretly wiped your eyes in the back row.
+92b4fd7c	Ageing parents
+27a4a9fb	Your elderly parents were finding the stairs hard, so you moved their bed downstairs beside the kitchen.
+ad33447f	An evening by the fire
+1b99e825	After the day's work you sat by the fire with your spouse and talked about your young days for the first time in a long while. You both laughed more than you did back then.
+8dc9cb8d	A quarrel over money
+340033de	You had a bad quarrel with your spouse over a tavern slate. For three days you said only what had to be said.
+96f264d0	A friend's funeral
+0eddf96f	You followed the funeral procession of a friend you had known since childhood all the way to the cemetery. One by one, those born in your year are fewer.
+af32160d	A pulled tooth
+8aa2370a	A molar ached, so you went to the tooth-puller at the fair. The drumming drowned out your scream, and now you chew on one side only.
+eeedc75e	Reading glasses
+0d379bf1	The writing had blurred, so you bought reading spectacles from a pedlar. When you put them on your nose, the world was sharp again.
+348ca69b	Grey hair
+69b857b5	Looking at your face in the well water, you noticed grey hair at your temples. Your mother was just this age when hers turned, you think.
+28337a65	Gold in a stocking
+6ee19dc3	Counting the money saved in a stocking under the bed, you found more than you expected. For the first time you thought you would not go hungry in old age.
+572364da	The Grand Pardon
+82bd3171	You walked to the Grand Pardon of Sainte-Anne-d'Auray. Tens of thousands held candles and sang all night in Breton.
+dae3d00f	A shipwreck
+42277b49	On the morning after the storm a ship lay broken on the shore. The villagers scrambled to carry off casks and planks.
+9c29e3b5	Winter earnings
+df632376	When the harvest was in, you left for Paris with the village men to earn money over the winter. You will carry water and sell charcoal, and come home in spring.
+3aea2ac5	Cheese from the high pastures
+ce86367b	The great cheese made on the summer pastures fetched a good price at market.
+073d2a19	Spring frost
+472c59e8	A late frost fell on the vines just as the buds broke. You burned straw in the rows all night, but half were blackened.
+cf6ce522	A vintage year
+21c34df3	This year's wine is deep in colour and smooth. The broker from Beaune tapped the casks and named a generous price.
+5cfa7646	The Chartrons quay
+1773ee69	On the Chartrons quay the rumble of wine casks being rolled aboard ships never stops all day. You hear English and Dutch as often as French.
+21610a40	When the Continental Blockade cut off the English ships, the masts vanished from the harbour. The casks gather dust in the warehouses.
+ca65b3c7	The cotton mill bell
+ab2936c9	When the dawn bell rings at the cotton mills of the Seine valley, even children file in through the factory gates.
+c170865d	The Loire in flood
+777a525f	Swollen with snowmelt, the Loire burst its banks. The ground floors of the riverside houses stood knee-deep in water.
+47fd1d6a	The Croix-Rousse hill
+e559e9c6	Weavers are moving into the new buildings on the Croix-Rousse, built with ceilings high enough for the looms. On rainy days the silk is carried through the traboules, the covered passages.
+b719dc60	Collecting the taille
+d8d97244	The taille collector came with the village roll. Rumour says a new roof means a higher tax, so everyone leaves their old roofs as they are.
+13980a2e	A tax on doors and windows
+7a0603d7	The bill came for the tax on the number of doors and windows. More and more houses are bricking up a window at the back.
+a21856ec	Rent day
+a70ac239	It is quarter day, when the rent is due. The landlord said he would raise the rent from next year. You worked out whether to move up to an attic room.
+6ac34a1a	Summer flux
+ffac3581	In the heat the well water went bad and the flux spread through the whole neighbourhood. You were ill for ten days, and two children next door died.
+5f12419c	Missing hens
+03c7eace	Three hens vanished from the coop overnight. Fox or vagrant, in the morning there were only feathers scattered across the field.
+1f7fcdce	Fire in the barn
+2a9c375b	Dry straw caught fire and one end of the barn burned. The whole village came running with buckets and at least kept it from spreading to the house.
+3eca6827	A quarrel at the washing place
+5ba452d9	You fell out with a neighbour woman over a place at the washing place. You ended up bringing her daughter's marriage prospects into it, and avoided her eyes for some time after.
+e8a4375a	Your mother-in-law's kitchen
+f1b92291	Your mother-in-law still watches how much salt you put in the soup. The kitchen is still hers.
+aa5f9b80	The hungry gap
+1e0403ea	Last autumn's grain has run out and the new harvest is still far off. For a month you got by on chestnuts and buckwheat porridge.
+5dd6d140	A lawsuit
+e14fe71a	You went to law with a cousin over a scrap of inherited land. What you paid the notary and the lawyer came to as much as the land is worth.
+05b17af6	The saint's day fair
+2be86363	The fair for the patron saint's day was held. Quack doctors, rope-dancers and tooth-pullers took over the square all at once.
+861e7fd3	The public letter-writer
+20a2a2b4	You paid a few sous to the letter-writer at the market to write a petition to the authorities. The sentences he read back did not sound like anything you had said.
+e82e25cc	The one who reads aloud
+95b060fb	Every evening the neighbours gather to hear you read the newspaper aloud. Knowing how to read draws people like this.
+4bf767ef	Saint Martin's Day
+9e20c229	On 11 November, Saint Martin's Day, leases and farmhands' hiring are all renewed at once. People with sacks of rent on their backs lined up outside the landowner's house.
+92e78972	The cemetery on All Saints
+5785ba4d	On All Saints' Day you visited the graves of family gone before and laid chrysanthemums. Every year there are more names you know in the cemetery.
+d2a05445	The Easter duty
+c9e05469	The priest writes down the names of those who do not take Easter communion. Once a year, nearly everyone in the village stands in line at the confessional.
+f10bc6ee	The hiring fair
+78b9ec47	At the midsummer hiring fair you stood with an ear of wheat in your hat, the sign of a farmhand for hire. A rich farmer looked at your palms and named a wage.
+0553b329	Décadi and Sunday
+029a97c3	The authorities say to rest on the tenth day, the décadi, but the villagers still down tools on Sunday. The priest who comes in secret says Mass in a barn.
+569b5c5e	Carnival night
+c7b606e4	On the last night before Lent you danced in the square in a mask. You saw the winter out by burning the straw figure of Carnival.
+76fa93bc	On the march
+1e46f764	You marched down muddy roads all day. The weight of your pack feels as if it will tear your shoulders off. In the evening you dropped and slept in a roadside field.
+7a1f0b76	Late rations
+4fd51a88	The supply wagons did not come, and for three days you lived on half a hard biscuit. Your comrades are eyeing the farms nearby.
+17ac4a26	A letter from home
+24d6e2cc	A letter came from home. A comrade who could read read it to you. The family are all safe.
+fda44a52	Night in camp
+cf047ad0	Around the fire you sang songs from home with your comrades. Norman, Provençal and Breton accents all mixed together.
+22569a24	Lice and fever
+a356ac7a	The camp swarmed with lice and fever went round. You lay in the field hospital for some days.
+dd35bc8d	Drill
+796ccfca	To the corporal's commands you loaded and fired dozens of times, until your hands moved on their own.
+4415ca19	Back pay
+2f095a7a	A strange land
+30ae63e0	You passed rivers and villages you had never seen. You cannot understand a word people say.
+43a0877a	A lullaby
+9c8bef79	Your mother wrapped you in swaddling clothes, held you close and sang you a quiet lullaby.
+81a93905	Baptism
+cf5a9270	The family took you to the parish church to be baptised.
+ae4123ae	First steps
+e371e941	You walked a few steps on your own for the first time. The grown-up watching over you was delighted.
+c9691d3d	Saving firewood
+b802af6d	As money grew tight, the family began to save on firewood for heating.
+8fe90094	A neighbour's care
+70b52e38	While your mother worked, a neighbour woman looked after you.
+ceeb0f12	Carriages outside the window
+877d7c90	You spent a long time watching the carriages go by outside the window.
+2c5c05b4	A little fruit
+658b18d0	Back from the market, your mother handed you a small piece of fruit.
+9d50387a	Children in the lane
+bb7d75b6	For the first time you played with the other children in the lane outside the house.
+a77cdcb6	A wooden toy
+d5922233	Your father made you a little toy from a piece of wood.

@@ -57,7 +57,19 @@ function hasBatchim(word) {
 const withJosa = (word, a, b) => word + (hasBatchim(word) ? a : b);
 const KOREAN_COUNT = ['','한','두','세','네','다섯','여섯','일곱','여덟','아홉'];
 const countWord = n => n < 10 ? KOREAN_COUNT[n] + ' 명' : n + '명';
+function companionsEN(s) {
+  const alive = s.relations.filter(r => r.alive), n = role => alive.filter(r => r.role === role).length, parts = [];
+  const dad = n('아버지'), mom = n('어머니');
+  if (dad && mom) parts.push('parents'); else if (dad) parts.push('father'); else if (mom) parts.push('mother');
+  if (n('할머니')) parts.push('grandmother');
+  if (n('배우자')) parts.push('spouse');
+  if (n('형제자매')) parts.push(n('형제자매') === 1 ? 'a sibling' : n('형제자매') + ' siblings');
+  if (n('자녀')) parts.push(n('자녀') === 1 ? 'a child' : n('자녀') + ' children');
+  if (!parts.length) return 'Living alone';
+  return 'With ' + (parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts.at(-1) : parts[0]);
+}
 function companions(s) {
+  if (LANG === 'en') return companionsEN(s);
   const alive = s.relations.filter(r => r.alive), has = role => alive.filter(r => r.role === role);
   const parts = [], dad = has('아버지').length, mom = has('어머니').length;
   if (dad && mom) parts.push('부모님'); else if (dad) parts.push('아버지'); else if (mom) parts.push('어머니');
@@ -166,24 +178,24 @@ function createUI(doc, engine, handlers) {
     const x = c.getContext('2d'), sans = getComputedStyle(doc.body).fontFamily, serif = "'Bitter', Georgia, serif";
     x.fillStyle = '#f8f9f7'; x.fillRect(0, 0, 1080, 1350);
     x.fillStyle = '#8c1c3c'; x.fillRect(0, 0, 1080, 120);
-    x.fillStyle = '#fbeef1'; x.font = `600 40px ${sans}`; x.fillText('어느 프랑스인의 삶', 64, 76);
+    x.fillStyle = '#fbeef1'; x.font = `600 40px ${sans}`; x.fillText(L('어느 프랑스인의 삶'), 64, 76);
     x.font = `500 30px 'IBM Plex Mono', monospace`; x.textAlign = 'right'; x.fillText(`${r.born}–${r.died}`, 1016, 76); x.textAlign = 'left';
     x.imageSmoothingEnabled = false;
     const portrait = new Image();
     portrait.onload = () => {
       x.drawImage(portrait, 64, 180, 280, 340);
       x.strokeStyle = '#c9cfc9'; x.lineWidth = 3; x.strokeRect(64, 180, 280, 340);
-      x.fillStyle = '#1c272a'; x.font = `800 72px ${sans}`; x.fillText(r.name, 384, 290);
-      x.font = `italic 600 40px ${serif}`; x.fillStyle = '#6d7672'; x.fillText(r.french, 384, 350);
-      x.font = `500 36px ${sans}`; x.fillStyle = '#1c272a'; wrap(r.epitaph, 384, 420, 632, 50, 2);
-      x.font = `400 32px ${sans}`; x.fillStyle = '#6d7672'; wrap(r.cause, 384, 520, 632, 44, 2);
+      x.fillStyle = '#1c272a'; x.font = `800 72px ${sans}`; x.fillText(LANG === 'en' ? r.french : r.name, 384, 290);
+      x.font = `italic 600 40px ${serif}`; x.fillStyle = '#6d7672'; if (LANG !== 'en') x.fillText(r.french, 384, 350);
+      x.font = `500 36px ${sans}`; x.fillStyle = '#1c272a'; wrap(L(r.epitaph), 384, 420, 632, 50, 2);
+      x.font = `400 32px ${sans}`; x.fillStyle = '#6d7672'; wrap(L(r.cause), 384, 520, 632, 44, 2);
       x.fillStyle = '#17695a'; x.font = `400 34px ${sans}`;
       let y = 640;
-      for (const line of r.lines.slice(0, 4)) y = wrap(line, 64, y, 952, 50, 2) + 22;
+      for (const line of r.lines.slice(0, 4)) y = wrap(L(line), 64, y, 952, 50, 2) + 22;
       if (r.historic.length) {
-        x.fillStyle = '#8c1c3c'; x.font = `700 32px ${sans}`; x.fillText('역사의 현장', 64, y + 20); y += 70;
+        x.fillStyle = '#8c1c3c'; x.font = `700 32px ${sans}`; x.fillText(L('역사의 현장'), 64, y + 20); y += 70;
         x.fillStyle = '#1c272a'; x.font = `400 32px ${sans}`;
-        for (const h of r.historic.slice(0, 3)) { x.fillText(`${h.year}  ${h.title}`, 64, y); y += 48; }
+        for (const h of r.historic.slice(0, 3)) { x.fillText(`${h.year}  ${L(h.title)}`, 64, y); y += 48; }
       }
       x.fillStyle = '#9aa29e'; x.font = `400 26px ${sans}`; x.fillText('hseo1101-boop.github.io/80', 64, 1300);
       $('shareImage').src = c.toDataURL('image/png');

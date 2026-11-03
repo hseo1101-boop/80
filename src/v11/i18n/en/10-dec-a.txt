@@ -1,0 +1,266 @@
+# Ordinary decisions, part 1.
+66154851	A chance to learn
+5a30b8a0	A grown-up close to you says they could arrange for you to learn to read. But the housework and the family's living need hands too. What will you do?
+dc184f2d	Learn to read
+3ceb4cbd	Learning begins / slow going / quick to learn
+ecfc66b7	You began to learn to read. New possibilities have opened for the future.
+27f75db9	Learning has begun
+e6182966	Every evening an older neighbour teaches you your letters. For the first time you wrote your own name on a slate.
+61f81b6c	Learning was slow
+2b57e89f	Work kept you busy and you often missed lessons, and the letters would not stick. Still, you can now read a few.
+3fe90ad5	You learned astonishingly fast
+2cf22a05	In a few months you could read the prayer book on your own. The grown-up teaching you was amazed.
+0cf249b1	Help with the family's work
+89c7bc51	The family's trust / hard work
+0b1898f8	You helped earn the family's living. At home they have begun to rely on you.
+9179b021	You became a pair of hands for the family
+4366809c	The work was hard
+ebf046ed	It was too much work for someone so young. You were often ill.
+9d2cddad	Wait until a chance comes
+c9224de6	Mostly as expected · sometimes better or worse
+5a682427	For now you put off deciding.
+5efb33f8	Things went as you thought
+ecfff9c8	Things went better than you thought
+a100e577	Things did not go your way
+c2a53e78	Choosing a trade
+74e49ce4	Now even at home they talk about how you will make your living. Given the times and the family's means, the paths open to you are not endless.
+82ccbbce	Learn the family trade
+d1f50cab	Carry on the family trade / clashes with father
+6c62935e	You began earning your living by learning the family's work.
+db64cd7e	You began learning the family trade
+e3ac847a	Beside your father, you learn again from the start, beginning with how to handle the tools.
+09e0471c	You often clashed with your father
+6294629b	More and more days ended in raised voices with your father over how the work should be done.
+54af76dd	Look for an apprenticeship elsewhere
+53a9d67f	A good master / a hard master
+c33311e7	You began learning a trade under another master.
+08bbd278	Learning under a master
+5c2351b4	You eat and sleep in the attic of another master's workshop and learn the trade.
+0621444e	You found a good master
+accab9bc	The master was strict but taught you his secrets without holding back.
+8253b019	You found a hard master
+6b4ba6f3	From dawn to night you only ran errands, and you were often beaten.
+aeae9e11	Carry on with housework and casual labour
+fd8f02e6	Work to be had / work dries up
+43398325	You took whatever work was going for now.
+adfd1106	You found work day by day
+59649e39	You go round the docks and the market looking for the day's work.
+055e4024	Work often dried up
+d2a2b857	There were many days without work, and you had to ask your family for help.
+2bf251f2	A chance to leave home
+7128f770	Word comes that another town is looking for hands. Leaving home would bring new chances, but you would have to leave your family and the life you know behind.
+2f71cabc	Head for Paris
+13036b02	Settle in / a brutal first year / work at once
+4a1a7ce6	You moved to Paris. A new life begins in unfamiliar streets.
+cba832a7	You settled in Paris
+e8407cff	You found a rented room in the faubourg. People from your home region live in the same lane, so you can make yourself understood.
+a9fdc7af	The first year was brutal
+ab0fb75e	You could not find work and went half-starved for months. Many times you thought of going back.
+e23043e4	You quickly found good work
+d2b04339	Through someone from home you found work in the first week.
+36bec7a2	Stay at home
+f0a87d6e	Comfort / regret
+26412035	You decided to go on living in the place you know.
+4aaac06d	You stayed at home
+682037c6	You go on living among familiar people.
+05581300	Now and then you think of that road
+a42353c3	Every time a letter comes from a friend who went to Paris, your heart wavers.
+d0621afd	First write to relatives in another region
+e17b3855	A reply / no news
+1a6a1871	You found out first and made careful plans.
+b65ea637	A reply came from your relatives
+43bc633c	It was packed with news of how things are there and of work to be had.
+a0d7ea6a	No reply came
+049d1cbd	Perhaps the letter went astray; no news ever came.
+2f6ab5e7	Divided among brothers, the land in {고향} comes to a palm's breadth each. A villager who went to Paris first has written that “hands are short and wages are double.” Leaving would bring chances, but you would have to leave your family and the fields you know behind.
+d7298ebd	Work in {고향} has dwindled. Word is that every workshop in Paris is looking for hands. You hesitate: could you find a place there as a {직업}, could you hold out in a great city where you know no one?
+98ae76fd	Talk of marriage
+da94e651	Your family and the people around you bring up the subject of marriage. In these times marriage is about a living and ties between families, not only affection.
+ff443222	Meet the person you are introduced to
+db2027ce	Marriage / not suited / family opposition
+d9737fce	Marriage brought you new family ties.
+e036ed4e	You married
+4636af56	You met a few times and talked, and the two families signed a marriage contract. The wedding was held in church.
+48317f18	You were not suited
+6fbb9d4b	A good person, but your heart was not in it. The match was quietly dropped.
+24c9a2fb	The family objected
+8b5e8f7c	The other family turned down the match over the dowry.
+81afd471	Concentrate on work for now
+dcd5d3c5	You put off marriage and concentrated on building your life.
+13236129	Find a way to live on your own
+00269199	You prepared to make a life of your own.
+22246ebe	The family elders spread out a list of possible matches. Rank, estates and connections at court come first and affection later: that is common sense in your station. The marriage contract sets out even the dowry and the widow's jointure.
+4c0a3687	An offer of marriage has come from the family of one of your father's business connections. The notary is matching the two families' inventories and the size of the dowry. You have seen the other party only twice, at church and at the theatre.
+b3ecf1b3	There is talk of a match with the daughter of a master in your workshop. The master has added a condition: “once you are made master.” First you work out whether you could set up house in a single rented room.
+53373abe	The journeyman you meet every Sunday at the dances in the taverns beyond the walls has raised the subject of marriage. Your mother says first find out how much he drinks and where his wages go.
+59781c6e	An offer of marriage has come from a farming family in the next village. They say they will give a few fields and a cow as dowry. Your mother says the girl is good with her hands.
+80dbc146	There is talk of a match with the eldest son of a farm in the next village. His mother and two unmarried sisters live in the same house. Your father says he can give a cow and twelve sheets as dowry.
+07e46c84	News of the Revolution and your daily life
+f8949d09	All over France people argue about the changes. Everyone wonders how the new order will change their own life.
+7bfcadcf	Follow the news and debates closely
+413ebc28	You grew used to the new political debates.
+bb7679ca	Concentrate on family and work
+60450272	In fast-changing times, you worked to keep daily life going.
+2e74a626	Share your thoughts with the neighbours
+60655c8b	Talking with the neighbours, you learned how different their opinions were.
+4975a092	An age of war
+a9f26b32	As the war drags on, military service, army supplies and making a living have become close realities. Which path will you take?
+5332332d	Look for work connected with the army
+7656bdd4	Wages / injury
+4c1cb84e	You began working in something connected with the army.
+b3f381fd	You took on army supply work
+94d7ac2c	You haul supplies and look after horses close to home. You do not go to the front.
+aa163afe	You were hurt carrying loads
+2ccf7e2f	You hurt your back moving crates of shells.
+96873faf	Keep your present work
+674a6218	You carried on with your usual work.
+e61a2c10	Put the family's living first
+34f28116	You put the family's living first.
+c6428f5e	Pressure of prices and making a living
+13c48ada	Prices have risen and goods are hard to find. You must decide how to bear the strain on the household.
+50383a2f	Spend less
+27cd1681	Getting by / health suffers
+cd93e88e	Thrift eased the strain on the household, but life grew pinched.
+ea4ee768	You tightened your belt
+a8d7a53a	You barely got by on fewer meals and less firewood.
+7bb844d9	Your health suffered
+b2344481	You scrimped so hard that you fell badly ill in the winter.
+a53a232b	Help one another with the neighbours
+77014936	Holding out together / help returns
+6ed6647f	You got through hard times sharing goods with the neighbours.
+a7ac2e7f	You held out together with the neighbours
+c3b109d7	You got through the winter sharing bread and firewood.
+fc4d6136	The help came back to you
+159422ae	A few months later, when you fell ill, the neighbours brought you food.
+dbd15d39	Look for extra work
+65accc42	You took on more work and earned more, but you grew tired.
+a22f4535	The life ahead
+f83adad2	The regime has changed yet again. You too look back over the years and think about the life ahead.
+827c6353	Keep your work steady
+1e73a772	You decided to put a stable life first.
+23328359	Learn new skills and knowledge
+1a45e211	You began to learn something new.
+419582fa	Spend time with family and those around you
+706f903a	You cherished the people close to you all the more.
+fea21239	A turning point at work
+abee761c	New work has turned up lately. You must decide whether to stay with what you know or look for another chance.
+a9110f47	Keep on steadily with your present work
+e078265e	You chose a steady life.
+16f3dd6a	Try a small business or workshop
+e42912e4	Thrives / gets by / fails
+888e96d2	You tried to set up a place of your own.
+d11e09fd	The shop thrived
+a41d26ce	Regulars multiplied and you earned back your stake in the first year.
+ad25451c	You get by
+00f756c5	You will not make a fortune, but you are proud that it is your own shop.
+ceb9f64b	You closed the doors
+df58fbfd	You wound up the shop to pay your debts.
+1a8893c7	Learn more skills
+4d5596e7	You learned new skills.
+070dfbf5	Your children's future
+7c413b31	As your children grow, the family begins to discuss how to prepare them for schooling and a trade. The choices are limited by the household's means and standing.
+3c763c54	Help with schooling as far as you can
+58ea0c5f	The child learns well / too costly
+fea37a20	You gave your child the chance to learn.
+cdadbc47	The child goes to school
+0094e355	Finding the fees and the price of books is a stretch, but the child is learning to read.
+49fec917	The fees were too much
+8adb267c	After two years you took the child out of school. The child cried a great deal.
+d1551719	Teach the family trade and skills for a living
+f51e849c	Your child began to learn the family's work.
+6a80acb6	Listen to what your child wants
+bedc473f	You heard your child out and talked it over together.
+de7f8179	Family property and political unrest
+a841813d	As political tension grows, the family's property and old rank are drawing attention. You must choose carefully how to live.
+2895d539	Check the relevant papers with the local authorities
+01d5d4c6	You looked into the administrative formalities concerning property and rank.
+a08923a5	Keep to work and family
+0f7c34d9	For the time being you put a stable life first.
+05251aa9	Consult a relative you trust
+91989b14	You discussed with the family how to respond.
+863b8452	Between learning and family
+d98af412	You think about how to divide your time between learning, rest and chores.
+bbe460e6	Practise reading and sums
+ae89cbc4	You decided to go over what you had learned whenever you had a moment.
+5eb2742d	Help with the family's work
+21a59640	Working alongside your family, you learned how life is lived.
+10555e40	Rest and play as much as you like
+870295d1	You spent your time resting and playing.
+f0a3f01b	Balancing your life
+560d995e	You decide where to put your effort: work, learning or rest. The course you choose will carry on into the years ahead.
+edc3be16	Put a steady income first
+5bc16338	You put a stable life first.
+8ae52379	Learn knowledge and skills
+4c511852	You make time to keep learning.
+67ede199	Look after your rest and the people close to you
+0130a2ea	You rest your body and look after those close to you.
+79d6b865	Time with the people close to you
+70a509c9	You think about how to keep up your ties with those close to you.
+855fc447	Listen and help one another
+fed2f3d0	You shared your time with the people around you.
+9d268862	Keep time free for work
+161168b1	You divide your time to keep both daily life and your ties going.
+3a5718f1	Salon invitations, hunting parties and visits to relatives in the provinces follow one after another. Keeping up appearances and connections takes time too. You think about how to spend time with the people close to you.
+bcb75f50	Wednesday receptions in the drawing room and dinners with business connections: you think about how to divide your time between society and the ledgers.
+a0ba041e	Mates at the tavern, the women on your landing, gatherings of people from your home region. You think about how to keep up your ties with people in the gaps of a twelve-hour working day.
+ff913917	Winter evenings round the neighbours' fires, the square after Sunday Mass, helping each other out at harvest. In a village, falling out with people means losing hands for the work. You think about how to get on with your neighbours.
+a329b44e	Daily life in later years
+48cead0c	It is time to adjust your daily life to the changes in your body.
+7b134644	Work less and rest
+e32f314e	You decided to ease the burden on your body.
+ac648a54	Pass on your experience and skills
+8b7e6f77	You pass on your experience to the next generation.
+706ae1b4	Keep working as much as you can
+76305107	You keep working as far as your body allows.
+1563e3d3	Your body is not what it was. You wonder whether to hand the management of the estate to your son and write your memoirs, or keep the family's affairs in your hands to the end.
+dad8d0ff	Your eyes have dimmed and the figures in the ledger blur. You wonder whether to hand the shop (or the office) to a son or son-in-law and live on the interest from government bonds, or keep going.
+84dd1356	Your hands shake and the tools will not obey. Cutting back in the workshop means lower wages; carrying on means ruining your health. The sight of old journeymen going into the poorhouse does not feel like someone else's fate.
+e0c716e6	Your back is bent and swinging a scythe is hard. You wonder whether to hand the field work to your son and keep only the cow and the kitchen garden, or still go out to the fields for now.
+52db5203	A world grown a little wider
+afa98703	The road outside the house and the sound of people's voices are growing familiar. When something strange happens, how will little you react? Choices at this age are made within the family's care.
+026639ea	Hold the hand of a grown-up close to you
+b3689b7e	Reassured by a familiar hand, you looked around.
+76f2f955	Look around and try repeating words
+b106a088	You began, little by little, to link the words you heard with the things in front of you.
+288d6b04	Rest and play somewhere familiar
+9b4575cb	You spent the day resting and playing at home.
+80088cfc	Ask to be sent to school?
+788b5974	The neighbours' child has started going to the parish charity school.\nYou want to learn to read too, but your father says he needs someone to run errands in the workshop.\nYour mother has said she will hear what you have to ask.
+fad43651	Ask your parents to send you to school
+0a61e30f	Allowed to go / refused / allowed on conditions
+5b283896	You were allowed to go to school
+8d198da9	Your mother talked your father round. The work of the workshop will be shared out, and you begin learning to read and reckon at the parish charity school. Books and school things cost a little.
+76f837e9	This time you were not allowed
+5498532e	Your father shook his head: he cannot spare a pair of hands just now. The plan to go to school was put off, but the wish to learn remained. There is still the chance to learn from family or neighbours later.
+420ae7de	Allowed, on condition you help in the family trade
+da62666f	Your parents said you may go to school if you keep running errands for the workshop. Dividing your time between lessons and work makes study slow, but you learn to read and reckon and gain experience of the family trade as well.
+db6ed508	Learn your letters from a neighbour
+199120b8	Informal lessons begin / the request is refused
+08ffba4f	Small lessons with a neighbour began
+ee501bde	The neighbour agreed to give you a little time after work. You copy letters on scraps of paper and learn to read. Time spent learning outside school and practising on your own adds up.
+3c9b17e6	The neighbour said they could not find the time
+e672cc52	The neighbour apologised: work leaves no time to teach. This request did not lead to lessons. You hold on to your wish to learn and wait for the next chance.
+2c2336c5	Help in the family trade for now
+82c0d47c	More experience of the trade / fewer chances to study
+6be8429a	Days of learning in the workshop began
+2b77703b	You agreed to run errands in your father's workshop. You add to the family's income and learn the tools and the order of the work. While you help there is less time to learn to read, but later you can make time for learning again.
+6feaaac8	Be inoculated against smallpox?
+383bb156	Smallpox is going round the next village. The doctor recommends ‘inoculation’: putting in a little matter from a smallpox patient to bring on a mild case. Usually it passes lightly, but now and then, they say, a child falls badly ill.
+582a9e40	Your parents have you inoculated
+fc922e3a	Lifelong protection / ill for a few days / badly ill
+9b8552d4	A mild case, and it passed
+deca5ed3	The fever rose for a few days and then broke. You need not fear smallpox any more.
+ef04930b	You were ill for nearly ten days
+66382916	You were ill longer than expected and the family fretted, but in the end you recovered.
+c2bc0764	You were badly ill and left with scars
+fe9aed67	A high fever kept you in bed for a long time. Faint scars remain on your face.
+7748aa15	Leave it to God's will and wait
+b5f2a637	You were not inoculated. Fortunately this outbreak passed the village by.
+a549037a	Send the child to relatives until the outbreak passes
+863b8b3e	You stayed with relatives for a while. It was a strange place, but you came home safe.
+24392e2c	Smallpox is going round the next street. The doctor at the city hospital recommends ‘inoculation’: putting in a little matter from a smallpox patient to bring on a mild case. Usually it passes lightly, but now and then, they say, a child falls badly ill.
+4bc4189e	Smallpox is going round the lower town of {고향}. The doctor recommends ‘inoculation’: putting in a little matter from a smallpox patient to bring on a mild case. Usually it passes lightly, but now and then, they say, a child falls badly ill.
+0f98150d	The new cowpox vaccination
+405e06e2	They say the ‘cowpox’ vaccination brought over from England is being given in the village too. Some grown-ups are uneasy because it uses matter from cows.
+ee98f8fc	Be vaccinated
+5d0f5aea	A small sore came up on your arm and healed. Your worry about smallpox is eased.

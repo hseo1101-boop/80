@@ -1,0 +1,589 @@
+# Interface, terms, careers, figures. Format: hash<TAB>English ("\n" = line break). Placeholders {0} must stay.
+13076770	Pause
+23740304	Light a candle for a life that stays with you.
+33015860	Potato blight and a failed wheat harvest filled the streets with hungry people.
+36162757	Each life you finish adds the historic scenes, {0}s and careers it reached.
+70957981	Revolution
+72082486	× speed
+77694367	e.g. Even on the day the Bastille fell, I baked bread.
+7e288609	A
+cec9bbba	French
+023bd7c9	 Life
+3ca66247	age
+817b2d5a	Until next birthday
+537d188b	Skip to the next major decision
+5dfb701d	To next decision »
+0f56c7a4	Next »
+c70a7c15	Auto-decide
+e556111c	♪ Music
+29a17795	Menu
+4501b9d9	Save
+7aa56312	Load
+396568e2	Export save code
+6b9c2eca	Import save code
+1667b89a	🌙 Dark mode
+716df1ad	New life…
+93990b34	Update notes
+591de152	New
+d530d099	Send feedback
+ebc943b9	Players' stories
+1e9af543	A family in an {0}th-century French village
+0e93965b	A life simulator: live one person's whole life
+d9c1f59d	Your birthplace and family are chosen at random.
+d19d365b	Time passes on its own and daily life is recorded; at the moments that matter, a
+b938f963	major decision
+c6f9f017	window opens.
+9181c1fb	The course of history does not change, but your life turns on your choices.
+92677de3	Year of birth
+ab2d43f6	Random
+719ce370	Quick pick
+43e748a3	Ancien Régime
+6bfc1d11	Revolution generation
+3ab9c1d2	Napoleonic generation
+9cab492d	July Monarchy generation
+32015abc	Second Empire generation
+7d45f203	Third Republic generation
+7504e14c	Continue last life
+a2e2f659	Start a new life
+8594cf38	← Back to the current life
+96bc2600	Suggested starts
+19b2e416	New here? Start with one of these
+a2b0679c	A random birth is most often a rural {0}'s life.
+ed9a6bfd	If you would rather start in the thick of history, choose below.
+85e84db9	A {0}'s child
+a5767913	The revolution generation, twenty-one when the Bastille falls
+c7654346	Age eight, straight into the first major decision
+dd8406fa	A child of a {0} family
+9911ce1f	An Atlantic trading port: wealth and ruin through revolution and blockade
+be497d61	A silk weaver's child
+f2ec8e3d	The Jacquard loom, the silk workers' risings, a July Monarchy city
+2773e0bd	My chronicle
+443de4e5	Open the codex →
+3bd94177	Be born for this scene
+0e422448	Epitaphs left behind
+47cd6321	See all →
+3461e4ce	French lives other players have lived, and the words carved on their stones.
+c80e924f	Tell us what you felt, what fell short, and any scene that seemed odd.
+01703b72	A short survey, no sign-in needed.
+0dd4ec38	Identity papers
+2d20a76e	Family and the people around you
+2d0e5f65	Groups
+ca665711	{0}·{1}
+7137a272	Scene of the present life
+3756bf4b	Life summary
+6ee0b79f	Scenes of history
+ee55709b	{0}s met
+3d136e4a	Starred memories
+43651f6b	Had it been another life
+5e55a842	Be born again somewhere else →
+56aee66f	Image to share
+56dca1b0	Life summary image for sharing
+d2020b11	Long-press or right-click the image to save it.
+948df8f6	Download image
+233d84d0	New in your chronicle
+055d77db	Carve a line on the gravestone
+d3f9c271	Words for the gravestone
+96bef6a9	What should be carved on this person's gravestone?
+5a115480	The words and the outline of this life will stand among the ‘Epitaphs left behind’ on the start screen.
+7e86b32a	Names, contact details and links cannot be carved; stones that collect reports are removed.
+631b06c2	Raise the stone
+f82f6799	New life
+d36ed239	Helping the household
+780f5fcd	This year's focus
+acdd33c5	You can change it any time
+72ea3e69	Life record
+a6bacc39	newest first
+1911efbf	tap a line to ☆
+028352d1	Life record, newest first
+ed169441	Era
+08d9651f	Milestones
+1248413e	Memories and interests
+6d1dfee8	Interests are experience piling up.
+e4ebada9	They do not mean character or political views.
+3afca7db	Circumstances
+d2de5bd0	A scene you have not seen
+46bd6906	Decision steps
+a4789b3f	Situation
+54c68306	Choice
+c86fa129	Outcome
+3a27b5b2	Options
+6e3acdbe	Possible outcomes
+cd63763b	Stat changes
+0a4b6ad7	This choice and its outcome are kept in your life record.
+99c5a644	Note the outcome and go on living →
+ed7de2ca	Birth
+26d648d0	Begin this life →
+465b6441	Cancel
+781bae3a	Continue
+f92bf9c9	Chronicle codex
+866c7eae	Close
+f21d5cab	Occupation
+d341afae	Birthplace
+f1af9dab	Real {0}s
+38ffba27	Showing the most recently raised stones first.
+3023d572	Save code
+2b1eacaa	Download file
+3dcc1bc1	Choose file
+6be83874	Copy
+9450346d	Load this code
+0bcf8d12	A French Life
+3769a098	Square (updates · feedback · epitaphs)
+6a3a3b10	· Saves are kept in your browser and in files you export
+00247180	{0}–{1}
+4637bddc	Historical events covered: {0}–{1}
+af773893	Life, economy and mortality are simplified models; ‘Numbers of the age’ are rounded approximations
+8a694a85	Petzold, Minuet in G ({0}, public domain)
+8c6e7c33	Background music: Petzold, Minuet in G ({0}, public domain)
+6b8fde2d	Opening soon.
+428a3691	When a life ends you will be able to carve a line on its gravestone.
+8d926e4e	You are born in a random year between {0} and {1}.
+42a8c6b9	Careers reached
+7d483b90	{1:month} {0}
+ac49d389	Anywhere
+c31f25a0	A scene you have not seen yet is waiting (for someone in a particular trade).
+a6c7e3d1	Born in {0}, you might reach it.
+8026f154	{0} year ≈ {1} s
+70cbd32e	This is the Kingdom of France under the Ancien Régime.
+c4193aab	Living conditions depend on region and estate.
+d4259203	{0}, in town
+50fa5442	A tenement of many floors
+53fa792d	With parents, {0} and a {1}
+690dbe77	A view of {0}.
+5edb7e19	Baby
+634126a7	Swaddling clothes.
+fca67127	Family members present: {0}.
+d6ab2b01	At the end of the {1}th century about {2}0,000 people live in {0}, the largest city of the kingdom.
+2131ad82	Health
+f4148883	Happiness
+fe131626	Knowledge
+72eef421	Wealth
+bec836c1	Relations
+4a72933a	Being looked after
+b6c878be	Newborn
+20e936dc	{0} household
+323684c1	Still growing up in someone's arms.
+db10b5c5	From age two you can choose a focus.
+cd6c6c44	You first meet the world inside a house in {0}.
+099e28b9	For now, the care of the grown-ups nearby fills most of the day.
+ae00f3d9	In {0}, about {1}.{2} million people live in France
+daab4db5	At the end of the {1}th century about {2}0,000 people live in {0}, the largest city of the kingdom
+4670fa21	Age {0} 📊 Numbers of the age
+50a32833	age {0}
+13a6e615	📊 Numbers of the age
+d4ddd7ce	Age {0} Family
+bbd57cf6	Age {0} Birth
+9b8d7c72	Passport
+27c08c08	Sex
+f9ab7e52	Male
+6ac94fce	Female
+cacaf2e9	Residence
+31cc3461	Estate
+949a46e3	Third Estate
+70679cb0	Religion
+a07334a8	Catholic
+e6a6dc34	Family of origin
+5a359655	{1} of {0} steps
+4674c5a3	Schooling
+d720a317	No formal schooling
+3b8510a1	Cannot read
+1c5c8c1e	Natural ability
+6b630807	Low
+672d743b	High
+32a26c37	(top {0}%
+258573ff	learning ×{0})
+e2045b25	Temperament
+aa1bc934	Not known yet
+b824dc31	Closeness {0}
+a7819969	{0} living
+6049324a	{0} in all
+1f024533	Republic
+e5a0610e	Consulate
+937423ac	First Empire
+e84918ba	Restoration
+01ae21c4	Hundred Days
+18e209af	July Monarchy
+5caae941	Second Republic
+69f5e0b3	Small experiences add up and interests grow.
+655b218b	Home
+024a98ea	Education
+c579aa56	Undecided
+cdb52f04	Literacy
+cb2f6bd4	{0}
+3bfdc03a	Political leaning
+c85a57e9	Not decided yet
+a4063a21	Prices
+c132c9e3	A {0} kg loaf of bread about {1} sous
+70c80ece	A day's wage about {0} sous
+a5bb6bbe	Bread costs {0}% of a day's wage
+5ac95ee8	Rough figures for {0}
+bee1432d	Events
+0623aa08	Good {0}
+5561d018	Ordinary {0}
+2db47f03	Bad {0}
+f8f79fa9	Paused
+94b7cfb5	Keep going
+c41817f8	{1:month} {0}, {2}
+65769dd5	{0}.
+2de1869b	You were born a {2} into a family of artisans and workers in {0} ({1}).
+d0ba4605	And one in four will not live to their first birthday.
+7fd5698c	Natural ability {0}
+6e1ef875	Low (about top {0}%)
+f8f85f7d	The Seven Years' War goes on.
+9ba33fb9	A rented room in town
+be04b4eb	With parents
+3ff7b3f8	About {1}0,000 people live in {0}, the city of silk.
+89e7d706	About {1}0,000 people live in {0}, the city of silk
+0d5f6c35	Age {0} Family memory
+893920be	Below average
+79c2fbe2	Died {0}
+ec5f157d	Rough figures for a provincial town
+e91132d1	This is the time of the Consulate.
+510a29ae	With two {0}
+b33a066c	Adult
+6bd2a671	A work apron.
+9fa53403	Work hard
+5a67b522	Look after family
+41d7ff21	Save money
+ef553b34	See the neighbours
+6a823187	Learning · reading
+c4134527	Mind your health
+0115fb32	Earnings rise, but there is less room to breathe.
+a3bd6990	In {0} you spend your days as a {1}'s helper and keep up with the people close to you.
+74c580aa	The changes of the age reach into private lives too.
+95791a0f	Prices leapt after the grain trade was freed, and the streets filled with hungry people.
+e7138ae6	Learning at home
+895f3692	Learning to read
+e3d9f5e5	Strong sense of duty
+0e2bfb69	Married
+1ba431d4	Sense of duty
+b40664ff	Knows the family trade
+4969bfa7	Interest in crafts
+80d936e4	Neighbourliness
+75d67f1c	Awareness of inequality
+e6f08bec	A day's wage about {0} sous ({1} franc = {2} sous)
+731c3785	No major decision in {0} years.
+9f9c1532	This is the time of Napoleon's First Empire.
+2f9c9bb1	Last resting place
+41bb2f6d	Old age
+e0e71fcd	A coat.
+e96de7a4	Life over
+5eb4e680	Look back over the record and milestones, at the choices and the people along the way.
+01acd768	{1} of {0}
+2070d622	Lived to {0}.
+3be766b3	Outlived about {0}% of those born the same year.
+04742aa7	Never learned to read.
+e9115e34	About {0}% of men of the same generation did not either.
+72b1a33a	Ended far better off than the family you were born into.
+1e8b7fb7	{1} of your {0:pl} died young.
+d88431fa	Never stood at a scene of history.
+a52026b3	Had you lived in {0}, in {2:month} {1}, at {3}, you might have been at “To the Bastille!”.
+4e92840c	Had you lived in the countryside, in {1:month} {0}, at {2}, you might have been at “The Great Fear”.
+1378e5d1	Had you lived in {0}, in {2:month} {1}, at {3}, you might have been at “The levy of {4}0,000 and the rising in the west”.
+4d2a5ee6	Had you lived in {0}, in {2:month} {1}, at {3}, you might have been at “Morning on the Place de la Révolution”.
+0df3d6e4	Never crossed paths with a famous {0}.
+eedb5af7	No starred records.
+b7fc5317	Tap a record line to mark it ☆.
+a0564fd8	This life added {0} new entries to your chronicle.
+f674507a	{0} {1}
+c69f656a	This is the time of the July Monarchy.
+638679b0	Railways and factories multiply; the age of the {0} begins.
+59a9aeed	A long winter and dear grain filled the streets with hungry people.
+802440e8	About {0}% of women of the same generation did not either.
+6b81bffd	Nothing new reached your chronicle in this life.
+9afd1872	Try being born at another time, in another place.
+4510fe96	Average to above average
+c55fd105	This is the time of the Restoration.
+2600d074	The Bourbons are back, but there is no full return to the days before the Revolution.
+2ebb8fec	This is the time of the Second Republic.
+4597bd17	An age when every adult man votes has begun.
+# terms
+64256876	Lyon
+42dde645	Paris
+f6c1b042	urban commoner
+0f92c164	printer
+877c08bf	weaver
+0d2f9f8a	Rouen
+54daf3f8	shoemaker
+2efddafa	rural Auvergne
+a806fa07	the Auvergne countryside
+b5320c2c	peasant
+e928ec08	farmer
+ecfefdfe	rural Burgundy
+7dc337f3	the Burgundy countryside
+7ed91439	sharecropper
+e130782a	rural Brittany
+0fdade17	the Breton countryside
+ecebdd23	Bordeaux
+360a7b49	bourgeois
+b35defdc	merchant
+68f24810	lawyer
+9bf7a2ad	Tours
+50239eea	noble
+1f230819	landowner
+8bd1fda5	royalist
+6f4959b1	royalist (non-juring Catholic)
+1cc211d3	constitutional liberal
+7606120a	Girondin
+6c006542	moderate republican
+08092f29	Thermidorian
+bd676680	republican
+8f923ff8	Montagnard (Jacobin)
+64f4622d	Bonapartist
+812477eb	socialist
+eebdff90	keeps out of politics
+# runtime
+45597127	End of life
+77945820	A second bad harvest in a row pushed the price of bread above a day's wage.
+92355673	In {0}, about {3} babies in {1},{2} are born.
+8f56b2a5	{0} ended their life at {1}.
+34ca122b	It was a long life.
+2478ba9b	News of family and {0}s
+e8f1cde1	You heard that your {0} {1} had died.
+947019bf	☕ Daily life
+8a1d2360	Hard year
+591060ed	Bad harvests and wartime requisitions filled the streets with hungry people.
+f86594a4	The family granary was well stocked.
+6657aa87	(A {0} kg loaf about {1} sous, a day's wage about {2} sous)
+573b4a6d	New acquaintance
+7ab2c435	You came to know {0}.
+e78b5552	A change in life
+775fc324	You step back from the work you have done for so long and settle into a new routine.
+6527ca35	The bitter cold of Year {0} and the collapse of the assignat filled the streets with hungry people.
+ba75e187	(A {0} kg loaf about {1} sous, a day's wage about {2} sous — dozens of times more if paid in assignats)
+0d19d4a4	After last summer's hail and a harsh winter, the streets filled with hungry people.
+621b295c	The bitter cold and floods of the winter of {0} filled the streets with hungry people.
+dadeef99	Prices leapt after the grain trade was freed and bread grew dear, but your savings carried you through without great hardship.
+4841f7c6	A second bad harvest in a row made bread dear, but your savings carried you through without great hardship.
+aaa15f3f	Neighbours and relatives shared their food, and that made it a little easier.
+916c2dfa	A family sorrow
+f0926f9c	Your newborn {0} {1} did not live to see a first birthday.
+ee4a8b16	A change in the family
+7e753c9e	Your {0} {1} was born.
+07c4ff77	Work
+7111da62	You began helping with the household work and learning the skills you will need.
+bf03e4bd	Learning
+7c490f3a	You picked up a little reading and reckoning from family and neighbours.
+367dd7cf	The odds of a birth
+43d076fd	In this period about {1} in {0} French babies were born into {2} families.
+d739b47c	Eight in ten are born in the countryside, as you were.
+552af02a	Family
+8e3bd5d8	A new life begins with your family.
+f4ff2bb2	Birth
+534bba79	{0} was born into a {2} family in {1}.
+0c24cd27	{0}
+e2c116bc	Born in {0}
+f047b5ce	Farewell to your {0} {1}
+7c10ce17	{0}'s helper
+2910312b	Occupation: {0}'s helper
+a85bfddb	Retired from work
+fa02bd61	End of life
+378a23d9	{0}
+3d9931a2	Housework and earning a living
+d43192af	None
+8f14339e	Helping in the family trade
+86c8ad8d	servant
+3718f731	retired
+9bb5bcf6	Died of a sudden illness.
+95495bcb	🌧️ Bad times
+34e68acc	Prices leapt after the grain trade was freed and bread grew very dear.
+6f2e7904	You had to cut back on meals and sell things you treasured.
+0541e515	A second bad harvest in a row made bread very dear.
+40dd555f	The bitter cold of Year {0} and the collapse of the assignat made bread dear, but your savings carried you through without great hardship.
+7acaab06	After last summer's hail and a harsh winter bread grew dear, but your savings carried you through without great hardship.
+7f4ca68d	The bitter cold and floods of the winter of {0} made bread very dear.
+72d47399	A family memory
+40d01f4e	Before you were born, your {0} {1} died before their first birthday.
+25aceabc	farm worker
+4c94b8d5	After last summer's hail and a harsh winter, bread grew very dear.
+b0a9464c	Your {0} {1} died of illness at only {2}.
+1056024d	shop clerk
+a67631dc	After the failed harvest of ‘the year without a summer’ bread grew dear, but your savings carried you through without great hardship.
+a69c6cd7	Bad harvests and wartime requisitions made bread dear, but your savings carried you through without great hardship.
+22ef3f8f	The bitter cold of Year {0} and the collapse of the assignat pushed the price of bread above a day's wage.
+fcd16352	All winter you got by on bread cut with bran and thin soup.
+9948a660	After last summer's hail and a harsh winter, the price of bread rose above a day's wage.
+061864d2	Before you were born, your older brother {0} died before his first birthday.
+5b17ff2b	apprentice
+3f47312e	Bad harvests and wartime requisitions made bread very dear.
+dedbe792	Could not survive a childhood fever.
+b70508f2	After the failed harvest of ‘the year without a summer’, the streets filled with hungry people.
+7b9ac55e	In this period about {1} in {0} French babies were born into families of town artisans and workers.
+a4d33088	artisan
+048c26be	The bitter cold and floods of the winter of {0} made bread dear, but your savings carried you through without great hardship.
+29e96976	The bitter cold of Year {0} and the collapse of the assignat made bread very dear.
+c0a8aecf	After the failed harvest of ‘the year without a summer’, bread grew very dear.
+f0985ec2	Lost their life in an accident at work.
+7c86912b	In {0}, a little over {2} babies in {1} are born.
+e75884b9	Caught smallpox and never recovered.
+# careers
+39938662	print-shop proofreader
+62925817	clerk
+77450519	teacher
+10ad50c8	lawyer and politician
+a7a3281c	law clerk
+f3ffcb2b	advocate
+4ebc9308	provincial administrator
+32c0ba38	deputy of the nation
+7d9a5fdf	prefect
+6f65e331	copyist's assistant in a law office
+541b7a3a	keeper of papers to the advocate ○○
+04b37627	journalist
+e8436a87	pamphleteer
+04d5b377	newspaper reporter
+fa5394d8	newspaper publisher
+20e8ae86	assistant proofreader at a print shop
+0ca553f5	newspaper contributor
+eed409b7	editorial assistant to the publisher ○○
+bd73e850	officer
+c9677c9c	sub-lieutenant
+38b63849	lieutenant
+bc589470	captain
+d9bf1517	colonel
+6ef8acd1	general
+b159f1a9	cantinière
+004356a9	regimental cantinière
+5b249262	scientist
+8a7a4522	mathematics teacher
+33b29fc6	corresponding member of the Academy
+30cbbfe7	professor at the École polytechnique
+94c55904	member of the Institute
+1968d9bb	calculating assistant at the Observatory
+67adad48	assistant and translator to the scholar ○○
+8cca8479	painter
+64f0256d	painter's pupil
+bd24d9b2	unknown painter
+553c1e81	painter shown at the Salon
+541f7a1d	celebrated painter
+3919fbba	merchant and banker
+8ad5f6dc	shop assistant
+30b22bfc	wholesale merchant
+44bf49c6	banker
+7591e0be	bookkeeper to the wholesaler ○○
+d690bcac	accounts assistant to the banker ○○
+2feb5a55	clergy
+e0ba7e5d	seminarian
+78c7b5df	curate
+236ac69e	parish priest
+212f44fb	cathedral canon
+c640d0f1	bishop
+c72b21e5	nun
+3a824bb7	novice
+ea263f92	mother superior
+dea5d9d1	physician
+a555660f	surgeon's apprentice
+4d88e3fb	surgeon
+8f13543d	chief physician of a hospital
+e90ee564	hospital nursing aide
+299b918f	assistant to the surgeon ○○
+ffdca463	head of nursing at a hospital
+8e740969	factory owner
+2bca5c8d	workshop foreman
+c14edaaa	workshop master
+885649fa	industrialist
+d634b005	forewoman
+e908fea2	mistress of a workshop
+24fd8b91	management assistant to the factory owner ○○
+b6e7a629	civil servant
+9e452e1e	government clerk
+19b6e8e7	head of department
+045ef0c8	councillor of state
+614b4c5b	copying assistant in a government office
+974a82e4	post office clerk
+77a17a59	village postmistress
+af5496f7	assistant teacher
+d9924dba	village schoolmaster
+ebd7fb56	town schoolteacher
+3ff15597	lycée teacher
+0e2b25d0	village girls' schoolmistress
+5e903f6c	town girls' schoolmistress
+5bfb2fc1	teacher at a girls' lycée
+6f0366cd	actor
+10c6a55d	strolling player
+e7204c68	provincial actor
+ced74ae7	Paris stage actor
+2621c120	great actor
+c2edb7cb	salon hostess
+8f85bdca	salon guest
+0fd24cba	salon hostess
+8a1643ea	hostess of a famous salon
+a4ff1874	writer
+202dc5ff	unknown writer
+a65dc8f6	published writer
+3a3be2d0	celebrated writer
+87265b19	midwife
+708f2222	apprentice midwife
+abce1aee	licensed parish midwife
+9c3f4d57	dressmaker and milliner
+399a68a3	apprentice seamstress
+de10777e	seamstress
+72fa34fd	milliner
+579670a5	owner of a fashionable dress shop
+61dca17d	sailor
+6736a14e	ship's boy
+bfcd4458	mate
+8cde782e	ship's captain
+60fdaf62	net mender
+1a0bc7c9	fish-market trader
+dfcdc4ca	civil engineer
+9fd4f4d0	apprentice surveyor
+e8fddca6	chief engineer
+b6ea8fa7	draughting assistant in a survey office
+bb24ddd3	draughtswoman to the engineer ○○
+85d23d08	police
+fa1905d2	constable
+bba6d19b	police commissioner
+5478c11e	prefect of police
+3b54df50	women's prison warder
+5a6349af	head warder of a women's prison
+# figures
+48612118	Camille Desmoulins
+cda3fc09	Maximilien Robespierre
+f4036b32	lawyer and deputy from Arras
+a22d6dec	On 10 Thermidor Robespierre was executed on the guillotine in the Place de la Révolution. He was the same exacting lawyer you once knew.
+9697e4bc	lawyer and journalist
+f13b051c	Camille Desmoulins was executed together with Danton. A few days later his wife Lucile mounted the same scaffold.
+d1436a78	Jean-Paul Marat
+7cf43552	publisher of L'Ami du peuple
+e969f4b4	Marat was stabbed to death in his bath by Charlotte Corday. All of Paris seemed to go into mourning.
+d62e3d81	Manon Roland
+b8559aa7	It is said that as Madame Roland mounted the scaffold she turned to the statue of Liberty and cried, “O Liberty, what crimes are committed in thy name!”
+66815e62	Napoleon Bonaparte
+b24a1557	artillery officer
+696de619	Lazare Hoche
+9d73b5f0	general
+0fe90501	General Hoche died of illness at twenty-nine. He had risen from the ranks all the way to general.
+2055cdbc	Pierre-Simon Laplace
+03ef883e	mathematician
+2b16f5d8	Antoine Lavoisier
+5fa774f5	chemist and tax farmer
+33f291db	Lavoisier was executed because he had been a tax farmer. Lagrange said: “It took them only an instant to cut off that head, and a hundred years may not produce another like it.”
+b33d814c	Jean-Baptiste Lamarck
+cfb6a675	naturalist
+aaccf2c9	Jacques-Louis David
+bfe48454	Henri Grégoire
+1f578616	priest and deputy
+2cb4a7c1	Philippe Pinel
+a4edbef0	physician of the mind
+ccd35684	Dominique-Jean Larrey
+2fc9950f	army surgeon
+e83338eb	Joseph-Marie Jacquard
+0dfe56ad	inventor of the loom
+995beb05	Joseph Fouché
+6b883125	minister of police
+b5aecb32	François-Joseph Talma
+e22d4bb0	Victor Hugo
+558ae338	poet and playwright
+6890ad5d	Germaine de Staël
+ec7db74f	writer and salon hostess
+8406150a	Olympe de Gouges
+44e054ed	playwright
+9eec0418	Olympe de Gouges was executed on the guillotine. “If woman has the right to mount the scaffold, she must equally have the right to mount the rostrum.”
+2673da50	Angélique du Coudray
+aff1f714	royal instructor of midwives
+0738fbf4	Madame du Coudray has died. Thousands of midwives she trained now serve in villages across the country.
+9acfd14a	Rose Bertin
+55f731a4	the queen's dressmaker
+b9104032	Rose Bertin has died. She was the one they called the ‘Minister of Fashion’.
+166ffcf1	Robert Surcouf
+b0f3e941	privateer captain
+3e2e70ca	Gaspard Monge

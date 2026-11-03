@@ -1,0 +1,209 @@
+# Ordinary decisions, part 2.
+0fe69028	The rumours sound doubtful; put it off
+bc394112	Your parents decided to wait and see a little longer.
+1ead3b12	They say the town hall is giving the ‘cowpox’ vaccination brought over from England free of charge. Some neighbours are uneasy because it uses matter from cows.
+0a5f5b18	They say the town hospital in {고향} is giving the ‘cowpox’ vaccination brought over from England. Some neighbours are uneasy because it uses matter from cows.
+a1a97dc8	Preparing for First Communion
+59d02110	The parish priest is gathering the children who will make their First Communion this year. You must learn the catechism by heart over several months, and new clothes must be found.
+8b708e56	Go faithfully to catechism class
+0fc7cc02	You learned the catechism by heart and the priest praised you. You made your First Communion dressed in white.
+9e99a7b1	Go when you can, between chores
+df0bb6c1	Your studies were slow, but you made your First Communion without mishap.
+687bc1fd	Put it off until next year
+8b81eb53	You were not ready this year. The neighbours whispered.
+ee3df1c3	The village school's winter term
+6e4c5dbc	In the winter months, when there is little farm work, the village school opens. The teacher is also the sexton, and the fees are a few sous a month.
+0c0a37d2	Beg to be sent to the winter school
+f4935742	You go / turned down for lack of money
+73d3f296	You went to school over the winter
+c1327726	Sitting round the stove, you learned your letters and sums. In spring you will help in the fields again.
+5afe9cd6	The family cannot afford the fees
+0e274266	Your father was already worried about this winter's firewood. School was put off until another time.
+69a832a9	Look after the animals at home
+c3c3b51b	You spent the winter tending the animals and helping with the housework.
+db015718	How to educate a child of the family
+85a1f22f	It is time to choose an education worthy of the family name. You could bring a tutor into the house, send the child to boarding school, or have them prepare to be a soldier.
+516597d1	Bring a tutor into the house
+af3e2eea	At home you learn Latin and French composition, dancing and manners.
+25beaa55	Send them to a boarding school run by a religious order
+2229d164	You learn the classics and the faith under strict discipline. You miss home.
+42174f62	Prepare for military school
+dd4d7715	You began learning mathematics, riding and fencing.
+556d462d	The collège, or the shop?
+a357f663	Your parents are weighing whether to send you to a school that teaches Latin or teach you to keep the books early. School is the door to getting on in the world, but it costs money.
+88ee98a0	Get a classical education at school
+05467f7c	Top of the class / middling
+bf5db17d	You won a prize
+ccad5b5d	You won a prize for Latin composition and became the pride of the family.
+7d480428	You get along well enough
+f180cf47	Your marks are middling, but you have made plenty of friends.
+d5cf6206	Learn the books and figures in the shop
+c0b3d91d	Behind the counter you learn to serve customers and keep the books.
+555dc304	Shepherd for a neighbouring farm
+6d345dcc	A big farm nearby is looking for a child to mind sheep all summer. Board is provided, and wages paid in the autumn.
+d7be280d	Go as a shepherd for the summer
+5e14266e	You spent the summer alone in the fields, watching the flock. You gave the wages you earned in the autumn to your mother.
+deb680c4	Stay at home
+b8224827	You spent the summer helping with the housework.
+d4655caa	Go to Paris to sweep chimneys?
+08414ad4	Every winter, children from the Auvergne go down to Paris to sweep chimneys and come back in spring. One of the village men is looking for children to take this year.
+057d6bbd	Go with him to Paris
+260a38aa	Come back with money / come back ill
+7bf3bc28	You came back in spring with money
+0e129e64	You got through the winter climbing up and down narrow chimneys. You were black with soot, but you came home with your savings.
+56e1e986	You came back with a cough
+c56e0e52	With the soot and the cold, the cough would not leave you. You saved only a little.
+ede3733b	This winter you stayed with your family.
+4b7c8c7c	Work at the spinning mill?
+1ef32bcf	The new spinning mill is hiring children. The work is more than twelve hours a day, but money comes into the house regularly.
+44eef40d	Go to the mill
+e8f882f2	Your job is to piece the broken threads. Your hands have grown quick, but you are always tired.
+817e16dd	Your parents decide to hold out a little longer
+69d73199	Money is tight at home, but for now you stayed at home.
+ed2259fb	A maid's place in town
+3ffcdea9	A cousin who went to town first offers to find you a place as a maid in a rich house. Bed and board are provided and you could save a dowry, but people say it all depends on the master you get.
+68fe3ab1	Go into service as a maid
+eee0e4e6	A good master / a hard house
+be3c00d1	You found a good master
+aa4a5403	The mistress was strict but fair. You put your wages by and even learned a few letters.
+6a5a70d9	It was a hard house
+2b2811e5	You worked from dawn to night and were often scolded. Still, you were paid.
+70c51356	Spin yarn at home and sell it
+386e6f08	You spin yarn at home and sell it to a merchant.
+a8e15b47	Stay with your family
+602eeb15	You decided to stay with your family.
+dbce31d5	A woman from your lane offers to find you a place as a maid in a rich house in the Faubourg Saint-Germain. Bed and board are provided and you could save a dowry, but people say it all depends on the master you get.
+767532de	A cousin writes that a merchant family in {고향} is looking for a maid. Bed and board are provided and you could save a dowry, but people say it all depends on the master you get.
+6627b346	A cousin who went to {도시} first offers to find you a place as a maid in a rich house. Bed and board are provided and you could save a dowry, but people say it all depends on the master you get.
+2259b51c	The journeyman's Tour de France
+ea35b8ff	The older members of the compagnonnage urge you to go round France, working in the workshops of different towns. It takes several years, but your skill is sure to grow.
+b8914f67	Set out on the Tour
+798db26a	Master journeyman / home early
+2491d76c	You came back a skilled journeyman
+715c621c	You worked in the workshops of Lyon, Marseille and Bordeaux, and earned your compagnonnage nickname.
+d9b863fd	You came back after a few months
+cfd1fad2	You were caught up in a fight between rival compagnonnages and came back early. Still, you learned something.
+fde5a788	Stay in your present workshop
+a5b689b3	You work steadily in the workshop you know.
+860fe027	Enter the seminary?
+2939cdef	The parish priest has noticed how bright you are and suggests the seminary. As a priest you could study, but you could never marry.
+a54365d6	Enter the seminary
+85fc4344	You began studying Latin and theology. In a few years you will be ordained.
+df7004d4	Politely decline
+67f3142f	The priest was disappointed but respected your wishes.
+1ec703d7	Talk of a dowry
+9c71a606	There is talk that you will need a dowry to marry. Your parents are not well off.
+a57da57e	Work a few years and save it yourself
+7abaeb7c	You decided to put off marriage and work to save a dowry.
+067d44ac	Your parents set aside a scrap of land
+42775444	Your parents promised a small field as your dowry. Your brothers and sisters are a little hurt.
+37938829	Look for someone who will take you without a dowry
+ff53769a	You decided to trust in love.
+216dc56c	Without a dowry it is hard to marry into a good family. At home there is even talk that a convent would cost less than a dowry.
+40a756c4	For the other family to take any interest, they say, your father would have to promise a dowry of some twenty thousand livres. Over dinner there is talk of how much that would cut your siblings' shares.
+60f770a7	It will take some years of work as a maid or seamstress to fill your bridal chest. Your parents, living in rented rooms, have almost nothing to give.
+9fbb1a89	All your father can give is a bed, a few sheets and, with luck, a cow. Without a dowry there are few good matches.
+5de03969	Someone met at the veillée
+e6107559	At the winter veillée, where neighbours gather in a byre to spin and talk, there is someone whose eyes keep meeting yours.
+4ccc41a7	Declare your feelings at the village dance
+01d9ae8c	Marriage / refusal
+c0de3520	You married the following spring
+48816012	The two families agreed and you were married in church. The village feasted for three days.
+f983c526	The other family objected
+3929e0df	Their parents wanted a better-off match. Your heart ached for a while.
+7ad447ac	Let it go
+8e7b2fa5	You said nothing. The winter passed.
+232cb1ff	A match arranged by the family
+7a06e01c	The notaries of both families are drawing up the marriage contract. The other party is well suited as families go, but you have met only a few times.
+d261192d	Sign the contract
+96a0dfe2	You signed the marriage contract and the wedding took place. The two families' fortunes were bound into one.
+7482b826	Insist on the one you love
+67638a95	Consent / estrangement
+3d29aa05	In the end you got their consent
+571892ec	Your parents sighed but gave their consent. The dowry was smaller.
+0df31d32	You grew apart from your parents
+7bed674e	The marriage was put off, and things grew cold with your family.
+a0c6d8d7	Put off marriage and devote yourself to study and work
+f6a6f240	You politely put off talk of a match.
+9d8dc2a1	The levée en masse
+707db6f1	“Every Frenchman is bound to serve in the army.” Unmarried young men are called up first. One by one, the village's young men are leaving.
+d6e1c605	Answer the call
+a7d0b50d	March to the frontier / injured in training
+79484605	You were posted to a battalion
+01e451df	You were issued a hat with a tricolour cockade and a musket and posted to a volunteer battalion. A few days later you begin the march to the frontier behind the drums.
+12e793e5	Injured in training and sent home
+96de92d8	You badly hurt your leg in training before setting out, and the army surgeon declared you unfit for service. It still aches when rain is coming.
+b6f5dc13	Stay behind in army-related work
+b82dacbc	You stayed at home and took on carting army supplies. You do not go to the front.
+16dae6a4	Hide in the woods (dodge the draft)
+c8c85188	Safe / caught
+a3f7386a	You were not found
+28affafa	You lay hidden for months. The neighbours pretended not to know.
+f9bf26c3	You were caught by the gendarmes
+5d4c48b9	You were fined and marched by the gendarmes to the nearest battalion. Now you must go to the frontier.
+c364750e	“Every Frenchman is bound to serve in the army.” Unmarried young men are called up first. The lists are posted outside the section office, and one by one the young men of your street are leaving.
+9c4bf905	“Every Frenchman is bound to serve in the army.” Unmarried young men are called up first. The lists are posted outside the town hall of {고향}, and one by one the young journeymen of the workshops are leaving.
+606677bd	The conscription lottery
+9169ae4b	The young men who have turned twenty gather at the town hall to draw numbers. Draw a bad number and you must serve several years in the army. With money you can buy a substitute.
+65ab71b0	Draw a number
+a25392df	A good number / a bad number
+7c3929ea	You drew a good number
+041c0780	You will not have to go into the army. The family lit a candle in church.
+50a2dd45	You drew a bad number
+af64f0dc	You put on the uniform and leave for your regiment.
+3bf5d19b	Buy a substitute
+bd59a8d6	You paid a large sum for another young man to enlist in your place.
+e986bada	Volunteer
+806fcadf	You joined the army of your own accord. You march with your comrades.
+3ce81afa	Section assemblies and political clubs
+7c71c9ed	Every evening in the section assemblies and clubs people read the newspapers aloud and make speeches. The neighbours want you to come too.
+1ec0da47	Go to the assembly and speak
+bf3089bd	For the first time you spoke before an audience. Your name became a little known.
+abf6a97a	Just buy the newspapers and read them
+7272ecc9	You read the newspapers quietly at home and keep an eye on how the world is going.
+eab2428d	Keep your distance
+e846acca	You decided to avoid talk of politics. These days every word must be guarded.
+a96811bc	To emigrate or not
+245f9215	Many noble families have left for Koblenz, across the border. Stay and you will be suspected; leave and your property may be confiscated.
+481d7237	Cross the border and emigrate
+7f957032	You packed at night and crossed the border. The land and house you left behind were confiscated by the state.
+b5679c10	Stay and swear loyalty to the Republic
+0e6554b0	You came through those times safely
+715ad1d9	You gave up your title and lived as a ‘citizen’. You kept part of the land.
+517334f6	You were arrested as a suspect
+0fae91bf	You spent months in prison and were released only after Thermidor.
+97392bc7	Hide quietly on your country estate
+dacf316a	You kept out of sight.
+45fec99b	Help write the cahier?
+4733c3b9	Ahead of the Estates-General, every parish is collecting a cahier de doléances setting out the people's grievances and wishes. People have gathered in the village square.
+ed19bce5	Step forward and have the grievances written in
+b5e02b54	You had taxes, corvées and the price of bread written into the cahier.
+b15370ba	Leave it to someone who can write
+29c54e34	You watched as the notary wrote it out for you.
+943156ce	Keep out of it, in case speaking up brings trouble
+59643b87	You stayed at home.
+183d21de	Ahead of the Estates-General, each of the sixty electoral districts of Paris is collecting a cahier. Your district's assembly meets in the church.
+a6bfe976	Ahead of the Estates-General, every guild and parish in {고향} is collecting a cahier. The masters have gathered in the guild hall.
+513f7274	The lord's dues
+671d1b2f	The lord's agent demands the arrears of dues and the fee for using the mill. This year's harvest will barely cover it.
+22577e4f	Pay, even if you have to borrow
+b247069a	You borrowed money and paid the dues.
+7bb071e4	Appeal to the seigneurial court with the other villagers
+a72dc23f	Reduction / dismissed
+e376c999	Part of it was remitted
+b541956b	Errors turned up in the old registers, and part of the dues was struck off.
+62ca71d1	The appeal was dismissed
+14c8322a	It only cost you the legal fees.
+9f240230	Hide part of the grain
+d9497ca8	You were not found out, but your conscience is uneasy.
+513ab6b1	The auction of national lands
+53f609d6	Land confiscated from the Church and from émigré nobles has come up for auction. It can be paid for in assignats.
+9e4ec460	Buy land
+4a370eef	Good land / disputes
+44b82cf9	You got good land
+d19bd880	You bought fields and vineyards that had belonged to a monastery. Rents will come in from now on.
+02213d1a	You were caught up in a dispute over ownership
+b7b1a6c7	A quarrel broke out with the old tenants. The neighbours look at you askance too.
+ba67ee20	Do not buy Church land
+b3edb2e4	It weighed on your conscience, and you did not go to the auction.
+85154cfc	A bread riot

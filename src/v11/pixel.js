@@ -8,24 +8,6 @@ const PX = {
   hairs:['#3a271c','#5a3a24','#7a4e2c','#262021','#9a6a3a','#c79f58','#8b3d22']
 };
 // Korean display names → the French originals used on the passport.
-const FR_NAMES = {'장':'Jean','피에르':'Pierre','루이':'Louis','자크':'Jacques','앙투안':'Antoine','프랑수아':'François','니콜라':'Nicolas',
-  '미셸':'Michel','에티엔':'Étienne','클로드':'Claude','조제프':'Joseph','샤를':'Charles','앙드레':'André','질':'Gilles','기욤':'Guillaume',
-  '르네':'René','마티외':'Mathieu','쥘리앵':'Julien','필리프':'Philippe','위베르':'Hubert','장바티스트':'Jean-Baptiste','폴':'Paul',
-  '오귀스탱':'Augustin','이브':'Yves','코랑탱':'Corentin','시몽':'Simon','알렉시':'Alexis','뱅상':'Vincent','오노레':'Honoré',
-  '아드리앵':'Adrien','가브리엘':'Gabriel','레옹':'Léon',
-  '마리':'Marie','잔':'Jeanne','안':'Anne','마들렌':'Madeleine','엘리자베트':'Élisabeth','루이즈':'Louise','카트린':'Catherine',
-  '마르그리트':'Marguerite','프랑수아즈':'Françoise','마리안':'Marianne','쥐스틴':'Justine','쥘리':'Julie','빅투아르':'Victoire',
-  '테레즈':'Thérèse','주느비에브':'Geneviève','아델라이드':'Adélaïde','앙젤리크':'Angélique','소피':'Sophie','클레르':'Claire',
-  '마르트':'Marthe','로즈':'Rose','셀레스트':'Céleste','외제니':'Eugénie','조제핀':'Joséphine','앙투아네트':'Antoinette','니콜':'Nicole',
-  '쉬잔':'Suzanne','아니에스':'Agnès','펠리시테':'Félicité','바르브':'Barbe',
-  '뒤퐁':'Dupont','마르탱':'Martin','르페브르':'Lefebvre','베르나르':'Bernard','모로':'Moreau','로랑':'Laurent','프티':'Petit',
-  '뒤랑':'Durand','르루아':'Leroy','루':'Roux','베르트랑':'Bertrand','모렐':'Morel','푸르니에':'Fournier','지라르':'Girard',
-  '메르시에':'Mercier','블랑':'Blanc','게랭':'Guérin','부아예':'Boyer','가르니에':'Garnier','슈발리에':'Chevalier','르그랑':'Legrand',
-  '고티에':'Gautier','페랭':'Perrin','로베르':'Robert','클레망':'Clément','모랭':'Morin','루셀':'Roussel','르메르':'Lemaire',
-  '뒤부아':'Dubois','포르':'Faure','르클레르':'Leclerc','브뤼네':'Brunet','르브룅':'Lebrun','르고프':'Le Goff','르갈':'Le Gall',
-  '뒤마':'Dumas','바이':'Bailly','콜랭':'Colin','아르노':'Arnaud','부셰':'Boucher','마송':'Masson','샤르팡티에':'Charpentier',
-  '파브르':'Fabre','롤랑':'Roland','카라덱':'Caradec','바레':'Barré','라퐁':'Lafont','르블랑':'Leblanc'};
-function frenchName(name) { return name.split(' ').map(part => FR_NAMES[part] || REAL_FR[part] || part).join(' '); }
 function strHash(text) {
   let v = 2166136261;
   for (let i = 0; i < text.length; i++) v = Math.imul(v ^ text.charCodeAt(i), 16777619);

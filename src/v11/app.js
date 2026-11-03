@@ -47,6 +47,30 @@ const prefs = (() => { try { return JSON.parse(localStorage.getItem('franceLife.
 // Light is the default; dark is chosen from the menu and remembered per browser.
 const applyTheme = () => { if (prefs.theme === 'dark') document.documentElement.dataset.theme = 'dark'; else delete document.documentElement.dataset.theme; };
 applyTheme();
+// Language: ?lang=en or ?lang=ko in the address wins and is remembered; otherwise the last choice.
+const urlLang = new URLSearchParams(location.search).get('lang');
+if (urlLang === 'en' || urlLang === 'ko') prefs.lang = urlLang;
+setLang(prefs.lang);
+if (LANG === 'en') { document.documentElement.lang = 'en'; document.title = 'A French Life'; }
+// English mode translates whatever the UI writes into the page as it appears.
+function i18nNode(n) {
+  if (n.nodeType === 3) { const v = n.nodeValue; if (hasHangul(v) && !n.parentNode?.closest?.('script,style,[lang="ko"]')) { const t = L(v); if (t !== v) n.nodeValue = t; } return; }
+  if (n.nodeType !== 1 || n.matches('script,style,[lang="ko"]')) return;
+  for (const a of ['placeholder', 'title', 'aria-label', 'alt']) { const v = n.getAttribute(a); if (v && hasHangul(v)) { const t = L(v); if (t !== v) n.setAttribute(a, t); } }
+  for (const c of n.childNodes) i18nNode(c);
+}
+if (LANG === 'en') {
+  i18nNode(document.body);
+  new MutationObserver(list => { for (const m of list) { if (m.type === 'childList') m.addedNodes.forEach(i18nNode); else i18nNode(m.target); } })
+    .observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['placeholder', 'title', 'aria-label', 'alt']});
+}
+function switchLang() {
+  prefs.lang = LANG === 'en' ? 'ko' : 'en'; savePrefs();
+  if (engine.state && !engine.state.dead) try { sessionStorage.setItem('franceLife.resume', '1'); } catch { /* optional */ }
+  const u = new URL(location.href); u.searchParams.delete('lang');
+  try { history.replaceState(null, '', u); } catch { /* sandboxed viewers */ }
+  location.reload();
+}
 const savePrefs = () => { try { localStorage.setItem('franceLife.prefs', JSON.stringify(prefs)); } catch { /* optional */ } };
 const ui = createUI(document, engine, {
   choose:index => controller.choose(index), setFocus:id => controller.setFocus(id), toggleStar:i => controller.toggleStar(i),
@@ -73,6 +97,7 @@ function render() { ui.render(); syncToggles(); autoDecide(); syncIntro(); syncL
 function syncToggles() {
   for (const id of ['autoButton','autoMenu']) { const b = document.getElementById(id); b.classList.toggle('on', !!prefs.auto); b.setAttribute('aria-pressed', String(!!prefs.auto)); }
   for (const id of ['musicButton','musicMenu']) { const b = document.getElementById(id); b.classList.toggle('on', music.on); b.setAttribute('aria-pressed', String(music.on)); }
+  const lg = document.getElementById('langMenu'); lg.textContent = LANG === 'en' ? '🌐 한국어' : '🌐 English'; lg.lang = LANG === 'en' ? 'ko' : 'en';
   const t = document.getElementById('themeMenu'); t.textContent = prefs.theme === 'dark' ? '☀ 화이트 모드' : '🌙 다크 모드'; t.setAttribute('aria-pressed', String(prefs.theme === 'dark'));
 }
 // In-page confirmation. Browsers inside embedded viewers block window.confirm, so every replacing
@@ -309,6 +334,7 @@ const actions = {
   importGame:() => openSaveSheet('import'),
   toggleMenu:() => { const m = document.getElementById('menu'); m.hidden = !m.hidden; document.getElementById('menuButton').setAttribute('aria-expanded', String(!m.hidden)); },
   toggleAuto:() => { prefs.auto = !prefs.auto; savePrefs(); ui.notify(prefs.auto ? '자동 결정: 중대 결정을 무작위로 고르고 결과를 확인합니다.' : '자동 결정을 껐습니다.'); syncToggles(); autoDecide(); },
+  toggleLang:() => { controller.autosave(); switchLang(); },
   toggleTheme:() => { prefs.theme = prefs.theme === 'dark' ? 'light' : 'dark'; savePrefs(); applyTheme(); syncToggles(); },
   toggleMusic:() => { if (music.on) music.stop(); else music.start(); prefs.music = music.on; savePrefs(); syncToggles(); },
   openFocus:() => { const c = document.getElementById('focusCard'); c.classList.toggle('open'); if (c.classList.contains('open')) c.scrollIntoView({block:'nearest', behavior:'smooth'}); },
@@ -368,6 +394,10 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('pagehide', () => { controller.autosave(); clock.stop(); });
 window.addEventListener('pageshow', () => { if (engine.state && !engine.state.dead && !document.hidden && !ui.choosing) clock.start(); });
-if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller, render, encodeSave, decodeSave};
+if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {I18N_MISS, L, engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller, render, encodeSave, decodeSave};
 gbShowPreview();
 render();
+// Coming back from a language switch in the middle of a life: carry on with it.
+try {
+  if (sessionStorage.getItem('franceLife.resume') && hasSave()) { sessionStorage.removeItem('franceLife.resume'); confirmed = true; try { if (controller.loadGame()) ui.setChoosing(false); } finally { confirmed = false; } }
+} catch { /* optional */ }

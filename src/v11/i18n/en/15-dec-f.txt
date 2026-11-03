@@ -1,0 +1,228 @@
+# Ordinary decisions, part 6.
+b234b0a9	A breech baby
+fd9c3c14	The baby is breech. If a surgeon is called, the mother's family will have to pay a great deal.
+6ba14cd3	Turn the baby yourself
+94421551	You put your hand in as you were taught and turned the baby. The first cry rang out.
+454302b1	Call the surgeon
+2e4a8304	The surgeon came, and mother and child both lived.
+6745fd8e	An unpaid account
+9da2f248	A noble customer has not paid for a dress for a year.
+b3b77034	Take them to court
+23d454f0	You got the money, but that family's friends stopped coming.
+9749dc39	Give them time
+efaf9aac	The customer apologised and brought other customers.
+8ae979a6	Discontent on board
+b782f61f	On a long voyage the food has gone bad, and the sailors vent their anger on the captain.
+8de210b2	Side with the captain
+942a8a92	There was no mutiny. The captain came to trust you.
+c1451f91	Put the sailors' demands to him
+352706c6	The captain increased the rations. The sailors follow you.
+7325b08f	Where to run the line
+c413b10d	Pressure has come to bend the route so that it crosses land owned by a friend of the minister.
+f1f27b04	Give in to the pressure
+bc51af88	The line was bent. News of your promotion came quickly.
+86fcfeb1	Insist on the technically correct route
+e7982e0e	Your report was praised, but the minister's side turned cold.
+d3845d14	Informers
+01517f5c	With an informer in every tavern, cases would be solved quickly. But neighbours would come to suspect one another.
+901961f8	Use informers
+825a9c12	Cases were solved faster, and you won the confidence of those above you.
+8faa0a8d	Investigate on foot
+33d608b2	It is slow, but people in the neighbourhood come to you first.
+7232c654	A friend asks to borrow the rent
+ef3844a2	A friend you have known since childhood has lost a clerk's post and come to you. If they cannot pay this quarter's rent, the family will be out in the street, so they ask to borrow three months' worth. There is no telling when it would be paid back.
+dbf45289	Less money, but a friend kept
+7e7ce04e	You handed over the purse. Your friend held your hand for a long time without a word.
+b583b268	You said you could not afford it. Your friend nodded and left, but their face was set as they went out of the door.
+09f8c3df	Forbidden books to hide
+56973fc7	A young clerk from next door knocked late at night with a bundle of forbidden books mocking the queen. The police are searching the print shops, so he asks you to keep them for a few days. There is a reward for informing.
+42271f9a	Hide them in the attic
+a06dbb51	If found out, the Bastille
+b9c7e6d3	Three days later he came for the bundle. “I will not forget this kindness.”
+eedfa525	The police came
+b40bb8a3	The police searched the attic and you were fined. He never gave your name.
+50421b20	Tell the police
+de4a014e	You collected the reward. They say he spent months in prison.
+a89648b7	Shut the door and pretend not to know
+918d29fd	You acted as if you had seen nothing.
+6e56dde1	An apprentice who stole money
+80fc5c9e	You found money missing from the workshop cash box. The sixteen-year-old apprentice confessed in tears: it was for medicine for a sick mother.
+5c994053	Forgive him and keep him on
+fe17d63b	From then on the boy came in earlier and worked later than anyone.
+ef79ff78	Throw him out
+dded47fc	You packed his things and sent him off. In his livret you wrote ‘thief’.
+de803934	Grain in the granary
+f36c5400	It is a bad year. Your granary is well stocked. The price of flour rises every day, and hungry neighbours ask for credit. If you wait, the price will go higher still.
+525cdd6b	Share it with the neighbours on credit
+bef8f90f	Half was never paid back. That winter no household in the lane starved.
+b72bac7d	Wait for the price to rise and then sell
+69f161b8	You sold the grain dear. The neighbours whispered that you were a ‘hoarder’.
+ec96307f	A neighbour poaching
+9eefafc3	At dawn you saw a neighbour coming out of the lord's woods with a rabbit over his shoulder. The lord's gamekeeper is looking for poachers and promises a reward for information. If caught, it means the galleys.
+1dfc8e2e	Pretend you never saw
+7ae5628a	You kept your mouth shut. A few days later the neighbour left a rabbit's leg on your doorstep.
+4e01a44a	Tell the gamekeeper
+188b23ef	You took the reward. The neighbour sold his cow to pay the fine.
+6061b71e	A noble patron
+f1813f47	A marquis has taken a liking to your skill (or your head for business). He offers regular orders and his backing in family matters, and has given you the run of his house.
+e0c20cea	Accept his patronage
+ccf24766	The orders never stopped. Letters stamped with the marquis's arms piled up in your drawer.
+9de3c037	You did not want to stand under another man's coat of arms.
+869d9524	A deserter in the barn
+4fb973ed	In the barn you found a young soldier who had thrown off his uniform. He says he ran because he thought they would beat him to death. Hiding a deserter is punishable.
+0a4ffd1d	Hide him and give him food
+9773b9c0	Three days later he left wearing the old clothes you gave him. When you asked his name, he only smiled.
+4d9e5a2a	Tell the gendarmes
+85e94cf5	The gendarmes dragged him away.
+6cbc2ebd	A poor curate
+3fdc7f0d	They say the parish's young curate goes without meals because the parish priest takes the whole tithe. You heard he has no firewood for the winter.
+a342864c	Take him firewood and bread
+1847964b	The curate accepted, embarrassed. “God will repay you.”
+6b04f2e1	Consider it none of your business
+404759a4	The winter passed.
+302418ed	A maid who broke a silver cup
+885ef280	The maid dropped one of the silver cups kept for guests and dented it. It is worth several years of her wages. The elders of the household say throw her out at once and hand her to the police.
+0eafba4e	Forgive her and have her pay it back little by little from her wages
+0137ebd1	The maid worked several more years. On the day she left she hugged your children and wept.
+945cd672	You sent her away without a reference. They say she never found a place in another house.
+24989bba	Testimony in court
+8fef6b62	You have been called as a witness in a suit between a landlord (or the lord's agent) and a poor tenant. You know the tenant is in the right. But the landlord has power over you too.
+c92d54c9	Say what you saw
+649ed5c3	The tenant won. The landlord was cold to you ever after.
+96286a5c	Side with the landlord
+17738db9	The tenant lost his land. Leaving the court, he gave you a long look.
+d3ad3d98	A half-pay officer's request
+adcce393	One of the Emperor's old officers, put on half pay, is under police watch. He asks to rent a room for meetings of Bonapartists.
+9ebb0ef0	Let him have the room
+e76ee260	For months you heard low voices every night. The police never came.
+bcd4f7ba	He was arrested, and you received a letter of thanks from the police commissioner.
+4f17c262	You failed
+fe9776e0	A neighbour's son dodging the draft
+eee7e960	The neighbours' son drew a bad number in the conscription lottery and fled to the woods. The gendarmes are searching the village and say any house that hides him will be fined. Tonight he knocks at your barn door.
+f8b303ea	Hide him in the barn
+c61dbc86	Safe / a fine
+6cdd6341	The gendarmes walked straight past the barn. The following year he bought a substitute, came back, and settled in the village.
+adb6f930	You were fined
+c92e79bd	The gendarmes dragged him out of the straw and you paid a fine. Still, he never forgot that night.
+8b74b200	He was taken and sent to a regiment. Years later he came back limping on one leg.
+2a44d360	The neighbours' son drew a bad number in the conscription lottery and ran. The police are searching the lanes and say any house that hides him will be fined. Tonight he knocks at the door of your attic room.
+a34341ff	The neighbours' son drew a bad number in the conscription lottery and ran. The gendarmes are searching the lanes of {고향} and say any house that hides him will be fined. Tonight he knocks at the back door of your workshop.
+2e4b31ff	Life in Paris
+96e84eb7	The rent in Paris has gone up again. The family coughs in a cramped rented room, and work comes and goes. Moving out to a faubourg beyond the walls would halve the rent, and country relatives in your parents' home region say come down and farm with them.
+986289dd	Move to a faubourg beyond the walls
+177739e5	Saving on rent / a long way to work
+3d643727	You saved on the rent
+7f3f2b1d	You moved to rooms at the far end of the Faubourg Saint-Antoine. For the same money you have one more room.
+5e49144e	Work is farther away
+83740608	You leave at five in the morning and come back at night. You hardly see the children.
+b6be9b8f	Take the family down to the country relatives
+0c8769ad	Land and air / a strange countryside
+61b2c593	You settled in the country
+36931143	You rented a corner of a relative's field and planted potatoes and wheat. The colour came back to the children's cheeks.
+40018595	The villagers found you strange
+c79bbfc7	For years the label ‘the Parisian’ followed you. Farm work never came easily to your hands.
+397c591e	You did not think you could live anywhere but Paris.
+1425ee67	Give it a try
+a6c0f8a9	Learning to read / slow / giving up
+09c02852	You learned to read
+b1ffbb31	Slow, but still learning
+254abbe8	You can make out the letters, but reading takes a long time. You can sign your name now, but a page of a book is still hard going.
+c7ce7148	You gave it up
+01268f59	The work was hard and you nodded off every evening. You stopped after a few weeks.
+c6d958d6	Decline: what use are letters at your age?
+7a842a54	You have lived without letters until now.
+635b17df	Letters learned from your spouse
+fd5c78a9	Your spouse can read. They offer to teach you a line every evening. It is embarrassing, but you are tired of asking others to read your letters.
+fa57cff6	In a few months your spouse had you stumbling through the prayer book and the newspaper. For the first time you signed your own name.
+ab2ca4be	The regimental school
+6b1f7550	To be made corporal you must be able to read. The regiment has an evening school, and a comrade who can read offers to teach you.
+4e9f9d4f	After a few months of the regimental school you could stumble through the prayer book and the newspaper. For the first time you signed your own name.
+ae5c451a	Which faculty?
+bdd0b262	You have finished the collège (lycée). Your father tells you to choose a road befitting the family. The faculty of law makes advocates, the faculty of medicine makes doctors. There is the seminary, the military schools and, after 1794, the École polytechnique. Or you could take over the family business straight away.
+a8e545a9	Go to the faculty of law
+9babad34	You learned Roman law and customary law and how to plead in court. You took your degree and were entered on the roll of advocates.
+e567e152	Go to the faculty (school) of medicine
+d06957f4	Years of the dissecting room and hospital rounds. You submitted your thesis and became a doctor.
+d69fd189	You put on the black cassock of the seminary of Saint-Sulpice.
+75376c60	Enter a military school
+93116af3	You finished military school and were commissioned as a sub-lieutenant.
+6c5c2e0b	Sit the École polytechnique examination
+f3a6c7d6	You put on the uniform of the École polytechnique founded by Monge. You graduated and became a civil engineer.
+44223be0	Your hands shook in front of the mathematics examiner. The following year you went to the faculty of law.
+3141b440	Go to the faculty of letters (the École normale) and become a teacher
+8185b988	By way of the École normale you took your place at the front of a lycée classroom.
+c762ebc2	Finish school and take over the family business
+b75adbf3	You learned your father's firm (or the estate) and took over the books.
+2fe2ab5f	A candidate for deputy
+5f914609	The electoral assembly is meeting. Since your name is known in the clubs and the section, there is talk of putting you forward as a candidate. Each département sends a dozen or so deputies, and there are dozens of candidates. Whether to the Legislative Assembly (1791) or the Convention (1792), those elected will decide the fate of France in the hall in Paris.
+90d90e5f	Stand as a candidate
+8e7e29fa	Elected / defeated
+edc7f037	You were elected
+ce33b28c	After three ballots in the electoral assembly, your name was called. You go to Paris as a deputy of the nation.
+f12e5247	You were defeated
+2f1d4372	Among hundreds of electors, few knew your name. You fell at the first ballot and went back to the business of the section.
+019b3de9	Do not stand
+fec20c99	Knowing what it means to become a deputy now, you asked them to withdraw your name.
+a18073aa	Where to sit
+3df51604	The Convention's hall rises in tiers. On the high benches to the left, the ‘Mountain’, sit Robespierre, Danton and Marat; on the right, the Girondins of Brissot and Vergniaud; and in the low seats in the middle, the quiet majority called the ‘Plain’. Where you sit is your fate.
+6bcc7e95	Sit with the Mountain
+61e507c0	The Jacobin Club and the sections of Paris are on your side.
+2f9afe50	Sit with the Girondins
+f9a8376d	You stand with the provinces, with law and order. The people of Paris hate you.
+cad3ae6f	Sit in the Plain
+0ca9498d	At every vote you watch which way the wind blows. These are the seats of those who survive.
+346fda2e	The Age of Enlightenment
+4be8fb91	In cafés and salons people talk of Voltaire and Rousseau. Some say the king's authority comes from heaven; others say taxes and privileges must be reformed. Which way does your heart lean?
+4c30accd	Trust the order of king and Church
+cb0f7285	You believe His Majesty watches over his people. The reformers' clamour displeases you.
+439f0afe	Think taxes and privileges must be reformed
+fcfa6699	You passed round pamphlets saying a parliament should check the king, as in England.
+2f26f0b6	Think the system of estates itself is wrong
+f672a01c	You go about reciting a line of Rousseau's Social Contract: “Man is born free, and everywhere he is in chains.”
+e5f9bc6c	Keep away from politics
+e2295d26	Whoever sits on top, what matters is the price of bread and the taxes. When talk turned to politics, you left the room.
+8bf5f0f8	Where you stand in the Revolution
+2933b748	The section assemblies and clubs, the newspapers and pamphlets all demand that you take sides. Some want to keep the constitutional monarchy, some to found a republic, some to return to the old monarchy.
+cb9f758f	Support the king and the old order
+82b4d92b	Instead of the tricolour cockade, you carry a white one in your pocket. It is a dangerous thought to speak aloud.
+1c5c47c9	Stop at constitutional monarchy (the Feuillants)
+eb5f478e	You believe the constitution and the king must go together. Lafayette's National Guard seems reliable.
+de052653	A moderate republic (the Girondins)
+5600e260	You read the papers of Brissot and Madame Roland. A republic is fine, but the violence of the Paris crowd frightens you.
+1a21d030	The Jacobin republic (the Mountain)
+243def7b	“The fatherland is in danger!” Your heart races at the speeches in the Jacobin Club.
+8276658c	The age of the Emperor
+4bda6220	The First Consul has become Emperor. Some say he brought order and glory, some that he stole the Republic, some that the rightful royal house must return.
+0549dedb	Follow the Emperor (Bonapartist)
+96d54079	At the news of Austerlitz you threw your hat in the air. It is the Emperor who safeguards what the Revolution won.
+46a547f4	Hope for the return of the rightful royal house
+b803eea5	You pray in secret for Louis XVIII in exile.
+04360bb9	Stay a republican at heart
+9b619cbb	On the day the republican calendar was abolished, you emptied your glass without a word.
+b39f7317	The France of the Restoration
+0f9ced6b	The Bourbons are back. There are the Ultras, who would turn the clock back to before the Revolution; the liberals, who would uphold the Charter; the Bonapartists, who miss the Emperor; and the republicans, holding their breath.
+bc058121	Ultra-royalist: throne and altar
+19abc9f7	You subscribe to La Quotidienne. You believe everything the Revolution left behind must be wiped away.
+26429486	Liberal: uphold the Charter
+09756363	You read Le Constitutionnel, and at every election your heart goes to the liberal candidate.
+efb29791	Bonapartist: dreaming of Saint Helena
+e58779f5	You keep a small bust of the Emperor hidden somewhere in the house.
+b4eeb1f1	A republican of the secret societies (the Carbonari)
+4fbb14d4	By lamplight you swore the Carbonari oath.
+a108f7ef	What to leave an only child
+c52962a1	It is time to call the notary and make your will. With only one child, there will be no quarrel over shares. What troubles you is the old age of the one left behind, and whether your child's in-laws will lay hands on the property.
+eee47f3c	Leave everything to your only child
+22b52c42	The will took a single page. Your child took your hand without a word.
+f6fd1796	Leave your spouse the use of it for life (usufruct), and the ownership to your child
+55d4d729	The notary explained the strange word “usufruct”. Your spouse will live in this house until death, and then it passes to your child.
+ef77674a	You left a tenth of your estate to the hospice and the parish school. Your child seemed a little hurt.
+02e00010	A will without children
+4e05b018	It is time to call the notary and make your will. You have no child to inherit. Left as it is, the law will divide it in its set order among your brothers and sisters, nephews and nieces.
+ee99338f	Divide it among your nephews and nieces
+7f4161c7	Your nephews and nieces gathered at the notary's office. Some of them you had never seen before.
+46cbe5a0	Leave it to the one who stayed by your side all your life
+a1dac81e	You left the house and its contents to the neighbour (or maid) who cared for you for so long. The relatives muttered about going to law.
+46f86630	Give it to the hospice and the parish school
+a86aad91	Under your will, two beds were endowed at the hospice and a scholarship in your name at the parish school.
+1b452e93	Turn it into a life annuity and live the rest of your days in comfort
+4ddb623f	You sold the house en viager, for a life annuity. Each month the annuity comes in. The buyer will be hoping you do not live long.

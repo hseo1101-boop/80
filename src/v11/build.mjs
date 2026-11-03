@@ -22,6 +22,8 @@ function patch(text, find, replace) {
   return text.replace(find, () => replace);
 }
 
+// 0. English mode: the translation layer and its catalogue go first so every later module can use L().
+js = patch(js, "(() => {\n'use strict';\n", "(() => {\n'use strict';\n" + read('i18n.js') + '\nObject.assign(EN, ' + read('i18n/en.json').trim() + ');\n');
 // 1. The 2 MB AI-image atlas and its SVG-based sprite UI are replaced by procedural pixel art.
 js = cut(js, '// src/data/pixel-atlas.js', '// src/characters.js', '');
 js = cut(js, '// src/characters.js', '// src/persistence.js', read('pixel.js') + '\n' + read('ui.js') + '\n');
@@ -151,6 +153,8 @@ js = patch(js, '    && (!c.real || s.familyEvents.real === c.real)', '    && (!c
 js = patch(js, '  applyRealEffects(s, effects);\n', '  applyRealEffects(s, effects);\n  applyBondEffects(s, effects);\n  applyFacetEffects(s, effects);\n  applyPoliticsEffects(s, effects);\n');
 js = patch(js, 'careerYear(s); crisisYear(s);', 'careerYear(s); bondYear(s); kinMarry(s); lifeFixYear(s); crisisYear(s);');
 js = patch(js, "    addLog(s, '역사적 사건', [event.text, ...impacts.map(i => i.text)].join('\\n'), 'history', event.id);", "    addLog(s, '역사적 사건', [event.text, ...impacts.map(i => i.text)].join('\\n'), 'history', event.id);\n    politicalMood(s, event);");
+// English mode: a fact not yet translated still happens but is not written in Korean.
+js = patch(js, "    addLog(s, '역사적 사건', [event.text, ...impacts.map(i => i.text)].join('\\n'), 'history', event.id);", "    if (enHas(event.text)) addLog(s, '역사적 사건', [event.text, ...impacts.filter(i => enHas(i.text)).map(i => i.text)].join('\\n'), 'history', event.id);");
 js = patch(js, "    if (r.deathYear !== undefined) p.deathYear = number(r.deathYear,'사망 연도',p.birthYear,s.year);", "    if (r.deathYear !== undefined) p.deathYear = number(r.deathYear,'사망 연도',p.birthYear,s.year);\n    if (Number.isInteger(r.married)) p.married = r.married;");
 js = patch(js, 'function decisionText(s,d) {', 'function decisionText(s,d) {\n  if (d.id !== \'school\') return bondFill(s, d, voiceText(s, d));');
 js = patch(js, '\\n선택: ${choice.label}\\n결과: ${outcome.title}\\n${outcome.result}`', '\\n선택: ${bondFill(s, d, choice.label)}\\n결과: ${outcome.title}\\n${bondFill(s, d, outcome.result)}`');
@@ -163,12 +167,14 @@ js = patch(js, "  s.aptitude = number(", `  if (v.career != null) {
   } else s.career = null;
   s.aptitude = number(`);
 // 2i. Soldiers at the front: no home-town everyday events, discharge in peacetime.
-js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) && !(isAbroad(s) && (e.when.places || e.when.placeIncludes || e.when.notPlaceIncludes || e.when.classes)) && !(e.when.parentJobs && ageOf(s) >= 14 && !e.when.parentJobs.some(p => (s.job || \'\').includes(p))) &&');
+js = patch(js, 'filter(e=>e.kind===kind && matches(s,e.when) &&', 'filter(e=>e.kind===kind && matches(s,e.when) && enHas(e.text) && enHas(e.title) && !(atFront(s) && (e.when.places || e.when.placeIncludes)) && !(isAbroad(s) && (e.when.places || e.when.placeIncludes || e.when.notPlaceIncludes || e.when.classes)) && !(e.when.parentJobs && ageOf(s) >= 14 && !e.when.parentJobs.some(p => (s.job || \'\').includes(p))) &&');
 js = patch(js, 'familyYear(s); careerYear(s);', 'familyYear(s); careerYear(s); armyYear(s);');
 // 2j. Girls' schooling and fewer informal chances to learn; the school scenario follows the player's sex.
 js = patch(js, "  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden;", "  return Math.min(.8,.25+(s.experience?.educationInterest||0)*.04+(s.stats.재산>=55?.15:0))*burden*girlsLearningFactor(s);");
 js = patch(js, "  return s.paths.learning==='family' && s.paths.priority!=='study' ? .08 : .24;", "  return (s.paths.learning==='family' && s.paths.priority!=='study' ? .08 : .24) * girlsLearningFactor(s);");
 js = patch(js, "s.decision='school'; s.lastDecision=s.year;", "s.decision=s.sex==='여성' ? 'school-girls' : 'school'; s.lastDecision=s.year;");
+// English mode can leave the age-two decision without a translated candidate.
+js = patch(js, '      const d = findDecision(s);\n      s.decision = d.id; s.lastDecision = s.year; s.pendingDecisionYear = null;\n      return true;', '      const d = findDecision(s);\n      if (d) { s.decision = d.id; s.lastDecision = s.year; s.pendingDecisionYear = null; return true; }');
 // 4. Controller actions for the new controls.
 js = patch(js, '    togglePause() { if (engine.togglePause())', `    setFocus(id) { if (engine.setFocus(id)) changed(); },
     toggleStar(index) { if (engine.toggleStar(index)) changed(); },
@@ -199,7 +205,7 @@ mkdirSync(join(root, 'site'), {recursive:true});
 const body = js.replace(/^\(\(\) => \{\n'use strict';\n/, '');
 const engineOnly = body.slice(0, body.indexOf('// src/ui.js'));
 mkdirSync(join(root, 'tools'), {recursive:true});
-writeFileSync(join(root, 'tools', 'engine.cjs'), `// Generated by src/v11/build.mjs — do not edit.\n'use strict';\n${engineOnly}\nmodule.exports = {CAREERS, GameEngine, createState, decisions, dailyEvents, childhoodEvents, ageOf, literacyOf, relationScore, lifeReport, choiceAvailable, outlivedPercent};\n`);
+writeFileSync(join(root, 'tools', 'engine.cjs'), `// Generated by src/v11/build.mjs — do not edit.\n'use strict';\n${engineOnly}\nmodule.exports = {setLang, L, EN, I18N_MISS, POLITICS_LABEL, enHas, enDecision, i18nKey, historicalEvents, families, FIGURES, VOICE, REAL_LIVES, FATES, CAREERS, GameEngine, createState, decisions, dailyEvents, childhoodEvents, ageOf, literacyOf, relationScore, lifeReport, choiceAvailable, outlivedPercent};\n`);
 writeFileSync(join(root, 'site', 'index.html'), page);
 console.log(`french_life_v11.html: ${(html.length/1024).toFixed(1)} KB`);
 

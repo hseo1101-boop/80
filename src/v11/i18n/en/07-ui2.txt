@@ -1,0 +1,306 @@
+# Interface and engine lines, second harvest.
+=군인	soldier
+=임시 노동자	casual labourer
+=코뮌 병사	Communard guardsman
+=망명자	émigré
+=군 관련 노동자	army supply worker
+=하녀	maid
+=방적 공장 아이	mill child
+=국립 작업장 노동자	National Workshops labourer
+=직인	journeyman
+=지역 주민	local resident
+=중개상	broker
+=장인	master craftsman
+=자영업자	self-employed tradesman
+=숯·포도주 장수	charcoal and wine seller
+=수공예인	craftsman
+=상이군인	disabled veteran
+=사제	priest
+=백화점 판매원	department store clerk
+=방적공	spinner
+=반급 장교	half-pay officer
+=물장수	water carrier
+=망명지 가정교사	tutor in exile
+=교육을 받은 점원	educated clerk
+=가업 보조	helper in the family trade
+=장인 견습	apprentice craftsman
+=농업 종사자	farm worker
+=도제	apprentice
+=점원	shop clerk
+=일꾼	labourer
+=은퇴	retired
+=수학자	mathematician
+=포병 장교	artillery officer
+=장군	general
+=극작가	playwright
+=군의관	army surgeon
+=정신과 의사	physician of the mind
+=박물학자	naturalist
+=화학자·징세청부인	chemist and tax farmer
+=직기 발명가	inventor of the loom
+=형	older brother
+=딸	daughter
+=좋은 일	Good times
+=🌿 좋은 일	🌿 Good times
+=나쁜 일	Bad times
+=⚖ 중대 결정	⚖ Major decision
+=🏛 역사의 현장	🏛 Scene of history
+=중대 결정	Major decision
+=역사의 현장	Scene of history
+=시대의 숫자	Numbers of the age
+=날품팔이	day labourer
+=감시위원	watch committee member
+=국민공회 의원	deputy to the Convention
+=소작인	tenant
+=서기	clerk
+=후작	marquis
+=보좌신부	curate
+=추방된 국왕 시해자	exiled regicide
+=면장	mayor
+=시장	mayor
+=신부	priest
+=관리	official
+=옛 지인	an old acquaintance
+=여러	many
+=그 일	that business
+c5afe0f8	My choice
+57290aac	reputation {0})
+a1e90595	📜 History
+e249b0ed	Relationships
+62aa4989	émigré {0}
+e9eb44a2	Political feeling
+f0ea9f60	In {0} you spend your days as a {1} and keep up with the people close to you.
+b2442237	Knowledge +{0}
+cb519070	Everyday clothes.
+5d9054d0	Promotion
+d8b38168	Birth of a {0}
+9dd450be	Basic literacy lessons
+61de57cb	Path: {0}
+cde96120	{0} → {1}
+69abca38	You spent time with {0}, catching up on news.
+ac496f02	Boy · girl
+80c7fe01	{0} returned
+fc6c7ae7	Child
+5efa7ac4	✓ Requirement met
+7546f8f0	Moved to {0}
+14fbd57d	A name returns
+e0167015	An Empire dress.
+f68262d9	Young child
+184a930c	Wealth −{0}
+d65464d2	Wealth +{0}
+fb208892	Married {0}
+1e657a19	{0} was born.
+ccaff365	You have a new member of the family to care for.
+4be77637	A {0} grows up
+ebead5d7	Smallpox inoculation
+439dfd36	Happiness −{0}
+b6046805	Not yet in formal schooling
+62afacdc	First Communion
+86675b39	Marriage
+af2d06c1	Pilgrimage
+b45d0f1f	You rose to {0}.
+c7d6ff2a	One more step along the road of the {0}.
+3bf47285	Your place in life
+8cba170b	Class: {0} → {1}
+5bcc0f09	Opened a workshop
+2bd82ee3	Began basic schooling
+f44457d2	Your skill and your earnings grow little by little.
+c2941727	It is time to think about whether to stay where you know or look for new chances.
+5b85043c	Wealth {0}+
+7d6b0a24	Can read and write
+cee27fa8	Your health took a serious turn for the worse.
+1f744ee8	Happiness +{0}
+4542c7b6	As a {0} you gain the experience life requires.
+e243a713	Finished the {0}'s Tour
+b6a996b7	In this period about {1} in {0} French babies were born into families of town {2}s and workers.
+47d4ebb5	Happiness −{0}
+2822be95	Health −{0}
+90be03ff	Wealth −{0}
+4776e7da	{0} starts working as a {1}.
+ac220eb3	Health +{0}
+5ee7678d	Learned to read as an adult
+3e20be48	Wealth {0} or more (now {1})
+f3f25b22	Needs: wealth {0} or more (now {1})
+aaddac6d	It is the person you stood up for in court {0} years ago.
+e4136b9a	{0} of four
+be39b72f	You had {1} children, and {2} are still with you.
+9bb2fb1b	{0} went before you.
+5514486c	Had you lived in {0}, in {2:month} {1}, at {3}, you might have been at “The siege of {4}”.
+9e0b86bb	Began working as a {0}
+c2d3baf5	A {0}'s marriage
+6b40b1c0	Wrote memoirs
+53f57266	Seminary
+27561877	You grow used to the family trade and closer to your parents.
+35bd7064	The family's means and the help of those around you will shape the road ahead.
+36831156	Health −{0}
+9d9d68ab	could you find a place there as a {0}, could you hold out in a great city where you know no one?
+a58e17d9	{0} has joined the watch committee.
+982ffd43	It is the body that decides who is a ‘suspect’ now.
+49872e05	As a {0}, you find this bitter news.
+332f0d4d	Knowledge {0}+
+8d100d0a	You adjust your work to the changes in your body and share your time with those still beside you.
+27bdab47	The traces of the choices you made remain in your life today.
+6d5ac745	Could read and write.
+e2043f40	Living as a {0}, you are now called ‘Monsieur’ (or ‘Madame’).
+bf9535c4	Someone born into a {0} family has taken a place among the {1}.
+1b24844a	Never came back from the battlefield.
+a6443193	A scene you have not seen yet is waiting (for someone in a particular trade
+25e922dd	age {0} or over).
+6b7b5747	You were born a {3} into a family of {1}s and workers in {0} ({2}).
+006f3668	Below average (about top {0}%)
+7b97a9d9	Running about
+06598603	Childhood
+196a329c	Mostly as expected
+6b79c6a4	sometimes better or worse
+488c335e	Learning a skill
+a63f0b91	Housing
+55bde583	Politics · revolution
+07c794e9	Marriage
+2a231155	Bonds
+e898e4b4	Made {0} in the guild
+834ed76d	Raising a {0}
+4b131c7c	As a {0}, you welcome this news.
+70218e00	As a {0}, you find this news hard to bear.
+88fb468e	For days you could not sleep.
+bdba560d	News came that {0} had been elected a deputy to the Convention.
+a1d8b51c	Economy
+02fc8184	As a {0}, this is news you have long waited for.
+cbccc23a	You feel like running out into the street.
+df7d2652	Only about {0}% of men of your generation could do that.
+e2a87df4	An apartment in town
+7578b62f	It is the person who was your patron and wrote to you {0} years ago.
+c95783b3	Bought national land
+db8fad61	The {0}'s favour
+d0ec8cfd	The marquis remembers
+496b346b	Old age
+345550f6	Made a will
+5714fc22	{0} married at {1}.
+1b2262ee	After the wedding Mass you held a small feast.
+eed81a55	Remarriage
+58416fce	{0} of three
+6e23504d	Divorce
+7ebc5902	Had you lived in {0}, in {2:month} {1}, at {3}, you might have been at “Live working or die fighting”.
+efcdfba4	Entered the seminary
+ef7f1481	With the family
+aa9f2cab	Exploring the neighbourhood
+9bed802c	Happiness and health rise little by little.
+612dc50a	You get to know familiar faces and voices, and learn about the world through play.
+d4372d37	Small reactions and encounters leave their mark on your ties with the family.
+7bdfe73f	Common
+ca68a1ce	After you choose, time stops until you have read the outcome.
+ffadf698	Once you have read the outcome, life goes on at {0}× speed.
+09fb1bbf	By estate
+080eb02a	Likes people
+8f94cfec	A child helping about the house
+5a2b7cdf	Learning letters
+ea01fa56	Playing with a {0}
+fcada07e	Catechism
+b66f6e4b	You keep learning at home and come to know how your family lives.
+9a67373b	Curiosity
+e6f6c87d	Religious experience
+94084ebd	By trade
+be491811	Earning money
+66ff4230	Study
+b4bec9ca	{0}s · romance
+7ef817e1	Rest
+30778bd3	As a {0}'s helper you gain the experience life requires.
+de8dfcc6	Must be able to read and write
+2217e814	Needs: must be able to read and write
+8aa8bd68	Good with hands
+5947e232	The outcome of a choice
+b1adeddc	Relations {0}+
+b8bc0fe7	The Revolution is under way.
+bfca928f	Politics and institutions are changing fast.
+72afcd3a	These are the early days of the Republic.
+00cf90da	War and political conflict weigh on society.
+22d939d5	It is the person you forgave {0} years ago, when they stole money as an {1}.
+648aec5b	It is the person whose forbidden books you hid {0} years ago.
+893fc240	Reading
+683f848c	This is the time of the Directory.
+b670d9bf	You lived in much the same circumstances as the family you were born into.
+f5fd6a36	Waiting for a chance to learn, you come to know how your family lives.
+5d911363	Reputation
+0c3c7d78	Word comes that {0} has emigrated across the border.
+22ddb2ea	Anyone tied to that name is now under suspicion.
+4d30a73d	Interest in commerce
+e916e332	{1} of {0}.
+9475c6c6	You were born into a {0} family, but now your days are the days of town workshops and back streets.
+d554fd6b	A letter came from {0}, your home.
+190e41e2	It is the person you lent the rent to {0} years ago.
+0cbf8042	The {1} {0} has granted your family a licence to sell tobacco.
+244e8bdc	It is a post selling tobacco, a state monopoly.
+7e1604af	The former Convention deputy {0} has been appointed {2} by the First Consul.
+2c15b16d	The revolutionaries are becoming Napoleon's officials now.
+172bc4ac	These are Napoleon's Hundred Days.
+60a3fecc	The marquis {0} has not forgotten your old ties as patron.
+8a12ff01	He arranged orders for you to supply the court.
+f69aaeee	With the Restoration, the marquis {0} has come back from exile.
+be7bb11c	In {0} it was a dangerous name; now it is a powerful one.
+9657bc18	The Restoration government has banished the former deputies who voted for the king's death.
+1bc4d43c	{0} has left for Brussels too.
+9f14b8b0	Throne and altar
+5a412993	Religious life
+727b9d1c	Seeing an old {0}
+2858e256	Your health recovers, but you earn less.
+35cbf01e	Only about {0}% of women of your generation could do that.
+b9408183	Continuing basic literacy lessons, you come to know how your family lives.
+76f21d96	{1} {2}'s management in {0}
+80fdd0b5	{0} of one child
+04586106	Had you been in the army, in {1:month} {0}, at {2}, you might have been at “The sun of Austerlitz”.
+a31b476e	Had you been in the army, in {1:month} {0}, at {2}, you might have been at “Crossing the Niemen”.
+21872671	Old {0} came to see you and talked about the day {1} years ago when you turned a blind eye to their poaching.
+d98e19e5	An old bond
+5a5e7e4f	“If it hadn't been for you then, I would not be here.”
+ea1923cd	Historical event
+47baba1b	Old {0} came to see you and talked about the day {1} years ago when you lent them the rent.
+384bfdf8	{0} has become mayor, appointed by the Emperor.
+33cffe93	It is the mayor who draws up the conscription lists.
+070e5cdd	It is the person who hid you {0} years ago when you fled conscription.
+5c1f8b8e	A word from the mayor
+cd174886	Mayor {0} let you know in advance the date of the auction of national property (old Church land).
+fce425cb	You bought a scrap of field cheaply.
+e340486e	{0} has been elected mayor of the new commune.
+50f00711	After the Concordat, Father {0} came back as {1}.
+ca95f2e2	It is the person you brought firewood and bread to {0} years ago.
+0aa8cd7d	It is the person you reported to the lord for poaching {0} years ago.
+d833eaf8	It is the person whose request for a loan you turned down {0} years ago.
+59b6d251	Prices leapt after the grain trade was freed, and the price of bread rose above a day's wage.
+6bfebf17	The priest's blessing
+2f3fdc2d	After Mass, Father {0} called you aside and blessed you.
+d3d1e877	He remembered that you had brought him firewood and bread.
+7a29db0e	A silent name
+53be06ab	No word at all came from {0}.
+8ed49a19	Whether the old days were forgotten, or the position demands caution, you cannot tell.
+a10161f0	It is the person whose poaching you turned a blind eye to {0} years ago.
+6ee441cd	Spent the winter sweeping chimneys in {0}
+d7c871be	It is the person you handed to the gendarmes {0} years ago when they dodged conscription.
+546b91fb	You distinguished yourself in battle and were commissioned from the ranks as a sub-lieutenant.
+9ea9cf1a	Before the Revolution this road was closed to commoners.
+1433203e	Married for love
+28b27613	Married in the village
+4600e936	You heard that {0} has become a {1} in the armies of the Republic.
+7a0695be	It is the deserter you handed to the gendarmes {0} years ago.
+89b8d006	It is the person you handed to the {1} {0} years ago.
+aca3d683	Path: painter
+b89a1b1f	Set up on own account
+ca2b8dbd	A {0} of the Republic
+0e1bd826	To {0}, fleeing debts
+4d5dcd9a	Left {0} for the countryside
+57efa901	Discharge
+c00923cc	The war over, you took off your uniform and came home to {0}.
+78ef4457	The house is just as it was, yet everything feels a little strange.
+06e8a528	Conscripted into the army
+f448cce4	Discharged and home again
+032fc090	Started at the village school
+796ed8bc	{0} did not bring up the past.
+d4acdc5e	Whether forgotten or waiting, you cannot tell.
+e8723ff8	It is the person you turned your back on in court {0} years ago.
+54df2e92	Started at the sisters' charity school
+52dbe5e2	Volunteered for the army
+4a96dc99	A letter from the {0}
+8133298d	{1:cap} {0} sent you a generous sum, saying he had not forgotten an old kindness.
+98f92708	It is the deserter you hid in your barn {0} years ago.
+4028850f	The mayor's revenge
+9c712e51	When the common land was divided, Mayor {0} gave you the poorest plot.
+116a0357	He had not forgotten what happened {0} years ago.
+9b8bcbe4	A second bad harvest in a row filled the streets with hungry people.

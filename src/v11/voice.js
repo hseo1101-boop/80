@@ -45,7 +45,7 @@ const VOICE = {
 function placeTokens(s, text) {
   if (typeof text !== 'string' || !text.includes('{')) return text;
   const home = s.place.replace(' 농촌', ' 시골');
-  return text.replaceAll('{고향}', home).replaceAll('{도시}', REGION_CITY[s.place] || s.place).replaceAll('{직업}', ['없음', '은퇴'].includes(s.job) ? '일꾼' : s.job);
+  return text.replaceAll('{고향}', L(home)).replaceAll('{도시}', L(REGION_CITY[s.place] || s.place)).replaceAll('{직업}', L(['없음', '은퇴'].includes(s.job) ? '일꾼' : s.job));
 }
 
 (() => {
@@ -136,6 +136,6 @@ function voiceText(s, d) {
   const v = VOICE[d.id]; if (!v) return d.text;
   const k = voiceKind(s), job = typeof jobKind === 'function' ? jobKind(s.job) : '';
   const role = typeof sceneRoleOf === 'function' ? sceneRoleOf(s) : null;
-  for (const key of [`role:${role}`, `job:${job}`, `${s.class}|${s.sex}|${k}`, `${s.class}|${s.sex}`, `${s.class}|${k}`, s.class, `${s.sex}|${k}`, s.sex, k]) if (v[key]) return v[key];
+  for (const key of [`role:${role}`, `job:${job}`, `${s.class}|${s.sex}|${k}`, `${s.class}|${s.sex}`, `${s.class}|${k}`, s.class, `${s.sex}|${k}`, s.sex, k]) if (v[key] && enHas(v[key])) return v[key];
   return d.text;
 }

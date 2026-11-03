@@ -106,6 +106,7 @@ for (const d of decisions) for (const c of d.choices) {
 // The yearly focus replaced these two filler decisions; the rest of the repeatable ones are rationed.
 const RETIRED_DECISIONS = new Set(['childcare','livelihood']);
 function decisionAllowed(s, d) {
+  if (!enDecision(d)) return false;
   if (typeof realBlocks === 'function' && realBlocks(s, d)) return false;
   if (typeof lifeFixBlocks === 'function' && lifeFixBlocks(s, d)) return false;
   // Abroad, home-town decisions and the ordinary career ladder wait.

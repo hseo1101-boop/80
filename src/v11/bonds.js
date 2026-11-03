@@ -76,11 +76,12 @@ function bondPick(s, spec = {}) {
 }
 function bondFill(s, d, text) {
   if (typeof text !== 'string') return text;
+  text = L(text);
   if (typeof placeTokens === 'function') text = placeTokens(s, text);
   if (!d?.when?.bond || !text.includes('{')) return text;
   const b = bondPick(s, d.when.bond);
-  return text.replaceAll('{옛사람}', b?.name || '옛 지인').replaceAll('{몇년}', b ? String(s.year - b.year) : '여러')
-    .replaceAll('{직함}', b ? bondTitle(s, b.fate) : '관리').replaceAll('{그일}', b?.memo || '그 일');
+  return text.replaceAll('{옛사람}', b ? nameOf(b.name) : L('옛 지인')).replaceAll('{몇년}', b ? String(s.year - b.year) : L('여러'))
+    .replaceAll('{직함}', L(b ? bondTitle(s, b.fate) : '관리')).replaceAll('{그일}', L(b?.memo || '그 일'));
 }
 function makeBond(s, spec) {
   const key = spec.key + (bondsOf(s).some(b => b.key === spec.key) ? s.year : '');

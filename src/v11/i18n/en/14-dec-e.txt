@@ -1,0 +1,234 @@
+# Ordinary decisions, part 5.
+2f0c6334	The baker shouted, and you were dragged off by the police. You spent months in prison. You could not bring yourself to ask how the family had managed meanwhile.
+05c18b19	Go to the parish relief office
+6394964d	You stood in line at the relief office and were given a bowl of soup and half a loaf.
+e94e1b3d	Sell something you treasure
+dbe495f7	You sold the silver spoons you were given as part of your dowry.
+6a108690	The list of suspects
+c149cd1c	A man from the section's watch committee has come. He wants you to sign a statement that a neighbour is a royalist. If you do not sign, you may come under suspicion yourself.
+d47bb8c2	Sign
+0ebf564a	Safety / a guilty conscience
+43241a85	You signed
+2a1ed08b	A few days later the neighbour was taken away. You could not look their children in the face.
+c9ddac1e	Say you know nothing
+fb3dabcf	Left alone / suspected yourself
+94d4b361	The committee man simply went away
+56d7515e	The neighbour never knew what you did, but you know.
+512bc8c8	Your own name went on the list
+26bd3c5c	You were watched for weeks and placed under house arrest for a while.
+34d0cd4d	After Thermidor
+47bf2c52	The Terror is over, and people released from prison have come home. In the street you meet eyes that remember those days.
+8b778e5e	Go and see that neighbour
+1c491a34	An apology / turned away
+f7782039	The door closed before you could speak
+badfb0b7	You tried to talk about the past, but that door did not open.
+ce3993be	The neighbour thanked you
+99614a0d	“I heard you would not sign back then.” The neighbour gripped your hand.
+9a0046f6	Let the past stay buried
+f907d03b	You carried on as if nothing had happened.
+8a52e66c	The moneylender
+3c7d0d44	You do not even have the money for seed. The moneylender in town offers to lend at high interest.
+c3a0f951	Borrow the money
+682c3421	You signed the IOU and took the money. The interest will grow frighteningly.
+d03216ab	Hold out without borrowing
+0d1e85a8	You sowed only half the seed. The harvest will be smaller.
+cf3f7329	You do not even have the rent. You have run out of things to pawn at the Mont-de-Piété, the public pawnshop. A moneylender in the lane offers to lend at high interest.
+5fcc1829	You have no money for the rent or for materials. A moneylender in {고향} offers to lend at high interest.
+0747b427	The day the debt falls due
+568407e1	The moneylender has come with a bailiff. The interest has doubled the principal.
+bc25192d	Pay
+5798b60a	Paid / land lost
+5edb9684	You just managed to pay
+ef81eb82	You scraped together everything you had and paid.
+926f0fd7	You handed over a field
+d48b8d75	The money fell short, and you had to give up a field.
+8957562d	Hold out, saying you cannot pay
+b14f1a67	A stay / debtors' prison
+4c25c848	You were given a few months' grace
+c3e48db2	The moneylender grudgingly agreed to wait.
+874c2186	You were locked up in debtors' prison
+ea8e7ce2	You were imprisoned until the debt was paid. Your family sold things to get you out.
+e03ed822	Slip away with your family
+b686ec98	You packed at night and left for another district. You can never go back.
+9496446a	A request for a loan
+7acc32b9	An old friend comes to you and pours out their troubles. They ask to borrow money, promising to pay it back within a few years.
+84b2c679	Lend it
+ec6d5097	You handed over the money without an IOU. Your friend bowed their head again and again.
+1a60d768	Your friend said they understood, but after that they rarely came by.
+ef27f137	The money you lent
+b792fd47	News comes of the friend who borrowed money from you.
+3a23dcf5	Go and talk to them
+bba982a6	Repaid with interest / partly / not at all
+24955fe6	Repaid with interest
+cb2581da	Your friend said that money had set them on their feet and paid it back with interest. You grew closer than ever.
+1dc9e309	You got only half back
+6678ca50	Your friend said times were hard for them too. You decided to let the rest go.
+314e2e10	You never got it back
+e2ccba95	Your friend had already left for another district.
+6fab1eba	Laid up with illness
+ea3dd514	The fever will not break and the cough will not stop. You must decide whether to call the doctor, go to the local bonesetter or the herb woman, or go and pray to a saint.
+afe965e3	Call the doctor
+4fbbe12a	Recovery / weaker after bleeding
+bc257685	You recovered
+0dbc246d	With the medicine and diet the doctor prescribed, you were up in a few weeks.
+3a56336f	You were weaker after the bleeding
+9a6ba4ef	The doctor bled you three times. The fever broke, but for a while you could hardly stand.
+5f73e216	Go to the herb woman
+32752ecd	Recovery / no effect
+7b3bf862	You got better
+0d0a618f	You drank a bitter herbal brew and sweated, and the fever went down.
+2ac7ee12	It did no good
+353e88d2	You were ill for several more weeks.
+f0d057f4	Go and pray at a saint's spring
+7c68139c	Comfort of mind / worn out on the road
+83529d9a	Your mind was eased
+730a96c6	You drank from the spring and lit a candle. Strangely, your strength began to come back little by little.
+1b45ab90	The road wore you out further
+3d922b03	Walking a long road while sick left you weaker.
+914dedac	The fever will not break and the cough will not stop. A famous doctor would bleed and purge you and charge a great deal. The household chaplain suggests having the holy oils ready.
+38f841a3	The fever will not break and the cough will not stop. The family doctor recommends bleeding, and the apothecary sells quinine. Your mother has put a medal of a woman saint under your pillow.
+824de5f6	The fever will not break and the cough will not stop. They say that at the Hôtel-Dieu two or three patients share a bed. The doctor is dear, the herb seller in the lane is cheap, and the church of Sainte-Geneviève is close.
+86daeef0	The fever will not break and the cough will not stop. The town hospital is free, but rumour says those who go in do not come out. The doctor is dear, the herb seller is cheap, and the church is close.
+8351b946	The fever will not break and the cough will not stop. There is no doctor in the village, and the surgeon in town is half a day away. The bonesetter and the herb woman are close, and the water of the saint's spring in the woods is said to be good for fevers.
+6755eb09	Before the birth
+d160cfdc	The child will soon be born. You must decide whether to call the village midwife, a surgeon-accoucheur from town, or leave it to your mother and the neighbour women.
+1ba11afb	Call the midwife
+9d2ed860	An easy birth / a hard labour
+d60deea6	An easy birth
+b138a29f	A healthy child was born into the midwife's hands.
+d53d9334	It was a hard labour
+c46de6e2	It was a long night. The child lived, and you could not get up for some time.
+13055429	Call the accoucheur
+f60aa75c	An easy birth / forceps
+6f0e09a5	The birth went safely
+2dc3c562	The accoucheur delivered the child. It cost dear, but it was a relief.
+bfe1417b	Forceps were needed
+fcea87b4	The child was breech, and the accoucheur used forceps. Both of you lived, but the pain lasted a long time.
+27ce6559	Leave it to your mother and the neighbour women
+139074e0	An easy birth / danger
+8a49a51f	The women delivered the child
+d595c60d	Water was boiled in the kitchen and the neighbour women stayed by your side all night.
+f41a8918	There was a dangerous moment
+0d920999	You lost a lot of blood. The child lived, but you were in bed for weeks.
+1600a6a4	The child will soon be born. You must decide whether to call the district midwife, go to the lying-in ward of the Hôtel-Dieu, or leave it to your mother and the neighbour women.
+ec5f5aa4	The child will soon be born. You must decide whether to call the local midwife, a surgeon-accoucheur in {고향}, or leave it to your mother and the neighbour women.
+aa12af44	Drink at the tavern
+2f958193	More and more days you stop at the tavern after work. These days your hands shake even in the morning.
+9c14163b	Give up drink
+d8a8e96e	Quit / back to the bottle
+aef0b8d0	You gave up drink
+038b78ca	The first weeks were hard, but now you eat supper with your family.
+40af0a9a	You went back to it
+3e0dc393	You held out for a few months, then your friends dragged you back to a seat at the tavern.
+d796e815	Go on as you are
+df4c1dcc	The hours at the tavern are your only pleasure.
+56e03e69	More and more often you and your workmates take ‘Saint Monday’ off as well. Your name grows longer on the tavern slate, and these days your hands shake even in the morning.
+56c9eeb8	Every market day you come home late from the tavern in town. Some days half the money from the livestock is gone. These days your hands shake even in the morning.
+c159ddf9	You cannot sleep now without the brandy you learned to drink in barracks. These days your hands shake even in the morning.
+c6be44e3	You drink more and more with business contacts at the café. There are days when the figures on the bill come out wrong.
+416530a8	The drink you take every evening at the café over the newspapers has gone from one glass to five. These days the hand that holds your pen shakes.
+0e053ced	Injured at work
+77089036	You were badly hurt at work. Rest and your wages stop; keep working and your body may suffer worse.
+4f9f908a	Rest a few weeks
+a4bafaef	Your body healed, but the debts grew meanwhile.
+7b665d86	Go to the bonesetter
+2963c4f3	Set right / a limp for life
+27818cee	The bone was set right
+8f02152a	The bonesetter set the bone in one go. It hurt enough to make you scream, but it healed.
+d7d2cb3d	You were left with a limp for life
+90461b1d	The bone knitted crooked.
+95fed182	Grit your teeth and keep working
+96b86ce8	You worked through it with clenched teeth. That injury ached into your old age.
+a2ee1745	You were badly hurt in the workshop: your hand was caught in the machine (the loom). Rest and your wages stop, and masters do not wait long for an injured journeyman.
+047718cc	At harvest you cut your leg badly with the scythe. Rest and the field work piles up; keep working and the wound may get worse.
+060acd63	You badly hurt your back unloading goods in the warehouse. Close the shop and the regulars drift away; keep standing and you may make it worse.
+9feeaf7c	A suit against the powerful
+c606e216	A client with no influence asks you to take a case against a local magnate. Win and you will make a name, but you will make enemies too.
+4f7377e1	Take the case
+35242ac9	In court you cross-examined the magnate's witness. The public gallery stirred.
+abc25f85	You decided to take only safe briefs.
+7c0ecb7e	The censor's warning
+940ae8b9	The police have sent a warning over an article in the last issue. Next time, they say, the paper will be suspended.
+5b0a6839	Keep the same tone
+e6907776	The next issue spoke with the same voice. Readers multiplied, and so did the fines.
+fb21c959	Tone it down
+546da70f	You cut the political articles and ran more serialised novels.
+20fbc666	A posting far away
+d9eed55e	You have been offered a step in rank if you will go to the army in Spain (or the colonies). It is notorious for guerrilla war and fevers.
+2ad86df2	Accept the posting
+95740e33	You left for the distant garrison. Promotion was quick, but you lost many comrades.
+e6cfc735	Stay with your present regiment
+9cd0736c	You stayed with the regiment you know.
+b266fe33	Priority of discovery
+16cf6002	Another scholar has presented to the Academy, under his own name, a result you found first.
+4901f1d6	Refute him publicly
+5da49387	You rebutted him at a meeting, holding your dated notebooks. The learned world split in two.
+5d4103fa	Move quietly on to your next work
+87cf3e18	You decided to spend the time on the next problem rather than on fighting.
+6e561d89	A commission that pays
+5b8ee917	A wealthy merchant and his wife commission a portrait. For a few months there will be no time for the great history painting.
+1925b5f6	Paint the portrait
+8d191a01	The couple were pleased with the picture and introduced you to their friends.
+4c4188f4	Stick with the history painting
+47ea4216	You stood before the great canvas with empty pockets.
+e5e466b5	An offer of partnership
+cbf25aa6	A rival merchant proposes joining forces. Your capital would double, but decisions would be made together.
+cb27fd4b	Go into partnership
+64ed99cc	You merged the two shops. Your connections grew.
+cffd30b3	Go it alone
+e0c69678	You run the shop your own way.
+49340757	Poor parishioners
+e5fa8922	In a bad year more and more parishioners say they cannot pay the tithe or the Mass offering. The bishop's office presses you to make up the income.
+300f92f5	Excuse them the offerings
+778399ab	The parishioners began calling you ‘our priest’.
+5f79e0cf	Collect according to the rules
+06ae6b35	You won the bishop's confidence, but the church is a little emptier.
+10c1ade4	Sent to the hospital
+dc7da6cd	The convent has decided to send nursing sisters to the town hospital, where an epidemic is raging.
+a3a936e5	Volunteer
+b06ad4f2	You went between the beds, caring for the sick.
+ec0088ad	Stay in the convent
+5741549c	You took on the children's lessons.
+8ec02be4	A new treatment
+5b9c3f65	A new method has been introduced in Paris (cowpox vaccination; later, Laennec's stethoscope). Your colleagues do not trust it yet.
+3cd9df9f	Use the new method
+b76e655a	Patients were suspicious at first, but the results spoke for themselves.
+0334fb47	Keep to the methods you know
+9cff629f	You held to proven ways.
+856d9fd2	The workers combine
+f4e8b817	The workers have downed tools, demanding higher pay. Combinations of workers are forbidden by law.
+5ba96a6b	Negotiate with their spokesmen
+d277bf98	You raised wages a little and work started again.
+ab6cfd52	Call the gendarmes
+4f56979b	The ringleaders were taken away. The works is running again, but the mood is icy.
+5f6cc958	An envelope
+60ff574f	Someone holds out an envelope, asking you to hurry through their papers of exemption from conscription.
+f7d004ca	Take it
+b30b41ee	The envelope was thick. That night you slept badly.
+87d2ebf9	Give it back
+b93f4d8e	You dealt with the papers in their turn.
+7cb7e904	Report it to your superior
+2efa13cd	Your superior began to take notice of you.
+af5caa44	Trouble with the priest
+e4a3de87	The parish priest wants more catechism lessons and reading taught only from the prayer book.
+5a58dffe	Do as the priest wishes
+95fd1d15	The classroom grew quiet.
+20cd5abd	Teach your own way
+4d91a5e3	The children learn to read from newspapers and maps. The priest mentioned you in his sermon.
+647a304b	A script stopped by the censor
+94f24b93	A few lines of the new play have been stopped by the censor. The theatre manager wants to change them.
+2d41f3bf	Change the lines
+59d8eb8b	The play went on without trouble.
+0f70e21a	Perform with the original lines
+236d7f94	The audience gave a standing ovation, and the next day the play was banned.
+a9bf5665	A dangerous guest
+8d9854d1	A writer out of favour with the government wants to come to your salon.
+46f0199d	Invite him
+9ccf5bf6	That night the conversation was hotter than ever. The next day a police informer was loitering outside the house.
+3b00490c	The salon went on quietly.
+01529b94	Your name or anonymous?
+dccc13b2	Your new book is almost finished. Some passages are politically sensitive.
+4a03848a	Publish under your own name
+123c17c2	The book caused a stir, and your name became known with it.
+9b3d9721	Publish anonymously
+da342640	The book sold, but nobody knows you wrote it.

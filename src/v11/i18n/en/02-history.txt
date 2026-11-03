@@ -1,0 +1,57 @@
+# Historical events 1756–1815 and their effects on you.
+19405097	Napoleon abdicates and the Bourbon monarchy is restored.
+ad7baa7d	The Estates-General meets at Versailles, and political talk spreads.
+3e9f3cd8	Debates about politics and institutions come close to home.
+ec216122	In Paris, the Bastille prison falls.
+35c2e53d	The turmoil and the news from the streets reach straight into daily life.
+88c46d52	The National Assembly declares the abolition of feudal privileges. Settling the actual rights will take years of further change.
+113e5483	You trade news with the neighbours about how dues and rights will change.
+4f5b4965	The family takes a fresh look at its income and its seigneurial rights.
+4012bd7d	The new administrative divisions, the départements, come into force.
+d357f072	The royal family's attempt to flee to Varennes fails.
+53e10b61	France declares war on Austria.
+fa5886a3	News of war and mobilisation weighs on work and on the household purse.
+df148f13	The monarchy is abolished and the First French Republic begins.
+73ccec58	Louis XVI is executed.
+279f03e9	War, political tension and prices bear down on daily life.
+b1415f13	Getting hold of the necessities becomes harder.
+dd23b0a5	Fear grows over old rank and property.
+9c929868	The Thermidorian Reaction turns revolutionary politics in a new direction.
+699e3d16	The Directory takes office.
+f53df44a	After the coup of Brumaire, the Consulate is established.
+4f0b872d	Napoleon is crowned Emperor.
+f54795db	Napoleon returns, and the Hundred Days begin.
+1d9c1bb5	Napoleon is defeated at the Battle of Waterloo.
+0baa26f4	The Bourbon monarchy is restored once more.
+adf006f2	France declares war on Britain, and the Seven Years' War begins.
+f73b832c	With the news of war comes talk of heavier taxes.
+b199570f	At Versailles, Damiens stabs King Louis XV with a knife.
+ccf97e85	Quebec, in North America, falls to the British.
+cd5f2a27	In Toulouse the Protestant Jean Calas is executed. Voltaire declares him innocent and pleads for tolerance.
+14d47209	For Protestant families this news does not feel like someone else's affair.
+322dadcb	The Treaty of Paris ends the Seven Years' War. France loses Canada and most of its colonies.
+4ac0d348	By royal decree the Jesuits are dissolved in France. The schools they ran pass into other hands.
+82b7f052	Stanisław, Duke of Lorraine, dies, and Lorraine becomes part of the Kingdom of France.
+2d5e3db1	Genoa cedes the island of Corsica to France.
+d76b8a54	The Dauphin Louis marries Marie Antoinette of Austria.
+24568fa4	The streets buzz with news of the celebration fireworks.
+f233018c	Chancellor Maupeou dissolves the parlements and pushes through a reform of the courts.
+b5e9ea32	A shadow of worry falls over families of the law.
+2662a8e9	Louis XV dies of smallpox, and Louis XVI comes to the throne.
+94c41f53	After the grain trade is freed, the price of bread soars and riots break out across the country: the Flour War.
+3d4aa647	Bread is hard to afford, and you cut back on meals.
+beb804f0	Turgot, the reforming Controller-General of Finances, is dismissed.
+ad68cd91	France allies with the United States and enters the War of Independence.
+c5929bc9	Munitions and merchant ships crowd the Atlantic ports.
+a1788c1e	The Montgolfier brothers' hot-air balloon carries men through the sky over Paris.
+eedf9d5d	Crowds gather to see the balloon that flies.
+6f9d2224	The Treaty of Versailles ends the American War of Independence. France won, but the kingdom's debt has swollen.
+96dc4ea2	Beaumarchais's comedy The Marriage of Figaro opens and is talked of as a satire on the nobility.
+7a50e2ea	Cardinal de Rohan is arrested over the Diamond Necklace Affair, and rumours about the queen spread.
+5bd03909	An Assembly of Notables is called to solve the financial crisis.
+966c8844	A tremendous hailstorm sweeps the fields of the north and centre.
+f84037d7	A whole year's harvest was ruined in a single night.
+ee1982a3	People worry that the price of grain will rise.
+d18de2d4	The king announces that he will summon the Estates-General next May.
+8074cb58	An unusually harsh winter freezes the Seine, and the price of bread soars.
+93f8b873	A winter in which firewood and bread are hard to come by.

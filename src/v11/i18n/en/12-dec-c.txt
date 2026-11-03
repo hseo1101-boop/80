@@ -1,0 +1,209 @@
+# Ordinary decisions, part 3.
+c0b9381c	The price of bread rises by the day. Women lead the crowd to the granary, shouting for it to be sold at the ‘just price’.
+d981c15f	Go to the granary with them
+823fbb4b	Cheap bread / arrest
+39795f39	You bought grain at a just price
+b2133aad	In the end the merchant handed over his wheat at the price the crowd set.
+eeb9c403	You were seized by the mounted constabulary
+61f4ca28	You were held for a few days and then released.
+fe9b9b83	Hold out on fewer meals
+5ac95c68	You held out by putting less bread in the soup.
+81f1ee05	The master's examination
+ba99761b	To become a master in the guild you must make a masterpiece, have it judged, and pay a large entry fee. It is far easier for a master's son or son-in-law.
+62d2e777	Make a masterpiece and submit it
+478770a0	Pass / fail
+72054657	You were made a master
+deec4893	The examiners nodded. Now you can open your own workshop.
+52022cc8	You failed the examination
+02e7446d	They picked on a tiny flaw. You lost the entry fee for nothing.
+d9f64ae0	Stay a journeyman for life
+c0239169	You work in someone else's workshop for wages.
+2b70d73f	Open a workshop of your own?
+bd3d7c5c	The guilds have been abolished, and anyone who pays the licence tax can open a shop. There are just as many more competitors.
+48fe98da	Open a workshop
+7df00619	Thriving / struggling
+720fea4b	You won regular customers
+19a22357	You hung up a small sign. You even took on an apprentice.
+7e1d6118	Only the debts grew
+5bfeb6b2	There were too few customers, and you closed the shop the following year.
+f454721b	Keep working in someone else's workshop
+b02e4a45	You chose steady wages.
+1f8de507	Send the baby to a wet nurse in the country?
+167b8000	Many town households, busy with work, put their newborns out to wet nurses in the country. It costs money, and you will not see the child for several years.
+de396004	Put the baby out to a country wet nurse
+f9b370d7	You sent the baby off in a cart. You can keep working, but your heart is heavy.
+d401dd0a	Raise the baby yourself at home
+bd5ebb65	You cut back on work and raise the child at your side.
+812a0a96	The Continental Blockade
+3a6eeb3a	Napoleon has forbidden trade with Britain. The price of sugar and coffee is soaring, and there is talk of smuggling in the ports.
+1560e70f	Bring in smuggled goods
+d9f61a8d	A fortune / caught
+46549dd4	You made a fortune
+9646b86f	Under cover of darkness you brought in English goods. Your strongbox grew heavy.
+7786426b	You were caught by the customs men
+bb6c6033	The goods were seized and you were fined.
+23e3ac55	Invest in a new business such as beet sugar
+da782f9a	You bought a share in a beet-sugar works of the kind the government encourages.
+85c4e6ca	Keep to the rules and hold out
+cfe4ac6d	Trade fell off, but your conscience is clear.
+a8ca1f0c	How to pass on your property
+33e21b7f	It is time to call the notary and make your will. Since the Civil Code, children must share alike, but they say there are ways to leave more to the eldest.
+df7b011d	Divide it equally among your children
+20825559	You left everyone the same share. The land will be cut into small pieces, but there will be no quarrels.
+55cd7da0	The house and land to the eldest, the rest in money
+280cd560	You decided to keep the family home together. The younger ones are hurt.
+3d503cd8	Leave part to the parish and the poor of the neighbourhood
+e4a9db29	You cut the children's shares a little and promised a gift to charity.
+0b0697b6	It is time to call the notary and make your will. The Revolution abolished primogeniture. Divide the château and the estates equally among the children, and the family's lands will be in pieces within a generation.
+d81b3f49	It is time to call the notary and make your will. You weigh how to divide the shop, the government bonds and the two rented houses, and whether, within the Civil Code's reserved shares, you can leave more to the eldest.
+be6a4644	It is time to call the notary and make your will. Divide the land equally among the children as the Civil Code says, and each share will be the size of a palm. Many families give the house and land to the eldest and have them pay the others in money.
+f3d97737	Move in with one of your children?
+66930718	Running a household alone has become too much. One of your children asks you to come and live with them. There is also talk of handing over the land and house in advance.
+9a570442	Hand over your property and move in with your child
+50c47183	You signed a maintenance contract and moved into your child's house. The grandchildren are always around you.
+9babc0bc	Live alone in your own house
+e601828d	You decided to stay in the house you know. A neighbour looks in from time to time.
+ee4164cb	Running the fields and the household alone has become too much. One of your children proposes a ‘gift between the living’: a notarised contract in which you hand over the land and house now, and in return they feed and clothe you until you die.
+3efa1122	Running a household alone has become too much. One of your children asks you to move into their cramped rented room. There is talk that in return you should hand over your remaining goods and tools.
+9ccd94b6	Running the household alone has become too much. One of your children asks you to come and live with them. The notary hints that you could also sell the house for a life annuity, en viager, to provide for your old age.
+39a99758	Marry again?
+0a522ff5	Time has passed since you lost your spouse. A neighbour offers to introduce you to someone in the same situation.
+b205cd57	Meet them
+d6f743fd	You remarried quietly. The village young people banged pots under your windows at night to mock you: a charivari.
+73cf3795	Live alone
+5365a6d1	You decided to live alone with your memories.
+c92b80af	A year has passed since you lost your husband. A neighbour offers to introduce you to a widower who has lost his wife. If you remarry, the guardianship of the children and the share your first husband left will have to be settled again.
+bfab447c	A year has passed since you lost your wife. Saying you need someone to look after the children, a neighbour offers to introduce you to a widow of the village.
+3ceda1f3	Write down the story of your life?
+7fa028a5	The young ask for stories of the old days. Few people are left who could put on record the times you lived through.
+82292c3d	Write it in the family book, the livre de raison
+07bd657b	Every evening by candlelight you wrote down the years gone by.
+dc3edd59	Only tell it aloud
+27fbe3e0	You sat the grandchildren on your knee and told them stories of the old days.
+d1ef0664	Go on pilgrimage?
+31bb460e	You want to visit a famous shrine before you grow old. It is a road of several weeks on foot.
+abeccb94	Leaning on a stick, you made the journey to the shrine. Your body is worn out, but your heart is light.
+92b89297	Pray in the village church
+fa0be21d	You prayed quietly in the place you know.
+e71c8b3d	Look for other work
+26f0a53f	Stay in Paris
+91380f13	Study law?
+31faf8cc	Study a few years in a faculty of law and buy a degree, and you can become an advocate. It costs money and you need connections, but in these times the law is the short road to getting on.
+929d9417	Enrol in the faculty of law
+b40feb46	Start as a law clerk / stopped by the fees
+33ddf9db	You went into a law office
+8166a2a9	You took your degree at Reims and began as a clerk in a notary's office. You stay up nights copying your first case papers.
+10aadce5	You could not meet the fees
+9eca5858	You gave up your studies after two years. Still, you learned how to read a law code.
+cc5600b1	Carry on the family's work
+2398a502	You gave up the dream of the law.
+4152677f	Could you live by writing?
+15e99f56	A print shop is looking for a proofreader. In a city awash with pamphlets and newspapers, a road is opening for people who write.
+a0745826	Go into the print shop as a proofreader
+5a4113b9	In a print shop that smells of ink you sort type and correct other people's writing. You wait for the day your own will be printed.
+a7387912	Keep your present work
+0f3002aa	You chose a steady living.
+d329bda9	A commission
+d7d6bc98	As a son of the family you can enter the king's army as a sub-lieutenant. Since the ordinance of 1781, an officer must prove four generations of nobility.
+bf622569	Join a regiment as a sub-lieutenant
+28c8265e	You put on the white uniform and were posted to your regiment.
+820a9d38	Look after the family estate
+028a88a7	You left the soldier's road to another brother.
+d706c080	You put on the white uniform and were posted to your regiment. At the artillery school examination, the examiner was the Academy's young mathematician, Laplace.
+d3fe1735	The military school of Saint-Cyr
+2b25a54d	The special military school the Emperor founded at Saint-Cyr is taking cadets. There are fees to pay, but graduates are commissioned as sub-lieutenants straight away.
+042511a7	Sit the entrance examination
+02a8cbcc	You passed
+fa073b05	For two years you learned drill, gunnery and mathematics, and you were commissioned as a sub-lieutenant.
+bcf6b55c	You failed
+abdb4571	You failed the mathematics paper.
+50eb7a7d	Take another road
+7319995e	You decided not to put on a uniform.
+42b6bb4d	A gift for mathematics
+9d791c59	Your teacher says your mathematics is out of the ordinary and urges you towards a scholar's life. After 1794 you could sit the entrance examination for the new École polytechnique.
+330df658	Follow the scholar's road
+ff058336	Start as a mathematics teacher / no opening
+c0d37439	You became a mathematics teacher
+bee58221	Teaching mathematics in a preparatory class for the military schools, you began writing a paper to send to the Academy.
+d3dd82eb	You found no patron
+7fe55ca4	You found no post. Every night you read mathematics books alone.
+40b3b34b	Concentrate on earning a living
+6758a9fe	You buried your gift in your heart.
+0db7d709	A painter's studio
+dde6ccdf	A well-known painter's studio is taking pupils. For years you would grind colours and draw plaster casts, but one day you might hang a picture at the Salon.
+18479b25	Join as a pupil
+426d44fe	You spend the day in a corner of the studio drawing plaster casts. The master rarely gives praise.
+54c25fe6	Look for practical work
+593db97d	You put the sketchbook away in a drawer.
+41ec2e00	A place as a shop assistant
+5f09a057	A wholesale merchant is looking for an assistant who is quick with figures. Better still if you can keep books and write letters.
+b6975c07	Go in as an assistant
+bb3c4ef2	Behind the counter you serve customers and keep the books. You dream of the day you open a shop of your own.
+182d6c97	You chose the work you know.
+426a69d4	Enter a convent?
+397f9dd9	The mother superior has taken notice of you. A convent is not only for prayer; it runs schools and hospitals too. She says they would take you even with a small dowry.
+46e4c417	Become a novice
+8545903f	You covered your hair and put on the novice's habit. Your days are filled with dawn prayers and teaching children.
+82981fd2	Stay in the world
+3b8ed287	You took your leave of the mother superior as you went out through the convent gate.
+d448efb9	The surgeon's road
+ebc7b352	Surgeons were long looked down on, bound in one guild with the barbers, but the army and the hospitals are always short of them. From 1794 medicine is taught at the national schools of health too.
+3803f47b	Become a surgeon's apprentice
+51f4751f	Going back and forth between the dissecting room and the hospital wards, you learn, starting with how to bind a dressing. It took months to get used to the smell of blood.
+08c6a8e9	Do other work
+e8519ec4	Medicine will have to wait for another life.
+82f06e5f	Set up a works?
+3bdc3d26	More and more workshops bring in English-style spinning machines and looms and hire people to run them. It needs capital, but if it goes well it means a fortune.
+d40f7448	Bring in machines and open a works
+e3592fc0	You started with a few second-hand spinning machines and ten workers. Every time a machine stops, your heart sinks.
+43691365	Work for someone else
+196bdfbb	You decided to leave the risk to others.
+65899a56	A place as a government clerk
+46e78106	Every new département and ministry needs people to write documents. They say that if your handwriting is neat, you can get in.
+9e6f5466	Go into government service
+d8b4ea7b	Wearing sleeve protectors, you copy official letters all day. The pay is small, but it comes without fail.
+ac433bbd	Do your present work
+151fae53	You declined the piles of paper.
+5a1b9b6d	Teach at a school?
+906b3c0b	The village school has no teacher. Teaching reading and writing, the catechism and sums, you would collect a little fee from each family. After 1833 the commune pays a salary too.
+8ea94bd9	Become a teacher
+d6ec2092	You met the children in a classroom with nothing but wooden benches and a few slates. In winter each child brings a log for the stove.
+425e296e	You decided that teaching children was not for you.
+01c0a590	A post as assistant teacher has come up at the district school. Teaching reading and writing, the catechism and sums, you would be paid a small salary by the city.
+3ef7d57d	A post as assistant teacher has come up at a school in {고향}. Teaching reading and writing, the catechism and sums, you would be paid a small salary.
+03ad8312	Go on the stage?
+e080541e	A company of strolling players passing through is looking for members. Actors are excommunicated by the Church, and your parents would be up in arms, but applause is sweet.
+a4f7715c	Go with the company
+a794f174	You wander from town to town in a wagon. You forgot your lines at your first performance, but the audience laughed kindly.
+9be34526	Listen to your parents
+8141f296	You watched the players' wagon leave.
+3cc52b2f	Open a salon?
+cadec9cb	A ‘salon’, where once a week you open your house to writers, politicians and scholars, is one of the few roads by which a woman of this age reaches the public world.
+412dedab	Open your doors every Tuesday
+617982ec	Only four guests came to the first gathering. Once the conversation warmed up, it went on past midnight.
+5a9098c2	Live quietly
+3abaa9c7	You kept the house a space for the family alone.
+d9271351	Try writing a book?
+0e12827a	You could show the manuscripts piling up in your drawer to a publisher. Most come back, but now and then a book shakes the world.
+f378c0ab	Send the manuscript
+88c4844b	The publisher said it was “not bad”. You agreed to print three hundred copies at your own expense.
+c3857bb6	Leave the manuscript in the drawer
+7118aacb	You thought the time was not yet right.
+cb945736	Become a midwife?
+b8525c10	The village's old midwife is looking for someone to take her place. Childbirth is women's business, and the midwife is one of the most trusted people in the village.
+3ba32237	Follow the midwife and learn
+a8d4a151	Called out in the middle of the night, you boiled water and delivered a baby. At its first cry, you wept.
+584be828	You did not feel able to carry that weight.
+92d3eeac	The district's old midwife is looking for someone to take her place. With a certificate from the city school of midwifery you can become a licensed midwife.
+6df1d07c	The old midwife of {고향} is looking for someone to take her place. Childbirth is women's business, and the midwife is one of the most trusted people in the neighbourhood.
+88abc5f1	Apprenticed to a dressmaker
+f2e79d25	A shop selling ribbons, lace and hats is looking for an apprentice seamstress. Quick hands and a good eye could mean a shop of your own one day.
+ddde35ae	Go in as an apprentice
+20147a68	You pricked your fingers on the needle many times. The mistress said your ribbon bows were pretty.
+7e4ed831	You decided to sew only at home.
+776a6380	Go to sea?
+dcc0533f	Merchant ships and fishing boats come and go in the harbour. Sign on as a ship's boy and you could go to the ends of the earth, but many never come back.
+e0e3f565	Go aboard
+66da6fa5	You were seasick for the whole of your first voyage. The boatswain laughed and taught you how to tie knots.
+c3396ecc	Stay ashore
+caa6643a	You decided to live with only the sound of the waves.

@@ -1,0 +1,200 @@
+# Everyday events, part 1.
+20942596	You went to a small gathering at a neighbour's house and listened to the grown-ups talk.
+55435984	Saint Crispin's Day
+77921643	Injured at work
+87852965	A baby was born to relatives, and the whole family gathered to drink to the good news.
+89523462	Glass shop window
+90170145	Several months of back pay arrived all at once. You sent part of it home.
+90800370	Bridal chest
+98524428	When the parish church bell rang, you watched the people around you stop to pray.
+cd142a5d	A new friend
+641e1c21	You played marbles with the child from the house at the end of the lane and quickly became friends. You played until sundown and both got a scolding.
+b64f2d3d	A little praise
+76a0b282	A grown-up praised you for running an errand to the baker's without getting a single coin wrong. You ran home clutching the change.
+d106acef	The joy of learning
+1fb21b8d	The priest (or an older neighbour) taught you words you had never heard and stories of faraway lands. Lying in bed that night, you went over them again.
+366b373a	A family holiday
+3ea72d9b	The whole family put on their best clothes and went to the fair. You were given a piece of gingerbread.
+be951fe0	Chores
+d69d1d1e	You fetched water, fed the hens and swept the floor. The list of jobs grows a little every day.
+41403ce5	The turn of the seasons
+2b4b3514	The leaves on the tree outside the window changed colour, and the grown-ups were busy getting ready for the season ahead. Different things were on sale on market day.
+e7ce87c9	Visiting the neighbours
+591939fe	You went with your family to pay a call on the neighbours. While the grown-ups talked you had to sit still, and you were itching to move.
+7139f4e5	Simple games
+b9bbd085	You rolled hoops and played hide-and-seek with the children of the street. Always the same games, and you never tire of them.
+df2f3c9c	A mild illness
+cc617d8d	A cough and fever kept you in bed for three days. You could barely get down the thin soup your mother made.
+8ef68ae5	A quarrel with a friend
+4c6fbfb1	You argued with your best friend over the rules of a game. For days you pretended not to see each other in the lane.
+a37be332	Harder times at home
+32f53e1f	Your father's work dried up and the bread on the supper table grew thinner. The grown-ups talked in low voices late into the night.
+3dc200e7	Something lost
+dcef36a3	You lost your beloved wooden top somewhere. You searched the whole lane but never found it.
+2ce80526	Work well done
+8f4dd25c	You finished the job early and without a flaw. The master said the next job would be yours too.
+6d43e289	A welcome letter
+f4d83f6f	A letter came from an old friend who had gone far away. You had a neighbour who could read go through it for you again and again.
+2faab496	A useful meeting
+f083a472	At the market tavern you happened to meet a pedlar, who told you about work and prices in other parts of the country.
+fd0f9ae6	Market dealings
+b98e4267	On market day you sold your goods for a better price than you expected. On the way home you bought a few sweets for the family.
+4dd8f25a	Family joy
+cb40553c	An ordinary day
+98b4a00f	You rose at the dawn bell, worked, ate soup and bread for supper, and went to bed early to save lamp oil.
+dc48e3d9	To the market
+75b7a944	You walked round the market asking the price of wheat and salt. Everyone grumbled that prices had gone up again.
+86aca090	A talk with the neighbours
+aea65b58	You talked with the neighbours at the well for a long while: whose wedding, whose lawsuit, and the latest from town.
+15114e0d	Putting the house in order
+68bdebf0	Before winter you patched the leaks in the roof and counted the stored grain, oil and firewood one by one.
+377c48f9	A day at work
+58b3ef37	Work was frantic all day. You made do with a piece of bread for lunch, eaten standing.
+72ff552b	An unexpected expense
+382bc312	A shoe lost its sole and a pot sprang a hole. Mending both at once ate into your savings.
+f437ec80	Worn out
+b0ca006b	After weeks of work without rest your body feels heavy, and sleep no longer takes the tiredness away.
+02e2de19	Less work
+07bbd093	A regular order stopped and work grew scarce. It looks as if you will have to go looking for something else.
+ae4fcf5b	A misunderstanding
+dc16af7b	A trifling remark was passed on wrongly, and things grew awkward with someone close to you. Meeting outside the church, you only nodded and walked on.
+e9858009	Aches and chills
+9b7f1e6e	Chills and aches kept you in bed for three days. The work piled up in the meantime.
+334b312a	Hard times in wartime
+5721c79a	War and unsteady prices made the necessities harder to come by.
+8d604f20	Farm work
+91da562c	You weeded, mended fences and tended the animals as the season demanded. There is no end to farm work.
+ad52e6a2	Family news
+aa1a1d2a	You heard news about relatives and the family's property.
+9f255642	A familiar voice
+16e0a64b	You fell asleep peacefully to the voice of a grown-up close to you.
+923447fc	A day indoors
+f2c94ef5	You spent the day watching the sounds and movements around you.
+b2764056	A restless night
+f444565b	You could not sleep soundly and needed looking after.
+d3a8ae4e	Wheat harvest
+6d77b8ed	You swung the sickle from sunrise. At midday you ate bread, onions and watered wine in the shade of the field bank. The harvest is good this year.
+42e7a2b6	Smut
+f42bbc1d	The ears of wheat turned black with disease and came up empty. You worry what this winter's bread will be baked from.
+b4fcc8f4	The tithe
+0b469bb3	The tithe collector came to the field, picked one sheaf in ten and loaded it on his cart. It was the best sheaf.
+bc90ef78	Road corvée
+a2b1f600	You were called out for the corvée to build the king's road and carried stones for a week. Your own field lay untouched all that time.
+25f47711	Market day in town
+79074acf	You took eggs and butter to the town market in a basket. You went round asking the price of salt and grain and came home at dusk.
+c2669eef	Spring ploughing
+bfdbb907	When the frozen ground thawed you yoked the ox to the plough, turned the field and sowed oats. All day you walked behind the ox.
+de133a70	A sick ox
+5b122908	The ox, the household's most valuable possession, fell ill. Instead of a vet, an old man of the village dosed it with herbs, but it went down in the end.
+aeb10128	A calf
+4afc3e07	A calf was born in the byre at dawn. Sitting up all night beside the cow was worth it.
+86ed6cdc	A neighbour's wedding
+33ef71d0	At a neighbour's wedding feast you danced all night to fiddle and bagpipes. Your legs were still shaking the next day.
+42aa5541	Drought
+79a63905	No rain for two months, and the bottom of the well showed. The priest led a procession to pray for rain.
+bf3264c0	A quarrel over the common
+9f0d362c	The lord (or a rich farmer) fenced off the village common. Poor households lost the place where they grazed their cows.
+b9e68c88	Grape harvest
+74b34d12	You hired on as a grape picker and earned a day's wage. On the last day there was a harvest feast in front of the wine vats.
+e31e9cf2	Tasting the new wine
+ee35b0ac	You drew the first of the new wine that had wintered in the cask. The wine broker tilted his head and named his price.
+001596bd	Up to the summer pastures
+65d2a951	You drove the herd up to the high mountain pastures. For three months you will live on the mountain making cheese.
+f2ea30fe	The tinkers leave
+7e8a0299	When winter came, the men of the village left for Spain and Paris to work as tinkers and water carriers. They will be back in spring with money.
+32ae7cf1	Gathering seaweed
+04eda2b1	On the shore you gathered a cartload of seaweed thrown up by the storm to spread on the fields. The salt cracked your hands.
+d8efe8c0	Pressing apples
+6fd0784b	You crushed and pressed apples and set the cider in a great cask. You shared the first glass with the neighbours.
+ed9535bd	Spinning on winter nights
+2fb88df5	On long winter nights you spun with the neighbour women by the light of a single lamp. The skeins will be sold to a merchant in spring.
+7570df17	The washing place
+07c84c97	Kneeling at the washing place, you beat the laundry with a paddle. The neighbours' gossip went round faster than the washing.
+8dcd1c35	‘Saint Monday’
+a7aeec7c	It was the day after Sunday, but your fellow journeymen downed tools for “Saint Monday” and headed for the tavern. You went along and shared a bottle of wine.
+612c0b9a	The day of Saint Crispin, patron saint of shoemakers. You closed the workshop, went to Mass, and then feasted with the others of the trade.
+87bca3b7	A secret pamphlet
+4c364394	Late at night you helped print an uncensored pamphlet at the print shop. It mocked a minister and the queen.
+17e01e86	Idle looms
+a4347ec2	Orders for silk stopped and the looms have stood idle for weeks. The merchant wants to cut piece rates.
+398321ec	Rent day
+97c3a473	It is the day the quarter's rent falls due, on the feast of Saint John. The landlord was waiting at the foot of the stairs.
+c50db6d9	A tavern beyond the gates
+172e3701	At the guinguettes beyond the toll wall, wine is far cheaper than in town. On Sunday afternoon you danced under the trees.
+ff921437	Working in a hurry, you cut your hand deeply on a tool. You could not work for days.
+d37665dd	The worker's livret
+a78cb04e	Under the new law you must carry a worker's book, the livret. Every time you change jobs, the master has to sign it and you must show it to the police.
+b770a926	The price of bread
+92e0f92c	A loaf of bread costs more than half a day's wage. You put less bread in the soup and more water.
+334d7900	The newspaper read aloud
+28d539f3	At the tavern, someone who could read read the newspaper aloud. Everyone held their breath to hear the news from the Assembly.
+b56571e8	The calico works
+ad9d7442	The dye pouring out of the print works along its banks turns the Robec a different colour every day. Rouen lives on cotton.
+5b6c470a	Unloading at the docks
+bb348954	You carried sacks of sugar and coffee from the West Indies. The day's pay was good.
+7466c9e9	An empty harbour
+8ed7de09	The Royal Navy's blockade keeps the ships away. The quays are crowded with nothing but men looking for work.
+67d16fa0	A mutual aid society
+c8486fda	You joined a mutual aid society, where people of the same trade put by a little each month to help one another when sick.
+423e4c02	A market stall
+fe03627d	You sold vegetables at the dawn market and dropped the coins into your apron pocket. You gained one more regular customer.
+b0ae55f4	A neighbour gives birth
+c5f069a3	In the middle of the night you went to help a neighbour in labour. You boiled water with the midwife and helped deliver the baby.
+16caf3d1	Newspapers at the café
+6499c1b1	Over a cup of coffee at the café you passed the newspapers round. A political argument broke out at the next table.
+2a473889	A novel by Rousseau
+457818eb	You sat up all night reading Rousseau's Julie, or the New Heloise. More than once you wiped away tears as you turned the pages.
+07ced403	The theatre
+bcea3b80	You saw a Molière comedy standing in the pit. The audience took turns jeering and cheering the actors.
+c95dcff7	A client goes bankrupt
+83cc39c0	Word came that a firm you had lent money to had gone bankrupt. The notary says you will be lucky to recover half.
+8d5cbdbd	Paper money turned to waste paper
+e0ebde38	In a few months the assignat has fallen to a fraction of its value. Shopkeepers ask for silver instead of paper.
+8aefe316	The new silver franc
+89d25aac	For the first time you held the new silver franc bearing the First Consul's face. People say the value of money will settle down.
+c63b1c2a	The Civil Code
+cdf797d3	You bought the new Civil Code and read the articles on inheritance and marriage. Now the same law holds everywhere in France.
+e6d16722	A portrait
+ed953015	You commissioned a portrait from a painter. The self in the picture hanging in the drawing room looked a little strange to you.
+be42a417	Presentation at Versailles
+16fa9925	Your family's genealogy passed the heralds' scrutiny, and you were presented to the king at the court of Versailles. The Hall of Mirrors was breathtakingly splendid.
+61f3502d	Family debts
+b3ab1e11	You had to sell part of the woods because of debts run up keeping up appearances.
+97efce92	Struck off the émigré list
+2931c012	Under the amnesty, the family name was struck off the list of émigrés. You may get back some of the land that was never sold.
+6dbbe82e	A child's first words
+ed5755e1	Your child made sounds something like “mama” and “papa” for the first time. The whole family gathered round.
+9f880683	A child's fever
+c43025d3	Your child's fever rose all night and you did not sleep a wink. Thankfully it broke after three days.
+8291ea91	A child grown up
+e9cd15ce	Your child, grown before you knew it, offered to help with the work. Quite handy, too.
+33a39349	A grandchild
+77fd8dee	A grandchild climbed onto your knee and begged for an old story. You told it just as you heard it as a child.
+a3f87043	Aching knees
+43a6bedd	Your knees and back ached as if rain were coming. Working all day as you used to is getting hard.
+ca459e47	The bench in the square
+9ff5419a	You sat on a bench in the square in the afternoon sun and watched people go by. One by one, the old friends are fewer.
+6989df7e	Spectacles
+1a86c4a0	The letters had blurred, so you bought spectacles at the market. You can read books again.
+be28317d	Making hay
+d4886ea2	The whole family went out to cut the grass and turn it to dry. You ran about until dusk getting the hay into the barn before the shower came.
+06a24dbd	Gathering firewood
+8d26cbf4	To last the winter you gathered dead branches in the common woods and carried them on your back. You have to keep out of the forest warden's sight.
+4fd4883d	The square after Mass
+7b60af9c	When Sunday Mass was over, people gathered in the church square to talk about the weather, the price of grain and who was getting married.
+20a8fb15	The cattle market
+8d0590ff	You sold a calf for a fair price at the town cattle market. When a deal is done you slap palms and buy a drink.
+08e3ab54	Gathering chestnuts
+d1533f5c	You brought home a sackful of chestnuts from the woods. There will be days this winter when chestnut porridge takes the place of bread.
+6c8a2267	Fourteen hours
+9cf9d6fb	You went to the workshop before sunrise and finished under the lamp. Fourteen hours again today.
+8d72a44c	Songs at the tavern
+588c81e0	After work you sang with your mates at your usual tavern. The landlord chalked it up on the slate.
+6ed3ebf6	The pawnshop
+d57be783	At the end of the month you pawned your winter coat to borrow money. You must redeem it before the cold sets in.
+7420529a	A Sunday stroll
+fdf7db66	On Sunday afternoon you walked the ramparts promenade in your best clothes. Everyone looks at everyone else's clothes.
+363f5cd9	Doing the accounts
+9d3c3b52	You balanced the books by candlelight late into the night. A few sous did not add up, so you added everything again from the start.
+61a2c996	An invitation to dinner
+af8d50ff	You were invited to dinner by a neighbouring family. Between courses the talk turned to matches and the price of land.

@@ -1,0 +1,233 @@
+# Ordinary decisions, part 4.
+27b2cb51	The École polytechnique entrance examination
+885fc887	The École polytechnique founded by Monge chooses its students by examination alone. It does not ask where you come from, and if you pass, the state pays your fees. Graduates go into civil engineering, the mines and the artillery.
+d12f7339	Sit the examination
+e9648a86	Wearing a uniform-like school coat, you attended Monge's lectures on descriptive geometry. After graduating you were posted to the Corps of Bridges and Roads.
+bc91ce47	You decided to try again the following year. You opened your mathematics books once more.
+48d5ed03	Do not sit the examination
+4c7a4968	You decided to take another road.
+190ca685	A place as a police constable
+1bf0e3fe	The police, newly organised under the First Consul, are recruiting. The work is running informers and keeping an eye on taverns and lodging houses.
+c460474e	Become a constable
+a3bc4017	You were issued a blue uniform. People in the neighbourhood now watch their words in front of you.
+404be6ad	You had no stomach for spying on your neighbours.
+9ad7d35f	Ask to go to the sisters' charity school?
+cd2c2e3f	The neighbours' daughter has started going to a charity school run by the Daughters of Charity. They teach the catechism, reading and sewing, she says.\nYour father says that for a girl, sewing and housework come before letters. Your mother has said she will hear what you have to ask.
+2aa9b0c9	Ask your parents to send you to the charity school
+d5312037	Allowed / refused / sewing school only
+6f3bad4f	You went to the charity school
+cb2a4b99	Your mother talked your father round. You learn the catechism and reading from the sisters. They teach only a little writing.
+f836c28f	You were not allowed
+4cd1f00b	“What use is reading to a girl?” After your father said that, you could not ask again.
+475d2163	You were allowed only the sewing school
+43998815	Instead of reading, you went to a sewing school. Between stitches you picked up a few letters from the prayer book.
+8ade2415	Learn to read the prayer book from your mother
+57f62b8a	Reading bit by bit / no time
+6adbb0f3	You came to stumble through the prayer book
+415a7414	Every evening you opened the prayer book with your mother. You cannot write, but you can read.
+93f35c08	Your mother had no time to spare
+8dfcc269	Your mother had too much work as well, and after a few tries it stopped.
+e63986f0	Help with the housework and run errands for the workshop
+d557a93d	Experience of the trade / fewer chances to study
+4adce097	You became a pair of hands for the household
+eae79a53	You fetch water, look after the little ones and run errands for the workshop. Your hands wind thread as fast as a grown-up's.
+4962c9e4	Catechism school for girls
+d849e522	When winter comes, the sexton's wife gathers a few village girls to teach them the catechism, reading from the prayer book, and spinning. It is held apart from the boys' school.
+cff51d79	Beg to be sent
+a530ad33	Learning through the winter / hands needed at home
+df18a2a9	You went all winter
+7286bc06	Sitting by the stove, you learned prayers by heart and read the letters one by one with your finger. In spring you helped in the fields again.
+68aa3033	They said hands were needed at home
+f6c5d862	You had to look after the little ones and work the spinning wheel.
+761a6d25	Learn to spin at your mother's side
+3205b648	You learned to work the spinning wheel. At the winter veillée the grown-ups praised your skill.
+6441b07b	A convent boarding school
+7b427b45	Your parents are wondering whether to send you to the Ursulines' convent boarding school. You would learn the catechism and manners, reading and writing, embroidery and music. Unlike a collège, it does not teach Latin.
+5839239b	Go to the boarding school
+c38759a1	Good marks / homesickness
+b85f624c	The sisters praised you
+e57b2590	You won prizes for French composition and embroidery. With some of your friends you will exchange letters all your life.
+2578957f	You often cried for home
+695ebff3	The discipline was strict and the winters cold. Still, you learned to read and write.
+7152ba73	Learn at home from your mother and a governess
+699a17fe	At your mother's side you learned housekeeping and manners, reading and writing.
+bbc225c6	How to educate a daughter of the family
+822e0aff	It is time to choose an education fit for a daughter of the family. Until 1793 there is also the royal school for girls at Saint-Cyr, which takes daughters of poor noble families.
+6136b552	Bring in a governess
+f90d205e	From a governess you learn French and Italian, the harp and drawing.
+1ce8d3ab	Apply to the royal school at Saint-Cyr
+68517fc0	Admitted / no place
+7ab480b7	You entered Saint-Cyr
+b2ddad72	Under strict discipline you learn history, geography and music. At twenty you will leave with a dowry.
+10a7d22a	There was no place
+610cea72	Your recommendations were not enough. You were sent to a convent boarding school instead.
+60b93415	Learn manners at your mother's side
+cc5a821b	You learned the manners of the salon and the art of letter-writing from your mother.
+eb766552	What your parents left
+a2614dd5	Both parents are gone, and the brothers and sisters have gathered at the notary's office. The house and fields, a few pieces of furniture and the papers of debts lie on the table.
+f5868efd	Divide it equally
+ac1fd6d5	Fair shares / the land cut too fine
+e114a5d0	You divided it fairly
+b78dd363	You drew lots for the shares and signed without a quarrel.
+2cd5cd63	The land was cut too fine
+2f422000	Each field received is too small to live on by farming. In the end some of you sold their land and left for the town.
+0db130d5	Take the house yourself and pay the others in money
+96d186f9	Keeping the house / a heavy debt
+d8cce21b	You kept the house
+5965aabe	You took on the house, promising to pay your brothers and sisters over several years.
+c9e27768	The money owed was heavy
+955e4072	When a bad year came you could not pay on time as promised, and there were hard words with your siblings.
+73c19181	Give way to your brothers and sisters
+ca6704a3	Their gratitude / empty-handed
+75118ebb	Your brothers and sisters were grateful
+88c55b16	You gave your share to a brother or sister in need.
+2af32d33	Nothing was left in your hands
+2e8b7b17	Later, when times grew hard, you regretted that decision a little.
+afea58cb	Both parents are gone, and the brothers and sisters have gathered at the notary's office. A few pieces of furniture from the rented rooms, the workshop tools and the papers of debts lie on the table.
+124ecf0f	Both parents are gone, and the brothers and sisters have gathered at the notary's office. A house in {고향}, the shop fittings and the papers of debts lie on the table.
+02108bc8	Ageing parents
+0f49ed21	Your parents, who can no longer manage a household alone, ask cautiously whether they could live with you.
+7ebbadf0	Take them into your home
+679c7807	The last years together / a tight household
+38fa9fa4	You came to live together
+771324a7	The grandchildren gather round their grandparents to hear stories of the old days.
+4116ad0f	The household grew tight
+b06bb3a3	Nursing them every night wore you out, and you quarrelled with your spouse more often.
+71113bce	Place them in the hospice
+9b89233b	A lighter load / guilt
+3b319dfe	They entered the hospice
+32ece38e	They found places in a hospice run by nuns. You visit every Sunday.
+3699ce0b	Every visit weighs on you
+9669c003	It was a ward where several people shared a narrow bed. It stayed on your mind for a long time.
+8c9b0598	Pay a neighbour to look after them
+91b231cf	You paid the widow next door each month to look after your parents.
+85e3b97b	Your parents, who can no longer manage the fields or the household alone, ask cautiously whether they could live with you. A bed beside the kitchen would do, they say.
+80123fbb	Your parents, who can hardly manage the stairs alone any more, ask cautiously whether they could live with you. Your rented rooms are already cramped.
+878cebbe	Your brothers and sisters discuss how to care for parents who can no longer run their house alone. The cost of one more maid is no small thing.
+b846ba3d	A child's marriage
+8f906711	An offer of marriage has come for your grown child. The other family starts by talking about the dowry.
+2c5fd6e1	Find the dowry and marry them off
+0f08e65b	A good match / debt
+975c7e98	You married them off
+57bbcd08	The marriage contract was signed and a feast was held. Your child left for a new home.
+1e4ad04e	The dowry put you in debt
+fc3ad7fb	You overreached to keep up appearances. You spent years paying off the debt.
+82a2c24b	Let them marry the person they want
+a01bb57f	A happy marriage / the family's standing
+b0cf3b66	Your child married the person they wanted
+7307e866	They have nothing, but they cherish each other.
+cb2e68a9	The relatives whispered
+55dd27b2	“To marry into a family like that!” You heard the talk for some time.
+157da54d	Keep them at home for now
+c6382e03	You put off the match. Your child seems disappointed.
+6f7ef6ed	Your son's conscription lottery
+93b22494	Your son has turned twenty and goes to draw in the conscription lottery. Families with money buy a substitute to go into the army in their son's place.
+f8903d22	You emptied your savings to pay a young man from a poor family to enlist in your son's place. His face stayed with you for a long time.
+d6e3970e	Leave it to chance
+3a20cf9c	A good number / he enlists
+387f1f54	Your son came home smiling. That evening the whole family lit a candle in church.
+5e5a22d7	Your son enlisted
+f61c0ff5	Your son put on the uniform and left for his regiment. He waved from the doorway for a long time.
+ad6d92ec	News from the front
+1bdef6da	The mayor came to the door with a letter. It came from your son's regiment.
+fb2e12c5	Open the letter
+6e6a6466	Safe / wounded / killed
+5e3d8000	Your son is safe
+df5a348b	“Mother, Father, I am well.” The handwriting was clumsy, but it was surely your son's.
+cbdf7e90	Your son was wounded
+07bb7080	The news is that your son has been wounded in the leg and is coming home. That he is coming back alive was enough to be thankful for.
+029fdb76	Your son was killed
+3a5c38a0	“Fighting bravely…” After that, the letters would not come into focus.
+3a8dd808	The divorce law
+b447e3df	From 1792 the law allows divorce. You wonder whether to go on living like this with a spouse who has been a stranger to you for years.
+3535de54	Ask for a divorce
+06832529	A fresh start / the family's reproach
+0f536ff2	You were divorced
+9190f104	The divorce was posted at the town hall. The neighbours whispered, but you could breathe again.
+0e330720	Your relatives turned their backs
+584317c2	The priest and your relatives called divorce a sin. You were lonely for years.
+6eb4e8a8	Try again
+9fa3318c	Reconciliation / no change
+cf933dcb	Little by little you grew close again
+25bfceee	You went to market together and ate supper together, and began to talk again.
+60303e3c	Nothing changed
+1d4b067a	You live under one roof, in separate rooms.
+25a4473d	From 1792 the district office accepts divorces. In Paris, they say, about one couple in five married in recent years has separated. You wonder whether to go on living like this with a spouse who has been a stranger to you for years.
+6eb514a5	The law has allowed divorce since 1792, they say, but no one in the village has ever been divorced. The priest says it is a sin, and the neighbours would whisper for the rest of your life. You wonder whether to go on living like this with a spouse who has been a stranger to you for years.
+e2be62db	Divorce has been possible since 1792, but it brings a lawsuit over dividing the dowry and the joint property. You wonder whether to go on living like this with a spouse who has been a stranger to you for years.
+6e8ddc19	An orphaned nephew or niece
+01028be1	One of your brothers or sisters has died of illness, leaving only a young child. Someone has to take them in.
+1a093234	Bring them home
+1cee7853	A new member of the family / one more mouth to feed
+ca81d0c3	The child became one of the family
+d093dd7d	Silent at first, the child began to smile after a few months.
+40e3f28b	The household grew tighter
+893b4588	There were frequent fights between the child and your own children.
+c2f22f26	Leave them at a convent orphanage
+a6c6952d	You left the child with the orphanage sisters. Your relatives' looks stung.
+eeade54b	Place them as apprentice to a craftsman
+7280d1e4	You sent the child as apprentice to a craftsman you know. Bed and board are settled.
+1bc97493	The foundling hospital's wheel
+3f3f5f8d	There is nothing to feed the newborn. Among the poor households of the town, not a few leave a child in the turning wheel at the door of the foundling hospital. In Paris at the end of the eighteenth century, about a third of all children born were left that way.
+a26273a6	Raise the child yourself somehow
+b95a0d5d	Holding out / health suffers
+25648aee	You kept the child in your arms
+650987ea	Neighbour women shared their milk and brought old clothes.
+1847126c	Everyone went hungry
+c61d4bb7	All through the depth of winter the whole family went hungry.
+7d2faeb6	Leave the child at the foundling hospital
+7c2964f4	Leave a token / no token
+3a1e837f	You left the child
+d77c2678	At night you put the child in the wheel and rang the bell. With the child you left a note with its name and half of a medal. You hope to find it one day.
+f2eb3ae6	You could not leave any token
+f5707523	In your haste you put in neither note nor medal.
+4c0393bf	Send the child to a country wet nurse
+8a589092	You borrowed money and sent the child to a wet nurse in the country. You hear news once every few months.
+074ad1ae	Looking for the child you left
+72954a57	Things have got a little better. The thought will not leave you: could you go and find the child you left at the foundling hospital?
+99598d38	Go and search the hospital's records
+8b521d19	Reunited / long dead / no record
+93db8e62	You found the child
+1d0c8961	You met the child, raised by a foster family in the country. They did not recognise you, but the half medal fitted exactly.
+ee832803	The child died long ago
+9fa506ff	The register said the child died with the foster family a few months after being left. Most children left at the hospital never lived to their first birthday.
+02fedc75	No record could be found
+c9c0b0ea	Too many children had been left on the same day.
+d1e41477	Decide not to look
+8408d63d	You did not want to upset the child's life. Every year, when that day comes, you light a candle in church.
+d0d21e41	Pregnant before marriage
+57e517c0	You are with child. The father promised to marry you, but lately he is hard to find. Before the Revolution the law required a declaration of pregnancy, and the world is harsh to an unmarried mother.
+d5acd813	Demand that the father marry you
+9a0d4e26	You married in haste
+14ca87d8	The two families hurriedly set a wedding date. A few months later the child was born.
+3ca5ec2a	He left the village
+e3cb2e1d	He left for another town. You bear and raise the child alone. At church and at market alike, people whisper behind your back.
+c606d81e	Go to the town and give birth in secret
+d2c37f60	Hidden / the foundling hospital
+40dbcc9d	You had the child and came back
+d6f2aab6	You gave birth at the town's lying-in hospital. The child is with a country wet nurse, and you send money every month.
+1ed9b92a	You left the child at the foundling hospital
+355d60bf	You came back alone. You told no one.
+7c43b12a	Have the child and raise it alone
+07f6b053	You held your head up and had the child. Your mother, at least, was on your side.
+a728f4d1	You are with child. The son of the house where you work as a maid promised to marry you, but his mother thinks only of how to put you out. The world is harsh to an unmarried mother.
+b183117f	You are with child. After the village fête the father promised to marry you, but lately he is hard to find. The village is harsh to an unmarried mother.
+583bc6a1	A share in a slave ship
+98b59374	A fellow merchant urges you to buy a share in a ship sailing by way of the African coast to Saint-Domingue. The ship buys people, loads them aboard and crosses the Atlantic. Many families in Bordeaux and Nantes built their fortunes this way.
+5fa963b9	Buy a share
+e0472688	A large profit / the ship is lost
+09902131	The ship returned and made a profit
+893004e7	The voyage ended and the dividend came in. The ledger says only ‘cargo’. You did not read the report that many of the people aboard died on the crossing.
+481344a3	The ship was lost
+f4a52dab	They say the ship was taken by a British warship, or there was a revolt aboard. The money invested never came back.
+219da6d5	Conscience / shunned
+681d292a	You refused
+fc63f7ea	“I will have nothing to do with buying and selling people.” Your colleague shrugged.
+3ff40866	You were shunned among the merchants
+450be945	One by one, your dealings in the port fell away.
+748ca311	A loaf of bread
+ffe043cd	For three days the family has not eaten properly. The bread on the baker's counter is right in front of you. If you are caught, you could be sent to prison or the galleys (later, the penal colony).
+053544d0	Steal the bread
+6673f626	Hunger staved off / caught
+17f90677	No one saw
+d36ac443	You hid the bread under your coat and ran. The children ate their fill, and you could not sleep that night.

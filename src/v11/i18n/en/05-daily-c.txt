@@ -1,0 +1,170 @@
+# Everyday events, part 3 (mostly childhood).
+2bcc4acf	Muddy shoes
+bd365737	You got your shoes covered in mud playing in the lane and were scolded at home.
+96a386c9	A quarrel and making up
+ca21504d	You quarrelled with the neighbours' child over a toy, but soon made up.
+0e8284e0	Haggling at the market
+d263e35c	You went to the market with your mother and watched the stallholders haggle.
+bf3ec898	Bells
+dfbed0ed	Grandmother's story
+229012f2	Your grandmother told you an old folk tale she had heard as a child.
+3eb4aa56	A strange tool
+c72d706f	You were scolded for handling one of your father's tools.
+49a177ca	Letters you want to read
+afff68c4	Seeing the neighbours' child read, you wished you could learn too.
+b66854dd	Winter warmth
+f3d9ca61	As the cold deepened, the family spent their time gathered close to the fire.
+d73dc4cd	A procession in the parish
+b2da4fd8	You watched a religious procession through the neighbourhood and stared at the decorations for a long time.
+439fc6a3	Counting change
+651a42be	Sent to the baker's, you struggled to count the change.
+ea2f0e83	Letters a friend learned
+0d40fb80	A friend who goes to the parish school showed off the letters they had learned.
+74b1483f	An errand done alone
+4f878cec	Helping your mother, you ran an errand by yourself for the first time.
+cbebb0c8	A craftsman's hands
+df45324f	You spent a long time in a craftsman's workshop watching him shape wood.
+10a051d7	Counting the change again
+1c1d280b	Buying something at the market, you noticed the change was wrong.
+353b4aef	Sweeping the workshop
+39c019ae	Your father gave you the job of cleaning the workshop.
+3d9e9c22	Down by the Seine
+d1b709b7	You wandered along the Seine with a friend and came home late.
+654f8a85	A gathering next door
+6846945b	What you want to do
+dd438dbc	Your family asked what work you would like to do one day. You thought about it for a long time.
+7ea957b0	A small helping hand
+7f17a939	A craftsman in the neighbourhood asked you to help with a simple job.
+b0463565	Cutting back
+52d76ad1	As things got harder at home, the family decided to spend less.
+7c0b7c62	A wooden top
+204733dc	You fiddled for ages trying to fix a wooden top that would not spin properly.
+4c16ddc5	Scraps of leather
+7cc580c4	You helped sort scraps of leather in your father's workshop.
+08ebb39b	Numbers in the ledger
+d10a2172	Looking at your father's ledger, you learned a little about reading numbers.
+ff44da96	The tutor's stories
+1bb08736	Your tutor told you the history of the kings of France.
+8c3b2b69	After sundown
+8f2e1d46	To save candles, you went to bed early after sunset.
+cb1fed60	A day at five
+9818340c	You turned five this year. The day passed as usual, without any special celebration.
+9e5132b8	Looking back at five
+735f8708	Told that you had turned five this year, you talked over the past with your family.
+f1330c5f	How others live
+d9397729	Watching a well-dressed child step down from a carriage, you wondered what life was like in that house.
+dcb19dbf	Letters seen again
+1ca560fa	You asked a neighbour about the letters you had seen before and copied them out a few times.
+ca296aa3	Reading a short text
+7508cb4e	You slowly read aloud a short sentence you could make out.
+60912f52	Christmas coming
+2fb3d982	You practised a short song for the parish's Christmas celebrations.
+a9c2fa4e	Talk of bread prices
+89051e61	At the market you heard the grown-ups complain about the price of bread.
+7ecb323d	Badges in the street
+62d0a100	In the street you saw people wearing badges of new colours. You did not yet really know what they meant.
+30be2462	Talk of a new constitution
+78b9692d	The grown-ups of the neighbourhood talked about the new constitution. Many of the words were strange to you.
+a5c3721d	People waiting
+c11491a3	You saw people waiting a long time to get necessities.
+b3927066	A strange republic
+ef50a80c	The neighbours argued for a long time. You did not quite understand what this republic they talked about was.
+5b79cace	Lowered voices
+103c7a15	The grown-ups lowered their voices while talking politics. You watched them warily from nearby.
+7ae57b51	New rumours
+761717b3	In the street you heard new rumours about the army and politics. It was still hard to tell what was changing.
+e0755684	Sounds of the house
+220eb8b5	A sunny spot
+e23e08ba	You spent a more comfortable day in a place full of bright sunshine.
+ddea4ecd	Foul weather
+1efb27b9	The weather was foul, and the house was darker and damper than usual.
+8084b842	A day in the lane
+a2e193be	Going up and down the familiar street, you took in the scenery around you.
+0173d868	A hand about the house
+585f7778	While the family sorted the things they needed for farming, you lent a small hand.
+4587c1f5	Minding the geese
+2e233ad3	For the first time you were given the job of minding the geese on the village green. When the gander stretched out its neck and came after you, you fled in terror.
+ee914eee	New clogs
+b16eea39	You put on for the first time the clogs your father carved from walnut by the fire on winter nights. You loved the clack-clack and ran all over the yard.
+15be2b3d	A winter evening's veillée
+d67fe2bb	In a neighbour's byre, beside the grown-ups spinning yarn, you heard stories of werewolves and forest fairies. The cows' breath kept the byre warm.
+4449296f	Gleaning
+890b5e9e	You gleaned in the harvested fields with the other children. When you gave your mother an apronful of ears, she stroked your hair.
+ab95e7f8	Talk of a wolf
+bc7452b1	Word went round that a wolf had come out at the edge of the woods and taken a sheep. For a while you had to be home before sunset.
+183e0908	Summer fever
+e4045b01	Playing near a pond you caught a fever and lay ill for days. Your mother gave you willow-bark tea.
+dc38b876	Pig-killing day
+89061c13	It is the day the household kills the pig. While the grown-ups made black pudding and sausages, you stood holding the bowl for the blood. It is meat for the whole winter.
+140ff531	The Angelus bell
+32f1b494	When the evening bell rang, the grown-ups working in the fields all stopped, took off their hats and prayed. You put your hands together too.
+30bd4685	Crayfish in the stream
+1b92b7cb	You rolled up your trousers with your friends, waded into the stream and caught crayfish under the stones. They went into the evening soup, and the whole family was pleased.
+9705fa4e	Hail
+4a6508e0	The sky suddenly darkened and hail poured down. The ripening wheat was flattened, and that evening the grown-ups said nothing.
+5fdfcb38	The Saint John's fire
+11f49476	On midsummer's night, the feast of Saint John, a great bonfire was lit in the village square. You clapped as the older boys leapt over the flames.
+d8ce1651	Breton
+aee3bc1c	You could hardly understand the French spoken by the official from town. At home and at church alike, everyone speaks Breton.
+6865a648	The pardon pilgrimage
+3495cf7d	You walked in the procession of the pardon, the pilgrimage on the feast of the village's patron saint: banners and candles, women in white lace coiffes, and a feast at the end.
+d67e10fd	The mountain tongue
+a62a37c6	At home you speak the Auvergne dialect, Occitan. Only the priest mixes Latin and French at Mass.
+11391b94	The cheese hut on the mountain
+a02fc489	You carried bread to your father at the stone hut, the buron, on the summer pastures. You watched for a long time as he pressed a great cheese.
+4a38b7d0	A child in the vineyard
+e1080777	At the end of the grape harvest the children went out into the vineyard with little baskets too. Your fingers and lips were stained purple.
+aac6d0fe	The water seller's cry
+f0e27a7f	At the water carrier's cry of “Water!” you ran down the stairs with a bucket. Fetching two buckets of water is your morning errand.
+bbd4f9fd	The singer in the square
+f9831c21	In the square you watched a street singer sing the newest song and sell the words on sheets. Back home you hummed it all day.
+ad04f022	Errands in the workshop
+f2d37fe2	You swept your father's workshop floor and ran errands for the journeymen. You sang along with the songs the men sang at work.
+4b714336	Into the gutter
+9c298e5e	On a rainy day you fell into the open drain running down the middle of the lane and got filthy all over. A passing carriage splashed you with muddy water too.
+23919dd3	The Guignol puppet show
+b0234312	On a little stage at the edge of the square, the puppet Guignol, chattering in Lyon dialect, beat a policeman with a stick. The children held their sides laughing.
+857a6091	The bread queue
+35be414b	You queued outside the baker's from dawn, but the bread ran out before your turn. The way home empty-handed was long.
+85b4dca1	A fire next door
+dd04b1d8	A fire broke out in the building opposite. People formed a line to pass buckets, and you trembled, clutching your mother's skirt.
+987af5c6	Light in the cathedral
+80f46abd	You gazed up at the cathedral's high vault and the light coming through the stained glass, until your neck ached.
+35ac90ec	Big ships in the harbour
+65b74639	On the Garonne quays you looked at the ships with their masts standing like a forest. A sailor said to be back from the West Indies showed you a parrot.
+ebfd5810	A child under the loom
+d77c9fff	While your mother worked the silk loom, you picked up dropped thread ends and helped wind the shuttles. The clack-clack sounds like a lullaby.
+3876bc10	On the banks of the Loire
+5e4f4d68	You skimmed stones with your friends from the sandbanks of the Loire. A barge caught the wind and slowly worked its way upstream.
+50206ce4	Keyboard lessons
+f313b2ff	A music master comes twice a week to teach you the keyboard. Your fingers would not do what you wanted, and you were upset.
+001c1e5a	Nurse and tutor
+b05bcdd4	You spend most of the day beside your nurse. Every evening at a set hour you go to pay your respects to your parents.
+159883fc	A fable of La Fontaine
+18b7b08d	You learned The Crow and the Fox by heart and recited it before the guests. The grown-ups applauded.
+40d674c9	The first hunt
+09371a69	For the first time you went along on your father's hunt. Your heart pounded at the baying hounds and the sound of the horn.
+c4ce1625	A lost tooth
+a2e45262	A front tooth had been wobbling, and it popped out when you bit into an apple. You put the tooth under your pillow.
+5bd19e66	Carnival
+03334a7d	On Carnival day, before Lent began, you smeared soot on your face and went round the neighbourhood with friends, begging for fritters.
+b2b57c47	Lent
+2f3319ba	It is Lent, so there is only dried cod and beans instead of meat. You count the days until Easter.
+533cf264	Carrying the little one
+375f6edf	While your mother worked, you carried your little brother or sister on your back and looked after them. You sang until the crying stopped.
+45aac54c	Grandmother's old tale
+552f2fed	Your grandmother told you about the Great Frost of 1709 that she had heard of as a child. Wine froze in the cask, she said, and birds fell from the sky in mid-flight.
+62c8db86	First snow
+570c46e4	You woke up to find the world covered in white. You had a snowball fight until your hands were red.
+ec080171	The tricolour cockade
+c891985c	Like the grown-ups, you wore a blue, white and red cockade on your hat. People without one were told off in the street.
+33033d9d	“Ça ira!”
+7432e29e	“Ça ira, ça ira!” was all the rage among the children. You sang it at the top of your voice without knowing what it meant.
+2e31c1a1	Citizen
+aaa6a4ac	The grown-ups now call each other ‘citoyen’, citizen, instead of ‘monsieur’. The teacher and the baker are all citizens.
+2f1b73f7	A day off every ten days
+ad42b644	Under the new calendar you rest on the tenth day, the décadi, instead of Sunday. This month is called ‘the month of flowers’, Floréal.
+dc07f517	Bells for a victory
+5c9df6b9	At news of a victory in a faraway land the church bells rang, and in the evening lamps were lit in every window.
+33b9b8e8	An army on the march
+4a940483	An army passed through the village. At its head a drummer boy only a little bigger than you was beating his drum.

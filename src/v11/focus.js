@@ -76,5 +76,6 @@ function birthdayFacts(s) {
   const text = eraFact(s, age);
   if (!text) return;
   s.familyEvents[key] = true;
+  if (!enHas(text)) return;
   addLog(s, '시대의 숫자', text, 'fact');
 }
