@@ -177,8 +177,8 @@ for (const d of decisions) if (['apprentice','trade'].includes(d.id)) d.when.noC
        no('가문의 영지를 돌본다', '군인의 길은 다른 형제에게 넘겼습니다.')]);
 
   D('door-saint-cyr', 9, {minAge:17, maxAge:21, sexes:['남성'], fromYear:1803, minKnowledge:55, literacy:['basic'], noCareer:true},
-    '생시르 사관학교',
-    '황제가 세운 생시르 특별 군사학교가 입학생을 받습니다. 학비를 내야 하지만, 졸업하면 바로 소위로 임관합니다.',
+    '특별 군사학교',
+    '보나파르트가 세운 특별 군사학교(처음엔 퐁텐블로, 1808년부터 생시르)가 입학생을 받습니다. 학비를 내야 하지만, 졸업하면 바로 소위로 임관합니다.',
     [{label:'입학시험을 본다', preview:'합격 / 낙방', requires:{minWealth:35}, outcomes:[
         O('pass', '합격했습니다', 60, '두 해 동안 행군과 포술, 수학을 배우고 소위로 임관했습니다.', {career:'officer', rep:6, education:'생시르 사관학교', stats:{재산:-8}}, [{when:{minAptitude:65}, amount:20}]),
         O('fail', '낙방했습니다', 40, '수학 시험에서 떨어졌습니다.', {stats:{행복:-3}})]},

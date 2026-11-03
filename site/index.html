@@ -3684,6 +3684,15 @@ Object.assign(EN, {"일시정지":"Pause",
 "유언장에 따라 구빈원에 침대 둘이 생기고, 교구 학교에 당신 이름의 장학금이 생겼습니다.":"Under your will, two beds were endowed at the hospice and a scholarship in your name at the parish school.",
 "종신 연금으로 바꿔 남은 생을 편하게 산다":"Turn it into a life annuity and live the rest of your days in comfort",
 "집을 종신 연금(비아제)으로 팔았습니다. 매달 연금이 들어옵니다. 산 사람은 당신이 오래 살지 않기를 바랄 것입니다.":"You sold the house en viager, for a life annuity. Each month the annuity comes in. The buyer will be hoping you do not live long.",
+"제1통령의 시대":"The age of the First Consul",
+"브뤼메르의 쿠데타로 보나파르트 장군이 제1통령이 되었습니다. 혁명을 끝내고 질서를 세웠다는 사람도, 공화국을 군인에게 넘겼다는 사람도, 그가 왕을 다시 모셔 올 거라는 사람도 있습니다.":"The coup of Brumaire has made General Bonaparte First Consul. Some say he has ended the Revolution and restored order, some that the Republic has been handed to a soldier, some that he will bring back the king.",
+"제1통령을 지지한다":"Support the First Consul",
+"이탈리아에서 승전보가 들려오고 거리의 소란이 잦아들었습니다. 십 년 만에 처음으로 나라가 굴러간다고 느낍니다.":"Victories are reported from Italy and the turmoil in the streets has died down. For the first time in ten years, you feel the country is working.",
+"보나파르트가 몽크 장군처럼 왕을 다시 모셔 오리라 기대했지만, 그럴 사람이 아니라는 것이 점점 분명해집니다.":"You hoped Bonaparte would bring back the king as General Monck once did, but it grows ever clearer he is not that kind of man.",
+"공화국을 지키려 한다":"Stand by the Republic",
+"헌법을 몇 번이나 고친 끝에 결국 장군 한 사람이 권력을 쥐었을 뿐이라고 생각합니다.":"After so many constitutions, you think, all that has happened is that one general has taken power.",
+"특별 군사학교":"The special military school",
+"보나파르트가 세운 특별 군사학교(처음엔 퐁텐블로, 1808년부터 생시르)가 입학생을 받습니다. 학비를 내야 하지만, 졸업하면 바로 소위로 임관합니다.":"The special military school founded by Bonaparte (first at Fontainebleau, at Saint-Cyr from 1808) is taking cadets. There are fees to pay, but graduates are commissioned as sub-lieutenants straight away.",
 "황제가 돌아왔다: 연대의 선택":"The Emperor is back: the regiment's choice",
 "엘바섬을 떠난 황제가 그르노블로 다가옵니다. 국왕의 명령은 “찬탈자를 막아라”입니다. 그러나 병사들은 벌써 배낭 속의 옛 삼색 휘장을 꺼내고 있습니다.":"The Emperor has left Elba and is nearing Grenoble. The king's order is “Stop the usurper.” But the soldiers are already pulling the old tricolour cockades out of their packs.",
 "연대와 함께 황제 편으로 넘어간다":"Go over to the Emperor with the regiment",
@@ -9651,7 +9660,7 @@ function personalFirst(s, groups, group) {
   E('m-day-winter', 'bad', {...M, jobMatch:DAY, months:[11]}, '일 없는 겨울', '강이 얼고 공사가 멈추자 일감이 뚝 끊겼습니다. 외투를 전당포에 맡기고 빵을 샀습니다.', {stats:{재산:-2, 건강:-1}, experience:{inequality:1}});
   E('m-day-hand', 'bad', {...M, jobMatch:DAY}, '으스러진 손가락', '짐을 내리다 손가락이 돌 사이에 끼었습니다. 일주일 동안 품삯 없이 손을 싸매고 있었습니다.', {stats:{건강:-2, 재산:-1}});
   E('m-day-cheated', 'bad', {...M, jobMatch:DAY}, '떼인 품삯', '일주일 일한 품삯을 받으러 갔더니 주인이 공사가 끝나지 않았다며 절반만 주었습니다. 따질 곳이 없습니다.', {stats:{재산:-2, 행복:-2}, experience:{inequality:2}});
-  E('m-day-works', 'good', {...M, jobMatch:DAY, places:['파리'], fromYear:1802, toYear:1813}, '황제의 공사판', '우르크 운하와 새 시장 공사장에 일손이 모자라 품삯이 올랐습니다. 몇 달은 고기 냄새를 맡으며 살았습니다.', {stats:{재산:2}});
+  E('m-day-works', 'good', {...M, jobMatch:DAY, places:['파리'], fromYear:1805, toYear:1813}, '황제의 공사판', '우르크 운하와 새 시장 공사장에 일손이 모자라 품삯이 올랐습니다. 몇 달은 고기 냄새를 맡으며 살았습니다.', {stats:{재산:2}});
 
   // ───── 하녀·하인 ─────
   E('m-serv-suspect', 'bad', {...M, jobMatch:SERV}, '은수저 한 벌', '주인집 은수저 한 벌이 없어지자 모두의 눈이 당신에게 쏠렸습니다. 사흘 뒤 찬장 뒤에서 나왔지만, 아무도 사과하지 않았습니다.', {stats:{행복:-3}, experience:{inequality:2}});
@@ -10113,8 +10122,8 @@ for (const d of decisions) if (['apprentice','trade'].includes(d.id)) d.when.noC
        no('가문의 영지를 돌본다', '군인의 길은 다른 형제에게 넘겼습니다.')]);
 
   D('door-saint-cyr', 9, {minAge:17, maxAge:21, sexes:['남성'], fromYear:1803, minKnowledge:55, literacy:['basic'], noCareer:true},
-    '생시르 사관학교',
-    '황제가 세운 생시르 특별 군사학교가 입학생을 받습니다. 학비를 내야 하지만, 졸업하면 바로 소위로 임관합니다.',
+    '특별 군사학교',
+    '보나파르트가 세운 특별 군사학교(처음엔 퐁텐블로, 1808년부터 생시르)가 입학생을 받습니다. 학비를 내야 하지만, 졸업하면 바로 소위로 임관합니다.',
     [{label:'입학시험을 본다', preview:'합격 / 낙방', requires:{minWealth:35}, outcomes:[
         O('pass', '합격했습니다', 60, '두 해 동안 행군과 포술, 수학을 배우고 소위로 임관했습니다.', {career:'officer', rep:6, education:'생시르 사관학교', stats:{재산:-8}}, [{when:{minAptitude:65}, amount:20}]),
         O('fail', '낙방했습니다', 40, '수학 시험에서 떨어졌습니다.', {stats:{행복:-3}})]},
@@ -13670,7 +13679,13 @@ function politicalMood(s, event) {
      ['입헌 군주정에서 멈춰야 한다 (푀양파)', 'constitutional', '헌법과 왕이 함께 가야 한다고 믿습니다. 라파예트의 국민방위대가 믿음직합니다.'],
      ['온건한 공화국 (지롱드파)', 'gironde', '브리소와 롤랑 부인의 신문을 읽습니다. 공화국은 좋지만 파리 민중의 폭력은 두렵습니다.'],
      ['자코뱅의 공화국 (산악파)', 'mountain', '“조국이 위험에 처했다!” 자코뱅 클럽의 연설에 가슴이 뜁니다.'], APART]);
-  P('pol-empire', 1800, 1814, '황제의 시대',
+  // The Consulate (1800–1804) is its own question; the Emperor's comes after the coronation and Austerlitz.
+  P('pol-consulate', 1800, 1804, '제1통령의 시대',
+    '브뤼메르의 쿠데타로 보나파르트 장군이 제1통령이 되었습니다. 혁명을 끝내고 질서를 세웠다는 사람도, 공화국을 군인에게 넘겼다는 사람도, 그가 왕을 다시 모셔 올 거라는 사람도 있습니다.',
+    [['제1통령을 지지한다', 'bonapartist', '이탈리아에서 승전보가 들려오고 거리의 소란이 잦아들었습니다. 십 년 만에 처음으로 나라가 굴러간다고 느낍니다.'],
+     ['정통 왕가의 귀환을 바란다', 'royalist', '보나파르트가 몽크 장군처럼 왕을 다시 모셔 오리라 기대했지만, 그럴 사람이 아니라는 것이 점점 분명해집니다.'],
+     ['공화국을 지키려 한다', 'engaged', '헌법을 몇 번이나 고친 끝에 결국 장군 한 사람이 권력을 쥐었을 뿐이라고 생각합니다.'], APART]);
+  P('pol-empire', 1806, 1814, '황제의 시대',
     '제1통령이 황제가 되었습니다. 질서와 영광을 가져왔다는 사람도, 공화국을 훔쳤다는 사람도, 정통 왕가가 돌아와야 한다는 사람도 있습니다.',
     [['황제를 따른다 (보나파르트파)', 'bonapartist', '아우스터리츠의 승전보에 모자를 던졌습니다. 혁명의 성과를 지키는 것은 황제입니다.'],
      ['정통 왕가의 귀환을 바란다', 'royalist', '망명지의 루이 18세를 위해 몰래 기도합니다.'],
@@ -15751,7 +15766,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.39';
+const GAME_VERSION = 'v0.40';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';

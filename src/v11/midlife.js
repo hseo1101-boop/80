@@ -34,7 +34,7 @@
   E('m-day-winter', 'bad', {...M, jobMatch:DAY, months:[11]}, '일 없는 겨울', '강이 얼고 공사가 멈추자 일감이 뚝 끊겼습니다. 외투를 전당포에 맡기고 빵을 샀습니다.', {stats:{재산:-2, 건강:-1}, experience:{inequality:1}});
   E('m-day-hand', 'bad', {...M, jobMatch:DAY}, '으스러진 손가락', '짐을 내리다 손가락이 돌 사이에 끼었습니다. 일주일 동안 품삯 없이 손을 싸매고 있었습니다.', {stats:{건강:-2, 재산:-1}});
   E('m-day-cheated', 'bad', {...M, jobMatch:DAY}, '떼인 품삯', '일주일 일한 품삯을 받으러 갔더니 주인이 공사가 끝나지 않았다며 절반만 주었습니다. 따질 곳이 없습니다.', {stats:{재산:-2, 행복:-2}, experience:{inequality:2}});
-  E('m-day-works', 'good', {...M, jobMatch:DAY, places:['파리'], fromYear:1802, toYear:1813}, '황제의 공사판', '우르크 운하와 새 시장 공사장에 일손이 모자라 품삯이 올랐습니다. 몇 달은 고기 냄새를 맡으며 살았습니다.', {stats:{재산:2}});
+  E('m-day-works', 'good', {...M, jobMatch:DAY, places:['파리'], fromYear:1805, toYear:1813}, '황제의 공사판', '우르크 운하와 새 시장 공사장에 일손이 모자라 품삯이 올랐습니다. 몇 달은 고기 냄새를 맡으며 살았습니다.', {stats:{재산:2}});
 
   // ───── 하녀·하인 ─────
   E('m-serv-suspect', 'bad', {...M, jobMatch:SERV}, '은수저 한 벌', '주인집 은수저 한 벌이 없어지자 모두의 눈이 당신에게 쏠렸습니다. 사흘 뒤 찬장 뒤에서 나왔지만, 아무도 사과하지 않았습니다.', {stats:{행복:-3}, experience:{inequality:2}});

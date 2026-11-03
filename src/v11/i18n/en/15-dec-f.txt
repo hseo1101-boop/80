@@ -226,3 +226,12 @@ a1dac81e	You left the house and its contents to the neighbour (or maid) who care
 a86aad91	Under your will, two beds were endowed at the hospice and a scholarship in your name at the parish school.
 1b452e93	Turn it into a life annuity and live the rest of your days in comfort
 4ddb623f	You sold the house en viager, for a life annuity. Each month the annuity comes in. The buyer will be hoping you do not live long.
+=제1통령의 시대	The age of the First Consul
+=브뤼메르의 쿠데타로 보나파르트 장군이 제1통령이 되었습니다. 혁명을 끝내고 질서를 세웠다는 사람도, 공화국을 군인에게 넘겼다는 사람도, 그가 왕을 다시 모셔 올 거라는 사람도 있습니다.	The coup of Brumaire has made General Bonaparte First Consul. Some say he has ended the Revolution and restored order, some that the Republic has been handed to a soldier, some that he will bring back the king.
+=제1통령을 지지한다	Support the First Consul
+=이탈리아에서 승전보가 들려오고 거리의 소란이 잦아들었습니다. 십 년 만에 처음으로 나라가 굴러간다고 느낍니다.	Victories are reported from Italy and the turmoil in the streets has died down. For the first time in ten years, you feel the country is working.
+=보나파르트가 몽크 장군처럼 왕을 다시 모셔 오리라 기대했지만, 그럴 사람이 아니라는 것이 점점 분명해집니다.	You hoped Bonaparte would bring back the king as General Monck once did, but it grows ever clearer he is not that kind of man.
+=공화국을 지키려 한다	Stand by the Republic
+=헌법을 몇 번이나 고친 끝에 결국 장군 한 사람이 권력을 쥐었을 뿐이라고 생각합니다.	After so many constitutions, you think, all that has happened is that one general has taken power.
+=특별 군사학교	The special military school
+=보나파르트가 세운 특별 군사학교(처음엔 퐁텐블로, 1808년부터 생시르)가 입학생을 받습니다. 학비를 내야 하지만, 졸업하면 바로 소위로 임관합니다.	The special military school founded by Bonaparte (first at Fontainebleau, at Saint-Cyr from 1808) is taking cadets. There are fees to pay, but graduates are commissioned as sub-lieutenants straight away.
