@@ -106,7 +106,8 @@ html[lang="en"] .stat span{font-size:.72rem;white-space:nowrap;overflow:hidden;t
 .intro{max-width:880px;margin:32px auto;padding:0 16px}
 .intro .card{padding:0;overflow:hidden}.intro-body{padding:26px 28px 28px}
 .intro h1{font-family:var(--serif);font-size:2.2rem;margin:0 0 4px;line-height:1.2}.intro h1 b{color:var(--wine)}
-.intro .sub{color:var(--muted);margin:0 0 16px}.intro p{line-height:1.8}
+.intro .sub{color:var(--muted);margin:0 0 16px}
+.world-lives{display:inline-block;margin:-6px 0 16px;padding:6px 14px;border-radius:14px;background:var(--tint-wine);border:1px solid var(--line);font-size:.92rem;color:var(--ink2)}.world-lives b{font-family:var(--serif);font-size:1.15rem;color:var(--wine);margin-left:4px;font-variant-numeric:tabular-nums}.world-lives span{color:var(--muted);white-space:nowrap}.intro p{line-height:1.8}
 .intro .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.primary{background:var(--dark)!important;color:#fff;border-color:var(--dark)!important;font-weight:700;padding:12px 20px}
 .birth-pick{background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:16px}
 .bp-head{display:flex;justify-content:space-between;align-items:baseline}.bp-head label{font-weight:800}.bp-head output{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--wine)}
@@ -264,7 +265,7 @@ label.section{display:block}
 <section id="intro" class="intro"><div class="card">
   <div class="scene-wrap"><canvas id="introScene" aria-label="18세기 프랑스 시골 마을의 가족"></canvas></div>
   <div class="intro-body">
-    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1750–1914 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p>
+    <h1>어느 <b>프랑스인</b>의 삶</h1><p class="sub">1750–1914 · 한 사람의 일생을 살아 보는 생애 시뮬레이션</p><p id="worldLives" class="world-lives" role="status" hidden></p>
     <p>출생지와 가문은 무작위로 정해집니다. 시간이 자동으로 흐르며 일상이 기록되고, 중요한 순간에는 <b>중대 결정</b> 창이 열립니다. 역사의 흐름은 바뀌지 않지만, 당신의 삶은 선택에 따라 달라집니다.</p>
     <div class="birth-pick">
       <div class="bp-head"><label for="birthYear">태어날 해</label><output id="birthYearOut" for="birthYear">무작위</output></div>

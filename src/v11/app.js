@@ -64,6 +64,49 @@ if (LANG === 'en') {
   new MutationObserver(list => { for (const m of list) { if (m.type === 'childList') m.addedNodes.forEach(i18nNode); else i18nNode(m.target); } })
     .observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['placeholder', 'title', 'aria-label', 'alt']});
 }
+// Lives that have passed through France: a shared count kept by a free public counter (abacus). Each new life
+// adds one; each browser adds itself once to the players. If the counter cannot be reached the line stays hidden,
+// and the embedded build (whose viewer blocks outside requests) never asks.
+const WORLD_API = 'https://abacus.jasoncameron.dev', WORLD_NS = 'hseo1101-80-french-life';
+const world = {lives:null, players:null};
+async function worldCall(verb, key) {
+  if (GUESTBOOK_EMBEDDED || typeof fetch !== 'function') return null;
+  const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const r = await fetch(`${WORLD_API}/${verb}/${WORLD_NS}/${key}`, {signal:ctrl.signal, cache:'no-store'});
+    if (!r.ok) return null;
+    const v = (await r.json())?.value;
+    return Number.isFinite(v) && v >= 0 ? v : null;
+  } catch { return null; } finally { clearTimeout(timer); }
+}
+function renderWorld() {
+  const el = document.getElementById('worldLives');
+  if (!el) return;
+  if (world.lives == null) { el.hidden = true; return; }
+  const n = v => Number(v).toLocaleString(LANG === 'en' ? 'en-US' : 'ko-KR');
+  el.lang = LANG;
+  el.innerHTML = LANG === 'en'
+    ? `Lives that have passed through France so far <b>${n(world.lives)}</b>${world.players ? ` <span>· ${n(world.players)} players</span>` : ''}`
+    : `지금까지 프랑스를 거쳐 간 삶 <b>${n(world.lives)}</b>${world.players ? ` <span>· 함께한 사람 ${n(world.players)}명</span>` : ''}`;
+  el.hidden = false;
+}
+async function worldLoad() {
+  const [lives, players] = await Promise.all([worldCall('get', 'lives'), worldCall('get', 'players')]);
+  if (lives != null) world.lives = lives;
+  if (players != null) world.players = players;
+  renderWorld();
+}
+async function worldHit() {
+  const lives = await worldCall('hit', 'lives');
+  if (lives != null) world.lives = lives;
+  if (!prefs.counted) {
+    const players = await worldCall('hit', 'players');
+    if (players != null) { world.players = players; prefs.counted = true; savePrefs(); }
+  }
+  renderWorld();
+}
+// Every way of starting a new life ends here.
+function lifeBegun() { prefs.played = true; savePrefs(); worldHit(); }
 function switchLang() {
   prefs.lang = LANG === 'en' ? 'ko' : 'en'; savePrefs();
   if (engine.state && !engine.state.dead) try { sessionStorage.setItem('franceLife.resume', '1'); } catch { /* optional */ }
@@ -144,7 +187,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.41';
+const GAME_VERSION = 'v0.42';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -288,7 +331,7 @@ $id('chronTargetGo').addEventListener('click', () => {
   if (!chronTarget) return;
   const b = sceneBirth(chronTarget);
   guarded(`${b.born}년에 새로 태어나면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?`, '태어나기', () => {
-    if (controller.newLife(null, {born:b.born, ...(b.family ? {family:b.family} : {})})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); }
+    if (controller.newLife(null, {born:b.born, ...(b.family ? {family:b.family} : {})})) { lifeBegun(); ui.setChoosing(false); startWithBirth(); }
   });
 });
 // Curated starts for a first life: a random birth is usually a peasant's life far from the great events.
@@ -316,15 +359,15 @@ function closeMenu() { document.getElementById('menu').hidden = true; document.g
 const actions = {
   newLife:() => {
     const born = Number.isInteger(prefs.born) ? prefs.born : undefined;
-    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); } });
+    guarded('새 인생을 시작하면 지금 진행 중인 인생 기록이 새 인생으로 바뀝니다. 계속할까요?', '새 인생 시작', () => { if (controller.newLife(null, {born})) { lifeBegun(); ui.setChoosing(false); startWithBirth(); } });
   },
   startPreset:button => {
     const preset = PRESETS[button?.dataset.preset]; if (!preset) return;
     guarded(`${preset.label}(으)로 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?`, '이야기 시작', () => {
-      if (controller.newLife(null, {born:preset.born, family:preset.family})) { prefs.played = true; savePrefs(); ui.setChoosing(false); startWithBirth(); }
+      if (controller.newLife(null, {born:preset.born, family:preset.family})) { lifeBegun(); ui.setChoosing(false); startWithBirth(); }
     });
   },
-  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) { prefs.played = true; savePrefs(); ui.setChoosing(false); } }),
+  schoolStory:() => guarded('1778년 파리 이야기를 시작하면 지금 진행 중인 인생 기록이 바뀝니다. 계속할까요?', '이야기 시작', () => { if (controller.newLife('school')) { lifeBegun(); ui.setChoosing(false); } }),
   chooseLife:() => { clock.stop(); ui.setChoosing(true); renderChronicle(); window.scrollTo(0, 0); },
   backToLife:() => { ui.setChoosing(false); if (engine.state && !engine.state.dead) { clock.reset(); clock.start(); } },
   continueDecision:() => controller.continueDecision(), togglePause:() => controller.togglePause(),
@@ -397,6 +440,7 @@ window.addEventListener('pageshow', () => { if (engine.state && !engine.state.de
 if (/[?&]debug\b/.test(location.search)) globalThis.__FL = {I18N_MISS, L, engine, createState, castOf, sceneSpec, createScene, characterLook, spriteURL, portraitURL, controller, render, encodeSave, decodeSave};
 gbShowPreview();
 render();
+worldLoad();
 // Coming back from a language switch in the middle of a life: carry on with it.
 try {
   if (sessionStorage.getItem('franceLife.resume') && hasSave()) { sessionStorage.removeItem('franceLife.resume'); confirmed = true; try { if (controller.loadGame()) ui.setChoosing(false); } finally { confirmed = false; } }
