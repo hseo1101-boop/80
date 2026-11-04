@@ -100,3 +100,5 @@
 =화가(으)로 다시 일을 시작했습니다.	You went back to work as a painter.
 =의사(으)로 다시 일을 시작했습니다.	You went back to work as a physician.
 =전 {0}	Former {0}
+={0} {1}이(가) 편지를 보내 {2}을(를) 자기 사령부의 서기로 데려가겠다고 했습니다.	{1:cap} {0} wrote that he would take {2} onto his staff as a clerk.
+=최전선 대신입니다.	Instead of the front line.
