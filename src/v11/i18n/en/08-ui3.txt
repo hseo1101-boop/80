@@ -94,3 +94,8 @@ cec4c589	The shopkeeper's {0}
 =콜레주	collège
 =콜레주(리세)	collège (lycée)
 ={0}에 다님	Attends {0}
+=📤 이미지와 함께 공유	📤 Share with the image
+=𝕏에 공유	Share on 𝕏
+=@ 스레드에 공유	@ Share on Threads
+=X와 스레드는 글과 게임 링크까지만 채워 줍니다. 위 이미지를 저장한 뒤 글쓰기 창에서 사진으로 붙여 주세요.	X and Threads fill in only the text and the game link. Save the image above, then attach it as a photo in the post window.
+=이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.	This browser cannot share images. Save the image and post it yourself.

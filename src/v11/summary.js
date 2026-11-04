@@ -20,7 +20,8 @@ function lifeReport(s) {
   const placeShort = s.place.replace(' 농촌', '');
   const top = s.familyEvents?.career_top;
   const job = top ? top : ['없음','은퇴'].includes(s.job) ? (s.job === '은퇴' ? (s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1]).filter(Boolean).at(-1) || '') : '') : s.job;
-  const who = job ? `${placeShort}의 ${job.replace(/ 보조$/, '')}` : `${placeShort} 사람`;
+  // '농부 보조' reads as a farmer's helper; a ladder rank such as '신문 발행인 ○○의 편집 보조' keeps its last word.
+  const who = job ? `${placeShort}의 ${job.replace(/^(\S+) 보조$/, '$1')}` : `${placeShort} 사람`;
   const NUM = ['','한','둘','셋','넷','다섯','여섯','일곱','여덟','아홉','열'];
   const parent = woman ? '어머니' : '아버지';
   const family = kids.length ? (kids.length === 1 ? `한 아이의 ${parent}` : `아이 ${NUM[kids.length] || kids.length}의 ${parent}`) : spouse ? `${spouse.name.split(' ')[0]}의 ${woman ? '아내' : '남편'}` : '';

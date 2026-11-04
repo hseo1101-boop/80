@@ -187,7 +187,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.45';
+const GAME_VERSION = 'v0.46';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -407,6 +407,36 @@ $id('shareSave')?.addEventListener('click', () => {
   const link = document.createElement('a'); link.href = $id('shareImage').src;
   link.download = `french-life-${engine.state?.name || 'life'}.png`; link.click();
 });
+// Sharing the life summary. X and Threads open their compose page with the text and the game link; their web
+// intents cannot carry an image, so the note asks the player to attach the saved picture. Where the browser can
+// share files (most phones), one button sends the image and the text together to any app, X and Threads included.
+const SHARE_URL = 'https://hseo1101-boop.github.io/80/';
+function shareText() {
+  const s = engine.state; if (!s) return '';
+  const r = lifeReport(s);
+  return LANG === 'en'
+    ? `A French Life — ${r.french}, ${r.born}–${r.died}\n${L(r.epitaph)}\n${L(r.cause)}\n#AFrenchLife`
+    : `어느 프랑스인의 삶 — ${r.name}(${r.born}–${r.died})\n${r.epitaph}\n${r.cause}\n#어느프랑스인의삶`;
+}
+// A link click opens the compose page in a new tab without leaving the game (window.open with 'noopener' always
+// returns null, so it cannot tell a blocked pop-up from a working one).
+function openShare(url) { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
+$id('shareX').addEventListener('click', () => openShare(`https://x.com/intent/post?text=${encodeURIComponent(shareText())}&url=${encodeURIComponent(SHARE_URL)}`));
+$id('shareThreads').addEventListener('click', () => openShare(`https://www.threads.net/intent/post?text=${encodeURIComponent(shareText() + '\n' + SHARE_URL)}`));
+async function shareImageFile() {
+  const src = $id('shareImage').src; if (!src.startsWith('data:image')) return null;
+  const blob = await (await fetch(src)).blob();
+  return new File([blob], `french-life-${engine.state?.born || ''}.png`, {type:'image/png'});
+}
+async function syncNativeShare() {
+  const b = $id('shareNative'); b.hidden = true;
+  try { const f = await shareImageFile(); if (f && navigator.canShare?.({files:[f]})) b.hidden = false; } catch { /* not supported */ }
+}
+$id('shareNative').addEventListener('click', async () => {
+  try { const f = await shareImageFile(); await navigator.share({files:[f], text:shareText() + '\n' + SHARE_URL}); }
+  catch (err) { if (err?.name !== 'AbortError') ui.notify(L('이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.')); }
+});
+new MutationObserver(syncNativeShare).observe($id('shareImage'), {attributes:true, attributeFilter:['src']});
 $id('saveClose').addEventListener('click', () => { $id('saveOverlay').hidden = true; });
 $id('savePick').addEventListener('click', () => $id('importFile').click());
 $id('saveLoad').addEventListener('click', () => { const raw = $id('saveCode').value.trim(); if (raw) importText(raw); else $id('saveStatus').textContent = '붙여 넣은 저장 코드가 없습니다.'; });

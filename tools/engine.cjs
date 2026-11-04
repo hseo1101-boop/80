@@ -1844,6 +1844,11 @@ Object.assign(EN, {"일시정지":"Pause",
 "콜레주":"collège",
 "콜레주(리세)":"collège (lycée)",
 "{0}에 다님":"Attends {0}",
+"📤 이미지와 함께 공유":"📤 Share with the image",
+"𝕏에 공유":"Share on 𝕏",
+"@ 스레드에 공유":"@ Share on Threads",
+"X와 스레드는 글과 게임 링크까지만 채워 줍니다. 위 이미지를 저장한 뒤 글쓰기 창에서 사진으로 붙여 주세요.":"X and Threads fill in only the text and the game link. Save the image above, then attach it as a photo in the post window.",
+"이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.":"This browser cannot share images. Save the image and post it yourself.",
 "백일천하 때 국왕을 따라 헨트로":"Followed the king to Ghent in the Hundred Days",
 "바스티유 함락에 군인으로 참여":"Took part in the fall of the Bastille as a soldier",
 "파리로 이주":"Moved to Paris",
@@ -8166,7 +8171,9 @@ function fateYear(s) {
   else risks.push([.003 + Math.max(0, age - 40)*.0005, '갑작스러운 병으로 세상을 떠났습니다.']);
   if (age >= 14 && /노동|농|직물|인쇄|제화|도제|장인|보조/.test(job)) risks.push([.0015, '작업 중 사고를 당해 목숨을 잃었습니다.']);
   const war = (s.year >= 1792 && s.year <= 1815) || (s.year >= 1756 && s.year <= 1763);
-  if (war && /군/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
+  // Soldiers, émigré-army officers and cantinières face the battlefield; army supply workers at home, half-pay
+  // officers and disabled veterans do not.
+  if (war && /^(군인|육군|망명군)|종군 상인/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
   if (s.year === 1832 && s.place.includes('파리')) risks.push([.012, '1832년 콜레라에 걸려 세상을 떠났습니다.']);
   if (s.year === 1849 && s.place.includes('파리')) risks.push([.006, '콜레라에 걸려 세상을 떠났습니다.']);
   for (const [p, reason] of risks) if (random(s) < p * frail) { endLife(s, reason); return; }
@@ -9633,7 +9640,8 @@ function lifeReport(s) {
   const placeShort = s.place.replace(' 농촌', '');
   const top = s.familyEvents?.career_top;
   const job = top ? top : ['없음','은퇴'].includes(s.job) ? (s.job === '은퇴' ? (s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1]).filter(Boolean).at(-1) || '') : '') : s.job;
-  const who = job ? `${placeShort}의 ${job.replace(/ 보조$/, '')}` : `${placeShort} 사람`;
+  // '농부 보조' reads as a farmer's helper; a ladder rank such as '신문 발행인 ○○의 편집 보조' keeps its last word.
+  const who = job ? `${placeShort}의 ${job.replace(/^(\S+) 보조$/, '$1')}` : `${placeShort} 사람`;
   const NUM = ['','한','둘','셋','넷','다섯','여섯','일곱','여덟','아홉','열'];
   const parent = woman ? '어머니' : '아버지';
   const family = kids.length ? (kids.length === 1 ? `한 아이의 ${parent}` : `아이 ${NUM[kids.length] || kids.length}의 ${parent}`) : spouse ? `${spouse.name.split(' ')[0]}의 ${woman ? '아내' : '남편'}` : '';

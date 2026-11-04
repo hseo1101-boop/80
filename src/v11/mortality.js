@@ -65,7 +65,9 @@ function fateYear(s) {
   else risks.push([.003 + Math.max(0, age - 40)*.0005, '갑작스러운 병으로 세상을 떠났습니다.']);
   if (age >= 14 && /노동|농|직물|인쇄|제화|도제|장인|보조/.test(job)) risks.push([.0015, '작업 중 사고를 당해 목숨을 잃었습니다.']);
   const war = (s.year >= 1792 && s.year <= 1815) || (s.year >= 1756 && s.year <= 1763);
-  if (war && /군/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
+  // Soldiers, émigré-army officers and cantinières face the battlefield; army supply workers at home, half-pay
+  // officers and disabled veterans do not.
+  if (war && /^(군인|육군|망명군)|종군 상인/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
   if (s.year === 1832 && s.place.includes('파리')) risks.push([.012, '1832년 콜레라에 걸려 세상을 떠났습니다.']);
   if (s.year === 1849 && s.place.includes('파리')) risks.push([.006, '콜레라에 걸려 세상을 떠났습니다.']);
   for (const [p, reason] of risks) if (random(s) < p * frail) { endLife(s, reason); return; }

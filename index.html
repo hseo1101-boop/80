@@ -189,7 +189,7 @@ label.section{display:block}
 .sum-dates{margin:0;font-family:var(--mono);font-size:.82rem;color:var(--muted)}.sum-epitaph{margin:6px 0 0;font-weight:700}.sum-cause{margin:2px 0 0;color:var(--muted);font-size:.9rem}
 .sum-lines{margin:0;padding:0 0 0 18px;display:grid;gap:6px;color:var(--teal)}.sum-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .sum-cols h3{font-size:.9rem;margin:0 0 6px}.sum-list{list-style:none;margin:0;padding:0;font-size:.9rem;display:grid;gap:4px}.sum-list b{font-family:var(--mono);font-weight:500;color:var(--wine);margin-right:4px}.sum-list span{color:var(--muted)}
-.sum-share summary{cursor:pointer;font-weight:700}.sum-share img{display:block;width:100%;max-width:360px;margin:10px 0;border:1px solid var(--line);border-radius:6px}
+.sum-share summary{cursor:pointer;font-weight:700}.share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.share-btn{font-weight:700;background:var(--paper)}#shareX{background:#111;color:#fff;border-color:#111}#shareX:hover{background:#333!important}.sum-share img{display:block;width:100%;max-width:360px;margin:10px 0;border:1px solid var(--line);border-radius:6px}
 .sum-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.share-story{display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);text-decoration:none;font-weight:700}.share-story:hover{border-color:var(--wine)}
 .menu-link{display:block;padding:10px 12px;border-radius:6px;color:var(--ink);text-decoration:none}.menu-link:hover{background:var(--chip)}.news-dot{font-size:.7rem;font-weight:800;color:#fff;background:var(--wine);border-radius:999px;padding:1px 7px;margin-left:4px}.menu-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--wine)}#menuButton{position:relative}.choice-req{display:block;font-size:.78rem;margin-top:5px;font-weight:700}.choice-req.ok{color:var(--teal)}.choice-req.no{color:var(--bad)}
 .choice:disabled{background:var(--tint);opacity:.75}.birth-top{display:flex;gap:14px;align-items:center;margin-bottom:10px}.birth-top img{width:48px;height:77px;image-rendering:pixelated;object-fit:cover;object-position:50% 100%}
@@ -316,7 +316,7 @@ label.section{display:block}
         <ul id="summaryLines" class="sum-lines"></ul>
         <div class="sum-cols"><div><h3>역사의 현장</h3><ul id="summaryHistoric" class="sum-list"></ul></div><div><h3>만난 인물</h3><ul id="summaryFigures" class="sum-list"></ul></div><div><h3>별표한 기억</h3><ul id="summaryStarred" class="sum-list"></ul></div></div>
         <div id="summaryMissed" class="sum-missed" hidden><h3>다른 삶이었다면</h3><ul id="summaryMissedList"></ul><button data-action="chooseLife">다른 곳에서 다시 태어나기 →</button></div>
-        <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button></details>
+        <details class="sum-share"><summary>공유용 이미지</summary><img id="shareImage" alt="생애 요약 공유 이미지"><p class="note">이미지를 길게 누르거나 오른쪽 클릭해 저장할 수 있습니다.</p><button id="shareSave">이미지 파일로 받기</button><div class="share-row"><button id="shareNative" class="share-btn" hidden>📤 이미지와 함께 공유</button><button id="shareX" class="share-btn">𝕏에 공유</button><button id="shareThreads" class="share-btn">@ 스레드에 공유</button></div><p id="shareHint" class="note">X와 스레드는 글과 게임 링크까지만 채워 줍니다. 위 이미지를 저장한 뒤 글쓰기 창에서 사진으로 붙여 주세요.</p></details>
         <section id="summaryArchive" class="sum-archive" hidden><h3>연대기에 새로 남은 것</h3><p id="summaryArchiveText"></p><ul id="summaryArchiveList"></ul></section>
         <section id="gbShare" class="gb-share" aria-labelledby="gbShareTitle" hidden>
           <div class="gb-stone" aria-hidden="true"><i>✝</i><b id="gbStoneName"></b><span id="gbStoneYears"></span><em id="gbStoneText"></em></div>
@@ -2241,6 +2241,11 @@ Object.assign(EN, {"일시정지":"Pause",
 "콜레주":"collège",
 "콜레주(리세)":"collège (lycée)",
 "{0}에 다님":"Attends {0}",
+"📤 이미지와 함께 공유":"📤 Share with the image",
+"𝕏에 공유":"Share on 𝕏",
+"@ 스레드에 공유":"@ Share on Threads",
+"X와 스레드는 글과 게임 링크까지만 채워 줍니다. 위 이미지를 저장한 뒤 글쓰기 창에서 사진으로 붙여 주세요.":"X and Threads fill in only the text and the game link. Save the image above, then attach it as a photo in the post window.",
+"이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.":"This browser cannot share images. Save the image and post it yourself.",
 "백일천하 때 국왕을 따라 헨트로":"Followed the king to Ghent in the Hundred Days",
 "바스티유 함락에 군인으로 참여":"Took part in the fall of the Bastille as a soldier",
 "파리로 이주":"Moved to Paris",
@@ -8563,7 +8568,9 @@ function fateYear(s) {
   else risks.push([.003 + Math.max(0, age - 40)*.0005, '갑작스러운 병으로 세상을 떠났습니다.']);
   if (age >= 14 && /노동|농|직물|인쇄|제화|도제|장인|보조/.test(job)) risks.push([.0015, '작업 중 사고를 당해 목숨을 잃었습니다.']);
   const war = (s.year >= 1792 && s.year <= 1815) || (s.year >= 1756 && s.year <= 1763);
-  if (war && /군/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
+  // Soldiers, émigré-army officers and cantinières face the battlefield; army supply workers at home, half-pay
+  // officers and disabled veterans do not.
+  if (war && /^(군인|육군|망명군)|종군 상인/.test(job) && age >= 16 && age <= 50) risks.push([.035, '전장에서 돌아오지 못했습니다.']);
   if (s.year === 1832 && s.place.includes('파리')) risks.push([.012, '1832년 콜레라에 걸려 세상을 떠났습니다.']);
   if (s.year === 1849 && s.place.includes('파리')) risks.push([.006, '콜레라에 걸려 세상을 떠났습니다.']);
   for (const [p, reason] of risks) if (random(s) < p * frail) { endLife(s, reason); return; }
@@ -10030,7 +10037,8 @@ function lifeReport(s) {
   const placeShort = s.place.replace(' 농촌', '');
   const top = s.familyEvents?.career_top;
   const job = top ? top : ['없음','은퇴'].includes(s.job) ? (s.job === '은퇴' ? (s.lifeMilestones.map(m => m.match(/직업: (.+)/)?.[1]).filter(Boolean).at(-1) || '') : '') : s.job;
-  const who = job ? `${placeShort}의 ${job.replace(/ 보조$/, '')}` : `${placeShort} 사람`;
+  // '농부 보조' reads as a farmer's helper; a ladder rank such as '신문 발행인 ○○의 편집 보조' keeps its last word.
+  const who = job ? `${placeShort}의 ${job.replace(/^(\S+) 보조$/, '$1')}` : `${placeShort} 사람`;
   const NUM = ['','한','둘','셋','넷','다섯','여섯','일곱','여덟','아홉','열'];
   const parent = woman ? '어머니' : '아버지';
   const family = kids.length ? (kids.length === 1 ? `한 아이의 ${parent}` : `아이 ${NUM[kids.length] || kids.length}의 ${parent}`) : spouse ? `${spouse.name.split(' ')[0]}의 ${woman ? '아내' : '남편'}` : '';
@@ -16212,7 +16220,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.45';
+const GAME_VERSION = 'v0.46';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -16432,6 +16440,36 @@ $id('shareSave')?.addEventListener('click', () => {
   const link = document.createElement('a'); link.href = $id('shareImage').src;
   link.download = `french-life-${engine.state?.name || 'life'}.png`; link.click();
 });
+// Sharing the life summary. X and Threads open their compose page with the text and the game link; their web
+// intents cannot carry an image, so the note asks the player to attach the saved picture. Where the browser can
+// share files (most phones), one button sends the image and the text together to any app, X and Threads included.
+const SHARE_URL = 'https://hseo1101-boop.github.io/80/';
+function shareText() {
+  const s = engine.state; if (!s) return '';
+  const r = lifeReport(s);
+  return LANG === 'en'
+    ? `A French Life — ${r.french}, ${r.born}–${r.died}\n${L(r.epitaph)}\n${L(r.cause)}\n#AFrenchLife`
+    : `어느 프랑스인의 삶 — ${r.name}(${r.born}–${r.died})\n${r.epitaph}\n${r.cause}\n#어느프랑스인의삶`;
+}
+// A link click opens the compose page in a new tab without leaving the game (window.open with 'noopener' always
+// returns null, so it cannot tell a blocked pop-up from a working one).
+function openShare(url) { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
+$id('shareX').addEventListener('click', () => openShare(`https://x.com/intent/post?text=${encodeURIComponent(shareText())}&url=${encodeURIComponent(SHARE_URL)}`));
+$id('shareThreads').addEventListener('click', () => openShare(`https://www.threads.net/intent/post?text=${encodeURIComponent(shareText() + '\n' + SHARE_URL)}`));
+async function shareImageFile() {
+  const src = $id('shareImage').src; if (!src.startsWith('data:image')) return null;
+  const blob = await (await fetch(src)).blob();
+  return new File([blob], `french-life-${engine.state?.born || ''}.png`, {type:'image/png'});
+}
+async function syncNativeShare() {
+  const b = $id('shareNative'); b.hidden = true;
+  try { const f = await shareImageFile(); if (f && navigator.canShare?.({files:[f]})) b.hidden = false; } catch { /* not supported */ }
+}
+$id('shareNative').addEventListener('click', async () => {
+  try { const f = await shareImageFile(); await navigator.share({files:[f], text:shareText() + '\n' + SHARE_URL}); }
+  catch (err) { if (err?.name !== 'AbortError') ui.notify(L('이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.')); }
+});
+new MutationObserver(syncNativeShare).observe($id('shareImage'), {attributes:true, attributeFilter:['src']});
 $id('saveClose').addEventListener('click', () => { $id('saveOverlay').hidden = true; });
 $id('savePick').addEventListener('click', () => $id('importFile').click());
 $id('saveLoad').addEventListener('click', () => { const raw = $id('saveCode').value.trim(); if (raw) importText(raw); else $id('saveStatus').textContent = '붙여 넣은 저장 코드가 없습니다.'; });
