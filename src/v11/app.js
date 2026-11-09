@@ -187,7 +187,7 @@ function startWithBirth() {
   if (real) $id('birthLead').textContent = `✦ 실존 인물로 태어났습니다. ${real.intro} 기록된 갈림길마다 역사대로 걸을지, 다른 길로 갈지 고르게 됩니다.`;
 }
 // Community links: updates, feedback (GitHub issue forms) and player stories (GitHub Discussions).
-const GAME_VERSION = 'v0.46';
+const GAME_VERSION = 'v0.47';
 const REPO = 'https://github.com/hseo1101-boop/80';
 const COMMUNITY = 'https://hseo1101-boop.github.io/80/community.html';
 const FEEDBACK_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyCERoyi6MDFP7AsavCBa0jtS6gw_L-xLUGlUm-UKf91nadQ/viewform?usp=header';
@@ -338,6 +338,8 @@ $id('chronTargetGo').addEventListener('click', () => {
 const PRESETS = {
   paris1768:{label:'1768년 파리 이야기', born:1768, family:{place:'파리', class:'도시 평민'}},
   bordeaux1765:{label:'1765년 보르도 이야기', born:1765, family:{place:'보르도', class:'부르주아'}},
+  paris1770noble:{label:'1770년 파리 귀족 이야기', born:1770, family:{place:'파리', class:'귀족'}},
+  paris1760bourgeois:{label:'1760년 파리 부르주아 이야기', born:1760, family:{place:'파리', class:'부르주아'}},
   lyon1805:{label:'1805년 리옹 이야기', born:1805, family:{place:'리옹', class:'도시 평민'}}
 };
 // First-time players see the curated starts first.

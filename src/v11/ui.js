@@ -83,7 +83,7 @@ function companions(s) {
 }
 function homeLabel(s) {
   const k = placeKind(s);
-  if (k === 'paris') return s.class === '부르주아' ? '시내의 아파르트망' : '다층 셋집';
+  if (k === 'paris') return s.class === '귀족' ? '포부르 생제르맹의 저택' : s.class === '부르주아' ? '시내의 아파르트망' : '다층 셋집';
   if (k === 'chateau') return '가문의 성관';
   if (k === 'town') return s.class === '부르주아' ? '상인의 집' : '도시의 셋집';
   if (s.place.includes('브르타뉴')) return '돌로 지은 농가';

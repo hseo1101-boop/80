@@ -5,8 +5,11 @@
 const FAMILY_WEIGHTS = {
   '파리|도시 평민': 4, '리옹|도시 평민': 4, '루앙|도시 평민': 3,
   '오베르뉴 농촌|농민': 26, '부르고뉴 농촌|농민': 27, '브르타뉴 농촌|농민': 27,
-  '보르도|부르주아': 5, '파리|부르주아': 3, '투르|귀족': 1
+  '보르도|부르주아': 5, '파리|부르주아': 3, '투르|귀족': .5, '파리|귀족': .5
 };
+// A Paris household of the robe nobility: a judge of the Parlement, with a town house in the Faubourg Saint-Germain.
+// Nobles stay about one birth in a hundred, split between Paris and Touraine.
+if (!families.some(f => f.place === '파리' && f.class === '귀족')) families.push({place:'파리', class:'귀족', job:'고등법원 판사', wealth:86});
 function pickFamily(s) {
   const weighted = families.map(f => ({f, w: FAMILY_WEIGHTS[f.place + '|' + f.class] || 1}));
   let roll = random(s) * weighted.reduce((n, x) => n + x.w, 0);

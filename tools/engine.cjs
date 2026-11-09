@@ -1849,6 +1849,13 @@ Object.assign(EN, {"일시정지":"Pause",
 "@ 스레드에 공유":"@ Share on Threads",
 "X와 스레드는 글과 게임 링크까지만 채워 줍니다. 위 이미지를 저장한 뒤 글쓰기 창에서 사진으로 붙여 주세요.":"X and Threads fill in only the text and the game link. Save the image above, then attach it as a photo in the post window.",
 "이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.":"This browser cannot share images. Save the image and post it yourself.",
+"고등법원 판사":"judge of the Parlement",
+"포부르 생제르맹의 저택":"A town house in the Faubourg Saint-Germain",
+"법복 귀족의 아이":"A child of the robe nobility",
+"열아홉에 혁명을 맞는 귀족, 망명과 공포정치의 갈림길":"A noble who meets the Revolution at nineteen: emigration or the Terror",
+"변호사 집안의 아이":"A child of a lawyer's family",
+"삼부회와 국민공회, 혁명의 연단에 설 수도 있는 법률가 집안":"The Estates-General and the Convention: a family of the law that may reach the revolutionary rostrum",
+"{0}의 {1} 가정({2})에서 {3}(으)로 태어났습니다.":"You were born a {3} into a {1} family in {0} ({2}).",
 "백일천하 때 국왕을 따라 헨트로":"Followed the king to Ghent in the Hundred Days",
 "바스티유 함락에 군인으로 참여":"Took part in the fall of the Bastille as a soldier",
 "파리로 이주":"Moved to Paris",
@@ -9527,8 +9534,11 @@ function priceLine(s) {
 const FAMILY_WEIGHTS = {
   '파리|도시 평민': 4, '리옹|도시 평민': 4, '루앙|도시 평민': 3,
   '오베르뉴 농촌|농민': 26, '부르고뉴 농촌|농민': 27, '브르타뉴 농촌|농민': 27,
-  '보르도|부르주아': 5, '파리|부르주아': 3, '투르|귀족': 1
+  '보르도|부르주아': 5, '파리|부르주아': 3, '투르|귀족': .5, '파리|귀족': .5
 };
+// A Paris household of the robe nobility: a judge of the Parlement, with a town house in the Faubourg Saint-Germain.
+// Nobles stay about one birth in a hundred, split between Paris and Touraine.
+if (!families.some(f => f.place === '파리' && f.class === '귀족')) families.push({place:'파리', class:'귀족', job:'고등법원 판사', wealth:86});
 function pickFamily(s) {
   const weighted = families.map(f => ({f, w: FAMILY_WEIGHTS[f.place + '|' + f.class] || 1}));
   let roll = random(s) * weighted.reduce((n, x) => n + x.w, 0);
@@ -13729,6 +13739,11 @@ function politicalMood(s, event) {
   t(dc('mobilization-women'), '남편과 형제들이 군인 수첩을 들고', '마을 남자들이 군인 수첩을 들고');
   t(dc('move-paris'), '아이들은 좁은 셋방에서 기침을 하고', '식구들은 좁은 셋방에서 기침을 하고');
   t(dc('inheritance-only'), '다만 배우자의 노후와,', '다만 남은 식구의 노후와,');
+  // Paris childhood moments that assume a poor household (saving firewood and candles, a neighbour minding you
+  // while mother works, errands for the craftsmen, envying a rich child's carriage) are for commoners only.
+  for (const id of ['paris-firewood', 'paris-neighbour-care', 'paris-errand', 'paris-craft-help', 'paris-craft-watch', 'paris-household-cuts',
+    'paris-candle', 'paris-bread-change', 'paris-wrong-change', 'paris-carriage-gap', 'paris-future-work', 'paris-school-friend', 'paris-letters', 'paris-letters-practice'])
+    { const e = ev(id); if (e) e.when.classes = ['도시 평민']; }
 })();
 
 // Women do not enlist. The National Guard, town militias, volunteer battalions and the army took men only;
@@ -14064,7 +14079,7 @@ function jobKind(job = '') {
   if (/군/.test(job)) return 'soldier';
   if (/농부|소작|농업|농민/.test(job)) return 'peasant';
   if (/법률|교사|교육|의사|관리|공증|사제|변호사|서기|행정관|의원|도지사|교정원|팸플릿|기자|발행인|교수|아카데미|학사원|신학생|신부|참사회원|주교|수녀|외과|관청|사무관|국장|참사관|작가|측량사|기사|순경|경찰/.test(job)) return 'professional';
-  if (/지주/.test(job)) return 'noble';
+  if (/지주|고등법원/.test(job)) return 'noble';
   if (/상인|점원|자영업|도매|은행|화가|작업장|공장|산업가|배우|살롱|의상실/.test(job)) return 'merchant';
   if (/도제|장인|직물|인쇄|제화|노동|하인|하녀|견습|보조|방적|직인|청소|산파|재봉사|선원|항해사|선장/.test(job)) return 'artisan';
   return null;

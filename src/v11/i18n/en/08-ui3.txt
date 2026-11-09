@@ -99,3 +99,10 @@ cec4c589	The shopkeeper's {0}
 =@ 스레드에 공유	@ Share on Threads
 =X와 스레드는 글과 게임 링크까지만 채워 줍니다. 위 이미지를 저장한 뒤 글쓰기 창에서 사진으로 붙여 주세요.	X and Threads fill in only the text and the game link. Save the image above, then attach it as a photo in the post window.
 =이 브라우저에서는 이미지 공유가 되지 않습니다. 이미지를 저장한 뒤 올려 주세요.	This browser cannot share images. Save the image and post it yourself.
+=고등법원 판사	judge of the Parlement
+=포부르 생제르맹의 저택	A town house in the Faubourg Saint-Germain
+=법복 귀족의 아이	A child of the robe nobility
+=열아홉에 혁명을 맞는 귀족, 망명과 공포정치의 갈림길	A noble who meets the Revolution at nineteen: emigration or the Terror
+=변호사 집안의 아이	A child of a lawyer's family
+=삼부회와 국민공회, 혁명의 연단에 설 수도 있는 법률가 집안	The Estates-General and the Convention: a family of the law that may reach the revolutionary rostrum
+={0}의 {1} 가정({2})에서 {3}(으)로 태어났습니다.	You were born a {3} into a {1} family in {0} ({2}).

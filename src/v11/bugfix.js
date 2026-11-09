@@ -14,6 +14,11 @@
   t(dc('mobilization-women'), '남편과 형제들이 군인 수첩을 들고', '마을 남자들이 군인 수첩을 들고');
   t(dc('move-paris'), '아이들은 좁은 셋방에서 기침을 하고', '식구들은 좁은 셋방에서 기침을 하고');
   t(dc('inheritance-only'), '다만 배우자의 노후와,', '다만 남은 식구의 노후와,');
+  // Paris childhood moments that assume a poor household (saving firewood and candles, a neighbour minding you
+  // while mother works, errands for the craftsmen, envying a rich child's carriage) are for commoners only.
+  for (const id of ['paris-firewood', 'paris-neighbour-care', 'paris-errand', 'paris-craft-help', 'paris-craft-watch', 'paris-household-cuts',
+    'paris-candle', 'paris-bread-change', 'paris-wrong-change', 'paris-carriage-gap', 'paris-future-work', 'paris-school-friend', 'paris-letters', 'paris-letters-practice'])
+    { const e = ev(id); if (e) e.when.classes = ['도시 평민']; }
 })();
 
 // Women do not enlist. The National Guard, town militias, volunteer battalions and the army took men only;

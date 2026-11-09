@@ -53,7 +53,7 @@ function jobKind(job = '') {
   if (/군/.test(job)) return 'soldier';
   if (/농부|소작|농업|농민/.test(job)) return 'peasant';
   if (/법률|교사|교육|의사|관리|공증|사제|변호사|서기|행정관|의원|도지사|교정원|팸플릿|기자|발행인|교수|아카데미|학사원|신학생|신부|참사회원|주교|수녀|외과|관청|사무관|국장|참사관|작가|측량사|기사|순경|경찰/.test(job)) return 'professional';
-  if (/지주/.test(job)) return 'noble';
+  if (/지주|고등법원/.test(job)) return 'noble';
   if (/상인|점원|자영업|도매|은행|화가|작업장|공장|산업가|배우|살롱|의상실/.test(job)) return 'merchant';
   if (/도제|장인|직물|인쇄|제화|노동|하인|하녀|견습|보조|방적|직인|청소|산파|재봉사|선원|항해사|선장/.test(job)) return 'artisan';
   return null;
