@@ -18,7 +18,7 @@ const ELITE_SKIP = new Set(['learn', 'school', 'apprentice', 'guizot-school', 'v
   'girls-school-1836', 'girls-convent-or-lay', 'village-school-girls', 'domestic-service']);
 function isEliteChild(s) {
   const born = s.familyEvents?.birthClass || s.class, w0 = s.familyEvents?.w0 ?? s.stats.재산;
-  return born === '귀족' || (born === '부르주아' && w0 >= 45);
+  return born === '귀족' || (born === '부르주아' && w0 >= 45) || !!s.familyEvents?.llg;
 }
 function lifeFixBlocks(s, d) {
   if (ageOf(s) >= 21 || !isEliteChild(s)) return false;
@@ -32,7 +32,9 @@ function lifeFixYear(s) {
   if (!s.familyEvents.birthClass) s.familyEvents.birthClass = s.class;
   const age = ageOf(s);
   // ── 4. 엘리트 교육 ──
-  if (age === 10 && isEliteChild(s) && !s.familyEvents.eliteSchool) {
+  // A boy who may be offered Louis-le-Grand (llg.js) waits for that answer; declining it sends him here a year later.
+  const llgWait = /^llg-entry/.test(s.decision || '') || (s.sex === '남성' && ['부르주아', '귀족'].includes(s.class) && !s.familyEvents.llgOffered && age < 12 && !s.familyEvents.real);
+  if (age >= 10 && age <= 12 && isEliteChild(s) && !s.familyEvents.eliteSchool && !llgWait) {
     s.familyEvents.eliteSchool = s.year;
     const y = s.year, boy = s.sex === '남성';
     const place = boy ? (y < 1762 ? '예수회 콜레주' : y < 1793 ? '오라토리오회 콜레주' : y < 1802 ? '중앙학교(에콜 상트랄)' : '리세') : (y >= 1792 && y < 1802 ? '가정교사' : '수녀원 기숙학교');
